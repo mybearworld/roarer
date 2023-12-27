@@ -18,7 +18,6 @@ const homeSchema = z.object({
     await (await fetch("https://api.meower.org/home?autoget=1")).json(),
   ).autoget;
 
-  console.log("HELLO?");
   const newPostSchema = z.object({
     cmd: z.literal("direct"),
     val: postSchema,

@@ -7,28 +7,12 @@ import { useLoginStatusStore } from "../stores/loginStatus";
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 
-const logInSchema = z
-  .object({
-    cmd: z.literal("statuscode"),
-    val: z
-      .literal("E:103 | ID not found")
-      .or(z.literal("E:025 | Deleted"))
-      .or(z.literal("I:011 | Invalid Password"))
-      .or(z.literal("E:018 | Account Banned"))
-      .or(z.literal("E:019 | Illegal characters detected"))
-      .or(z.literal("E:106 | Too many requests")),
-  })
-  .or(
-    z.object({
-      cmd: z.literal("direct"),
-      val: z.object({
-        mode: z.literal("auth"),
-        payload: z.object({
-          username: z.string(),
-        }),
-      }),
-    }),
-  );
+const logInSchema = z.object({
+  mode: z.literal("auth"),
+  payload: z.object({
+    username: z.string(),
+  }),
+});
 
 const username = ref("");
 const password = ref("");
@@ -40,22 +24,28 @@ const resetFormFields = () => {
   password.value = "";
 };
 
-const login = (e: Event) => {
+const login = async (e: Event) => {
   e.preventDefault();
-  cloudlinkStore.lookFor(logInSchema, (packet) => {
-    if (packet.cmd === "statuscode") {
-      message.value = packet.val;
-      loading.value = false;
-      return;
-    }
-    loginStatusStore.username = packet.val.payload.username;
-    loading.value = false;
-    resetFormFields();
-    return;
-  });
-  cloudlinkStore.login(username.value, password.value);
   loading.value = true;
   message.value = "";
+  let data;
+  try {
+    data = await cloudlinkStore.send(
+      {
+        cmd: "authpswd",
+        val: { username: username.value, pswd: password.value },
+      },
+      logInSchema,
+    );
+  } catch (e) {
+    message.value = e as string;
+    loading.value = false;
+    return;
+  }
+  loginStatusStore.username = data.payload.username;
+  loading.value = false;
+  resetFormFields();
+  return;
 };
 
 const signOut = () => {

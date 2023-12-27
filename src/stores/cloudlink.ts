@@ -17,38 +17,54 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     cloudlink: client,
   }),
   actions: {
-    setup() {
-      if (this.cloudlink.status === 1) {
-        return new Promise<void>((resolve) => resolve());
-      }
-      return new Promise<void>((resolve) => {
-        const interval = setInterval(() => {
-          if (this.cloudlink.status === 1) {
-            clearInterval(interval);
-            resolve();
+    send<TSchema extends ZodSchema>(
+      packet: CloudlinkPacket,
+      responseSchema: TSchema,
+    ) {
+      return new Promise<z.infer<TSchema>>((resolve, reject) => {
+        this.cloudlink.send({
+          cmd: "direct",
+          val: packet,
+        });
+        const schema = z.object({
+          cmd: z.literal("direct"),
+          val: responseSchema,
+        });
+        const errorSchema = z.object({
+          cmd: z.literal("statuscode"),
+          val: z.string().startsWith("E:"),
+        });
+        let stop = false;
+        setTimeout(() => {
+          stop = true;
+          reject("Timeout");
+        }, 1500);
+        this.cloudlink.on("packet", (packet: unknown) => {
+          if (stop) {
+            return;
           }
-        }, 100);
+          const safePacket = schema.safeParse(packet);
+          console.log(safePacket);
+          if (!safePacket.success) {
+            const safeErrorPacket = errorSchema.safeParse(packet);
+            if (!safeErrorPacket.success) {
+              return;
+            }
+            reject(safeErrorPacket.data.val);
+            stop = true;
+            return;
+          }
+          resolve(safePacket.data.val);
+          stop = true;
+        });
       });
     },
-    async send(packet: CloudlinkPacket) {
-      await this.setup();
-      this.cloudlink.send(packet);
-    },
-    login(username: string, password: string) {
-      this.send({
-        cmd: "direct",
-        val: {
-          cmd: "authpswd",
-          val: { username, pswd: password },
-        },
-      });
-    },
-    post(content: string) {
-      this.send({
-        cmd: "post_home",
-        val: content,
-      });
-    },
+    // post(content: string) {
+    //   this.send({
+    //     cmd: "post_home",
+    //     val: content,
+    //   });
+    // },
     lookFor<TSchema extends ZodSchema>(
       schema: TSchema,
       fun: (packet: z.infer<TSchema>) => void,
