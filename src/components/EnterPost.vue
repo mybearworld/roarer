@@ -37,6 +37,35 @@ const reply = (post: z.infer<typeof postSchema>) => {
   inputRef.value?.focus();
 };
 
+const lastTypingIndicatorSent = ref<number | null>(null);
+const input = () => {
+  const currentDate = new Date().getTime();
+  if (
+    lastTypingIndicatorSent.value === null ||
+    lastTypingIndicatorSent.value + 1500 < currentDate
+  ) {
+    console.log(
+      `sending now - ${
+        lastTypingIndicatorSent.value
+          ? lastTypingIndicatorSent.value - currentDate
+          : null
+      }`,
+    );
+    lastTypingIndicatorSent.value = currentDate;
+    cloudlinkStore.cloudlink.send({
+      cmd: "direct",
+      listener: "typing_indicator",
+      val: {
+        cmd: "set_chat_state",
+        val: {
+          chatid: "livechat",
+          state: 101,
+        },
+      },
+    });
+  }
+};
+
 defineExpose({ reply });
 </script>
 
@@ -45,6 +74,7 @@ defineExpose({ reply });
     <input
       class="w-full rounded-lg bg-slate-800 px-2"
       placeholder="Say something!"
+      @input="input"
       v-model="postContent"
       ref="inputRef"
     />
