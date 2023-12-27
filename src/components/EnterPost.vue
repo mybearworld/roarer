@@ -33,9 +33,15 @@ const post = async (e: Event) => {
 </script>
 
 <template>
-  <form v-on:submit="post">
-    <input placeholder="Say something!" v-model="postContent" />
-    <button type="submit">Send!</button>
+  <form v-on:submit="post" class="flex space-x-2">
+    <input
+      class="rounded-lg bg-slate-800 px-2"
+      placeholder="Say something!"
+      v-model="postContent"
+    />
+    <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
+      Send!
+    </button>
   </form>
   <p v-if="errorMessage">{{ errorMessage }}</p>
 </template>

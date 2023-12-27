@@ -9,9 +9,9 @@ const { post } = defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="flex gap-2 rounded-xl bg-slate-800 px-2 py-1">
     <div>
-      {{ post.u }}
+      <span class="font-bold">{{ post.u }}</span>
     </div>
     {{ post.p }}
   </div>
