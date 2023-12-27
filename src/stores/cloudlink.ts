@@ -12,6 +12,12 @@ const interval = setInterval(() => {
     client.send({ cmd: "direct", val: "meower" });
   }
 });
+setInterval(() => {
+  client.send({
+    cmd: "ping",
+    val: "",
+  });
+}, 10000);
 export const useCloudlinkStore = defineStore("cloudlink", {
   state: () => ({
     cloudlink: client,
