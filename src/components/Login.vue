@@ -2,8 +2,10 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useLoginStatusStore } from "../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
+const loginStatusStore = useLoginStatusStore();
 
 const logInSchema = z
   .object({
@@ -32,7 +34,6 @@ const username = ref("");
 const password = ref("");
 const loading = ref(false);
 const message = ref("");
-const isLoggedIn = ref(false);
 
 const resetFormFields = () => {
   username.value = "";
@@ -47,9 +48,8 @@ const login = (e: Event) => {
       loading.value = false;
       return;
     }
-    message.value = `Logged in as ${packet.val.payload.username}`;
+    loginStatusStore.username = packet.val.payload.username;
     loading.value = false;
-    isLoggedIn.value = true;
     resetFormFields();
     return;
   });
@@ -65,8 +65,9 @@ const signOut = () => {
 
 <template>
   <form v-on:submit="login">
-    <template v-if="isLoggedIn">
+    <template v-if="loginStatusStore.username !== null">
       <button v-on:click="signOut">Sign out</button>
+      <p>Logged in as {{ loginStatusStore.username }}</p>
     </template>
     <template v-else>
       <strong class="block">Log in</strong>
@@ -80,10 +81,10 @@ const signOut = () => {
       </label>
       <button type="submit" :disabled="loading">
         {{ loading ? "Loading..." : "Submit" }}
-      </button></template
-    >
-    <p v-if="message">
-      {{ message }}
-    </p>
+      </button>
+      <p v-if="message">
+        {{ message }}
+      </p>
+    </template>
   </form>
 </template>
