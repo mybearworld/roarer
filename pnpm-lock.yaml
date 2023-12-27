@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@tabler/icons-vue':
+    specifier: ^2.44.0
+    version: 2.44.0(vue@3.3.13)
   '@williamhorning/cloudlink':
     specifier: ^4.1.1
     version: 4.1.1
@@ -592,6 +595,19 @@ packages:
   /@swc/types@0.1.5:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
+
+  /@tabler/icons-vue@2.44.0(vue@3.3.13):
+    resolution: {integrity: sha512-7SpRS9hQ0VEKSHQNGNjVedgiU2dRtpcZvD5l5MgKBnwGPR3dq/Y3RNQOq2k2IjCQj3p21nj/zd9giR5RTdgTxQ==}
+    peerDependencies:
+      vue: '>=3.0.1'
+    dependencies:
+      '@tabler/icons': 2.44.0
+      vue: 3.3.13(typescript@5.3.3)
+    dev: false
+
+  /@tabler/icons@2.44.0:
+    resolution: {integrity: sha512-WPPtihDcAwEm1QZM9MXQw6+r/R2/qx7KMU1eegsi9DsqBLAb0W2kbt6e/syvd6j9c+6XNpRVBW1ziGqSWQAWOg==}
+    dev: false
 
   /@vitejs/plugin-vue@4.6.0(vite@5.0.10)(vue@3.3.13):
     resolution: {integrity: sha512-XHuyFdAikWRmHuAd89FOyUGIjrBU5KlxJtyi2hVeR9ySGFxQwE0bl5xAQju/ArMq5azdBivY4d+D2yPKwoYWUg==}

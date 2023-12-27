@@ -37,6 +37,6 @@ const homeSchema = z.object({
   <div class="space-y-2">
     <h1 class="text-3xl font-bold">Roarer</h1>
     <EnterPost />
-    <Post :post="post" v-for="post in homePosts" />
+    <Post :post="post" :key="post.post_id" v-for="post in homePosts" />
   </div>
 </template>
