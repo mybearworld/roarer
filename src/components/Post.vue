@@ -11,6 +11,9 @@ import { postSchema } from "../lib/postSchema";
 const { post } = defineProps<{
   post: z.infer<typeof postSchema>;
 }>();
+const emit = defineEmits<{
+  reply: [post: z.infer<typeof postSchema>];
+}>();
 
 const username = ref(post.u);
 const postContent = ref(post.p);
@@ -23,10 +26,6 @@ if (isBridged) {
     postContent.value = match[2];
   }
 }
-
-const emit = defineEmits<{
-  reply: [post: z.infer<typeof postSchema>];
-}>();
 </script>
 
 <template>
