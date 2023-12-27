@@ -11,6 +11,7 @@ const logInSchema = z.object({
   mode: z.literal("auth"),
   payload: z.object({
     username: z.string(),
+    token: z.string(),
   }),
 });
 
@@ -24,32 +25,60 @@ const resetFormFields = () => {
   password.value = "";
 };
 
-const login = async (e: Event) => {
+const login = async (username: string, password: string, noErrors = false) => {
+  return await cloudlinkStore.send(
+    {
+      cmd: "authpswd",
+      val: { username: username, pswd: password },
+    },
+    logInSchema,
+    !noErrors,
+  );
+};
+
+const loginEvent = async (e: Event) => {
   e.preventDefault();
   loading.value = true;
   message.value = "";
   let data;
   try {
-    data = await cloudlinkStore.send(
-      {
-        cmd: "authpswd",
-        val: { username: username.value, pswd: password.value },
-      },
-      logInSchema,
-    );
+    data = await login(username.value, password.value);
   } catch (e) {
     message.value = e as string;
     loading.value = false;
     return;
   }
   loginStatusStore.username = data.payload.username;
+  loginStatusStore.token = data.payload.token;
   loading.value = false;
   resetFormFields();
   return;
 };
 
+if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
+  let nonNullCredentials: [string, string] = [
+    loginStatusStore.username,
+    loginStatusStore.token,
+  ];
+  try {
+    const syntaxErrorSchema = z.object({
+      val: z.literal("E:101 | Syntax"),
+    });
+    cloudlinkStore.cloudlink.on("statuscode", async (packet: unknown) => {
+      if (syntaxErrorSchema.safeParse(packet).success) {
+        await login(...nonNullCredentials);
+      }
+    });
+  } catch (e) {
+    loginStatusStore.username = null;
+    loginStatusStore.token = null;
+    throw e;
+  }
+}
+
 const signOut = () => {
-  location.reload();
+  loginStatusStore.username = null;
+  loginStatusStore.token = null;
 };
 </script>
 
@@ -61,7 +90,7 @@ const signOut = () => {
     <div
       class="absolute left-0 top-0 flex h-screen w-screen items-center justify-center"
     >
-      <form class="rounded-xl bg-slate-900 px-5 py-4" v-on:submit="login">
+      <form class="rounded-xl bg-slate-900 px-5 py-4" v-on:submit="loginEvent">
         <div class="space-y-4">
           <strong class="block text-xl">Log in to Roarer</strong>
           <label class="block">

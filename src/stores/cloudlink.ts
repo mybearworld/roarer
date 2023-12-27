@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ZodSchema, z } from "zod";
+import { ZodSchema, late, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
 
 const client = new CloudlinkClient({
@@ -18,16 +18,28 @@ setInterval(() => {
     val: "",
   });
 }, 10000);
+
 export const useCloudlinkStore = defineStore("cloudlink", {
   state: () => ({
     cloudlink: client,
   }),
   actions: {
+    waitUntilSendable() {
+      return new Promise<void>((resolve) => {
+        const interval = setInterval(() => {
+          if (this.cloudlink.status === 1) {
+            clearInterval(interval);
+            resolve();
+          }
+        });
+      });
+    },
     send<TSchema extends ZodSchema>(
       packet: CloudlinkPacket,
       responseSchema: TSchema,
     ) {
-      return new Promise<z.infer<TSchema>>((resolve, reject) => {
+      return new Promise<z.infer<TSchema>>(async (resolve, reject) => {
+        await this.waitUntilSendable();
         this.cloudlink.send({
           cmd: "direct",
           val: packet,
@@ -38,7 +50,7 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         });
         const errorSchema = z.object({
           cmd: z.literal("statuscode"),
-          val: z.string().startsWith("E:"),
+          val: z.string().startsWith("E:").or(z.string().startsWith("I:011")),
         });
         let stop = false;
         setTimeout(() => {
@@ -50,7 +62,6 @@ export const useCloudlinkStore = defineStore("cloudlink", {
             return;
           }
           const safePacket = schema.safeParse(packet);
-          console.log(safePacket);
           if (!safePacket.success) {
             const safeErrorPacket = errorSchema.safeParse(packet);
             if (!safeErrorPacket.success) {
