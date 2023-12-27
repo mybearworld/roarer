@@ -35,7 +35,7 @@ const post = async (e: Event) => {
 <template>
   <form v-on:submit="post" class="flex space-x-2">
     <input
-      class="rounded-lg bg-slate-800 px-2"
+      class="w-full rounded-lg bg-slate-800 px-2"
       placeholder="Say something!"
       v-model="postContent"
     />

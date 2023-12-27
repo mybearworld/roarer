@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import Login from "./Login.vue";
 import EnterPost from "./EnterPost.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -35,7 +36,10 @@ const homeSchema = z.object({
 
 <template>
   <div class="space-y-2">
-    <h1 class="text-3xl font-bold">Roarer</h1>
+    <div class="space-x-2">
+      <h1 class="inline-block text-3xl font-bold">Roarer</h1>
+      <Login />
+    </div>
     <EnterPost />
     <Post :post="post" :key="post.post_id" v-for="post in homePosts" />
   </div>

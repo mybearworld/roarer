@@ -7,6 +7,6 @@ const loginStatusStore = useLoginStatusStore();
 </script>
 
 <template>
-  <Login />
-  <HomePosts v-if="loginStatusStore.username !== null" />
+  <Login v-if="loginStatusStore.username === null" />
+  <HomePosts v-else />
 </template>

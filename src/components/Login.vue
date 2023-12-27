@@ -122,10 +122,13 @@ const signOut = () => {
       </form>
     </div>
   </template>
-  <div class="float-right space-y-2 rounded-xl bg-slate-800 px-4 py-2" v-else>
-    <button class="rounded-xl bg-slate-700 px-2 py-1" v-on:click="signOut">
+  <div class="inline-flex items-center gap-2" v-else>
+    <p class="inline-block">Logged in as {{ loginStatusStore.username }}</p>
+    <button
+      class="inline-block rounded-xl bg-slate-800 px-2 py-1"
+      v-on:click="signOut"
+    >
       Sign out
     </button>
-    <p>Logged in as {{ loginStatusStore.username }}</p>
   </div>
 </template>
