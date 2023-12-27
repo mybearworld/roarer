@@ -2,6 +2,7 @@
 import { ref, VNodeRef } from "vue";
 import Login from "./Login.vue";
 import EnterPost from "./EnterPost.vue";
+import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -45,6 +46,7 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
     </div>
     <OnlineList />
     <EnterPost ref="enterPost" />
+    <TypingIndicator />
     <Post
       :post="post"
       :key="post.post_id"
