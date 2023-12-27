@@ -32,17 +32,15 @@ const username = ref("");
 const password = ref("");
 const loading = ref(false);
 const message = ref("");
+const isLoggedIn = ref(false);
 
-const loggedIn = () => {
+const resetFormFields = () => {
   username.value = "";
   password.value = "";
 };
 
 const login = (e: Event) => {
   e.preventDefault();
-  cloudlinkStore.login(username.value, password.value);
-  loading.value = true;
-  message.value = "";
   cloudlinkStore.lookFor(logInSchema, (packet) => {
     if (packet.cmd === "statuscode") {
       message.value = packet.val;
@@ -51,26 +49,39 @@ const login = (e: Event) => {
     }
     message.value = `Logged in as ${packet.val.payload.username}`;
     loading.value = false;
-    loggedIn();
+    isLoggedIn.value = true;
+    resetFormFields();
     return;
   });
+  cloudlinkStore.login(username.value, password.value);
+  loading.value = true;
+  message.value = "";
+};
+
+const signOut = () => {
+  location.reload();
 };
 </script>
 
 <template>
   <form v-on:submit="login">
-    <strong class="block">Log in</strong>
-    <label class="block">
-      Username:
-      <input type="text" v-model="username" />
-    </label>
-    <label class="block">
-      Password:
-      <input type="password" v-model="password" />
-    </label>
-    <button type="submit" :disabled="loading">
-      {{ loading ? "Loading..." : "Submit" }}
-    </button>
+    <template v-if="isLoggedIn">
+      <button v-on:click="signOut">Sign out</button>
+    </template>
+    <template v-else>
+      <strong class="block">Log in</strong>
+      <label class="block">
+        Username:
+        <input type="text" v-model="username" />
+      </label>
+      <label class="block">
+        Password:
+        <input type="password" v-model="password" />
+      </label>
+      <button type="submit" :disabled="loading">
+        {{ loading ? "Loading..." : "Submit" }}
+      </button></template
+    >
     <p v-if="message">
       {{ message }}
     </p>
