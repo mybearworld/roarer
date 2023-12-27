@@ -17,7 +17,7 @@ cloudlinkStore.cloudlink.on("ulist", (packet: unknown) => {
 <template>
   <details>
     <summary class="cursor-pointer">
-      Online users ({{ onlineUsers.length }}):
+      Online users ({{ onlineUsers.length }})
     </summary>
     {{ onlineUsers.join(", ") }}
   </details>
