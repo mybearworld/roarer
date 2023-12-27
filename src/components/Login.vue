@@ -8,7 +8,13 @@ const cloudlinkStore = useCloudlinkStore();
 const logInSchema = z
   .object({
     cmd: z.literal("statuscode"),
-    val: z.string(),
+    val: z
+      .literal("E:103 | ID not found")
+      .or(z.literal("E:025 | Deleted"))
+      .or(z.literal("I:011 | Invalid Password"))
+      .or(z.literal("E:018 | Account Banned"))
+      .or(z.literal("E:019 | Illegal characters detected"))
+      .or(z.literal("E:106 | Too many requests")),
   })
   .or(
     z.object({
@@ -27,6 +33,11 @@ const password = ref("");
 const loading = ref(false);
 const message = ref("");
 
+const loggedIn = () => {
+  username.value = "";
+  password.value = "";
+};
+
 const login = (e: Event) => {
   e.preventDefault();
   cloudlinkStore.login(username.value, password.value);
@@ -40,6 +51,7 @@ const login = (e: Event) => {
     }
     message.value = `Logged in as ${packet.val.payload.username}`;
     loading.value = false;
+    loggedIn();
     return;
   });
 };
