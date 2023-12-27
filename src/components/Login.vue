@@ -25,14 +25,13 @@ const resetFormFields = () => {
   password.value = "";
 };
 
-const login = async (username: string, password: string, noErrors = false) => {
+const login = async (username: string, password: string) => {
   return await cloudlinkStore.send(
     {
       cmd: "authpswd",
       val: { username: username, pswd: password },
     },
     logInSchema,
-    !noErrors,
   );
 };
 
