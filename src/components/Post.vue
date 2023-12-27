@@ -9,7 +9,7 @@ const { post } = defineProps<{
 </script>
 
 <template>
-  <div class="flex gap-2 rounded-xl bg-slate-800 px-2 py-1">
+  <div class="flex flex-col rounded-xl bg-slate-800 px-2 py-1">
     <div>
       <span class="font-bold">{{ post.u }}</span>
     </div>
