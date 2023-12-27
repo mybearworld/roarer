@@ -16,6 +16,20 @@ const homeSchema = z.object({
   homePosts.value = homeSchema.parse(
     await (await fetch("https://api.meower.org/home?autoget=1")).json(),
   ).autoget;
+
+  console.log("HELLO?");
+  const newPostSchema = z.object({
+    cmd: z.literal("direct"),
+    val: postSchema,
+  });
+  cloudlinkStore.lookFor(
+    newPostSchema,
+    ({ val: post }) => {
+      homePosts.value.unshift(post);
+      homePosts.value = homePosts.value;
+    },
+    false,
+  );
 })();
 </script>
 

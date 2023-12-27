@@ -46,10 +46,11 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     lookFor<TSchema extends ZodSchema>(
       schema: TSchema,
       fun: (packet: z.infer<TSchema>) => void,
+      shouldStop = true,
     ) {
       let stop = false;
       this.cloudlink.on("packet", (packet: unknown) => {
-        if (stop) {
+        if (stop && shouldStop) {
           return;
         }
         const parsed = schema.safeParse(packet);
