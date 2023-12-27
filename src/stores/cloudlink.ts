@@ -56,6 +56,7 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         if (!parsed.success) {
           return;
         }
+        stop = true;
         fun(parsed.data);
       });
     },
