@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
 
 const client = new CloudlinkClient({
@@ -40,6 +41,22 @@ export const useCloudlinkStore = defineStore("cloudlink", {
           cmd: "authpswd",
           val: { username, pswd: password },
         },
+      });
+    },
+    lookFor<TSchema extends ZodSchema>(
+      schema: TSchema,
+      fun: (packet: z.infer<TSchema>) => void,
+    ) {
+      let stop = false;
+      this.cloudlink.on("packet", (packet: unknown) => {
+        if (stop) {
+          return;
+        }
+        const parsed = schema.safeParse(packet);
+        if (!parsed.success) {
+          return;
+        }
+        fun(parsed.data);
       });
     },
   },

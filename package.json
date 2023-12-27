@@ -11,7 +11,8 @@
   "dependencies": {
     "@williamhorning/cloudlink": "^4.1.1",
     "pinia": "^2.1.7",
-    "vue": "^3.3.11"
+    "vue": "^3.3.11",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
