@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { IconBrandDiscord, IconWebhook } from "@tabler/icons-vue";
+import {
+  IconBrandDiscord,
+  IconMessageDots,
+  IconWebhook,
+} from "@tabler/icons-vue";
 import { z } from "zod";
 import { postSchema } from "../lib/postSchema";
 
@@ -19,6 +23,10 @@ if (isBridged) {
     postContent.value = match[2];
   }
 }
+
+const emit = defineEmits<{
+  reply: [post: z.infer<typeof postSchema>];
+}>();
 </script>
 
 <template>
@@ -37,6 +45,9 @@ if (isBridged) {
       >
         <IconWebhook class="inline-block w-5" />
       </span>
+      <button class="float-right" @click="emit('reply', post)">
+        <IconMessageDots />
+      </button>
     </div>
     {{ postContent }}
   </div>

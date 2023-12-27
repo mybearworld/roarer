@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, VNodeRef } from "vue";
 import Login from "./Login.vue";
 import EnterPost from "./EnterPost.vue";
 import Post from "./Post.vue";
@@ -32,6 +32,8 @@ const homeSchema = z.object({
     false,
   );
 })();
+
+const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 </script>
 
 <template>
@@ -40,7 +42,12 @@ const homeSchema = z.object({
       <h1 class="inline-block text-3xl font-bold">Roarer</h1>
       <Login />
     </div>
-    <EnterPost />
-    <Post :post="post" :key="post.post_id" v-for="post in homePosts" />
+    <EnterPost ref="enterPost" />
+    <Post
+      :post="post"
+      :key="post.post_id"
+      @reply="enterPost?.reply"
+      v-for="post in homePosts"
+    />
   </div>
 </template>

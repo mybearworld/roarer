@@ -30,6 +30,14 @@ const post = async (e: Event) => {
   }
   postContent.value = "";
 };
+
+const inputRef = ref<HTMLInputElement | null>(null);
+const reply = (post: z.infer<typeof postSchema>) => {
+  postContent.value = `@${post.u} [${post.post_id}]` + postContent.value;
+  inputRef.value?.focus();
+};
+
+defineExpose({ reply });
 </script>
 
 <template>
@@ -38,6 +46,7 @@ const post = async (e: Event) => {
       class="w-full rounded-lg bg-slate-800 px-2"
       placeholder="Say something!"
       v-model="postContent"
+      ref="inputRef"
     />
     <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
       Send!
