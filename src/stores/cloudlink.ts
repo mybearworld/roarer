@@ -59,12 +59,6 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         });
       });
     },
-    // post(content: string) {
-    //   this.send({
-    //     cmd: "post_home",
-    //     val: content,
-    //   });
-    // },
     lookFor<TSchema extends ZodSchema>(
       schema: TSchema,
       fun: (packet: z.infer<TSchema>) => void,
