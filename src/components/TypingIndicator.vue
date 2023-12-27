@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { IconKeyboard } from "@tabler/icons-vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useLoginStatusStore } from "../stores/loginStatus";
 import { z } from "zod";
 
 const cloudlinkStore = useCloudlinkStore();
+const loginStatusStore = useLoginStatusStore();
 
 const typingUsers = ref(new Set<string>());
+const shownTypingUsers = computed(() =>
+  [...typingUsers.value].filter((item) => item !== loginStatusStore.username),
+);
 
 const typingIndicatorSchema = z.object({
   cmd: z.literal("direct"),
@@ -30,8 +35,8 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
 </script>
 
 <template>
-  <p v-if="typingUsers.size">
+  <p v-if="shownTypingUsers.length">
     <IconKeyboard class="inline-block" />
-    {{ [...typingUsers.values()].join(", ") }}
+    {{ [...shownTypingUsers.values()].join(", ") }}
   </p>
 </template>
