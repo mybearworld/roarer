@@ -77,7 +77,6 @@ const remove = async () => {
         mode: z.literal("delete"),
         id: z.literal(post.post_id),
       }),
-      true,
     );
   } catch (e) {
     alert(e); // i can do error handling!
