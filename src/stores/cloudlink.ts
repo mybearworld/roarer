@@ -37,7 +37,6 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     send<TSchema extends ZodSchema>(
       packet: CloudlinkPacket,
       responseSchema: TSchema,
-      log = false,
     ) {
       return new Promise<z.infer<TSchema>>(async (resolve, reject) => {
         await this.waitUntilSendable();
@@ -61,8 +60,8 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         setTimeout(() => {
           reject("Timeout");
         }, 1500);
-        this.lookFor(schema, (packet) => resolve(packet.val), true, log);
-        this.lookFor(errorSchema, (packet) => reject(packet.val), true, log);
+        this.lookFor(schema, (packet) => resolve(packet.val), true);
+        this.lookFor(errorSchema, (packet) => reject(packet.val), true);
       });
     },
     lookFor<TSchema extends ZodSchema>(
@@ -73,13 +72,10 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     ) {
       let stop = false;
       this.cloudlink.on("packet", (packet: unknown) => {
-        if (log) console.log("recieved", { packet });
         if (stop && shouldStop) {
           return;
         }
-        if (log) console.log(schema);
         const parsed = schema.safeParse(packet);
-        if (log) console.log({ parsed, packet });
         if (!parsed.success) {
           return;
         }
