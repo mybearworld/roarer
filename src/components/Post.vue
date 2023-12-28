@@ -14,6 +14,7 @@ import {
   IconWebhook,
 } from "@tabler/icons-vue";
 import { z } from "zod";
+import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -94,13 +95,14 @@ const remove = async () => {
 };
 
 const editing = ref(false);
-const editInputValue = ref<HTMLInputElement | null>(null);
+const editInputValue = ref<HTMLTextAreaElement | null>(null);
 const edit = async (e?: Event) => {
   e?.preventDefault();
   editing.value = false;
   if (!editInputValue.value) {
     return;
   }
+  autoResizeTextarea(editInputValue.value);
   const { username, token } = loginStatusStore;
   if (username === null || token === null) {
     return;
@@ -132,6 +134,13 @@ const editKeydown = (e: KeyboardEvent) => {
       edit();
     }
   }
+};
+
+const resizeTextarea = () => {
+  if (!editInputValue.value) {
+    return;
+  }
+  editInputValue.value.style.height = `${editInputValue.value.scrollHeight}px`;
 };
 
 const md = markdownit({
@@ -275,6 +284,7 @@ const markdownPostContent = computed(() => {
         :value="postContent"
         ref="editInputValue"
         @keydown="editKeydown"
+        @input="resizeTextarea"
       />
       <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
         Edit

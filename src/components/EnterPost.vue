@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
+import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
@@ -51,7 +52,7 @@ const trimmedPost = (post: string) => {
   }`;
 };
 
-const inputRef = ref<HTMLInputElement | null>(null);
+const inputRef = ref<HTMLTextAreaElement | null>(null);
 const reply = (post: APIPost) => {
   postContent.value =
     `@${post.u} [${trimmedPost(post.p)}] ` + postContent.value;
@@ -61,6 +62,9 @@ const reply = (post: APIPost) => {
 const lastTypingIndicatorSent = ref<number | null>(null);
 const input = () => {
   const currentDate = new Date().getTime();
+  if (inputRef.value) {
+    autoResizeTextarea(inputRef.value);
+  }
   if (
     lastTypingIndicatorSent.value === null ||
     lastTypingIndicatorSent.value + 1500 < currentDate
