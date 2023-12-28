@@ -8,6 +8,7 @@ import {
   IconWebhook,
 } from "@tabler/icons-vue";
 import { z } from "zod";
+import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema } from "../lib/postSchema";
 
 const { post } = defineProps<{
@@ -35,7 +36,6 @@ const md = markdownit({
 
 const IMAGE_REGEX = /\[([^\]]+?): ([^\]]+?)\]/g;
 const markdownPostContent = computed(() => {
-  const ogTokens = md.parse(postContent.value, {});
   const tokens = md.parse(postContent.value, {});
   console.log(tokens);
   const newTokens: Token[] = [];
@@ -94,7 +94,17 @@ const markdownPostContent = computed(() => {
   });
   console.log(newTokens);
   const parsed = md.renderer.render(tokens, md.options, {});
-  return parsed;
+  const domParser = new DOMParser();
+  const postDocument = domParser.parseFromString(parsed, "text/html");
+  postDocument.querySelectorAll("img").forEach((img) => {
+    console.log(img);
+    if (!hostWhitelist.some((host) => img.src.startsWith(host))) {
+      const span = document.createElement("span");
+      span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
+      img.replaceWith(span);
+    }
+  });
+  return postDocument.body.innerHTML;
 });
 </script>
 
