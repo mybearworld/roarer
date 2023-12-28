@@ -24,10 +24,18 @@ const shownTypingUsers = computed(() =>
 
 const typingIndicatorSchema = z.object({
   cmd: z.literal("direct"),
-  val: z.object({
-    u: z.string(),
-    state: z.literal(101),
-  }),
+  val: z
+    .object({
+      u: z.string(),
+      state: z.literal(chat ? 100 : 101),
+    })
+    .and(
+      chat
+        ? z.object({
+            chatid: z.literal(chat._id),
+          })
+        : z.object({}),
+    ),
 });
 cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
   const safeTypingIndicator = typingIndicatorSchema.safeParse(packet);

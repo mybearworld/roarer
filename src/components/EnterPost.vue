@@ -76,8 +76,8 @@ const input = () => {
       val: {
         cmd: "set_chat_state",
         val: {
-          chatid: "livechat",
-          state: 101,
+          chatid: chat ? chat._id : "livechat",
+          state: chat ? 100 : 101,
         },
       },
     });
