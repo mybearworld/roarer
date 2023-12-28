@@ -8,6 +8,7 @@ import {
   IconArrowForward,
   IconBrandDiscord,
   IconBuildingBridge,
+  IconCircleFilled,
   IconEdit,
   IconTrash,
   IconWebhook,
@@ -17,9 +18,11 @@ import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+import { useOnlinelistStore } from "../stores/onlinelist";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const onlineListStore = useOnlinelistStore();
 
 const { post, dontUpdate } = defineProps<{
   post: z.infer<typeof postSchema>;
@@ -221,8 +224,14 @@ const markdownPostContent = computed(() => {
     v-else
     v-if="!isDeleted"
   >
-    <div class="space-x-2">
+    <div class="flex items-center space-x-2">
       <span class="font-bold">{{ username }}</span>
+      <span
+        class="inline-block text-green-400"
+        v-if="onlineListStore.online.includes(username)"
+      >
+        <IconCircleFilled class="h-2 w-2" />
+      </span>
       <span
         title="This post was created on the Discord server."
         v-if="post.u === 'Discord'"
