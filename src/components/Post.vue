@@ -188,12 +188,12 @@ const markdownPostContent = computed(() => {
       >
         <IconWebhook class="inline-block w-5" />
       </span>
-      <div class="float-right space-x-2">
-        <button class="float-right" @click="emit('reply', post)">
-          <IconArrowForward />
-        </button>
-        <button class="float-right" @click="remove">
+      <div class="float-right space-x-3">
+        <button class="h-4 w-4" @click="remove">
           <IconTrash />
+        </button>
+        <button class="h-4 w-4" @click="emit('reply', post)">
+          <IconArrowForward />
         </button>
       </div>
     </div>
