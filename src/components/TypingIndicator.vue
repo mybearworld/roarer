@@ -1,16 +1,25 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { IconKeyboard } from "@tabler/icons-vue";
+import { z } from "zod";
+import { chatSchema } from "../lib/chatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
-import { z } from "zod";
+
+const { chat } = defineProps<{
+  chat?: z.infer<typeof chatSchema>;
+}>();
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 
 const typingUsers = ref(new Set<string>());
 const shownTypingUsers = computed(() =>
-  [...typingUsers.value].filter((item) => item !== loginStatusStore.username),
+  [...typingUsers.value].filter(
+    (item) =>
+      item !== loginStatusStore.username &&
+      (!chat || chat.members.includes(item)),
+  ),
 );
 
 const typingIndicatorSchema = z.object({

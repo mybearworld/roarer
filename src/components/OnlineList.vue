@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
 import { z } from "zod";
-import { useCloudlinkStore } from "../stores/cloudlink";
+import { chatSchema } from "../lib/chatSchema";
 import { useOnlinelistStore } from "../stores/onlinelist";
 
-const cloudlinkStore = useCloudlinkStore();
+const { chat } = defineProps<{
+  chat?: z.infer<typeof chatSchema>;
+}>();
+
 const onlineListStore = useOnlinelistStore();
+
+const shownOnlineList = computed(() =>
+  chat
+    ? onlineListStore.online.filter((user) => chat.members.includes(user))
+    : onlineListStore.online,
+);
 </script>
 
 <template>
   <details>
     <summary class="cursor-pointer">
-      Online users ({{ onlineListStore.online.length }})
+      Online users ({{ shownOnlineList.length }})
     </summary>
-    {{ onlineListStore.online.join(", ") }}
+    {{ shownOnlineList.join(", ") }}
   </details>
 </template>

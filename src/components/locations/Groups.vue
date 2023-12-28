@@ -2,6 +2,7 @@
 import { effect, ref } from "vue";
 import { z } from "zod";
 import ChatView from "../ChatView.vue";
+import Posts from "../Posts.vue";
 import Navigation from "../Navigation.vue";
 import { chatSchema } from "../../lib/chatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
@@ -35,14 +36,21 @@ effect(async () => {
   chats.value = response.payload.all_chats;
 });
 
-const open = (id: string) => {
-  alert(`Opening ${id}`);
+const openGroupchat = ref<z.infer<typeof chatSchema> | null>(null);
+const open = (chat: z.infer<typeof chatSchema>) => {
+  openGroupchat.value = chat;
 };
 </script>
 
 <template>
   <div class="block space-y-2">
     <Navigation title="Groups" />
-    <ChatView :chat="chat" @open="open" v-for="chat in chats" />
+    <ChatView
+      :chat="chat"
+      @open="open"
+      v-for="chat in chats"
+      v-if="openGroupchat === null"
+    />
+    <Posts :chat="openGroupchat" v-else />
   </div>
 </template>

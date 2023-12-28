@@ -5,30 +5,56 @@ import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useLoginStatusStore } from "../stores/loginStatus";
+import { chatSchema } from "../lib/chatSchema";
 import { postSchema } from "../lib/postSchema";
 import { z } from "zod";
 
+const { chat } = defineProps<{
+  chat?: z.infer<typeof chatSchema>;
+}>();
+
 const cloudlinkStore = useCloudlinkStore();
+const loginStatusStore = useLoginStatusStore();
 
-const homePosts = ref<z.infer<typeof postSchema>[]>([]);
+const posts = ref<z.infer<typeof postSchema>[]>([]);
 
-const homeSchema = z.object({
+const postsSchema = z.object({
   autoget: postSchema.array(),
 });
 (async () => {
-  homePosts.value = homeSchema.parse(
-    await (await fetch("https://api.meower.org/home?autoget=1")).json(),
-  ).autoget;
+  const { username, token } = loginStatusStore;
+  if (username === null || token === null) {
+    return;
+  }
+  const request = await (
+    await fetch(
+      chat
+        ? `https://api.meower.org/posts/${chat._id}?autoget=1`
+        : "https://api.meower.org/home?autoget=1",
+      {
+        headers: {
+          username,
+          token,
+        },
+      },
+    )
+  ).json();
+  posts.value = postsSchema.parse(request).autoget;
 
   const newPostSchema = z.object({
     cmd: z.literal("direct"),
-    val: postSchema,
+    val: postSchema.and(
+      z.object({
+        post_origin: z.literal(chat?._id ?? "home"),
+      }),
+    ),
   });
   cloudlinkStore.lookFor(
     newPostSchema,
     ({ val: post }) => {
-      homePosts.value.unshift(post);
-      homePosts.value = homePosts.value;
+      posts.value.unshift(post);
+      posts.value = posts.value;
     },
     false,
   );
@@ -38,13 +64,14 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 </script>
 
 <template>
-  <OnlineList />
-  <EnterPost ref="enterPost" />
-  <TypingIndicator />
+  <h2 class="text-lg font-bold" v-if="chat">{{ chat.nickname }}</h2>
+  <OnlineList :chat="chat" />
+  <EnterPost ref="enterPost" :chat="chat" />
+  <TypingIndicator :chat="chat" />
   <Post
     :post="post"
     :key="post.post_id"
     @reply="enterPost?.reply"
-    v-for="post in homePosts"
+    v-for="post in posts"
   />
 </template>

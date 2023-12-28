@@ -7,14 +7,14 @@ const { chat } = defineProps<{
   chat: z.infer<typeof chatSchema>;
 }>();
 const emit = defineEmits<{
-  open: [id: string];
+  open: [id: z.infer<typeof chatSchema>];
 }>();
 </script>
 
 <template>
   <button
     class="block w-full rounded-xl bg-slate-800 px-2 py-1 text-left"
-    @click="emit('open', chat._id)"
+    @click="emit('open', chat)"
   >
     <p class="text-xl font-bold">{{ chat.nickname }}</p>
     <p class="flex gap-1">

@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { z } from "zod";
+import { chatSchema } from "../lib/chatSchema";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+
+const { chat } = defineProps<{
+  chat?: z.infer<typeof chatSchema>;
+}>();
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
@@ -20,10 +25,17 @@ const post = async (e?: Event) => {
   try {
     await cloudlinkStore.send(
       {
-        cmd: "post_home",
-        val: postContent.value,
+        cmd: chat ? "post_chat" : "post_home",
+        val: chat
+          ? { chatid: chat._id, p: postContent.value }
+          : postContent.value,
       },
-      postSchema.and(z.object({ u: z.literal(username) })),
+      postSchema.and(
+        z.object({
+          post_origin: z.literal(chat?._id ?? "home"),
+          u: z.literal(username),
+        }),
+      ),
     );
   } catch (e) {
     errorMessage.value = e as string;
