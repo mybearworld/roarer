@@ -45,7 +45,7 @@ const post = async (e?: Event) => {
 
 const inputRef = ref<HTMLInputElement | null>(null);
 const reply = (post: APIPost) => {
-  postContent.value = `@${post.u} [${post.post_id}]` + postContent.value;
+  postContent.value = `@${post.u} [${post.post_id}] ` + postContent.value;
   inputRef.value?.focus();
 };
 
