@@ -88,8 +88,8 @@ const remove = async () => {
 
 const editing = ref(false);
 const editInputValue = ref<HTMLInputElement | null>(null);
-const edit = async (e: Event) => {
-  e.preventDefault();
+const edit = async (e?: Event) => {
+  e?.preventDefault();
   editing.value = false;
   if (!editInputValue.value) {
     return;
@@ -115,6 +115,15 @@ const edit = async (e: Event) => {
   );
   if (request.status !== 200) {
     alert(`Unexpected ${request.status} when editing`);
+  }
+};
+
+const editKeydown = (e: KeyboardEvent) => {
+  if (e.key === "Enter") {
+    if (!e.shiftKey) {
+      e.preventDefault();
+      edit();
+    }
   }
 };
 
@@ -237,11 +246,13 @@ const markdownPostContent = computed(() => {
       </div>
     </div>
     <form v-if="editing" @submit="edit">
-      <input
-        class="my-2 block w-full rounded-lg bg-slate-700 px-2 py-1"
+      <textarea
+        class="my-2 block w-full resize-y rounded-lg bg-slate-700 px-2 py-1"
         type="text"
+        rows="1"
         :value="postContent"
         ref="editInputValue"
+        @keydown="editKeydown"
       />
       <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
         Edit
