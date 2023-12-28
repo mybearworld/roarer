@@ -26,7 +26,7 @@ const postContent = ref(post.p);
 
 const isBridged = username.value === "Discord" || username.value === "Webhooks";
 if (isBridged) {
-  const match = postContent.value.match(/^(.*?): (.*)$/);
+  const match = postContent.value.match(/^(.*?): (.*)$/s);
   if (match) {
     username.value = match[1];
     postContent.value = match[2];
