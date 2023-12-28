@@ -7,6 +7,7 @@ import Token from "markdown-it/lib/token";
 import {
   IconArrowForward,
   IconBrandDiscord,
+  IconEdit,
   IconTrash,
   IconWebhook,
 } from "@tabler/icons-vue";
@@ -82,6 +83,38 @@ const remove = async () => {
     );
   } catch (e) {
     alert(e); // i can do error handling!
+  }
+};
+
+const editing = ref(false);
+const editInputValue = ref<HTMLInputElement | null>(null);
+const edit = async (e: Event) => {
+  e.preventDefault();
+  editing.value = false;
+  if (!editInputValue.value) {
+    return;
+  }
+  const { username, token } = loginStatusStore;
+  if (username === null || token === null) {
+    return;
+  }
+  const request = await fetch(
+    `https://api.meower.org/posts?id=${post.post_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        username,
+        token,
+        id: post.post_id,
+      },
+      body: JSON.stringify({
+        content: editInputValue.value.value,
+      }),
+    },
+  );
+  if (request.status !== 200) {
+    alert(`Unexpected ${request.status} when editing`);
   }
 };
 
@@ -189,26 +222,41 @@ const markdownPostContent = computed(() => {
       >
         <IconWebhook class="inline-block w-5" />
       </span>
-      <div class="float-right space-x-3">
-        <button
-          class="h-4 w-4"
-          v-if="post.u === loginStatusStore.username"
-          @click="remove"
-        >
-          <IconTrash />
-        </button>
+      <div class="float-right space-x-3" v-if="!editing">
+        <template v-if="post.u === loginStatusStore.username">
+          <button class="h-4 w-4" @click="remove">
+            <IconTrash />
+          </button>
+          <button class="h-4 w-4" @click="editing = true">
+            <IconEdit />
+          </button>
+        </template>
         <button class="h-4 w-4" @click="emit('reply', post)">
           <IconArrowForward />
         </button>
       </div>
     </div>
+    <form v-if="editing" @submit="edit">
+      <input
+        class="my-2 block w-full rounded-lg bg-slate-700 px-2 py-1"
+        type="text"
+        :value="postContent"
+        ref="editInputValue"
+      />
+      <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
+        Edit
+      </button>
+      <button
+        class="rounded-xl bg-slate-700 px-2 py-1"
+        @click="editing = false"
+      >
+        Cancel
+      </button>
+    </form>
     <div
       class="space-y-2 [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1"
       v-html="markdownPostContent"
-      v-if="markdownPostContent"
+      v-else
     ></div>
-    <p v-else>
-      {{ postContent }}
-    </p>
   </div>
 </template>
