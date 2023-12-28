@@ -45,8 +45,9 @@ const post = async (e?: Event) => {
 
 const trimmedPost = (post: string) => {
   const quoteMatch = post.match(/^@[a-z_-]+ \[.{0,40}…?\] (.*)$/i);
-  return `${(quoteMatch ? quoteMatch[1] : post).slice(0, 40).trim()}${
-    post.length > 39 ? "…" : ""
+  const postContent = quoteMatch ? quoteMatch[1] : post;
+  return `${postContent.slice(0, 40).trim()}${
+    postContent.length > 39 ? "…" : ""
   }`;
 };
 
