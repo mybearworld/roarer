@@ -7,6 +7,7 @@ import Token from "markdown-it/lib/token";
 import {
   IconArrowForward,
   IconBrandDiscord,
+  IconBuildingBridge,
   IconEdit,
   IconTrash,
   IconWebhook,
@@ -31,7 +32,10 @@ const emit = defineEmits<{
 const username = ref(post.u);
 const postContent = ref(post.p);
 
-const isBridged = username.value === "Discord" || username.value === "Webhooks";
+const isBridged =
+  username.value === "Discord" ||
+  username.value === "Webhooks" ||
+  username.value === "RevowerJS";
 if (isBridged) {
   const match = postContent.value.match(/^(.*?): (.*)$/s);
   if (match) {
@@ -222,7 +226,7 @@ const markdownPostContent = computed(() => {
       <span
         title="This post was created on the Discord server."
         v-if="post.u === 'Discord'"
-      >
+      >]]]]
         <IconBrandDiscord class="inline-block w-5" />
       </span>
       <span
@@ -230,6 +234,12 @@ const markdownPostContent = computed(() => {
         v-if="post.u === 'Webhooks'"
       >
         <IconWebhook class="inline-block w-5" />
+      </span>
+      <span
+        title="This post was created on the Revolt server."
+        v-if="post.u === 'RevowerJS'"
+      >
+        <IconBuildingBridge class="inline-block w-5" />
       </span>
       <div
         class="invisible float-right space-x-3 group-hover:visible"
