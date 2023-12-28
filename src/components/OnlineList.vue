@@ -2,22 +2,17 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useOnlinelistStore } from "../stores/onlinelist";
 
 const cloudlinkStore = useCloudlinkStore();
-
-const onlineUsers = ref<string[]>([]);
-
-cloudlinkStore.cloudlink.on("ulist", (packet: unknown) => {
-  const online = z.object({ val: z.string() }).parse(packet);
-  onlineUsers.value = online.val.split(";").slice(0, -1);
-});
+const onlineListStore = useOnlinelistStore();
 </script>
 
 <template>
   <details>
     <summary class="cursor-pointer">
-      Online users ({{ onlineUsers.length }})
+      Online users ({{ onlineListStore.online.length }})
     </summary>
-    {{ onlineUsers.join(", ") }}
+    {{ onlineListStore.online.join(", ") }}
   </details>
 </template>
