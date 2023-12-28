@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+export type APIChat = z.infer<typeof chatSchema>;
 export const chatSchema = z.object({
   created: z.number(),
   deleted: z.boolean(),

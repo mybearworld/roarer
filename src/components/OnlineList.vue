@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { z } from "zod";
-import { chatSchema } from "../lib/chatSchema";
+import { APIChat } from "../lib/chatSchema";
 import { useOnlinelistStore } from "../stores/onlinelist";
 
 const { chat } = defineProps<{
-  chat?: z.infer<typeof chatSchema>;
+  chat?: APIChat;
 }>();
 
 const onlineListStore = useOnlinelistStore();

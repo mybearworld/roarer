@@ -4,12 +4,12 @@ import { z } from "zod";
 import ChatView from "../ChatView.vue";
 import Posts from "../Posts.vue";
 import Navigation from "../Navigation.vue";
-import { chatSchema } from "../../lib/chatSchema";
+import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 
 const cloudlinkStore = useCloudlinkStore();
 
-const chats = ref<z.infer<typeof chatSchema>[]>([]);
+const chats = ref<APIChat[]>([]);
 const postSchema = z.object({
   mode: z.literal("chats"),
   payload: z.object({
@@ -36,8 +36,8 @@ effect(async () => {
   chats.value = response.payload.all_chats;
 });
 
-const openGroupchat = ref<z.infer<typeof chatSchema> | null>(null);
-const open = (chat: z.infer<typeof chatSchema>) => {
+const openGroupchat = ref<APIChat | null>(null);
+const open = (chat: APIChat) => {
   openGroupchat.value = chat;
 };
 </script>

@@ -15,7 +15,7 @@ import {
 } from "@tabler/icons-vue";
 import { z } from "zod";
 import { hostWhitelist } from "../lib/hostWhitelist";
-import { postSchema } from "../lib/postSchema";
+import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
@@ -25,11 +25,11 @@ const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 
 const { post, dontUpdate } = defineProps<{
-  post: z.infer<typeof postSchema>;
+  post: APIPost;
   dontUpdate?: boolean;
 }>();
 const emit = defineEmits<{
-  reply: [post: z.infer<typeof postSchema>];
+  reply: [post: APIPost];
 }>();
 
 const username = ref(post.u);
@@ -48,7 +48,7 @@ if (isBridged) {
 }
 
 const isDeleted = ref(false);
-const edited = ref<null | z.infer<typeof postSchema>>(null);
+const edited = ref<null | APIPost>(null);
 const deleteSchema = z.object({
   cmd: z.literal("direct"),
   val: z.object({

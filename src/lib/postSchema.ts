@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+export type APIPost = z.infer<typeof postSchema>;
 export const postSchema = z.object({
   isDeleted: z.boolean(),
   p: z.string(),

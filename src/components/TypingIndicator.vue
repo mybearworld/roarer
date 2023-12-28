@@ -2,12 +2,12 @@
 import { computed, ref } from "vue";
 import { IconKeyboard } from "@tabler/icons-vue";
 import { z } from "zod";
-import { chatSchema } from "../lib/chatSchema";
+import { APIChat } from "../lib/chatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
 const { chat } = defineProps<{
-  chat?: z.infer<typeof chatSchema>;
+  chat?: APIChat;
 }>();
 
 const cloudlinkStore = useCloudlinkStore();

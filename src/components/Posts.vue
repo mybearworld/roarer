@@ -6,18 +6,18 @@ import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
-import { chatSchema } from "../lib/chatSchema";
-import { postSchema } from "../lib/postSchema";
+import { APIChat } from "../lib/chatSchema";
+import { postSchema, APIPost } from "../lib/postSchema";
 import { z } from "zod";
 
 const { chat } = defineProps<{
-  chat?: z.infer<typeof chatSchema>;
+  chat?: APIChat;
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 
-const posts = ref<z.infer<typeof postSchema>[]>([]);
+const posts = ref<APIPost[]>([]);
 
 const postsSchema = z.object({
   autoget: postSchema.array(),

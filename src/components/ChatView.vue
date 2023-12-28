@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { z } from "zod";
 import { IconUser } from "@tabler/icons-vue";
-import { chatSchema } from "../lib/chatSchema";
+import { APIChat } from "../lib/chatSchema";
 
 const { chat } = defineProps<{
-  chat: z.infer<typeof chatSchema>;
+  chat: APIChat;
 }>();
 const emit = defineEmits<{
-  open: [id: z.infer<typeof chatSchema>];
+  open: [id: APIChat];
 }>();
 </script>
 

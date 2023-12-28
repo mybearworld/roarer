@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { z } from "zod";
-import { chatSchema } from "../lib/chatSchema";
-import { postSchema } from "../lib/postSchema";
+import { APIChat } from "../lib/chatSchema";
+import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
 const { chat } = defineProps<{
-  chat?: z.infer<typeof chatSchema>;
+  chat?: APIChat;
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
@@ -44,7 +44,7 @@ const post = async (e?: Event) => {
 };
 
 const inputRef = ref<HTMLInputElement | null>(null);
-const reply = (post: z.infer<typeof postSchema>) => {
+const reply = (post: APIPost) => {
   postContent.value = `@${post.u} [${post.post_id}]` + postContent.value;
   inputRef.value?.focus();
 };
