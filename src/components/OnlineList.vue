@@ -8,7 +8,6 @@ const cloudlinkStore = useCloudlinkStore();
 const onlineUsers = ref<string[]>([]);
 
 cloudlinkStore.cloudlink.on("ulist", (packet: unknown) => {
-  console.log(onlineUsers.value);
   const online = z.object({ val: z.string() }).parse(packet);
   onlineUsers.value = online.val.split(";").slice(0, -1);
 });

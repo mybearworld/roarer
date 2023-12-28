@@ -44,13 +44,6 @@ const input = () => {
     lastTypingIndicatorSent.value === null ||
     lastTypingIndicatorSent.value + 1500 < currentDate
   ) {
-    console.log(
-      `sending now - ${
-        lastTypingIndicatorSent.value
-          ? lastTypingIndicatorSent.value - currentDate
-          : null
-      }`,
-    );
     lastTypingIndicatorSent.value = currentDate;
     cloudlinkStore.cloudlink.send({
       cmd: "direct",

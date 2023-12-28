@@ -40,7 +40,6 @@ const md = markdownit({
 const IMAGE_REGEX = /\[([^\]]+?): ([^\]]+?)\]/g;
 const markdownPostContent = computed(() => {
   const tokens = md.parse(postContent.value, {});
-  console.log(tokens);
   const newTokens: Token[] = [];
   tokens.forEach((token) => {
     if (token.type !== "inline" || !token.children) {
@@ -95,12 +94,10 @@ const markdownPostContent = computed(() => {
     token.children = newChildren;
     newTokens.push(token);
   });
-  console.log(newTokens);
   const parsed = md.renderer.render(tokens, md.options, {});
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(parsed, "text/html");
   postDocument.querySelectorAll("img").forEach((img) => {
-    console.log(img);
     if (!hostWhitelist.some((host) => img.src.startsWith(host))) {
       const span = document.createElement("span");
       span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
