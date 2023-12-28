@@ -46,7 +46,6 @@ const post = async (e?: Event) => {
 
 const trimmedPost = (post: string) => {
   post = post.replace(/\[/g, "{").replace(/\]/g, "}");
-  console.log(post);
   const quoteMatch = post.match(/^@[a-z_-]+(?: \[.{0,40}…?\] )?(.*)$/i);
   const postContent = quoteMatch ? quoteMatch[1] : post;
   return `${postContent.slice(0, 40).trim()}${
