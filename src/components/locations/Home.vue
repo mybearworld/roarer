@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import EnterPost from "../EnterPost.vue";
-import Header from "../Header.vue";
+import Navigation from "../Navigation.vue";
 import TypingIndicator from "../TypingIndicator.vue";
 import OnlineList from "../OnlineList.vue";
 import Post from "../Post.vue";
@@ -40,7 +40,7 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 
 <template>
   <div class="space-y-2">
-    <Header title="Home" />
+    <Navigation title="Home" />
     <OnlineList />
     <EnterPost ref="enterPost" />
     <TypingIndicator />

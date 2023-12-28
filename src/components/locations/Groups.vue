@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Header from "../Header.vue";
+import Navigation from "../Navigation.vue";
 </script>
 
 <template>
-  <Header title="Groups" />
+  <Navigation title="Groups" />
 </template>
