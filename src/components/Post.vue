@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import * as linkify from "linkifyjs";
+import linkifyHtml from "linkify-html";
+import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {
@@ -104,7 +107,15 @@ const markdownPostContent = computed(() => {
       img.replaceWith(span);
     }
   });
-  return postDocument.body.innerHTML;
+  const sanitizedHTML = postDocument.body.innerHTML;
+  // using the built in linkify feature of markdown-it would not allow the
+  // above change for images
+  const linkifiedHTML = linkifyHtml(sanitizedHTML, {
+    formatHref: {
+      mention: (href) => `https://app.meower.org/users${href}`,
+    },
+  });
+  return linkifiedHTML;
 });
 </script>
 
