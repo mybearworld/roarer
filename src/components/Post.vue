@@ -7,7 +7,7 @@ import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {
   IconBrandDiscord,
-  IconMessageDots,
+  IconArrowForward,
   IconWebhook,
 } from "@tabler/icons-vue";
 import { z } from "zod";
@@ -136,7 +136,7 @@ const markdownPostContent = computed(() => {
         <IconWebhook class="inline-block w-5" />
       </span>
       <button class="float-right" @click="emit('reply', post)">
-        <IconMessageDots />
+        <IconArrowForward />
       </button>
     </div>
     <div
