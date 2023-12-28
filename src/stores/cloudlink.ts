@@ -37,6 +37,7 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     send<TSchema extends ZodSchema>(
       packet: CloudlinkPacket,
       responseSchema: TSchema,
+      log = false,
     ) {
       return new Promise<z.infer<TSchema>>(async (resolve, reject) => {
         await this.waitUntilSendable();
@@ -50,43 +51,35 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         });
         const errorSchema = z.object({
           cmd: z.literal("statuscode"),
-          val: z.string().startsWith("E:").or(z.string().startsWith("I:011")),
+          val: z
+            .string()
+            .startsWith("E:")
+            .or(
+              z.string().startsWith("I:011").or(z.string().startsWith("I:017")),
+            ),
         });
-        let stop = false;
         setTimeout(() => {
-          stop = true;
           reject("Timeout");
         }, 1500);
-        this.cloudlink.on("packet", (packet: unknown) => {
-          if (stop) {
-            return;
-          }
-          const safePacket = schema.safeParse(packet);
-          if (!safePacket.success) {
-            const safeErrorPacket = errorSchema.safeParse(packet);
-            if (!safeErrorPacket.success) {
-              return;
-            }
-            reject(safeErrorPacket.data.val);
-            stop = true;
-            return;
-          }
-          resolve(safePacket.data.val);
-          stop = true;
-        });
+        this.lookFor(schema, (packet) => resolve(packet.val), true, log);
+        this.lookFor(errorSchema, (packet) => reject(packet.val), true, log);
       });
     },
     lookFor<TSchema extends ZodSchema>(
       schema: TSchema,
       fun: (packet: z.infer<TSchema>) => void,
       shouldStop = true,
+      log = false,
     ) {
       let stop = false;
       this.cloudlink.on("packet", (packet: unknown) => {
+        if (log) console.log("recieved", { packet });
         if (stop && shouldStop) {
           return;
         }
+        if (log) console.log(schema);
         const parsed = schema.safeParse(packet);
+        if (log) console.log({ parsed, packet });
         if (!parsed.success) {
           return;
         }

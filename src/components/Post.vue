@@ -5,8 +5,9 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {
-  IconBrandDiscord,
   IconArrowForward,
+  IconBrandDiscord,
+  IconTrash,
   IconWebhook,
 } from "@tabler/icons-vue";
 import { z } from "zod";
@@ -64,6 +65,24 @@ if (!dontUpdate) {
     edited.value = packet.val.payload;
   });
 }
+
+const remove = async () => {
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "delete_post",
+        val: post.post_id,
+      },
+      z.object({
+        mode: z.literal("delete"),
+        id: z.literal(post.post_id),
+      }),
+      true,
+    );
+  } catch (e) {
+    alert(e); // i can do error handling!
+  }
+};
 
 const md = markdownit({
   breaks: true,
@@ -169,9 +188,14 @@ const markdownPostContent = computed(() => {
       >
         <IconWebhook class="inline-block w-5" />
       </span>
-      <button class="float-right" @click="emit('reply', post)">
-        <IconArrowForward />
-      </button>
+      <div class="float-right space-x-2">
+        <button class="float-right" @click="emit('reply', post)">
+          <IconArrowForward />
+        </button>
+        <button class="float-right" @click="remove">
+          <IconTrash />
+        </button>
+      </div>
     </div>
     <div
       class="space-y-2 [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1"
