@@ -13,10 +13,12 @@ const interval = setInterval(() => {
   }
 });
 setInterval(() => {
-  client.send({
-    cmd: "ping",
-    val: "",
-  });
+  if (client.status === 1) {
+    client.send({
+      cmd: "ping",
+      val: "",
+    });
+  }
 }, 10000);
 
 export const useCloudlinkStore = defineStore("cloudlink", {
