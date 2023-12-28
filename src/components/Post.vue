@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import markdownit from "markdown-it";
+import markdownit, { Token } from "markdown-it";
 import {
   IconBrandDiscord,
   IconMessageDots,
@@ -33,12 +33,7 @@ const md = markdownit({
 });
 
 const markdownPostContent = computed(() => {
-  const parsed = md.render(
-    postContent.value.replace(
-      /\[([^\]]+?): ([^\]]+?)\]/,
-      (_, name, image) => `![${name}](${image})`,
-    ),
-  );
+  const parsed = md.render(postContent.value);
   return parsed;
 });
 </script>
@@ -63,7 +58,11 @@ const markdownPostContent = computed(() => {
         <IconMessageDots />
       </button>
     </div>
-    <div v-html="markdownPostContent" v-if="markdownPostContent"></div>
+    <div
+      class="space-y-2 [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1"
+      v-html="markdownPostContent"
+      v-if="markdownPostContent"
+    ></div>
     <p v-else>
       {{ postContent }}
     </p>
