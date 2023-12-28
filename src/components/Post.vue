@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import markdownit from "markdown-it";
 import {
   IconBrandDiscord,
   IconMessageDots,
@@ -26,6 +27,20 @@ if (isBridged) {
     postContent.value = match[2];
   }
 }
+
+const md = markdownit({
+  breaks: true,
+});
+
+const markdownPostContent = computed(() => {
+  const parsed = md.render(
+    postContent.value.replace(
+      /\[([^\]]+?): ([^\]]+?)\]/,
+      (_, name, image) => `![${name}](${image})`,
+    ),
+  );
+  return parsed;
+});
 </script>
 
 <template>
@@ -48,6 +63,9 @@ if (isBridged) {
         <IconMessageDots />
       </button>
     </div>
-    {{ postContent }}
+    <div v-html="markdownPostContent" v-if="markdownPostContent"></div>
+    <p v-else>
+      {{ postContent }}
+    </p>
   </div>
 </template>

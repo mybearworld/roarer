@@ -11,11 +11,13 @@
   "dependencies": {
     "@tabler/icons-vue": "^2.44.0",
     "@williamhorning/cloudlink": "^4.1.1",
+    "markdown-it": "^14.0.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/markdown-it": "^13.0.7",
     "@vitejs/plugin-vue": "^4.5.2",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
