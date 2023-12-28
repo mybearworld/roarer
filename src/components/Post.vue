@@ -226,7 +226,7 @@ const markdownPostContent = computed(() => {
       <span
         title="This post was created on the Discord server."
         v-if="post.u === 'Discord'"
-      >]]]]
+      >
         <IconBrandDiscord class="inline-block w-5" />
       </span>
       <span

@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { useLoginStatusStore } from "./stores/loginStatus";
+import { useLocationStore } from "./stores/location";
 import Login from "./components/Login.vue";
-import HomePosts from "./components/HomePosts.vue";
+import Home from "./components/locations/Home.vue";
+import Groups from "./components/locations/Groups.vue";
 
 const loginStatusStore = useLoginStatusStore();
+const locationStore = useLocationStore();
 </script>
 
 <template>
-  <Login v-if="loginStatusStore.username === null" />
-  <HomePosts v-else />
+  <template v-if="locationStore.location === 'home'">
+    <Login v-if="loginStatusStore.username === null" />
+    <Home v-else />
+  </template>
+  <Groups v-if="locationStore.location === 'group'" />
 </template>

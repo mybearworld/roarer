@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, VNodeRef } from "vue";
-import Login from "./Login.vue";
-import EnterPost from "./EnterPost.vue";
-import TypingIndicator from "./TypingIndicator.vue";
-import OnlineList from "./OnlineList.vue";
-import Post from "./Post.vue";
-import { useCloudlinkStore } from "../stores/cloudlink";
-import { postSchema } from "../lib/postSchema";
+import { ref } from "vue";
+import EnterPost from "../EnterPost.vue";
+import Header from "../Header.vue";
+import TypingIndicator from "../TypingIndicator.vue";
+import OnlineList from "../OnlineList.vue";
+import Post from "../Post.vue";
+import { useCloudlinkStore } from "../../stores/cloudlink";
+import { postSchema } from "../../lib/postSchema";
 import { z } from "zod";
 
 const cloudlinkStore = useCloudlinkStore();
@@ -40,10 +40,7 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 
 <template>
   <div class="space-y-2">
-    <div class="space-x-2">
-      <h1 class="inline-block text-3xl font-bold">Roarer</h1>
-      <Login />
-    </div>
+    <Header title="Home" />
     <OnlineList />
     <EnterPost ref="enterPost" />
     <TypingIndicator />
