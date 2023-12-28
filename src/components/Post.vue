@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import * as linkify from "linkifyjs";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
@@ -13,9 +12,13 @@ import {
 import { z } from "zod";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema } from "../lib/postSchema";
+import { useCloudlinkStore } from "../stores/cloudlink";
 
-const { post } = defineProps<{
+const cloudlinkStore = useCloudlinkStore();
+
+const { post, dontUpdate } = defineProps<{
   post: z.infer<typeof postSchema>;
+  dontUpdate?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [post: z.infer<typeof postSchema>];
@@ -31,6 +34,35 @@ if (isBridged) {
     username.value = match[1];
     postContent.value = match[2];
   }
+}
+
+const isDeleted = ref(false);
+const edited = ref<null | z.infer<typeof postSchema>>(null);
+const deleteSchema = z.object({
+  cmd: z.literal("direct"),
+  val: z.object({
+    mode: z.literal("delete"),
+    id: z.literal(post.post_id),
+  }),
+});
+const editSchema = z.object({
+  cmd: z.literal("direct"),
+  val: z.object({
+    mode: z.literal("update_post"),
+    payload: postSchema.and(
+      z.object({
+        post_id: z.literal(post.post_id),
+      }),
+    ),
+  }),
+});
+if (!dontUpdate) {
+  cloudlinkStore.lookFor(deleteSchema, () => {
+    isDeleted.value = true;
+  });
+  cloudlinkStore.lookFor(editSchema, (packet) => {
+    edited.value = packet.val.payload;
+  });
 }
 
 const md = markdownit({
@@ -117,7 +149,12 @@ const markdownPostContent = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col rounded-xl bg-slate-800 px-2 py-1">
+  <Post :post="edited" v-if="edited" />
+  <div
+    class="flex flex-col rounded-xl bg-slate-800 px-2 py-1"
+    v-else
+    v-if="!isDeleted"
+  >
     <div class="space-x-2">
       <span class="font-bold">{{ username }}</span>
       <span
