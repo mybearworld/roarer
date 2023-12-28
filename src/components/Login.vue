@@ -90,6 +90,7 @@ const signOut = async () => {
   }
   loginStatusStore.username = null;
   loginStatusStore.token = null;
+  location.reload();
 };
 </script>
 
