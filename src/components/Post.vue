@@ -224,7 +224,7 @@ const markdownPostContent = computed(() => {
     v-else
     v-if="!isDeleted"
   >
-    <div class="flex items-center space-x-2">
+    <div class="space-x-2">
       <span class="font-bold">{{ username }}</span>
       <span
         class="inline-block text-green-400"
