@@ -213,7 +213,7 @@ const markdownPostContent = computed(() => {
 <template>
   <Post :post="edited" v-if="edited" />
   <div
-    class="flex flex-col rounded-xl bg-slate-800 px-2 py-1"
+    class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
     v-else
     v-if="!isDeleted"
   >
@@ -231,7 +231,10 @@ const markdownPostContent = computed(() => {
       >
         <IconWebhook class="inline-block w-5" />
       </span>
-      <div class="float-right space-x-3" v-if="!editing">
+      <div
+        class="invisible float-right space-x-3 group-hover:visible"
+        v-if="!editing"
+      >
         <template v-if="post.u === loginStatusStore.username">
           <button class="h-4 w-4" @click="remove">
             <IconTrash />
