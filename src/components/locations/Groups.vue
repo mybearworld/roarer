@@ -6,34 +6,30 @@ import Posts from "../Posts.vue";
 import Navigation from "../Navigation.vue";
 import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
+import { useLoginStatusStore } from "../../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
+const loginStatusStore = useLoginStatusStore();
 
 const chats = ref<APIChat[]>([]);
-const postSchema = z.object({
-  mode: z.literal("chats"),
-  payload: z.object({
-    all_chats: chatSchema.array(),
-    index: z.string().array(),
-    "page#": z.number(),
-    pages: z.number(),
-  }),
+const schema = z.object({
+  autoget: chatSchema.array(),
 });
 effect(async () => {
-  let response;
-  try {
-    response = await cloudlinkStore.send(
-      {
-        cmd: "get_chat_list",
-        val: { page: 1 },
-      },
-      postSchema,
-    );
-  } catch (e) {
-    alert(e);
+  const { username, token } = loginStatusStore;
+  if (username === null || token === null) {
     return;
   }
-  chats.value = response.payload.all_chats;
+  const unsafeResponse = await (
+    await fetch("https://api.meower.org/chats?autoget=1", {
+      headers: {
+        username,
+        token,
+      },
+    })
+  ).json();
+  const response = schema.parse(unsafeResponse);
+  chats.value = response.autoget;
 });
 
 const openGroupchat = ref<APIChat | null>(null);
