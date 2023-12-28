@@ -43,9 +43,17 @@ const post = async (e?: Event) => {
   postContent.value = "";
 };
 
+const trimmedPost = (post: string) => {
+  const quoteMatch = post.match(/^@[a-z_-]+ \[.{0,40}…?\] (.*)$/i);
+  return `${(quoteMatch ? quoteMatch[1] : post).slice(0, 40).trim()}${
+    post.length > 39 ? "…" : ""
+  }`;
+};
+
 const inputRef = ref<HTMLInputElement | null>(null);
 const reply = (post: APIPost) => {
-  postContent.value = `@${post.u} [${post.post_id}] ` + postContent.value;
+  postContent.value =
+    `@${post.u} [${trimmedPost(post.p)}] ` + postContent.value;
   inputRef.value?.focus();
 };
 
