@@ -14,8 +14,10 @@ import { z } from "zod";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useLoginStatusStore } from "../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
+const loginStatusStore = useLoginStatusStore();
 
 const { post, dontUpdate } = defineProps<{
   post: z.infer<typeof postSchema>;
@@ -188,7 +190,11 @@ const markdownPostContent = computed(() => {
         <IconWebhook class="inline-block w-5" />
       </span>
       <div class="float-right space-x-3">
-        <button class="h-4 w-4" @click="remove">
+        <button
+          class="h-4 w-4"
+          v-if="post.u === loginStatusStore.username"
+          @click="remove"
+        >
           <IconTrash />
         </button>
         <button class="h-4 w-4" @click="emit('reply', post)">
