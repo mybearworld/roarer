@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import markdownit, { Token } from "markdown-it";
+import markdownit from "markdown-it";
+import Token from "markdown-it/lib/token";
 import {
   IconBrandDiscord,
   IconMessageDots,
@@ -32,8 +33,67 @@ const md = markdownit({
   breaks: true,
 });
 
+const IMAGE_REGEX = /\[([^\]]+?): ([^\]]+?)\]/g;
 const markdownPostContent = computed(() => {
-  const parsed = md.render(postContent.value);
+  const ogTokens = md.parse(postContent.value, {});
+  const tokens = md.parse(postContent.value, {});
+  console.log(tokens);
+  const newTokens: Token[] = [];
+  tokens.forEach((token) => {
+    if (token.type !== "inline" || !token.children) {
+      newTokens.push(token);
+      return;
+    }
+    const newChildren: Token[] = [];
+    token.children.forEach((child) => {
+      if (child.type !== "text") {
+        newChildren.push(child);
+        return;
+      }
+      const content = child.content;
+      const images = [...content.matchAll(IMAGE_REGEX)];
+      if (images.length === 0) {
+        newChildren.push(child);
+        return;
+      }
+      const newTextTokens: Token[] = [];
+      images.forEach((image, i) => {
+        const index = image.index;
+        if (index === undefined) {
+          return;
+        }
+        const beforeText = content.slice(0, index);
+        const beforeTextToken = new Token("text", "", 0);
+        beforeTextToken.content = beforeText;
+        newTextTokens.push(beforeTextToken);
+        const [fullMatch, alt, src] = image;
+        const imageToken = new Token("image", "", 0);
+        imageToken.content = alt;
+        imageToken.tag = "img";
+        imageToken.attrs = [
+          ["alt", ""],
+          ["src", src],
+          // This is not used (yet?)
+          ["data-original", fullMatch],
+        ];
+        const altTextToken = new Token("text", "", 0);
+        altTextToken.content = alt;
+        imageToken.children = [altTextToken];
+        newTextTokens.push(imageToken);
+        if (i === images.length - 1) {
+          const afterText = content.slice(index + fullMatch.length);
+          const afterTextToken = new Token("text", "", 0);
+          afterTextToken.content = afterText;
+          newTextTokens.push(afterTextToken);
+        }
+      });
+      newChildren.push(...newTextTokens);
+    });
+    token.children = newChildren;
+    newTokens.push(token);
+  });
+  console.log(newTokens);
+  const parsed = md.renderer.render(tokens, md.options, {});
   return parsed;
 });
 </script>
