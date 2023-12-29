@@ -83,6 +83,9 @@ if (!dontUpdate) {
 }
 
 const remove = async () => {
+  if (!confirm("Are you sure you want to delete this post?")) {
+    return;
+  }
   try {
     await cloudlinkStore.send(
       {

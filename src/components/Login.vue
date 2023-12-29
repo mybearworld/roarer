@@ -85,6 +85,9 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
 }
 
 const signOut = async () => {
+  if (!confirm("Are you sure you want to sign out?")) {
+    return;
+  }
   loginStatusStore.username = null;
   loginStatusStore.token = null;
   location.reload();
