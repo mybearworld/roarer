@@ -225,7 +225,7 @@ const markdownPostContent = computed(() => {
 </script>
 
 <template>
-  <Post :post="edited" v-if="edited" />
+  <Post :post="edited" v-if="edited" @reply="emit('reply', $event)" />
   <div
     class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
     v-else
