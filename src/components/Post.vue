@@ -26,15 +26,22 @@ const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 
-const { post, dontUpdate } = defineProps<{
+const { post, inbox, dontUpdate } = defineProps<{
   post: APIPost;
+  inbox?: boolean;
   dontUpdate?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string];
 }>();
 
-const username = ref(post.u);
+const username = ref(
+  inbox
+    ? post.u === loginStatusStore.username
+      ? "Notification"
+      : "Announcement"
+    : post.u,
+);
 const postContent = ref(post.p);
 
 const isBridged = bridgeBots.includes(username.value);

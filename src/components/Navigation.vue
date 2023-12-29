@@ -25,6 +25,12 @@ const locationStore = useLocationStore();
         </button>
         <button
           class="text-sky-400 underline"
+          @click="locationStore.location = 'inbox'"
+        >
+          Inbox
+        </button>
+        <button
+          class="text-sky-400 underline"
           @click="locationStore.location = 'group'"
         >
           Groups

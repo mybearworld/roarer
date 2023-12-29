@@ -10,8 +10,9 @@ import { APIChat } from "../lib/chatSchema";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { z } from "zod";
 
-const { chat } = defineProps<{
+const { chat, inbox } = defineProps<{
   chat?: APIChat;
+  inbox?: boolean;
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
@@ -31,7 +32,7 @@ const postsSchema = z.object({
     await fetch(
       chat
         ? `https://api.meower.org/posts/${chat._id}?autoget=1`
-        : "https://api.meower.org/home?autoget=1",
+        : `https://api.meower.org/${inbox ? "inbox" : "home"}?autoget=1`,
       {
         headers: {
           username,
@@ -40,6 +41,7 @@ const postsSchema = z.object({
       },
     )
   ).json();
+  console.log(request);
   posts.value = postsSchema.parse(request).autoget;
 
   const newPostSchema = z.object({
@@ -50,14 +52,16 @@ const postsSchema = z.object({
       }),
     ),
   });
-  cloudlinkStore.lookFor(
-    newPostSchema,
-    ({ val: post }) => {
-      posts.value.unshift(post);
-      posts.value = posts.value;
-    },
-    false,
-  );
+  if (!inbox) {
+    cloudlinkStore.lookFor(
+      newPostSchema,
+      ({ val: post }) => {
+        posts.value.unshift(post);
+        posts.value = posts.value;
+      },
+      false,
+    );
+  }
 })();
 
 const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
@@ -65,12 +69,13 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 
 <template>
   <h2 class="text-lg font-bold" v-if="chat">{{ chat.nickname }}</h2>
-  <OnlineList :chat="chat" />
-  <EnterPost ref="enterPost" :chat="chat" />
-  <TypingIndicator :chat="chat" />
+  <OnlineList :chat="chat" v-if="!inbox" />
+  <EnterPost ref="enterPost" :chat="chat" v-if="!inbox" />
+  <TypingIndicator :chat="chat" v-if="!inbox" />
   <Post
     :post="post"
     :key="post.post_id"
+    :inbox="inbox"
     @reply="enterPost?.reply"
     v-for="post in posts"
   />
