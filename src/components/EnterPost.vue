@@ -41,6 +41,7 @@ const post = async (e?: Event) => {
         }),
       ),
     );
+    errorMessage.value = "";
   } catch (e) {
     errorMessage.value = e as string;
   }
