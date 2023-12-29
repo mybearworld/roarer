@@ -148,6 +148,8 @@ const resizeTextarea = () => {
   editInputValue.value.style.height = `${editInputValue.value.scrollHeight}px`;
 };
 
+const reload = () => location.reload();
+
 const md = markdownit({
   breaks: true,
 });
@@ -313,6 +315,7 @@ const markdownPostContent = computed(() => {
           username === 'mybearworld' &&
           !isBridged
         "
+        @click="reload"
       >
         Reload now
       </button>
