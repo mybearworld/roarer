@@ -9,6 +9,7 @@ export const useLoginStatusStore = defineStore("loginStatus", () => {
     localStorage.getItem(USERNAME_STORAGE) ?? null,
   );
   const token = ref<string | null>(localStorage.getItem(TOKEN_STORAGE) ?? null);
+  const isLoggedIn = ref(false);
 
   watch([username, token], (n) => {
     const [u, t] = n;
@@ -24,5 +25,5 @@ export const useLoginStatusStore = defineStore("loginStatus", () => {
     }
   });
 
-  return { username, token };
+  return { username, token, isLoggedIn };
 });

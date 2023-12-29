@@ -26,13 +26,15 @@ const resetFormFields = () => {
 };
 
 const login = async (username: string, password: string) => {
-  return await cloudlinkStore.send(
+  const response = await cloudlinkStore.send(
     {
       cmd: "authpswd",
       val: { username: username, pswd: password },
     },
     logInSchema,
   );
+  loginStatusStore.isLoggedIn = true;
+  return response;
 };
 
 const loginEvent = async (e: Event) => {
@@ -64,6 +66,9 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
     val: z.literal("E:101 | Syntax"),
   });
   cloudlinkStore.cloudlink.on("statuscode", async (packet: unknown) => {
+    if (loginStatusStore.isLoggedIn) {
+      return;
+    }
     if (syntaxErrorSchema.safeParse(packet).success) {
       try {
         await login(...nonNullCredentials);
@@ -87,6 +92,7 @@ const signOut = async () => {
 </script>
 
 <template>
+  {{ loginStatusStore.isLoggedIn }}
   <template v-if="loginStatusStore.username === null">
     <div
       class="absolute left-0 top-0 -z-50 h-screen w-screen bg-black opacity-20"
