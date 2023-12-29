@@ -266,7 +266,7 @@ const markdownPostContent = computed(() => {
       </span>
       <div
         class="invisible float-right space-x-3 group-hover:visible"
-        v-if="!editing"
+        v-if="!editing && !inbox"
       >
         <template v-if="post.u === loginStatusStore.username">
           <button class="h-4 w-4" @click="remove">
