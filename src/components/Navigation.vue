@@ -33,7 +33,12 @@ const locationStore = useLocationStore();
     </div>
     <p>
       Note: Roarer is very early in its development. Please do report bugs
-      and/or suggest features on <a href="https://github.com/mybearworld/roarer" class="text-sky-400 underline">the Github repository</a>!
+      and/or suggest features on
+      <a
+        href="https://github.com/mybearworld/roarer"
+        class="text-sky-400 underline"
+        >the Github repository</a
+      >!
     </p>
   </div>
 </template>
