@@ -92,7 +92,6 @@ const signOut = async () => {
 </script>
 
 <template>
-  {{ loginStatusStore.isLoggedIn }}
   <template v-if="loginStatusStore.username === null">
     <div
       class="absolute left-0 top-0 -z-50 h-screen w-screen bg-black opacity-20"
