@@ -45,10 +45,10 @@ const post = async (e?: Event) => {
 };
 
 const trimmedPost = (post: string) => {
-  post = post.replace(/\[/g, "{").replace(/\]/g, "}");
   const quoteMatch = post.match(/^@[a-z_-]+(?: \[.{0,40}…?\] )?(.*)$/i);
   const postContent = quoteMatch ? quoteMatch[1] : post;
-  return `${postContent.slice(0, 40).trim()}${
+  const replacedPostContent = postContent.replace("[", "{").replace("]", "}");
+  return `${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
   }`;
 };
