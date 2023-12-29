@@ -80,18 +80,6 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
 }
 
 const signOut = async () => {
-  try {
-    await cloudlinkStore.send(
-      {
-        cmd: "del_tokens",
-        val: null,
-      },
-      z.literal("I:024 | Logged out"),
-    );
-  } catch (e) {
-    alert(`Couldn't sign out: ${e}`);
-    return;
-  }
   loginStatusStore.username = null;
   loginStatusStore.token = null;
   location.reload();
