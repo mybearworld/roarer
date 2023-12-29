@@ -59,20 +59,24 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
     loginStatusStore.username,
     loginStatusStore.token,
   ];
-  try {
-    const syntaxErrorSchema = z.object({
-      val: z.literal("E:101 | Syntax"),
-    });
-    cloudlinkStore.cloudlink.on("statuscode", async (packet: unknown) => {
-      if (syntaxErrorSchema.safeParse(packet).success) {
+
+  const syntaxErrorSchema = z.object({
+    val: z.literal("E:101 | Syntax"),
+  });
+  cloudlinkStore.cloudlink.on("statuscode", async (packet: unknown) => {
+    if (syntaxErrorSchema.safeParse(packet).success) {
+      try {
         await login(...nonNullCredentials);
+      } catch (e) {
+        loginStatusStore.username = null;
+        loginStatusStore.token = null;
+        alert(
+          "You couldn't be logged in. This is most likely because your token has been revoked. Please log in again.",
+        );
+        location.reload();
       }
-    });
-  } catch (e) {
-    loginStatusStore.username = null;
-    loginStatusStore.token = null;
-    throw e;
-  }
+    }
+  });
 }
 
 const signOut = async () => {
