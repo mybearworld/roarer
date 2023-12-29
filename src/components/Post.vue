@@ -31,7 +31,7 @@ const { post, dontUpdate } = defineProps<{
   dontUpdate?: boolean;
 }>();
 const emit = defineEmits<{
-  reply: [post: APIPost];
+  reply: [username: string, postContent: string];
 }>();
 
 const username = ref(post.u);
@@ -225,7 +225,7 @@ const markdownPostContent = computed(() => {
 </script>
 
 <template>
-  <Post :post="edited" v-if="edited" @reply="emit('reply', $event)" />
+  <Post :post="edited" v-if="edited" @reply="(u, p) => emit('reply', u, p)" />
   <div
     class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
     v-else
@@ -269,7 +269,7 @@ const markdownPostContent = computed(() => {
             <IconEdit />
           </button>
         </template>
-        <button class="h-4 w-4" @click="emit('reply', post)">
+        <button class="h-4 w-4" @click="emit('reply', username, postContent)">
           <IconArrowForward />
         </button>
       </div>

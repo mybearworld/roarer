@@ -64,9 +64,9 @@ const trimmedPost = (post: string) => {
 };
 
 const inputRef = ref<HTMLTextAreaElement | null>(null);
-const reply = (post: APIPost) => {
+const reply = (username: string, content: string) => {
   postContent.value =
-    `@${post.u} [${trimmedPost(post.p)}] ` + postContent.value;
+    `@${username} [${trimmedPost(content)}] ` + postContent.value;
   inputRef.value?.focus();
 };
 
