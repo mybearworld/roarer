@@ -19,6 +19,10 @@ setInterval(() => {
       val: "",
     });
   }
+  if (client.status === 3) {
+    alert("You were disconnected. Clicking OK will reload the page.");
+    location.reload();
+  }
 }, 10000);
 
 export const useCloudlinkStore = defineStore("cloudlink", {
