@@ -55,9 +55,9 @@ const trimmedPost = (post: string) => {
   const quoteMatch = post.match(/^@[a-z_0-9-]+(?: \[.{0,40}…?\] )?(.*)$/i);
   const postContent = quoteMatch ? quoteMatch[1] : post;
   const replacedPostContent = postContent
-    .replace("[", "{")
-    .replace("]", "}")
-    .replace("\n", " ");
+    .replace(/\[/g, "{")
+    .replace(/\]/g, "}")
+    .replace(/\n/g, " ");
   return `${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
   }`;
