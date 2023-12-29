@@ -2,7 +2,10 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
-import { autoResizeTextarea } from "../lib/autoResizeTextarea";
+import {
+  autoResizeTextarea,
+  resetTextareaSize,
+} from "../lib/autoResizeTextarea";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
@@ -42,6 +45,9 @@ const post = async (e?: Event) => {
     errorMessage.value = e as string;
   }
   postContent.value = "";
+  if (inputRef.value) {
+    resetTextareaSize(inputRef.value);
+  }
 };
 
 const trimmedPost = (post: string) => {
