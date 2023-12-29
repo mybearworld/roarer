@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { z } from "zod";
+import { bridgeBots } from "../lib/bridgeBots";
 import { APIChat } from "../lib/chatSchema";
 import { useOnlinelistStore } from "../stores/onlinelist";
 
@@ -11,9 +12,10 @@ const { chat } = defineProps<{
 const onlineListStore = useOnlinelistStore();
 
 const shownOnlineList = computed(() =>
-  chat
-    ? onlineListStore.online.filter((user) => chat.members.includes(user))
-    : onlineListStore.online,
+  onlineListStore.online.filter(
+    (user) =>
+      (!chat || chat.members.includes(user)) && !bridgeBots.includes(user),
+  ),
 );
 </script>
 

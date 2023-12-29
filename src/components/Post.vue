@@ -15,6 +15,7 @@ import {
 } from "@tabler/icons-vue";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
+import { bridgeBots } from "../lib/bridgeBots";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -36,10 +37,7 @@ const emit = defineEmits<{
 const username = ref(post.u);
 const postContent = ref(post.p);
 
-const isBridged =
-  username.value === "Discord" ||
-  username.value === "Webhooks" ||
-  username.value === "RevowerJS";
+const isBridged = bridgeBots.includes(username.value);
 if (isBridged) {
   const match = postContent.value.match(/^(.*?): (.*)$/s);
   if (match) {
