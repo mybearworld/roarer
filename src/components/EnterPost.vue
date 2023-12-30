@@ -52,21 +52,21 @@ const post = async (e?: Event) => {
 };
 
 const trimmedPost = (post: string) => {
-  const quoteMatch = post.match(/^@[a-z_0-9-]+(?: \[.{0,40}…?\] )?(.*)$/i);
+  const quoteMatch = post.match(/^@[a-z_0-9-]+(?: ".{0,40}…?" )?(.*)$/i);
   const postContent = quoteMatch ? quoteMatch[1] : post;
   const replacedPostContent = postContent
     .replace(/\[/g, "{")
     .replace(/\]/g, "}")
     .replace(/\n/g, " ");
-  return `${replacedPostContent.slice(0, 40).trim()}${
+  return `"${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
-  }`;
+  }"`;
 };
 
 const inputRef = ref<HTMLTextAreaElement | null>(null);
 const reply = (username: string, content: string) => {
   postContent.value =
-    `@${username} [${trimmedPost(content)}] ` + postContent.value;
+    `@${username} ${trimmedPost(content)} ` + postContent.value;
   inputRef.value?.focus();
 };
 
