@@ -299,7 +299,9 @@ effect(() => {
       >
         <IconBuildingBridge class="inline-block w-5" />
       </span>
-      <div class="inline-block text-sm italic text-slate-400">
+      <div
+        class="hidden text-sm italic text-slate-400 group-hover:inline-block"
+      >
         {{ formatDate(post.t.e) }}
       </div>
       <div
