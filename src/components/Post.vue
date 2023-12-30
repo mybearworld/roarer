@@ -10,6 +10,7 @@ import {
   IconBuildingBridge,
   IconCircleFilled,
   IconEdit,
+  IconReload,
   IconTrash,
   IconWebhook,
 } from "@tabler/icons-vue";
@@ -345,15 +346,17 @@ effect(() => {
         @keydown="editKeydown"
         @input="resizeTextarea"
       />
-      <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
-        Edit
-      </button>
-      <button
-        class="rounded-xl bg-slate-700 px-2 py-1"
-        @click="editing = false"
-      >
-        Cancel
-      </button>
+      <div class="space-x-2">
+        <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
+          Edit
+        </button>
+        <button
+          class="rounded-xl bg-slate-700 px-2 py-1"
+          @click="editing = false"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
     <div v-else>
       <div
@@ -362,7 +365,7 @@ effect(() => {
         ref="postContentElement"
       ></div>
       <button
-        class="rounded-xl bg-slate-700 px-2 py-1"
+        class="mt-2 flex items-center gap-1 rounded-xl bg-slate-700 px-2 py-1"
         v-if="
           postContent.endsWith('\u200c') &&
           username === 'mybearworld' &&
@@ -370,7 +373,8 @@ effect(() => {
         "
         @click="reload"
       >
-        Reload now
+        <IconReload class="inline-block h-5 w-5" />
+        Reload
       </button>
     </div>
   </div>
