@@ -32,6 +32,7 @@ import icon30 from "./icon_30.svg";
 import icon31 from "./icon_31.svg";
 import icon32 from "./icon_32.svg";
 import icon33 from "./icon_33.svg";
+import icon100 from "./icon_100.svg";
 
 export const profilePictures = new Map([
   [1, icon0],
@@ -68,4 +69,5 @@ export const profilePictures = new Map([
   [32, icon31],
   [33, icon32],
   [34, icon33],
+  [100, icon100],
 ]);
