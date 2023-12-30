@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { IconKeyboard } from "@tabler/icons-vue";
+import { IconKeyboard, IconKeyboardOff } from "@tabler/icons-vue";
 import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -52,8 +52,14 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
 </script>
 
 <template>
-  <p v-if="shownTypingUsers.length">
-    <IconKeyboard class="inline-block" />
-    {{ [...shownTypingUsers.values()].join(", ") }}
+  <p>
+    <span v-if="shownTypingUsers.length">
+      <IconKeyboard class="inline-block" />
+      {{ [...shownTypingUsers.values()].join(", ") }}
+    </span>
+    <span class="italic text-slate-400" v-else>
+      <IconKeyboardOff class="inline-block" />
+      No one is currently typing.
+    </span>
   </p>
 </template>
