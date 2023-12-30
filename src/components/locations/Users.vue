@@ -5,8 +5,12 @@ import { profilePictures } from "../../assets/pfp";
 import { formatDate } from "../../lib/formatDate";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
 import { useLocationStore } from "../../stores/location";
+import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useOnlinelistStore } from "../../stores/onlinelist";
 
 const locationStore = useLocationStore();
+const loginStatusStore = useLoginStatusStore();
+const onlinelistStore = useOnlinelistStore();
 
 const usernameElement = ref<HTMLInputElement | null>(null);
 
@@ -55,20 +59,34 @@ effect(async () => {
     >
       Enter a user above to view their profile!
     </div>
-    <div class="mx-auto mt-5 flex items-center gap-2" v-else>
-      <div class="rounded-xl border-2 border-slate-500 bg-white p-2">
+    <div class="mx-auto mt-5 flex gap-2" v-else>
+      <div
+        class="flex items-center rounded-xl border-2 border-slate-500 bg-white p-2"
+      >
         <img
           width="70"
           height="70"
           :src="profilePictures.get(userProfile!.pfp_data)"
         />
       </div>
-      <div>
+      <div class="">
         <h2 class="text-xl font-bold">{{ userProfile!._id }}</h2>
         <q class="text-lg italic">{{ userProfile!.quote }}</q>
-        <p v-if="userProfile!.last_seen">
+        <div class="mt-2"></div>
+        <p
+          v-if="
+            loginStatusStore.username &&
+            onlinelistStore.online.includes(loginStatusStore.username)
+          "
+        >
+          Online
+        </p>
+        <p v-else-if="userProfile!.last_seen">
           Last seen {{ formatDate(userProfile!.last_seen) }}
         </p>
+        <p v-if="userProfile!.banned">Banned</p>
+        <div class="mt-2"></div>
+        <p>Account created: {{ formatDate(userProfile.created) }}</p>
       </div>
     </div>
   </div>
