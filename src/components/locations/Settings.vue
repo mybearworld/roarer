@@ -67,10 +67,6 @@ const submit = async (e: Event) => {
     <Navigation title="Settings" />
     <div>
       <h2 class="text-lg font-bold">Me</h2>
-      <p class="text-sm text-slate-400">
-        None of these settings can currently be viewed by other people from
-        Roarer. They are, however, visible from other clients.
-      </p>
     </div>
     <form class="contents" @submit="submit">
       <label class="flex items-center gap-2">
