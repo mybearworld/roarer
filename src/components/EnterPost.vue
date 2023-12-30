@@ -18,14 +18,19 @@ const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 
 const postContent = ref("");
+const posting = ref(false);
 const errorMessage = ref("");
 
 const post = async (e?: Event) => {
   e?.preventDefault();
+  if (posting.value) {
+    return;
+  }
   const username = loginStatusStore.username;
   if (username === null) {
     throw new Error("Not logged in");
   }
+  posting.value = true;
   try {
     await cloudlinkStore.send(
       {
@@ -43,12 +48,14 @@ const post = async (e?: Event) => {
     );
     errorMessage.value = "";
   } catch (e) {
+    posting.value = false;
     errorMessage.value = e as string;
   }
   postContent.value = "";
   if (inputRef.value) {
     resetTextareaSize(inputRef.value);
   }
+  posting.value = false;
 };
 
 const trimmedPost = (post: string) => {
