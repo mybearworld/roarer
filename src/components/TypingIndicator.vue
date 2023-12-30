@@ -54,11 +54,12 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
 <template>
   <p>
     <span v-if="shownTypingUsers.length">
-      <IconKeyboard class="inline-block" />
+      <IconKeyboard class="inline-block" aria-hidden />
+      <span class="sr-only">Typing users:</span>
       {{ [...shownTypingUsers.values()].join(", ") }}
     </span>
     <span class="italic text-slate-400" v-else>
-      <IconKeyboardOff class="inline-block" />
+      <IconKeyboardOff class="inline-block" aria-hidden />
       No one is currently typing.
     </span>
   </p>

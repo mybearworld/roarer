@@ -27,11 +27,12 @@ const emit = defineEmits<{
     </p>
     <p class="flex gap-1">
       <template v-if="chat.nickname">
-        <IconUser class="inline-block w-4" />
+        <IconUser class="inline-block w-4" aria-hidden />
+        <span class="sr-only">Members:</span>
         {{ chat.members.join(", ") }}
       </template>
       <template v-else>
-        <IconMessage class="inline-block w-4" />
+        <IconMessage class="inline-block w-4" aria-hidden />
         DM
       </template>
     </p>

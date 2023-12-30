@@ -279,25 +279,36 @@ effect(() => {
         class="inline-block text-green-400"
         v-if="onlineListStore.online.includes(username)"
       >
-        <IconCircleFilled class="h-2 w-2" />
+        <IconCircleFilled class="h-2 w-2" aria-hidden />
+        <span class="sr-only">Online</span>
       </span>
       <span
         title="This post was created on the Discord server."
         v-if="post.u === 'Discord'"
       >
-        <IconBrandDiscord class="inline-block w-5" />
+        <IconBrandDiscord class="inline-block w-5" aria-hidden />
+        <span class="sr-only">
+          This post was created on the Discord server.
+        </span>
       </span>
       <span
         title="This post was created via a Webhook. These do not go through Meowers account system, anyone can create a message under any name."
         v-if="post.u === 'Webhooks'"
       >
         <IconWebhook class="inline-block w-5" />
+        <span class="sr-only">
+          This post was created via a Webhook. These do not go through Meowers
+          account system, anyone can create a message under any name.
+        </span>
       </span>
       <span
         title="This post was created on the Revolt server."
         v-if="post.u === 'RevowerJS'"
       >
         <IconBuildingBridge class="inline-block w-5" />
+        <span class="sr-only">
+          This post was created on the Revolt server.
+        </span>
       </span>
       <div
         class="hidden text-sm italic text-slate-400 group-hover:inline-block"
@@ -310,14 +321,17 @@ effect(() => {
       >
         <template v-if="post.u === loginStatusStore.username">
           <button class="h-4 w-4" @click="remove">
-            <IconTrash />
+            <IconTrash aria-hidden />
+            <span class="sr-only">Delete</span>
           </button>
           <button class="h-4 w-4" @click="editing = true">
-            <IconEdit />
+            <IconEdit aria-hidden />
+            <span class="sr-only">Edit</span>
           </button>
         </template>
         <button class="h-4 w-4" @click="emit('reply', username, postContent)">
-          <IconArrowForward />
+          <IconArrowForward aria-hidden />
+          <span class="sr-only">Reply</span>
         </button>
       </div>
     </div>
