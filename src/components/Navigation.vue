@@ -35,6 +35,12 @@ const locationStore = useLocationStore();
         >
           Groups
         </button>
+        <button
+          class="text-sky-400 underline"
+          @click="locationStore.location = 'settings'"
+        >
+          Settings
+        </button>
       </div>
     </div>
     <p>

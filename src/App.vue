@@ -5,6 +5,7 @@ import Login from "./components/Login.vue";
 import Home from "./components/locations/Home.vue";
 import Inbox from "./components/locations/Inbox.vue";
 import Groups from "./components/locations/Groups.vue";
+import Settings from "./components/locations/Settings.vue";
 
 const loginStatusStore = useLoginStatusStore();
 const locationStore = useLocationStore();
@@ -17,4 +18,5 @@ const locationStore = useLocationStore();
   </template>
   <Groups v-if="locationStore.location === 'group'" />
   <Inbox v-if="locationStore.location === 'inbox'" />
+  <Settings v-if="locationStore.location === 'settings'" />
 </template>
