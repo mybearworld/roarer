@@ -66,12 +66,12 @@ effect(async () => {
         <img
           width="70"
           height="70"
-          :src="profilePictures.get(userProfile!.pfp_data)"
+          :src="profilePictures.get(userProfile.pfp_data)"
         />
       </div>
       <div class="">
-        <h2 class="text-xl font-bold">{{ userProfile!._id }}</h2>
-        <q class="text-lg italic">{{ userProfile!.quote }}</q>
+        <h2 class="text-xl font-bold">{{ userProfile._id }}</h2>
+        <q class="text-lg italic">{{ userProfile.quote }}</q>
         <div class="mt-2"></div>
         <p
           v-if="
@@ -81,10 +81,10 @@ effect(async () => {
         >
           Online
         </p>
-        <p v-else-if="userProfile!.last_seen">
+        <p v-else-if="userProfile.last_seen">
           Last seen {{ formatDate(userProfile!.last_seen) }}
         </p>
-        <p v-if="userProfile!.banned">Banned</p>
+        <p v-if="userProfile.banned">Banned</p>
         <div class="mt-2"></div>
         <p>Account created: {{ formatDate(userProfile.created) }}</p>
       </div>
