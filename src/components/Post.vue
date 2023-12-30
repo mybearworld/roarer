@@ -267,7 +267,7 @@ effect(() => {
 <template>
   <Post :post="edited" v-if="edited" @reply="(u, p) => emit('reply', u, p)" />
   <div
-    class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
+    class="group flex max-h-48 flex-col overflow-y-auto rounded-xl bg-slate-800 px-2 py-1"
     v-else
     v-if="!isDeleted"
   >
