@@ -344,7 +344,7 @@ effect(() => {
       <button
         class="rounded-xl bg-slate-700 px-2 py-1"
         v-if="
-          postContent.startsWith('Roarer users: Reload') &&
+          postContent.endsWith('\u200c') &&
           username === 'mybearworld' &&
           !isBridged
         "
