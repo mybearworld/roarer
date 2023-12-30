@@ -16,6 +16,7 @@ import {
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { bridgeBots } from "../lib/bridgeBots";
+import { formatDate } from "../lib/formatDate";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -298,6 +299,9 @@ effect(() => {
       >
         <IconBuildingBridge class="inline-block w-5" />
       </span>
+      <div class="inline-block text-sm italic text-slate-400">
+        {{ formatDate(post.t.e) }}
+      </div>
       <div
         class="invisible float-right space-x-3 group-hover:visible"
         v-if="!editing && !inbox"
