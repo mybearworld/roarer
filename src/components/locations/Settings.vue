@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { z } from "zod";
 import Navigation from "../Navigation.vue";
 import { profilePictures } from "../../assets/pfp";
+import { profileSchema } from "../../lib/profileSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 
@@ -12,19 +13,6 @@ const loginStatusStore = useLoginStatusStore();
 const quote = ref("");
 const profilePicture = ref(0);
 
-const profileSchema = z.object({
-  _id: z.string(),
-  banned: z.boolean(),
-  created: z.number(),
-  flags: z.number(),
-  last_seen: z.number(),
-  lower_username: z.string(),
-  lvl: z.number(),
-  permissions: z.number(),
-  pfp_data: z.number(),
-  quote: z.string(),
-  uuid: z.string(),
-});
 (async () => {
   const response = await (
     await fetch(`https://api.meower.org/users/${loginStatusStore.username}`)

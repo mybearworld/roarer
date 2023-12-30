@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Login from "./Login.vue";
-import { useLocationStore } from "../stores/location";
+import { useLocationStore, Location } from "../stores/location";
 
 const { title } = defineProps<{
   title: string;
@@ -9,6 +9,11 @@ const { title } = defineProps<{
 document.title = "Roarer - " + title;
 
 const locationStore = useLocationStore();
+
+const goTo = (location: Location) => {
+  locationStore.location = location;
+  locationStore.sublocation = null;
+};
 </script>
 
 <template>
@@ -34,6 +39,12 @@ const locationStore = useLocationStore();
           @click="locationStore.location = 'group'"
         >
           Groups
+        </button>
+        <button
+          class="text-sky-400 underline"
+          @click="locationStore.location = 'users'"
+        >
+          Users
         </button>
         <button
           class="text-sky-400 underline"

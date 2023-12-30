@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, effect, ref } from "vue";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
@@ -19,10 +19,12 @@ import { bridgeBots } from "../lib/bridgeBots";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useLocationStore } from "../stores/location";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
 
 const cloudlinkStore = useCloudlinkStore();
+const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 
@@ -81,6 +83,11 @@ if (!dontUpdate) {
     edited.value = packet.val.payload;
   });
 }
+
+const goToUser = (username: string) => {
+  locationStore.sublocation = username;
+  locationStore.location = "users";
+};
 
 const remove = async () => {
   if (!confirm("Are you sure you want to delete this post?")) {
@@ -234,6 +241,26 @@ const markdownPostContent = computed(() => {
   });
   return linkifiedHTML;
 });
+
+const postContentElement = ref<HTMLDivElement | null>(null);
+effect(() => {
+  if (postContentElement.value === null) {
+    return;
+  }
+  postContentElement.value.querySelectorAll("a").forEach((element) => {
+    const text = element.textContent;
+    if (!text || !element.textContent?.startsWith("@")) {
+      return;
+    }
+    const user = text.slice(1);
+    element.href = "#";
+    element.role = "button";
+    element.addEventListener("click", (e) => {
+      e.preventDefault();
+      goToUser(user);
+    });
+  });
+});
 </script>
 
 <template>
@@ -244,7 +271,9 @@ const markdownPostContent = computed(() => {
     v-if="!isDeleted"
   >
     <div class="space-x-2">
-      <span class="font-bold">{{ username }}</span>
+      <button class="font-bold" @click="goToUser(username)">
+        {{ username }}
+      </button>
       <span
         class="inline-block text-green-400"
         v-if="onlineListStore.online.includes(username)"
@@ -310,6 +339,7 @@ const markdownPostContent = computed(() => {
       <div
         class="space-y-2 break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-slate-500 [&_img]:max-h-96 [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc"
         v-html="markdownPostContent"
+        ref="postContentElement"
       ></div>
       <button
         class="rounded-xl bg-slate-700 px-2 py-1"
