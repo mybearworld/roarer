@@ -37,6 +37,7 @@ const { post, inbox, dontUpdate } = defineProps<{
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string];
+  delete: [];
 }>();
 
 const username = ref(
@@ -106,6 +107,7 @@ const remove = async () => {
         id: z.literal(post.post_id),
       }),
     );
+    emit("delete");
   } catch (e) {
     alert(e); // i can do error handling!
   }

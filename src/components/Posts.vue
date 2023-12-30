@@ -18,7 +18,14 @@ const { chat, inbox } = defineProps<{
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 
+const POSTS_PER_REQUESTS = 25;
+const requestURL = chat
+  ? `https://api.meower.org/posts/${chat._id}?autoget=1`
+  : `https://api.meower.org/${inbox ? "inbox" : "home"}?autoget=1`;
+
 const posts = ref<APIPost[]>([]);
+const newPostsAmount = ref(0);
+const pagesAmount = ref(1);
 
 const postsSchema = z.object({
   autoget: postSchema.array(),
@@ -29,17 +36,12 @@ const postsSchema = z.object({
     return;
   }
   const request = await (
-    await fetch(
-      chat
-        ? `https://api.meower.org/posts/${chat._id}?autoget=1`
-        : `https://api.meower.org/${inbox ? "inbox" : "home"}?autoget=1`,
-      {
-        headers: {
-          username,
-          token,
-        },
+    await fetch(requestURL, {
+      headers: {
+        username,
+        token,
       },
-    )
+    })
   ).json();
   console.log(request);
   posts.value = postsSchema.parse(request).autoget;
@@ -58,6 +60,7 @@ const postsSchema = z.object({
       ({ val: post }) => {
         posts.value.unshift(post);
         posts.value = posts.value;
+        newPostsAmount.value++;
       },
       false,
     );
@@ -65,6 +68,40 @@ const postsSchema = z.object({
 })();
 
 const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
+
+const loadingMore = ref(false);
+const loadMore = async () => {
+  if (loadingMore.value) {
+    return;
+  }
+  loadingMore.value = true;
+  const { username, token } = loginStatusStore;
+  if (username === null || token === null) {
+    loadingMore.value = false;
+    return;
+  }
+  const pagesToSkip = Math.floor(newPostsAmount.value / POSTS_PER_REQUESTS);
+  const postsToRemove =
+    newPostsAmount.value >= 0
+      ? newPostsAmount.value % POSTS_PER_REQUESTS
+      : POSTS_PER_REQUESTS -
+        Math.abs(newPostsAmount.value % POSTS_PER_REQUESTS);
+  const page = pagesAmount.value + pagesToSkip + 1;
+  const request = await (
+    await fetch(requestURL + `&page=${page}`, {
+      headers: {
+        username,
+        token,
+      },
+    })
+  ).json();
+  const safeRequest = postsSchema.parse(request);
+  const newPosts = safeRequest.autoget.slice(postsToRemove);
+  posts.value.push(...newPosts);
+  pagesAmount.value = page;
+  newPostsAmount.value += newPosts.length;
+  loadingMore.value = false;
+};
 </script>
 
 <template>
@@ -77,6 +114,15 @@ const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
     :key="post.post_id"
     :inbox="inbox"
     @reply="enterPost?.reply"
+    @delete="newPostsAmount--"
     v-for="post in posts"
   />
+  <button
+    type="button"
+    class="w-full rounded-xl bg-slate-800 py-1"
+    :disabled="loadingMore"
+    @click="loadMore"
+  >
+    {{ loadingMore ? "Loading more..." : "Load more" }}
+  </button>
 </template>
