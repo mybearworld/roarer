@@ -165,7 +165,9 @@ const editKeydown = (e: KeyboardEvent) => {
 const report = async () => {
   const reason = prompt("Reason:");
   if (!reason) {
-    alert("Please specify a reason.");
+    if (reason !== null) {
+      alert("Please specify a reason.");
+    }
     return;
   }
   if (
