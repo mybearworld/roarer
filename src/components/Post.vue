@@ -346,7 +346,7 @@ effect(() => {
     </div>
     <form v-if="editing" @submit="edit">
       <textarea
-        class="my-2 block w-full resize-y rounded-lg bg-slate-700 px-2 py-1"
+        class="my-2 block w-full resize-none rounded-lg bg-slate-700 px-2 py-1"
         type="text"
         rows="1"
         :value="postContent"

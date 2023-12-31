@@ -117,7 +117,7 @@ defineExpose({ reply });
 <template>
   <form @submit="post" class="flex space-x-2">
     <textarea
-      class="w-full resize-y rounded-lg bg-slate-800 px-2 py-1"
+      class="w-full resize-none rounded-lg bg-slate-800 px-2 py-1"
       placeholder="Say something!"
       @input="input"
       @keydown="keydown"
