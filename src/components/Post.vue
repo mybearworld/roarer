@@ -303,6 +303,22 @@ effect(() => {
       goToUser(user);
     });
   });
+  postContentElement.value.querySelectorAll("img").forEach(async (element) => {
+    const request = await fetch(element.src);
+    if (request.status !== 200) {
+      return;
+    }
+    const contentType = request.headers.get("content-type");
+    const isAudio = contentType?.startsWith("audio/");
+    const isVideo = contentType?.startsWith("video/");
+    if (!isAudio && !isVideo) {
+      return;
+    }
+    const newElement = document.createElement(isAudio ? "audio" : "video");
+    newElement.src = element.src;
+    newElement.controls = true;
+    element.replaceWith(newElement);
+  });
 });
 </script>
 
