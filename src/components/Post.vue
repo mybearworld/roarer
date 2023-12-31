@@ -5,6 +5,7 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {
+  IconAlertTriangle,
   IconArrowForward,
   IconBrandDiscord,
   IconBuildingBridge,
@@ -159,6 +160,36 @@ const editKeydown = (e: KeyboardEvent) => {
       edit();
     }
   }
+};
+
+const report = async () => {
+  const reason = prompt("Reason:");
+  if (!reason) {
+    alert("Please specify a reason.");
+    return;
+  }
+  if (
+    !confirm(
+      `You are reporting for the following reason:\n${reason}\n\nAre you absolutely sure? Post:\n${post.p}`,
+    )
+  ) {
+    return;
+  }
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "report",
+        val: {
+          type: 0,
+          id: post.post_id,
+          reason,
+          comment: "Reported with Roarer.",
+        },
+      },
+      z.object({}), // for obvious reasons, reports aren't public and there's no response associated with them
+    );
+  } catch {}
+  alert("Reported.");
 };
 
 const resizeTextarea = () => {
@@ -333,6 +364,14 @@ effect(() => {
             <span class="sr-only">Edit</span>
           </button>
         </template>
+        <button
+          class="h-4 w-4"
+          @click="report"
+          v-if="post.u !== loginStatusStore.username"
+        >
+          <IconAlertTriangle aria-hidden />
+          <span class="sr-only">Report</span>
+        </button>
         <button class="h-4 w-4" @click="emit('reply', username, postContent)">
           <IconArrowForward aria-hidden />
           <span class="sr-only">Reply</span>
