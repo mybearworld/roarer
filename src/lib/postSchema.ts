@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export type APIPost = z.infer<typeof postSchema>;
 export const postSchema = z.object({
+  edited_at: z.number().optional(),
   isDeleted: z.boolean(),
   p: z.string(),
   post_id: z.string(),

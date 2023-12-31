@@ -342,6 +342,7 @@ effect(() => {
         class="visible w-full text-sm italic text-slate-400 sm:hidden sm:w-auto group-hover:sm:inline-block"
       >
         {{ formatDate(post.t.e) }}
+        <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
     <form v-if="editing" @submit="edit">
