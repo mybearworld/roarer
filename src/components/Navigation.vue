@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Login from "./Login.vue";
 import { useLocationStore, Location } from "../stores/location";
+import { useIsDevStore } from "../stores/isDev";
 
 const { title } = defineProps<{
   title: string;
@@ -8,6 +9,7 @@ const { title } = defineProps<{
 
 document.title = "Roarer - " + title;
 
+const isDevStore = useIsDevStore();
 const locationStore = useLocationStore();
 
 const goTo = (location: Location) => {
@@ -62,6 +64,9 @@ const goTo = (location: Location) => {
         class="text-sky-400 underline"
         >the Github repository</a
       >!
+    </p>
+    <p class="text-red-200" v-if="isDevStore.isDev">
+      You are currently in development mode.
     </p>
   </div>
 </template>
