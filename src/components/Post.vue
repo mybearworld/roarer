@@ -116,6 +116,9 @@ const remove = async () => {
 const editing = ref(false);
 const editInputValue = ref<HTMLTextAreaElement | null>(null);
 effect(() => {
+  if (!editInputValue.value) {
+    return;
+  }
   resizeTextarea();
 });
 const edit = async (e?: Event) => {
