@@ -314,11 +314,6 @@ effect(() => {
         </span>
       </span>
       <div
-        class="hidden text-sm italic text-slate-400 group-hover:inline-block"
-      >
-        {{ formatDate(post.t.e) }}
-      </div>
-      <div
         class="invisible float-right space-x-3 group-hover:visible"
         v-if="!editing && !inbox"
       >
@@ -336,6 +331,11 @@ effect(() => {
           <IconArrowForward aria-hidden />
           <span class="sr-only">Reply</span>
         </button>
+      </div>
+      <div
+        class="hidden text-sm italic text-slate-400 group-hover:inline-block"
+      >
+        {{ formatDate(post.t.e) }}
       </div>
     </div>
     <form v-if="editing" @submit="edit">
