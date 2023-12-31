@@ -274,7 +274,7 @@ effect(() => {
     v-else
     v-if="!isDeleted"
   >
-    <div class="space-x-2">
+    <div class="relative flex flex-wrap items-center gap-x-2">
       <button class="font-bold" @click="goToUser(username)">
         {{ username }}
       </button>
@@ -314,7 +314,7 @@ effect(() => {
         </span>
       </span>
       <div
-        class="invisible float-right space-x-3 group-hover:visible"
+        class="visible absolute right-0 top-0 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
         v-if="!editing && !inbox"
       >
         <template v-if="post.u === loginStatusStore.username">
@@ -333,7 +333,7 @@ effect(() => {
         </button>
       </div>
       <div
-        class="hidden text-sm italic text-slate-400 group-hover:inline-block"
+        class="visible w-full text-sm italic text-slate-400 sm:hidden sm:w-auto group-hover:sm:inline-block"
       >
         {{ formatDate(post.t.e) }}
       </div>
