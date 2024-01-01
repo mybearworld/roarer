@@ -3,6 +3,7 @@ import { computed, effect, ref } from "vue";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
+// @ts-expect-error - the type definitions aren't correct
 import { full as emoji } from "markdown-it-emoji";
 import Token from "markdown-it/lib/token";
 import {
@@ -206,7 +207,7 @@ const reload = () => location.reload();
 
 const md = markdownit({
   breaks: true,
-}).use(emoji);
+}).use(emoji, { shortcuts: {} });
 
 const IMAGE_REGEX = /\[([^\]]+?): ([^\]]+?)\]/g;
 const markdownPostContent = computed(() => {
