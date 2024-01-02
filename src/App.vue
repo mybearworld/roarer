@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLoginStatusStore } from "./stores/loginStatus";
-import { useLocationStore } from "./stores/location";
+import { useLocationStore, Location } from "./stores/location";
 import Login from "./components/Login.vue";
 import Home from "./components/locations/Home.vue";
 import Inbox from "./components/locations/Inbox.vue";

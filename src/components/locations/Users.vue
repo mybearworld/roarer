@@ -22,9 +22,17 @@ const submit = (e: Event) => {
   locationStore.sublocation = usernameElement.value.value;
 };
 
+const dm = (user: string) => {
+  locationStore.location = "group";
+  locationStore.sublocation = `dm:${user}`;
+};
+
 const userProfile = ref<APIProfile | null>(null);
 effect(async () => {
-  if (locationStore.sublocation === null) {
+  if (
+    locationStore.sublocation === null ||
+    locationStore.location !== "users"
+  ) {
     console.log("returning");
     return;
   }
@@ -89,6 +97,14 @@ effect(async () => {
         <p v-if="userProfile.banned">Banned</p>
         <div class="mt-2"></div>
         <p>Account created: {{ formatDate(userProfile.created) }}</p>
+        <div class="mt-2"></div>
+        <button
+          type="button"
+          class="rounded-xl bg-slate-800 px-2 py-1"
+          @click="dm(userProfile._id)"
+        >
+          DM
+        </button>
       </div>
     </div>
   </div>

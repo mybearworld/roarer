@@ -9,9 +9,11 @@ import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { updateChatSchema } from "../../lib/updateChatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useLocationStore } from "../../stores/location";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const locationStore = useLocationStore();
 
 const chats = ref<APIChat[]>([]);
 const schema = z.object({
@@ -102,6 +104,25 @@ cloudlinkStore.lookFor(
   },
   false,
 );
+
+effect(async () => {
+  const { username, token } = loginStatusStore;
+  if (!username || !token) {
+    return;
+  }
+  if (
+    locationStore.sublocation &&
+    locationStore.sublocation.startsWith("dm:")
+  ) {
+    const dmUser = locationStore.sublocation.slice(3);
+    const response = await fetch(`https://api.meower.org/users/${dmUser}/dm`, {
+      headers: { username, token },
+    });
+    const safeResponse = chatSchema.parse(await response.json());
+    openGroupchat.value = safeResponse;
+    section.value = "main";
+  }
+});
 
 const openGroupchat = ref<APIChat | null>(null);
 const section = ref<null | "settings" | "main">(null);

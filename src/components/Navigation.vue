@@ -24,34 +24,19 @@ const goTo = (location: Location) => {
       <h1 class="inline-block text-3xl font-bold">Roarer - {{ title }}</h1>
       <Login />
       <div class="float-right space-x-2">
-        <button
-          class="text-sky-400 underline"
-          @click="locationStore.location = 'home'"
-        >
+        <button class="text-sky-400 underline" @click="goTo('home')">
           Home
         </button>
-        <button
-          class="text-sky-400 underline"
-          @click="locationStore.location = 'inbox'"
-        >
+        <button class="text-sky-400 underline" @click="goTo('inbox')">
           Inbox
         </button>
-        <button
-          class="text-sky-400 underline"
-          @click="locationStore.location = 'group'"
-        >
+        <button class="text-sky-400 underline" @click="goTo('group')">
           Groups
         </button>
-        <button
-          class="text-sky-400 underline"
-          @click="locationStore.location = 'users'"
-        >
+        <button class="text-sky-400 underline" @click="goTo('users')">
           Users
         </button>
-        <button
-          class="text-sky-400 underline"
-          @click="locationStore.location = 'settings'"
-        >
+        <button class="text-sky-400 underline" @click="goTo('settings')">
           Settings
         </button>
       </div>
