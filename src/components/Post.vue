@@ -209,7 +209,7 @@ const md = markdownit({
   breaks: true,
 }).use(emoji, { shortcuts: {} });
 
-const IMAGE_REGEX = /\[([^\]]+?): ([^\]]+?)\]/g;
+const IMAGE_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/g;
 const markdownPostContent = computed(() => {
   const tokens = md.parse(postContent.value, {});
   const newTokens: Token[] = [];
