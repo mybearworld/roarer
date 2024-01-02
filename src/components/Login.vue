@@ -56,6 +56,29 @@ const loginEvent = async (e: Event) => {
   return;
 };
 
+const signUp = async () => {
+  loading.value = true;
+  message.value = "";
+  let data;
+  try {
+    data = await cloudlinkStore.send(
+      {
+        cmd: "gen_account",
+        val: { username: username.value, pswd: password.value },
+      },
+      logInSchema,
+    );
+  } catch (e) {
+    message.value = e as string;
+    loading.value = false;
+    return;
+  }
+  loginStatusStore.username = data.payload.username;
+  loginStatusStore.token = data.payload.token;
+  loading.value = false;
+  resetFormFields();
+};
+
 if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
   let nonNullCredentials: [string, string] = [
     loginStatusStore.username,
@@ -124,13 +147,23 @@ const signOut = async () => {
               v-model="password"
             />
           </label>
-          <button
-            class="rounded-xl bg-slate-700 px-2 py-1"
-            type="submit"
-            :disabled="loading"
-          >
-            {{ loading ? "Loading..." : "Go!" }}
-          </button>
+          <div class="space-x-2">
+            <button
+              class="rounded-xl bg-slate-700 px-2 py-1"
+              type="submit"
+              :disabled="loading"
+            >
+              Log in
+            </button>
+            <button
+              class="rounded-xl bg-slate-700 px-2 py-1"
+              type="button"
+              :disabled="loading"
+              @click="signUp"
+            >
+              Sign up
+            </button>
+          </div>
           <span v-if="message">
             {{ message }}
           </span>
