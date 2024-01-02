@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { effect, ref } from "vue";
 import { z } from "zod";
+import ChatSettings from "../ChatSettings.vue";
 import ChatView from "../ChatView.vue";
 import Posts from "../Posts.vue";
 import Navigation from "../Navigation.vue";
 import { chatSchema, APIChat } from "../../lib/chatSchema";
+import { updateChatSchema } from "../../lib/updateChatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 
@@ -67,9 +69,49 @@ cloudlinkStore.lookFor(
   false,
 );
 
+const deleteChatSchema = z.object({
+  cmd: z.literal("direct"),
+  val: z.object({
+    mode: z.literal("delete"),
+    id: z.string(),
+  }),
+});
+cloudlinkStore.lookFor(deleteChatSchema, (packet) => {
+  chats.value = chats.value.filter((chat) => chat._id !== packet.val.id);
+  if (openGroupchat.value?._id === packet.val.id) {
+    openGroupchat.value = null;
+  }
+});
+
+cloudlinkStore.lookFor(
+  updateChatSchema,
+  (packet) => {
+    const index = chats.value.findIndex(
+      (chat) => packet.val.payload._id === chat._id,
+    );
+    if (packet.val.payload.nickname) {
+      chats.value[index].nickname = packet.val.payload.nickname;
+    }
+    if (packet.val.payload.owner) {
+      chats.value[index].owner = packet.val.payload.owner;
+    }
+    if (packet.val.payload.members) {
+      chats.value[index].members = packet.val.payload.members;
+    }
+    chats.value = chats.value;
+  },
+  false,
+);
+
 const openGroupchat = ref<APIChat | null>(null);
+const section = ref<null | "settings" | "main">(null);
 const open = (chat: APIChat) => {
   openGroupchat.value = chat;
+  section.value = "main";
+};
+const settings = (chat: APIChat) => {
+  openGroupchat.value = chat;
+  section.value = "settings";
 };
 </script>
 
@@ -88,8 +130,14 @@ const open = (chat: APIChat) => {
           Create
         </button>
       </form>
-      <ChatView :chat="chat" @open="open" v-for="chat in chats" />
+      <ChatView
+        :chat="chat"
+        @open="open"
+        @settings="settings"
+        v-for="chat in chats"
+      />
     </template>
-    <Posts :chat="openGroupchat" v-else />
+    <Posts :chat="openGroupchat" v-else-if="section === 'main'" />
+    <ChatSettings :chat="openGroupchat" @back="openGroupchat = null" v-else />
   </div>
 </template>
