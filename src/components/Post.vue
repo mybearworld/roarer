@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, effect, ref } from "vue";
+import hljs from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
@@ -210,6 +212,12 @@ const reload = () => location.reload();
 
 const md = markdownit({
   breaks: true,
+  highlight(str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(str, { language: lang }).value;
+    }
+    return "";
+  },
 }).use(emoji, { shortcuts: {} });
 
 const IMAGE_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/g;
