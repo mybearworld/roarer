@@ -71,12 +71,14 @@ effect(async () => {
       </div>
       <div class="">
         <h2 class="text-xl font-bold">{{ userProfile._id }}</h2>
-        <q class="text-lg italic">{{ userProfile.quote }}</q>
+        <q class="text-lg italic" v-if="userProfile.quote">
+          {{ userProfile.quote }}
+        </q>
         <div class="mt-2"></div>
         <p
           v-if="
-            loginStatusStore.username &&
-            onlinelistStore.online.includes(loginStatusStore.username)
+            locationStore.sublocation &&
+            onlinelistStore.online.includes(locationStore.sublocation)
           "
         >
           Online
