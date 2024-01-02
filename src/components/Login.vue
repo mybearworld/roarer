@@ -70,24 +70,19 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
       return;
     }
     if (syntaxErrorSchema.safeParse(packet).success) {
-      const tryLogIn = async () => {
-        try {
-          await login(...nonNullCredentials);
-        } catch (e) {
-          if (
-            confirm(
-              "You couldn't be logged in. This may be because your token has been revoked. Do you want to try again?",
-            )
-          ) {
-            tryLogIn();
-          } else {
-            loginStatusStore.username = null;
-            loginStatusStore.token = null;
-            location.reload();
-          }
+      try {
+        await login(...nonNullCredentials);
+      } catch (e) {
+        if (
+          !confirm(
+            "You couldn't be logged in. This may be because your token has been revoked. Do you want to try again?",
+          )
+        ) {
+          loginStatusStore.username = null;
+          loginStatusStore.token = null;
         }
-      };
-      tryLogIn();
+        location.reload();
+      }
     }
   });
 }
