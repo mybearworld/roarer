@@ -5,9 +5,11 @@ import Navigation from "../Navigation.vue";
 import { profilePictures } from "../../assets/pfp";
 import { profileSchema } from "../../lib/profileSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
+import { useLocationStore } from "../../stores/location";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
+const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 
 const quote = ref("");
@@ -101,5 +103,28 @@ const submit = async (e: Event) => {
         Submit
       </button>
     </form>
+    <h2 class="text-lg font-bold">Credits</h2>
+    <p>
+      Thank you to all
+      <a
+        href="https://github.com/mybearworld/roarer/graphs/contributors"
+        class="text-sky-400 underline"
+        >contributors</a
+      >
+      for making this possible.
+    </p>
+    <p>
+      Special thanks to
+      <button
+        class="text-sky-400 underline"
+        @click="
+          locationStore.location = 'users';
+          locationStore.sublocation = 'Supernoodles99';
+        "
+      >
+        @Supernoodles99
+      </button>
+      for making the (currently unnamed) mascot!
+    </p>
   </div>
 </template>
