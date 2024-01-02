@@ -452,7 +452,7 @@ effect(() => {
         "
         @click="reload"
       >
-        <IconReload class="inline-block h-5 w-5" />
+        <IconReload class="inline-block h-5 w-5" aria-hidden />
         Reload
       </button>
     </div>

@@ -49,8 +49,14 @@ const emit = defineEmits<{
       @click="emit('settings', chat)"
       v-if="chat.nickname"
     >
-      <IconSettings v-if="chat.owner === loginStatusStore.username" />
-      <IconUsersGroup v-else />
+      <IconSettings
+        aria-hidden
+        v-if="chat.owner === loginStatusStore.username"
+      />
+      <IconUsersGroup aria-hidden v-else />
+      <span class="sr-only">
+        {{ chat.owner === loginStatusStore.username ? "Settings" : "People" }}
+      </span>
     </button>
   </div>
 </template>
