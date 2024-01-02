@@ -36,7 +36,7 @@ effect(async () => {
   chats.value = response.autoget;
 });
 
-const chatNickname = ref<HTMLInputElement | null>(null);
+const chatNickname = ref("");
 const createChat = async (e?: Event) => {
   e?.preventDefault();
   const { username, token } = loginStatusStore;
@@ -47,7 +47,7 @@ const createChat = async (e?: Event) => {
     method: "POST",
     headers: { username, token, "content-type": "application/json" },
     body: JSON.stringify({
-      nickname: chatNickname.value.value,
+      nickname: chatNickname.value,
     }),
   });
   if (response.status !== 200) {
@@ -145,7 +145,7 @@ const settings = (chat: APIChat) => {
           type="text"
           placeholder="Nickname"
           class="w-full rounded-lg bg-slate-800 px-2 py-1"
-          ref="chatNickname"
+          v-model="chatNickname"
         />
         <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
           Create

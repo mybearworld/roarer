@@ -12,14 +12,14 @@ const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlinelistStore = useOnlinelistStore();
 
-const usernameElement = ref<HTMLInputElement | null>(null);
+const username = ref("");
 
 const submit = (e: Event) => {
   e.preventDefault();
-  if (!usernameElement.value) {
+  if (!username.value) {
     return;
   }
-  locationStore.sublocation = usernameElement.value.value;
+  locationStore.sublocation = username.value;
 };
 
 const dm = (user: string) => {
@@ -57,7 +57,7 @@ effect(async () => {
         placeholder="Username..."
         aria-label="Username"
         type="text"
-        ref="usernameElement"
+        v-model="username"
       />
       <button class="rounded-xl bg-slate-800 px-2 py-1">Go</button>
     </form>
