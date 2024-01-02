@@ -43,7 +43,7 @@ cloudlinkStore.lookFor(
   false,
 );
 
-const submit = async (e: Event) => {
+const me = async (e: Event) => {
   e.preventDefault();
   try {
     await cloudlinkStore.send(
@@ -62,6 +62,59 @@ const submit = async (e: Event) => {
   }
   alert("Successfully updated your settings.");
 };
+
+const revokeTokens = async () => {
+  if (!confirm("Are you sure? You'll have to sign in on every device again.")) {
+    return;
+  }
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "del_tokens",
+        val: null,
+      },
+      z.literal("I:024 | Logged out"),
+    );
+  } catch (e) {
+    alert(`Couldn't revoke tokens: ${e}`);
+    return;
+  }
+  loginStatusStore.username = null;
+  loginStatusStore.token = null;
+  location.reload();
+};
+
+const deleteAccount = async () => {
+  if (
+    !confirm(
+      "Are you sure? There is ABSOLUTELY NO WAY to undo this. Your account will be PERMANENTLY deleted after 7 days.",
+    )
+  ) {
+    return;
+  }
+  const password = prompt(
+    "Please enter your password to confirm deleting your account.",
+  );
+  if (!password) {
+    return;
+  }
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "del_account",
+        val: password,
+      },
+      z.literal("I:024 | Logged out"),
+      // true,
+    );
+  } catch (e) {
+    alert(`Couldn't delete account: ${e}`);
+    return;
+  }
+  loginStatusStore.username = null;
+  loginStatusStore.token = null;
+  location.reload();
+};
 </script>
 
 <template>
@@ -70,7 +123,7 @@ const submit = async (e: Event) => {
     <div>
       <h2 class="text-lg font-bold">Me</h2>
     </div>
-    <form class="contents" @submit="submit">
+    <form class="contents" @submit="me">
       <label class="flex items-center gap-2">
         Quote:
         <input
@@ -99,10 +152,24 @@ const submit = async (e: Event) => {
           </button>
         </div>
       </label>
-      <button class="rounded-xl bg-slate-700 px-2 py-1" type="submit">
+      <button class="rounded-xl bg-slate-800 px-2 py-1" type="submit">
         Submit
       </button>
     </form>
+    <h2 class="text-lg font-bold">My account</h2>
+    <div>
+      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="revokeTokens">
+        Revoke all tokens
+      </button>
+      This will sign you out of all devices.
+    </div>
+    <div>
+      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="deleteAccount">
+        Delete account
+      </button>
+      This will delete your account <strong>permanently</strong>. There is
+      <strong>no</strong> way to undo this.
+    </div>
     <h2 class="text-lg font-bold">Credits</h2>
     <p>
       Thank you to all

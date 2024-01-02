@@ -65,7 +65,7 @@ export const useCloudlinkStore = defineStore("cloudlink", {
         });
         setTimeout(() => {
           reject("Timeout");
-        }, 1500);
+        }, 2500);
         this.lookFor(schema, (packet) => resolve(packet.val), true);
         this.lookFor(errorSchema, (packet) => reject(packet.val), true);
       });
@@ -74,7 +74,6 @@ export const useCloudlinkStore = defineStore("cloudlink", {
       schema: TSchema,
       fun: (packet: z.infer<TSchema>) => void,
       shouldStop = true,
-      log = false,
     ) {
       let stop = false;
       this.cloudlink.on("packet", (packet: unknown) => {
