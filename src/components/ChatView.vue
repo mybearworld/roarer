@@ -25,14 +25,14 @@ const emit = defineEmits<{
         chat.members.find((user) => user !== loginStatusStore.username)
       }}
     </p>
-    <p class="flex gap-1">
+    <p class="flex items-center gap-1">
       <template v-if="chat.nickname">
-        <IconUser class="inline-block w-4" aria-hidden />
+        <IconUser class="inline-block h-4 w-4 min-w-4" aria-hidden />
         <span class="sr-only">Members:</span>
         {{ chat.members.join(", ") }}
       </template>
       <template v-else>
-        <IconMessage class="inline-block w-4" aria-hidden />
+        <IconMessage class="inline-block h-4 w-4 min-w-4" aria-hidden />
         DM
       </template>
     </p>
