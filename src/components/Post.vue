@@ -15,6 +15,7 @@ import {
   IconBuildingBridge,
   IconCircleFilled,
   IconEdit,
+  IconSailboat,
   IconReload,
   IconTrash,
   IconWebhook,
@@ -57,13 +58,22 @@ const postContent = ref(post.p);
 const isItalicUser = computed(() =>
   ["Server", "Notification", "Announcement"].includes(username.value),
 );
-const isBridged = computed(() => bridgeBots.includes(username.value));
-if (isBridged.value) {
-  const match = postContent.value.match(/^(.*?): (.*)$/s);
+
+const separatePost = (content: string) => {
+  const match = content.match(/^(.*?): (.*)$/s);
   if (match) {
     username.value = match[1];
     postContent.value = match[2];
   }
+};
+
+const isBridged = bridgeBots.includes(username.value);
+if (isBridged) {
+  separatePost(postContent.value);
+}
+const isSplash = post.u === "Webhooks" && username.value === "SplashBridge";
+if (isSplash) {
+  separatePost(postContent.value);
 }
 
 const isDeleted = ref(false);
@@ -368,13 +378,20 @@ effect(() => {
       </span>
       <span
         title="This post was created via a Webhook. These do not go through Meowers account system, anyone can create a message under any name."
-        v-if="post.u === 'Webhooks'"
+        v-if="post.u === 'Webhooks' && !isSplash"
       >
         <IconWebhook class="inline-block w-5" />
         <span class="sr-only">
           This post was created via a Webhook. These do not go through Meowers
           account system, anyone can create a message under any name.
         </span>
+      </span>
+      <span
+        title="This post was created via Splash. These do not go through Meowers or Splashs account system, anyone can create a message under any name."
+        v-if="isSplash"
+      >
+        <IconSailboat class="inline-block w-5" />
+        <span class="sr-only"> This post was created on Splash. </span>
       </span>
       <span
         title="This post was created on the Revolt server."
