@@ -59,7 +59,9 @@ const post = async (e?: Event) => {
 };
 
 const trimmedPost = (post: string) => {
-  const quoteMatch = post.match(/^@[a-z_0-9-]+(?: ".{0,40}…?" )?(.*)$/i);
+  const quoteMatch = post.match(
+    /^@[a-z_0-9-]+(?: ".{0,40}…?"| \[[a-z0-9\-]+\])? (.*)$/i,
+  );
   const postContent = quoteMatch ? quoteMatch[1] : post;
   const slicedPostContent = postContent.slice(0, 40);
   const replacedPostContent = slicedPostContent
