@@ -23,7 +23,7 @@ setInterval(() => {
     alert("You were disconnected. Clicking OK will reload the page.");
     location.reload();
   }
-}, 10000);
+}, 20000);
 
 export const useCloudlinkStore = defineStore("cloudlink", {
   state: () => ({
