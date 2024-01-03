@@ -18,4 +18,5 @@ export const postSchema = z.object({
   }),
   type: z.number(),
   u: z.string(),
+  unfiltered_p: z.string().optional(),
 });
