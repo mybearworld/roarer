@@ -63,6 +63,39 @@ const me = async (e: Event) => {
   alert("Successfully updated your settings.");
 };
 
+const changePassword = async () => {
+  const newPassword = prompt("What do you want your new password to be?");
+  if (!newPassword) {
+    return;
+  }
+  const oldPassword = prompt("What is your current password?");
+  if (!oldPassword) {
+    return;
+  }
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "change_pswd",
+        val: {
+          old: oldPassword,
+          new: newPassword,
+        },
+      },
+      z.object({
+        cmd: z.literal("statuscode"),
+        val: z.literal("I:100 | OK"),
+      }),
+      false,
+    );
+  } catch (e) {
+    alert(`Couldn't change password: ${e}`);
+    return;
+  }
+  if (confirm("Do you also want to revoke all tokens?")) {
+    revokeTokens();
+  }
+};
+
 const revokeTokens = async () => {
   if (!confirm("Are you sure? You'll have to sign in on every device again.")) {
     return;
@@ -157,6 +190,11 @@ const deleteAccount = async () => {
       </button>
     </form>
     <h2 class="text-lg font-bold">My account</h2>
+    <div>
+      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">
+        Change password
+      </button>
+    </div>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="revokeTokens">
         Revoke all tokens

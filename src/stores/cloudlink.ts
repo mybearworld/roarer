@@ -43,6 +43,7 @@ export const useCloudlinkStore = defineStore("cloudlink", {
     send<TSchema extends ZodSchema>(
       packet: CloudlinkPacket,
       responseSchema: TSchema,
+      direct = true,
     ) {
       return new Promise<z.infer<TSchema>>(async (resolve, reject) => {
         await this.waitUntilSendable();
@@ -50,10 +51,12 @@ export const useCloudlinkStore = defineStore("cloudlink", {
           cmd: "direct",
           val: packet,
         });
-        const schema = z.object({
-          cmd: z.literal("direct"),
-          val: responseSchema,
-        });
+        const schema = direct
+          ? z.object({
+              cmd: z.literal("direct"),
+              val: responseSchema,
+            })
+          : responseSchema;
         const errorSchema = z.object({
           cmd: z.literal("statuscode"),
           val: z
