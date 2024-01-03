@@ -53,14 +53,14 @@ const goTo = (location: Location) => {
     <p class="text-red-200" v-if="isDevStore.isDev">
       You are currently in development mode.
       <a
-        href="https://github.com/meower-media-co/Meower-Server"
+        href="https://github.com/meower-media-co/Meower-Server/tree/main"
         class="text-sky-400 underline"
         target="_blank"
         >Meower Server</a
       >
       -
       <a
-        href="https://github.com/meower-media-co/Meower-Svelte"
+        href="https://github.com/meower-media-co/Meower-Svelte/tree/master"
         class="text-sky-400 underline"
         target="_blank"
         >Meower Svelte</a
