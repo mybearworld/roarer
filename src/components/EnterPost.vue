@@ -65,7 +65,10 @@ const trimmedPost = (post: string) => {
   const postContent = quoteMatch ? quoteMatch[1] : post;
   const slicedPostContent = postContent.slice(0, 40);
   const replacedPostContent = slicedPostContent
+    .slice(0, 40)
     .replace(/: /g, ":  ") // images shouldn't appear in replies
+
+    .replace(/!/g, "!\u200c") // markdown images
     .replace(/\n/g, " ");
   return `"${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
