@@ -6,4 +6,7 @@ import topLevelAwait from "vite-plugin-top-level-await";
 export default defineConfig({
   plugins: [vue(), topLevelAwait()],
   base: "/roarer",
+  build: {
+    minify: false,
+  },
 });
