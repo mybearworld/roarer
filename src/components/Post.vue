@@ -31,13 +31,11 @@ import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLocationStore } from "../stores/location";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
-import { useRelationshipStore } from "../stores/relationship";
 
 const cloudlinkStore = useCloudlinkStore();
 const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
-const relationshipStore = useRelationshipStore();
 
 const { post, inbox, dontUpdate } = defineProps<{
   post: APIPost;
@@ -337,15 +335,11 @@ effect(() => {
 </script>
 
 <template>
-  <Post
-    :post="edited"
-    v-if="edited && !relationshipStore.blockedUsers.has(username)"
-    @reply="(u, p) => emit('reply', u, p)"
-  />
+  <Post :post="edited" v-if="edited" @reply="(u, p) => emit('reply', u, p)" />
   <div
     class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
     v-else
-    v-if="!isDeleted && !relationshipStore.blockedUsers.has(username)"
+    v-if="!isDeleted"
   >
     <div class="relative flex flex-wrap items-center gap-x-2">
       <button

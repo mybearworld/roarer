@@ -2,9 +2,6 @@
 import Login from "./Login.vue";
 import { useLocationStore, Location } from "../stores/location";
 import { useIsDevStore } from "../stores/isDev";
-import { useRelationshipStore } from "../stores/relationship";
-
-const relationshipStore = useRelationshipStore();
 
 const { title } = defineProps<{
   title: string;

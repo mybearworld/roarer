@@ -1,27 +1,17 @@
 <script lang="ts" setup>
-import { computed, effect, ref } from "vue";
-import { z } from "zod";
+import { effect, ref } from "vue";
 import Navigation from "../Navigation.vue";
 import { profilePictures } from "../../assets/pfp";
-import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
-import {
-  relationshipSchema,
-  relationshipPacketSchema,
-  APIRelationship,
-} from "../../lib/relationshipSchema";
-import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLocationStore } from "../../stores/location";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useOnlinelistStore } from "../../stores/onlinelist";
-import { useRelationshipStore } from "../../stores/relationship";
 
-const cloudlinkStore = useCloudlinkStore();
 const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlinelistStore = useOnlinelistStore();
-const relationshipStore = useRelationshipStore();
 
 const username = ref("");
 
@@ -62,44 +52,6 @@ effect(async () => {
   }
   userProfile.value = response;
 });
-
-const isBlocked = computed(() =>
-  relationshipStore.blockedUsers.has(username.value),
-);
-const block = async () => {
-  if (
-    locationStore.sublocation === null ||
-    locationStore.location !== "users"
-  ) {
-    return;
-  }
-  if (
-    !confirm(
-      `Are you sure you want to ${
-        isBlocked.value
-          ? "unblock this user?"
-          : "block this user? You won't be able to see their messages."
-      }`,
-    )
-  ) {
-    return;
-  }
-  const response = await apiRequest(
-    `/users/${locationStore.sublocation}/relationship`,
-    {
-      method: "PATCH",
-      auth: loginStatusStore,
-      body: JSON.stringify({
-        state: isBlocked.value ? 0 : 2,
-      }),
-    },
-  );
-  if (response.status !== 200) {
-    alert(
-      `Couldn't ${isBlocked.value ? "unblock" : "block"}: ${response.status}`,
-    );
-  }
-};
 </script>
 
 <template>
@@ -152,24 +104,13 @@ const block = async () => {
         <div class="mt-2"></div>
         <p>Account created: {{ formatDate(userProfile.created) }}</p>
         <div class="mt-2"></div>
-        <div class="space-x-2">
-          <button
-            type="button"
-            class="rounded-xl bg-slate-800 px-2 py-1"
-            @click="dm(userProfile._id)"
-            v-if="!isBlocked"
-          >
-            DM
-          </button>
-          <button
-            type="button"
-            class="rounded-xl bg-slate-800 px-2 py-1"
-            @click="block"
-            v-if="locationStore.sublocation !== loginStatusStore.username"
-          >
-            {{ isBlocked ? "Unblock" : "Block" }}
-          </button>
-        </div>
+        <button
+          type="button"
+          class="rounded-xl bg-slate-800 px-2 py-1"
+          @click="dm(userProfile._id)"
+        >
+          DM
+        </button>
       </div>
     </div>
   </div>

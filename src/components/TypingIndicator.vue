@@ -5,7 +5,6 @@ import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
-import { useRelationshipStore } from "../stores/relationship";
 
 const { chat } = defineProps<{
   chat?: APIChat;
@@ -13,15 +12,13 @@ const { chat } = defineProps<{
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
-const relationshipStore = useRelationshipStore();
 
 const typingUsers = ref(new Set<string>());
 const shownTypingUsers = computed(() =>
   [...typingUsers.value].filter(
     (item) =>
       item !== loginStatusStore.username &&
-      (!chat || chat.members.includes(item)) &&
-      !relationshipStore.blockedUsers.has(item),
+      (!chat || chat.members.includes(item)),
   ),
 );
 
