@@ -139,6 +139,15 @@ const settings = (chat: APIChat) => {
 <template>
   <div class="block space-y-2">
     <Navigation title="Groups" />
+    <p class="text-xl font-bold">
+      Notice: Any features other than seeing and sending messages of groups may
+      currently not work correctly.
+      <a
+        href="https://github.com/mybearworld/roarer/issues/21"
+        class="text-sky-400 underline"
+        >More details</a
+      >
+    </p>
     <template v-if="openGroupchat === null">
       <form class="flex gap-2" @submit="createChat">
         <input
