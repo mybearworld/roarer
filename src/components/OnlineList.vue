@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { z } from "zod";
 import { bridgeBots } from "../lib/bridgeBots";
 import { APIChat } from "../lib/chatSchema";
 import { useOnlinelistStore } from "../stores/onlinelist";

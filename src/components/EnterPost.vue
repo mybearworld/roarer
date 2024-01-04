@@ -6,7 +6,7 @@ import {
   autoResizeTextarea,
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
-import { postSchema, APIPost } from "../lib/postSchema";
+import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
