@@ -5,6 +5,7 @@ import ChatSettings from "../ChatSettings.vue";
 import ChatView from "../ChatView.vue";
 import Posts from "../Posts.vue";
 import Navigation from "../Navigation.vue";
+import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { updateChatSchema } from "../../lib/updateChatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
@@ -20,32 +21,26 @@ const schema = z.object({
   autoget: chatSchema.array(),
 });
 effect(async () => {
-  const { username, token } = loginStatusStore;
-  if (username === null || token === null) {
+  const response = await getResponseFromAPIRequest("/chats?autoget=1", {
+    auth: loginStatusStore,
+    schema,
+  });
+  if ("status" in response) {
+    alert(`Couldn't get chats: ${response.status}`);
     return;
   }
-  const unsafeResponse = await (
-    await fetch("https://api.meower.org/chats?autoget=1", {
-      headers: {
-        username,
-        token,
-      },
-    })
-  ).json();
-  const response = schema.parse(unsafeResponse);
   chats.value = response.autoget;
 });
 
 const chatNickname = ref("");
 const createChat = async (e?: Event) => {
   e?.preventDefault();
-  const { username, token } = loginStatusStore;
-  if (username === null || token === null || chatNickname.value === null) {
+  if (chatNickname.value === null) {
     return;
   }
-  const response = await fetch("https://api.meower.org/chats", {
+  const response = await apiRequest("/chats", {
     method: "POST",
-    headers: { username, token, "content-type": "application/json" },
+    auth: loginStatusStore,
     body: JSON.stringify({
       nickname: chatNickname.value,
     }),
@@ -106,22 +101,23 @@ cloudlinkStore.lookFor(
 );
 
 effect(async () => {
-  const { username, token } = loginStatusStore;
-  if (!username || !token) {
+  if (
+    !locationStore.sublocation ||
+    !locationStore.sublocation.startsWith("dm:")
+  ) {
     return;
   }
-  if (
-    locationStore.sublocation &&
-    locationStore.sublocation.startsWith("dm:")
-  ) {
-    const dmUser = locationStore.sublocation.slice(3);
-    const response = await fetch(`https://api.meower.org/users/${dmUser}/dm`, {
-      headers: { username, token },
-    });
-    const safeResponse = chatSchema.parse(await response.json());
-    openGroupchat.value = safeResponse;
-    section.value = "main";
+  const dmUser = locationStore.sublocation.slice(3);
+  const response = await getResponseFromAPIRequest(`/users/${dmUser}/dm`, {
+    auth: loginStatusStore,
+    schema: chatSchema,
+  });
+  if ("status" in response) {
+    alert(`Couldn't open DM: ${response.status}`);
+    return;
   }
+  openGroupchat.value = response;
+  section.value = "main";
 });
 
 const openGroupchat = ref<APIChat | null>(null);

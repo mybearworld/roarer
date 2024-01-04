@@ -22,6 +22,7 @@ import {
 } from "@tabler/icons-vue";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
+import { apiRequest } from "../lib/apiRequest";
 import { bridgeBots } from "../lib/bridgeBots";
 import { formatDate } from "../lib/formatDate";
 import { hostWhitelist } from "../lib/hostWhitelist";
@@ -146,27 +147,15 @@ const edit = async (e?: Event) => {
     return;
   }
   autoResizeTextarea(editInputValue.value);
-  const { username, token } = loginStatusStore;
-  if (username === null || token === null) {
-    return;
-  }
-  const request = await fetch(
-    `https://api.meower.org/posts?id=${post.post_id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        username,
-        token,
-        id: post.post_id,
-      },
-      body: JSON.stringify({
-        content: editInputValue.value.value,
-      }),
-    },
-  );
-  if (request.status !== 200) {
-    alert(`Unexpected ${request.status} when editing`);
+  const response = await apiRequest(`/posts?id=${post.post_id}`, {
+    method: "PATCH",
+    auth: loginStatusStore,
+    body: JSON.stringify({
+      content: editInputValue.value.value,
+    }),
+  });
+  if (response.status !== 200) {
+    alert(`Unexpected ${response.status} when editing`);
   }
 };
 

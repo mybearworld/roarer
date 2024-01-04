@@ -2,6 +2,7 @@
 import { effect, ref } from "vue";
 import Navigation from "../Navigation.vue";
 import { profilePictures } from "../../assets/pfp";
+import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
 import { useLocationStore } from "../../stores/location";
@@ -35,15 +36,21 @@ effect(async () => {
   ) {
     return;
   }
-  const response = await (
-    await fetch(`https://api.meower.org/users/${locationStore.sublocation}`)
-  ).json();
-  const parsedResponse = profileSchemaOrError.parse(response);
-  if (parsedResponse.error) {
-    alert(`Couldn't get profile: ${parsedResponse.type}`);
+  const response = await getResponseFromAPIRequest(
+    `/users/${locationStore.sublocation}`,
+    {
+      schema: profileSchemaOrError,
+    },
+  );
+  if ("status" in response) {
+    alert(`Couldn't get profile: ${response.status}`);
     return;
   }
-  userProfile.value = parsedResponse;
+  if (response.error) {
+    alert(`Couldn't get profile: ${response.type}`);
+    return;
+  }
+  userProfile.value = response;
 });
 </script>
 

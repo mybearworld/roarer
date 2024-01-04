@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { IconCrown, IconX } from "@tabler/icons-vue";
+import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/chatSchema";
 import { updateChatSchema } from "../lib/updateChatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -28,36 +29,26 @@ const owner = ref(chat.owner);
 const newChatName = ref(name.value);
 const rename = async (e?: Event) => {
   e?.preventDefault();
-  const { username, token } = loginStatusStore;
-  if (!username || !token) {
-    return;
-  }
-  const response = await fetch(`https://api.meower.org/chats/${chat._id}`, {
+  const response = await apiRequest(`/chats/${chat._id}`, {
+    auth: loginStatusStore,
     method: "PATCH",
-    headers: { username, token, "content-type": "application/json" },
     body: JSON.stringify({
       nickname: newChatName.value,
     }),
   });
   if (response.status !== 200) {
     alert(`Unexpected ${response.status} when trying to rename chat`);
-  } else {
-    alert("Renamed.");
   }
 };
 
 const addUserName = ref("");
 const addUser = async (e?: Event) => {
   e?.preventDefault();
-  const { username, token } = loginStatusStore;
-  if (!username || !token) {
-    return;
-  }
-  const response = await fetch(
-    `https://api.meower.org/chats/${chat._id}/members/${addUserName.value}`,
+  const response = await apiRequest(
+    `/chats/${chat._id}/members/${addUserName.value}`,
     {
+      auth: loginStatusStore,
       method: "PUT",
-      headers: { username, token },
     },
   );
   if (response.status !== 200) {
@@ -66,40 +57,26 @@ const addUser = async (e?: Event) => {
 };
 
 const remove = async (person: string) => {
-  const { username, token } = loginStatusStore;
   if (
-    !username ||
-    !token ||
     !confirm(
       `Are you sure you want to remove ${person}? You can add them back afterwards.`,
     )
   ) {
     return;
   }
-  const response = await fetch(
-    `https://api.meower.org/chats/${chat._id}/members/${person}`,
-    {
-      method: "DELETE",
-      headers: { username, token },
-    },
-  );
+  const response = await apiRequest(`/chats/${chat._id}/members/${person}`, {
+    method: "DELETE",
+    auth: loginStatusStore,
+  });
   if (response.status !== 200) {
     alert(`Unexpected ${response.status} while removing user`);
   }
 };
 
 const leave = async () => {
-  const { username, token } = loginStatusStore;
-  if (
-    !username ||
-    !token ||
-    !confirm(`Are you sure you want to leave this group?`)
-  ) {
-    return;
-  }
-  const response = await fetch(`https://api.meower.org/chats/${chat._id}`, {
+  const response = await apiRequest(`/chats/${chat._id}`, {
     method: "DELETE",
-    headers: { username, token },
+    auth: loginStatusStore,
   });
   if (response.status !== 200) {
     alert(`Unexpected ${response.status} when trying to leave chat`);
@@ -107,21 +84,18 @@ const leave = async () => {
 };
 
 const promote = async (person: string) => {
-  const { username, token } = loginStatusStore;
   if (
-    !username ||
-    !token ||
     !confirm(
       `Are you sure you want to promote ${person}?\nYou will lose ownership of the group.`,
     )
   ) {
     return;
   }
-  const response = await fetch(
-    `https://api.meower.org/chats/${chat._id}/members/${person}/transfer`,
+  const response = await apiRequest(
+    `/chats/${chat._id}/members/${person}/transfer`,
     {
       method: "POST",
-      headers: { username, token },
+      auth: loginStatusStore,
     },
   );
   if (response.status !== 200) {

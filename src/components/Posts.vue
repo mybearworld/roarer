@@ -6,6 +6,7 @@ import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+import { getResponseFromAPIRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/chatSchema";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { z } from "zod";
@@ -20,8 +21,8 @@ const loginStatusStore = useLoginStatusStore();
 
 const POSTS_PER_REQUESTS = 25;
 const requestURL = chat
-  ? `https://api.meower.org/posts/${chat._id}?autoget=1`
-  : `https://api.meower.org/${inbox ? "inbox" : "home"}?autoget=1`;
+  ? `/posts/${chat._id}?autoget=1`
+  : `/${inbox ? "inbox" : "home"}?autoget=1`;
 
 const posts = ref<APIPost[]>([]);
 const newPostsAmount = ref(0);
@@ -31,19 +32,15 @@ const postsSchema = z.object({
   autoget: postSchema.array(),
 });
 (async () => {
-  const { username, token } = loginStatusStore;
-  if (username === null || token === null) {
+  const response = await getResponseFromAPIRequest(requestURL, {
+    auth: loginStatusStore,
+    schema: postsSchema,
+  });
+  if ("status" in response) {
+    alert("Failed to get posts.");
     return;
   }
-  const request = await (
-    await fetch(requestURL, {
-      headers: {
-        username,
-        token,
-      },
-    })
-  ).json();
-  posts.value = postsSchema.parse(request).autoget;
+  posts.value = postsSchema.parse(response).autoget;
 
   const newPostSchema = z.object({
     cmd: z.literal("direct"),
@@ -74,11 +71,6 @@ const loadMore = async () => {
     return;
   }
   loadingMore.value = true;
-  const { username, token } = loginStatusStore;
-  if (username === null || token === null) {
-    loadingMore.value = false;
-    return;
-  }
   const pagesToSkip = Math.floor(newPostsAmount.value / POSTS_PER_REQUESTS);
   const postsToRemove =
     newPostsAmount.value >= 0
@@ -86,16 +78,18 @@ const loadMore = async () => {
       : POSTS_PER_REQUESTS -
         Math.abs(newPostsAmount.value % POSTS_PER_REQUESTS);
   const page = pagesAmount.value + pagesToSkip + 1;
-  const request = await (
-    await fetch(requestURL + `&page=${page}`, {
-      headers: {
-        username,
-        token,
-      },
-    })
-  ).json();
-  const safeRequest = postsSchema.parse(request);
-  const newPosts = safeRequest.autoget.slice(postsToRemove);
+  const response = await getResponseFromAPIRequest(
+    requestURL + `&page=${page}`,
+    {
+      auth: loginStatusStore,
+      schema: postsSchema,
+    },
+  );
+  if ("status" in response) {
+    alert(`Couldn't load more: ${response.status}`);
+    return;
+  }
+  const newPosts = response.autoget.slice(postsToRemove);
   posts.value.push(...newPosts);
   pagesAmount.value = page;
   newPostsAmount.value += newPosts.length;

@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { z } from "zod";
 import Navigation from "../Navigation.vue";
 import { profilePictures } from "../../assets/pfp";
+import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/profileSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLocationStore } from "../../stores/location";
@@ -16,12 +17,18 @@ const quote = ref("");
 const profilePicture = ref(0);
 
 (async () => {
-  const response = await (
-    await fetch(`https://api.meower.org/users/${loginStatusStore.username}`)
-  ).json();
-  const parsedResponse = profileSchema.parse(response);
-  quote.value = parsedResponse.quote;
-  profilePicture.value = parsedResponse.pfp_data;
+  const response = await getResponseFromAPIRequest(
+    `/users/${loginStatusStore.username}`,
+    {
+      schema: profileSchema,
+    },
+  );
+  if ("status" in response) {
+    alert(`Failed to get your profile information: ${response.status}`);
+    return;
+  }
+  quote.value = response.quote;
+  profilePicture.value = response.pfp_data;
 })();
 
 const updateConfigSchema = z.object({
