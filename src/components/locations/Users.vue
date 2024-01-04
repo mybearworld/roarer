@@ -33,7 +33,6 @@ effect(async () => {
     locationStore.sublocation === null ||
     locationStore.location !== "users"
   ) {
-    console.log("returning");
     return;
   }
   const response = await (

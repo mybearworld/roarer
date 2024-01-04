@@ -25,7 +25,7 @@ const name = ref(chat.nickname);
 const members = ref(chat.members);
 const owner = ref(chat.owner);
 
-const newChatName = ref(name);
+const newChatName = ref(name.value);
 const rename = async (e?: Event) => {
   e?.preventDefault();
   const { username, token } = loginStatusStore;

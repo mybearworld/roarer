@@ -43,7 +43,6 @@ const postsSchema = z.object({
       },
     })
   ).json();
-  console.log(request);
   posts.value = postsSchema.parse(request).autoget;
 
   const newPostSchema = z.object({
