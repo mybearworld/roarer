@@ -47,7 +47,7 @@ export const hu = {
   confirmReport:
     "Teljesen biztos ebben? A következő indokért bejelent:\n{reason}\n\nPost:\n{post}",
   reportSuccess: "Bejelentve.",
-  chatDM: "DM",
+  chatDM: "Üzenet",
   chatSettings: "Beállítások",
   chatPeople: "Emberek",
   renameChatFail: "Nem sikerült újranevezni a csevegést: {status}",
