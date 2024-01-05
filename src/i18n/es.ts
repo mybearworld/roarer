@@ -32,9 +32,9 @@ export const es = {
   noTypingUsers: "Nadie está escribiendo.",
   discordBridgePost: "Este post ha sido creado en el servidor de Discord.",
   webhookBridgePost:
-    "Esta publicación fue creada a través de un webhook. Estos no pasan por el sistema de cuentas de Meower, cualquiera puede crear un mensaje con cualquier nombre.",
+    "Esta post fue creado a través de un webhook. Estos no pasan por el sistema de cuentas de Meower, cualquiera puede crear un mensaje con cualquier nombre.",
   splashBridgePost:
-    "Esta publicación fue creada a través de Splash. Estos no pasan por el sistema de cuentas de Meower o Splash, cualquiera puede crear un mensaje con cualquier nombre.",
+    "Esta post fue creado a través de Splash. Estos no pasan por el sistema de cuentas de Meower o Splash, cualquiera puede crear un mensaje con cualquier nombre.",
   revoltBridgePost: "Este post fue creado en el servidor de Revolt.",
   deletePost: "Eliminar",
   editPost: "Editar",
@@ -68,7 +68,7 @@ export const es = {
   newPassword: "¿Qué quieres que sea tu nueva contraseña?",
   oldPassword: "¿Cuál es tu contraseña actual?",
   passwordChangeFail: "No se ha podido actualizar la contraseña: {errmsg}",
-  alsoRevokeTokens: "¿Quieres también revocar todos los tokens?",
+  alsoRevokeTokens: "¿Quieres revocar también todos los tokens?",
   revokeTokensConfirm:
     "¿Estás seguro? Tendrás que iniciar sesión en cada dispositivo de nuevo.",
   revokeTokensFail: "No se ha podido revocar los tokens: {errmsg}",
