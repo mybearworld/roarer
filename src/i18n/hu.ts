@@ -67,10 +67,10 @@ export const hu = {
   newPassword: "Mi legyen az új jelszava?",
   oldPassword: "Mi a régi jelszava?",
   passwordChangeFail: "Nem sikerült frissíteni: {errmsg}",
-  alsoRevokeTokens: "Vissza akarja vonni az összes token-t is?",
+  alsoRevokeTokens: "Vissza akarja vonni az összes tokent is?",
   revokeTokensConfirm:
     "Biztos ebben? Ezután vissza kell jelentkeznie minden eszközén.",
-  revokeTokensFail: "Nem sikerült visszavonni a token-eket: {errmsg}",
+  revokeTokensFail: "Nem sikerült visszavonni a tokeneket: {errmsg}",
   deleteAccountConfirm:
     "Biztos ebben? Ezt SEHOGY sem lehet vissza csinálni a törlés után. A fiókja törlődni fog 7 nap múlva.",
   deleteAccountPasswordPrompt:
