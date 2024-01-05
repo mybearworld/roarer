@@ -1,4 +1,4 @@
-export const en = {
+export const hu = {
   languageName: "Magyar",
   roarer: "Roarer",
   routeHome: "Főoldal",
