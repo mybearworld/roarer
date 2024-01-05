@@ -1,5 +1,5 @@
 export const es = {
-    languageName: "Spanish",
+    languageName: "Español",
     roarer: "Roarer",
     routeHome: "Home",
     routeInbox: "Bandeja de entrada",
