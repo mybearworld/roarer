@@ -120,4 +120,5 @@ export const de = {
   chatGetFail: "Chats konnten nicht erhalten werden: {status}",
   disconnected:
     "Deine Verbindung wurde abgebrochen. Drücke OK, um die Seite neu zu laden.",
+  myAccount: "Mein Konto",
 };

@@ -193,7 +193,7 @@ const deleteAccount = async () => {
         {{ t("updateProfile") }}
       </button>
     </form>
-    <h2 class="text-lg font-bold">My account</h2>
+    <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">
         {{ t("changePassword") }}

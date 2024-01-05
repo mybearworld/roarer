@@ -117,4 +117,5 @@ export const en = {
   chatCreateFail: "Couldn't create chat: {status}",
   chatGetFail: "Couldn't get chats: {status}",
   disconnected: "You were disconnected. Clicking OK will reload the page.",
+  myAccount: "My account",
 };
