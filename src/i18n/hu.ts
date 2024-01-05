@@ -65,7 +65,7 @@ export const hu = {
   configFail: "Nem sikerült frissíteni a profilját: {errmsg}",
   configSuccess: "Frissítette a profilját.",
   newPassword: "Mi legyen az új jelszava?",
-  oldPassword: "Mi a jelenlegi jelszava?",
+  oldPassword: "Mi a régi jelszava?",
   passwordChangeFail: "Nem sikerült frissíteni: {errmsg}",
   alsoRevokeTokens: "Vissza akarja vonni az összes token-t is?",
   revokeTokensConfirm:
