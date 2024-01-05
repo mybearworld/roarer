@@ -29,9 +29,11 @@ const requestURL = chat
 const posts = ref<APIPost[]>([]);
 const newPostsAmount = ref(0);
 const pagesAmount = ref(1);
+const stopShowingLoadMore = ref(false);
 
 const postsSchema = z.object({
   autoget: postSchema.array(),
+  pages: z.number(),
 });
 (async () => {
   const response = await getResponseFromAPIRequest(requestURL, {
@@ -42,7 +44,8 @@ const postsSchema = z.object({
     alert("Failed to get posts.");
     return;
   }
-  posts.value = postsSchema.parse(response).autoget;
+  posts.value = response.autoget;
+  stopShowingLoadMore.value = response.pages === 1;
 
   const newPostSchema = z.object({
     cmd: z.literal("direct"),
@@ -96,6 +99,7 @@ const loadMore = async () => {
   pagesAmount.value = page;
   newPostsAmount.value += newPosts.length;
   loadingMore.value = false;
+  stopShowingLoadMore.value = response.pages === page;
 };
 </script>
 
@@ -117,6 +121,7 @@ const loadMore = async () => {
     class="w-full rounded-xl bg-slate-800 py-1"
     :disabled="loadingMore"
     @click="loadMore"
+    v-if="!stopShowingLoadMore"
   >
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>

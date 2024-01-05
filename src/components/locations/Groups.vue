@@ -136,7 +136,7 @@ const settings = (chat: APIChat) => {
 
 <template>
   <div class="block space-y-2">
-    <Navigation title="Groups" />
+    <Navigation :title="t('routeGroups')" />
     <template v-if="openGroupchat === null">
       <form class="flex gap-2" @submit="createChat">
         <input
