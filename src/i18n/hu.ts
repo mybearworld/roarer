@@ -34,7 +34,7 @@ export const hu = {
   webhookBridgePost:
     "Ez a poszt egy Webhook-kal volt készítve. Mivel ezek nem mennek át Meower-nak a fiókrendszerén, bárki küldhet üzenetet bármilyen néven.",
   splashBridgePost:
-    "Ez a poszt Splash-al volt készítve. Mivel ezek nem mennek át Meower-nak a fiók rendszerén, bárki küldhet üzenetet bármilyen néven.",
+    "Ez a poszt Splash-al volt készítve. Mivel ezek nem mennek át Meower-nak a fiókrendszerén, bárki küldhet üzenetet bármilyen néven.",
   revoltBridgePost: "Ez a poszt a Revolt szerveren volt készítve.",
   deletePost: "Törlés",
   editPost: "Szerkesztés",
