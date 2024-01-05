@@ -118,4 +118,10 @@ export const en = {
   chatGetFail: "Couldn't get chats: {status}",
   disconnected: "You were disconnected. Clicking OK will reload the page.",
   myAccount: "My account",
+  languageContributing: {
+    start:
+      "Do you speak one of these languages, or even one that isn't present here yet? If you want to see Roarer in your language, you can ",
+    githubLink: "translate it on GitHub",
+    end: "!",
+  },
 };

@@ -213,6 +213,14 @@ const deleteAccount = async () => {
     </div>
     <h2 class="text-lg font-bold">{{ t("language") }}</h2>
     <LanguageSwitcher />
+    <p>
+      {{ t("languageContributing.start")
+      }}<a
+        href="https://github.com/mybearworld/roarer"
+        class="text-sky-400 underline"
+        >{{ t("languageContributing.githubLink") }}</a
+      >{{ t("languageContributing.end") }}
+    </p>
     <h2 class="text-lg font-bold">{{ t("credits") }}</h2>
     <p>
       {{ t("contributorsThanks.start")

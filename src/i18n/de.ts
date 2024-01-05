@@ -121,4 +121,10 @@ export const de = {
   disconnected:
     "Deine Verbindung wurde abgebrochen. Drücke OK, um die Seite neu zu laden.",
   myAccount: "Mein Konto",
+  languageContributing: {
+    start:
+      "Sprichst du eine dieser Sprachen, oder sogar eine, die hier noch nicht verfügbar ist? Wenn du Roarer in deiner Sprache sehen willst, kannst du es ",
+    githubLink: "auf GitHub übersetzen",
+    end: "!",
+  },
 };
