@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { z } from "zod";
+import { useI18n } from "vue-i18n";
 import Navigation from "../Navigation.vue";
+import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/profileSchema";
@@ -12,6 +14,7 @@ import { useLoginStatusStore } from "../../stores/loginStatus";
 const cloudlinkStore = useCloudlinkStore();
 const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
+const { t } = useI18n();
 
 const quote = ref("");
 const profilePicture = ref(0);
@@ -24,7 +27,7 @@ const profilePicture = ref(0);
     },
   );
   if ("status" in response) {
-    alert(`Failed to get your profile information: ${response.status}`);
+    alert(t("profileInformationFail", { status: response.status }));
     return;
   }
   quote.value = response.quote;
@@ -64,18 +67,18 @@ const me = async (e: Event) => {
       updateConfigSchema,
     );
   } catch (e) {
-    alert(`Failed updating the config: ${e} `);
+    alert(t("configFail", { errmsg: e }));
     return;
   }
-  alert("Successfully updated your settings.");
+  alert(t("configSuccess"));
 };
 
 const changePassword = async () => {
-  const newPassword = prompt("What do you want your new password to be?");
+  const newPassword = prompt(t("newPassword"));
   if (!newPassword) {
     return;
   }
-  const oldPassword = prompt("What is your current password?");
+  const oldPassword = prompt(t("oldPassword"));
   if (!oldPassword) {
     return;
   }
@@ -95,16 +98,16 @@ const changePassword = async () => {
       false,
     );
   } catch (e) {
-    alert(`Couldn't change password: ${e}`);
+    alert(t("passwordChangeFail", { errmsg: e }));
     return;
   }
-  if (confirm("Do you also want to revoke all tokens?")) {
+  if (confirm(t("alsoRevokeTokens"))) {
     revokeTokens();
   }
 };
 
 const revokeTokens = async () => {
-  if (!confirm("Are you sure? You'll have to sign in on every device again.")) {
+  if (!confirm(t("revokeTokensConfirm"))) {
     return;
   }
   try {
@@ -116,7 +119,7 @@ const revokeTokens = async () => {
       z.literal("I:024 | Logged out"),
     );
   } catch (e) {
-    alert(`Couldn't revoke tokens: ${e}`);
+    alert(t("revokeTokensFail", { errmsg: e }));
     return;
   }
   loginStatusStore.username = null;
@@ -125,16 +128,10 @@ const revokeTokens = async () => {
 };
 
 const deleteAccount = async () => {
-  if (
-    !confirm(
-      "Are you sure? There is ABSOLUTELY NO WAY to undo this. Your account will be PERMANENTLY deleted after 7 days.",
-    )
-  ) {
+  if (!confirm(t("deleteAccountConfirm"))) {
     return;
   }
-  const password = prompt(
-    "Please enter your password to confirm deleting your account.",
-  );
+  const password = prompt(t("deleteAccountPassword"));
   if (!password) {
     return;
   }
@@ -148,7 +145,7 @@ const deleteAccount = async () => {
       // true,
     );
   } catch (e) {
-    alert(`Couldn't delete account: ${e}`);
+    alert(t("deleteAccountFail", { errmsg: e }));
     return;
   }
   loginStatusStore.username = null;
@@ -159,13 +156,13 @@ const deleteAccount = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <Navigation title="Settings" />
+    <Navigation :title="t('routeSettings')" />
     <div>
-      <h2 class="text-lg font-bold">Me</h2>
+      <h2 class="text-lg font-bold">{{ t("usersSectionMe") }}</h2>
     </div>
     <form class="contents" @submit="me">
       <label class="flex items-center gap-2">
-        Quote:
+        {{ t("usersMeQuote") }}
         <input
           type="text"
           class="w-full rounded-lg bg-slate-800 px-2 py-1"
@@ -173,7 +170,7 @@ const deleteAccount = async () => {
         />
       </label>
       <label>
-        Profile picture:
+        {{ t("usersMePfp") }}
         <div class="flex flex-wrap gap-2">
           <button
             class="rounded-xl border-2 border-slate-500 bg-white p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
@@ -187,56 +184,55 @@ const deleteAccount = async () => {
               width="70"
               height="70"
               :src="value"
-              :alt="`Profile picture #${key}`"
+              :alt="t('profilePictureAlt', { n: key })"
             />
           </button>
         </div>
       </label>
       <button class="rounded-xl bg-slate-800 px-2 py-1" type="submit">
-        Submit
+        {{ t("updateProfile") }}
       </button>
     </form>
     <h2 class="text-lg font-bold">My account</h2>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">
-        Change password
+        {{ t("changePassword") }}
       </button>
     </div>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="revokeTokens">
-        Revoke all tokens
+        {{ t("revokeTokens") }}
       </button>
-      This will sign you out of all devices.
+      {{ t("revokeTokensInfo") }}
     </div>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="deleteAccount">
-        Delete account
+        {{ t("deleteAccount") }}
       </button>
-      This will delete your account <strong>permanently</strong>. There is
-      <strong>no</strong> way to undo this.
+      {{ t("deleteAccountInfo") }}
     </div>
-    <h2 class="text-lg font-bold">Credits</h2>
+    <h2 class="text-lg font-bold">{{ t("language") }}</h2>
+    <LanguageSwitcher />
+    <h2 class="text-lg font-bold">{{ t("credits") }}</h2>
     <p>
-      Thank you to all
-      <a
+      {{ t("contributorsThanks.start")
+      }}<a
         href="https://github.com/mybearworld/roarer/graphs/contributors"
         class="text-sky-400 underline"
-        >contributors</a
-      >
-      for making this possible.
+        >{{ t("contributorsThanks.contributorsLink") }}</a
+      >{{ t("contributorsThanks.end") }}
     </p>
     <p>
-      Special thanks to
-      <button
+      {{ t("mascotThanks.start")
+      }}<button
         class="text-sky-400 underline"
         @click="
           locationStore.location = 'users';
           locationStore.sublocation = 'Supernoodles99';
         "
       >
-        @Supernoodles99
-      </button>
-      for making the (currently unnamed) mascot!
+        @Supernoodles99</button
+      >{{ t("mascotThanks.end") }}
     </p>
   </div>
 </template>

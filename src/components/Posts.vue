@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import EnterPost from "./EnterPost.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
@@ -18,6 +19,7 @@ const { chat, inbox } = defineProps<{
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const { t } = useI18n();
 
 const POSTS_PER_REQUESTS = 25;
 const requestURL = chat
@@ -116,6 +118,6 @@ const loadMore = async () => {
     :disabled="loadingMore"
     @click="loadMore"
   >
-    {{ loadingMore ? "Loading more..." : "Load more" }}
+    {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { effect, ref } from "vue";
 import { z } from "zod";
+import { useI18n } from "vue-i18n";
 import ChatSettings from "../ChatSettings.vue";
 import ChatView from "../ChatView.vue";
 import Posts from "../Posts.vue";
@@ -15,6 +16,7 @@ import { useLocationStore } from "../../stores/location";
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const locationStore = useLocationStore();
+const { t } = useI18n();
 
 const chats = ref<APIChat[]>([]);
 const schema = z.object({
@@ -26,7 +28,7 @@ effect(async () => {
     schema,
   });
   if ("status" in response) {
-    alert(`Couldn't get chats: ${response.status}`);
+    alert(t("getChatsFail", { status: response.status }));
     return;
   }
   chats.value = response.autoget;
@@ -46,7 +48,7 @@ const createChat = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(`Failed creating chat: ${response.status}`);
+    alert(t("createChatFail", { status: response.status }));
   }
 };
 
@@ -113,7 +115,7 @@ effect(async () => {
     schema: chatSchema,
   });
   if ("status" in response) {
-    alert(`Couldn't open DM: ${response.status}`);
+    alert(t("openDMFail", { status: response.status }));
     return;
   }
   openGroupchat.value = response;
@@ -139,12 +141,12 @@ const settings = (chat: APIChat) => {
       <form class="flex gap-2" @submit="createChat">
         <input
           type="text"
-          placeholder="Nickname"
+          :placeholder="t('chatNickname')"
           class="w-full rounded-lg bg-slate-800 px-2 py-1"
           v-model="chatNickname"
         />
         <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
-          Create
+          {{ t("createChat") }}
         </button>
       </form>
       <ChatView

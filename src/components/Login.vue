@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { z } from "zod";
+import LanguageSwitcher from "./LanguageSwitcher.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useRelationshipStore } from "../stores/relationship";
@@ -9,6 +11,7 @@ import { individualRelationshipPacketSchema } from "../lib/relationshipSchema";
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
+const { t } = useI18n();
 
 const logInSchema = z.object({
   mode: z.literal("auth"),
@@ -105,11 +108,7 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
       try {
         await login(...nonNullCredentials);
       } catch (e) {
-        if (
-          !confirm(
-            "You couldn't be logged in. This may be because your token has been revoked. Do you want to try again?",
-          )
-        ) {
+        if (!confirm(t("loginFail"))) {
           loginStatusStore.username = null;
           loginStatusStore.token = null;
         }
@@ -120,7 +119,7 @@ if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
 }
 
 const signOut = async () => {
-  if (!confirm("Are you sure you want to sign out?")) {
+  if (!confirm(t("loginSignoutConfirm"))) {
     return;
   }
   loginStatusStore.username = null;
@@ -139,9 +138,12 @@ const signOut = async () => {
     >
       <form class="rounded-xl bg-slate-900 px-5 py-4" v-on:submit="loginEvent">
         <div class="space-y-4">
-          <strong class="block text-xl">Log in to Roarer</strong>
+          <div class="flex gap-2">
+            <strong class="text-xl">{{ t("loginHeader") }} </strong>
+            <LanguageSwitcher />
+          </div>
           <label class="block">
-            Username:
+            {{ t("loginUsername") }}
             <input
               class="rounded-lg bg-slate-700 px-1"
               type="text"
@@ -149,7 +151,7 @@ const signOut = async () => {
             />
           </label>
           <label class="block">
-            Password:
+            {{ t("loginPassword") }}
             <input
               class="rounded-lg bg-slate-700 px-1"
               type="password"
@@ -162,7 +164,7 @@ const signOut = async () => {
               type="submit"
               :disabled="loading"
             >
-              Log in
+              {{ t("loginSubmit") }}
             </button>
             <button
               class="rounded-xl bg-slate-700 px-2 py-1"
@@ -170,7 +172,7 @@ const signOut = async () => {
               :disabled="loading"
               @click="signUp"
             >
-              Sign up
+              {{ t("loginSignUp") }}
             </button>
           </div>
           <span v-if="message">
@@ -180,13 +182,13 @@ const signOut = async () => {
       </form>
     </div>
   </template>
-  <div class="inline-flex items-center gap-2" v-else>
-    <p class="inline-block">Logged in as {{ loginStatusStore.username }}</p>
+  <div class="inline-flex flex-col" v-else>
     <button
-      class="inline-block rounded-xl bg-slate-800 px-2 py-1"
+      class="inline-block rounded-xl bg-slate-800 px-2 py-1 text-sm"
       v-on:click="signOut"
     >
-      Sign out
+      {{ t("signOut") }}
+      <div class="text-xs font-bold">@{{ loginStatusStore.username }}</div>
     </button>
   </div>
 </template>

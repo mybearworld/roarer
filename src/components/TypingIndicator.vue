@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { IconKeyboard, IconKeyboardOff } from "@tabler/icons-vue";
+import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -14,6 +15,7 @@ const { chat } = defineProps<{
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
+const { t } = useI18n();
 
 const typingUsers = ref(new Set<string>());
 const shownTypingUsers = computed(() =>
@@ -58,12 +60,12 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
   <p>
     <span v-if="shownTypingUsers.length">
       <IconKeyboard class="inline-block" aria-hidden />
-      <span class="sr-only">Typing users:</span>
+      <span class="sr-only">{{ t("typingUsers") }}</span>
       {{ [...shownTypingUsers.values()].join(", ") }}
     </span>
     <span class="italic text-slate-400" v-else>
       <IconKeyboardOff class="inline-block" aria-hidden />
-      No one is currently typing.
+      {{ t("noTypingUsers") }}
     </span>
   </p>
 </template>

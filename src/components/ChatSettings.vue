@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { z } from "zod";
+import { useI18n } from "vue-i18n";
 import { IconCrown, IconX } from "@tabler/icons-vue";
 import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/chatSchema";
@@ -10,6 +11,7 @@ import { useLoginStatusStore } from "../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const { t } = useI18n();
 
 const { chat } = defineProps<{
   chat: APIChat;
@@ -37,7 +39,7 @@ const rename = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} when trying to rename chat`);
+    alert(t("renameChatFail", { status: response.status }));
   }
 };
 
@@ -52,7 +54,7 @@ const addUser = async (e?: Event) => {
     },
   );
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} when trying to add user.`);
+    alert(t("addMemberChatFail", { status: response.status }));
   }
 };
 
@@ -69,7 +71,7 @@ const remove = async (person: string) => {
     auth: loginStatusStore,
   });
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} while removing user`);
+    alert(t("removeMemberChatFail", { status: response.status }));
   }
 };
 
@@ -79,7 +81,7 @@ const leave = async () => {
     auth: loginStatusStore,
   });
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} when trying to leave chat`);
+    alert(t("leaveChatFail", { status: response.status }));
   }
 };
 
@@ -99,7 +101,7 @@ const promote = async (person: string) => {
     },
   );
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} when trying to promote user`);
+    alert(t("promoteChatFail", { status: response.status }));
   }
 };
 
@@ -133,10 +135,12 @@ cloudlinkStore.lookFor(
   <div class="space-y-4">
     <div class="flex items-center gap-2">
       <h2 class="text-xl font-bold">{{ name }}</h2>
-      <button class="text-sky-400 underline" @click="emit('back')">Back</button>
+      <button class="text-sky-400 underline" @click="emit('back')">
+        {{ t("back") }}
+      </button>
     </div>
     <div class="space-y-2" v-if="loginStatusStore.username === owner">
-      <h3 class="text-lg font-bold">Settings</h3>
+      <h3 class="text-lg font-bold">{{ t("chatSettings") }}</h3>
       <form class="flex gap-2" @submit="rename">
         <input
           class="w-full rounded-lg bg-slate-800 px-2 py-1"
@@ -144,7 +148,7 @@ cloudlinkStore.lookFor(
           v-model="newChatName"
         />
         <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
-          Rename
+          {{ t("chatRename") }}
         </button>
       </form>
       <form class="flex gap-2" @submit="addUser">
@@ -155,19 +159,19 @@ cloudlinkStore.lookFor(
           v-model="addUserName"
         />
         <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
-          Add
+          {{ t("chatAddMember") }}
         </button>
       </form>
     </div>
     <div class="space-y-2">
-      <h3 class="text-lg font-bold">People</h3>
+      <h3 class="text-lg font-bold">{{ t("chatPeople") }}</h3>
       <div class="flex gap-2" v-for="person in members">
         <div
           class="flex w-full items-center gap-2 rounded-xl bg-slate-800 px-2 py-1"
         >
           <h3 class="inline-block text-lg font-bold">{{ person }}</h3>
           <IconCrown class="inline-block" aria-hidden v-if="person === owner" />
-          <span class="sr-only">Owner</span>
+          <span class="sr-only">{{ t("chatOwner") }}</span>
         </div>
         <button
           type="button"
@@ -179,7 +183,7 @@ cloudlinkStore.lookFor(
           "
         >
           <IconCrown aria-hidden />
-          <span class="sr-only">Promote</span>
+          <span class="sr-only">{{ t("chatPromote") }}</span>
         </button>
         <button
           type="button"
@@ -193,7 +197,7 @@ cloudlinkStore.lookFor(
           "
         >
           <IconX aria-hidden />
-          <span class="sr-only">Remove</span>
+          <span class="sr-only">{{ t("chatRemove") }}</span>
         </button>
       </div>
     </div>

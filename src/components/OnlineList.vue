@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { bridgeBots } from "../lib/bridgeBots";
 import { APIChat } from "../lib/chatSchema";
 import { useOnlinelistStore } from "../stores/onlinelist";
@@ -9,6 +10,7 @@ const { chat } = defineProps<{
 }>();
 
 const onlineListStore = useOnlinelistStore();
+const { t } = useI18n();
 
 const shownOnlineList = computed(() =>
   onlineListStore.online.filter(
@@ -21,7 +23,7 @@ const shownOnlineList = computed(() =>
 <template>
   <details>
     <summary class="cursor-pointer">
-      Online users ({{ shownOnlineList.length }})
+      {{ t("onlineUsers", { n: shownOnlineList.length }) }}
     </summary>
     {{ shownOnlineList.join(", ") }}
   </details>

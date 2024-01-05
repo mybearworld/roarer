@@ -20,6 +20,7 @@ import {
   IconTrash,
   IconWebhook,
 } from "@tabler/icons-vue";
+import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest } from "../lib/apiRequest";
@@ -38,6 +39,7 @@ const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
+const { t, locale } = useI18n();
 
 const { post, inbox, dontUpdate } = defineProps<{
   post: APIPost;
@@ -114,7 +116,7 @@ const goToUser = (username: string) => {
 };
 
 const remove = async () => {
-  if (!confirm("Are you sure you want to delete this post?")) {
+  if (!confirm(t("deletePostConfirm"))) {
     return;
   }
   try {
@@ -173,16 +175,9 @@ const editKeydown = (e: KeyboardEvent) => {
 const report = async () => {
   const reason = prompt("Reason:");
   if (!reason) {
-    if (reason !== null) {
-      alert("Please specify a reason.");
-    }
     return;
   }
-  if (
-    !confirm(
-      `You are reporting for the following reason:\n${reason}\n\nAre you absolutely sure? Post:\n${post.p}`,
-    )
-  ) {
+  if (!confirm(t("confirmReport", { reason, post: post.p }))) {
     return;
   }
   try {
@@ -199,7 +194,7 @@ const report = async () => {
       z.object({}), // for obvious reasons, reports aren't public and there's no response associated with them
     );
   } catch {}
-  alert("Reported.");
+  alert(t("reportSuccess"));
 };
 
 const resizeTextarea = () => {
@@ -362,40 +357,24 @@ effect(() => {
         <IconCircleFilled class="h-2 w-2" aria-hidden />
         <span class="sr-only">Online</span>
       </span>
-      <span
-        title="This post was created on the Discord server."
-        v-if="post.u === 'Discord'"
-      >
+      <span :title="t('discordBridgePost')" v-if="post.u === 'Discord'">
         <IconBrandDiscord class="inline-block w-5" aria-hidden />
-        <span class="sr-only">
-          This post was created on the Discord server.
-        </span>
+        <span class="sr-only">{{ t("discordBridgePost") }}</span>
       </span>
       <span
-        title="This post was created via a Webhook. These do not go through Meowers account system, anyone can create a message under any name."
+        :title="t('webhookBridgePost')"
         v-if="post.u === 'Webhooks' && !isSplash"
       >
         <IconWebhook class="inline-block w-5" />
-        <span class="sr-only">
-          This post was created via a Webhook. These do not go through Meowers
-          account system, anyone can create a message under any name.
-        </span>
+        <span class="sr-only">{{ t("webhookBridgePost") }}</span>
       </span>
-      <span
-        title="This post was created via Splash. These do not go through Meowers or Splashs account system, anyone can create a message under any name."
-        v-if="isSplash"
-      >
+      <span :title="t('splashBridgePost')" v-if="isSplash">
         <IconSailboat class="inline-block w-5" />
-        <span class="sr-only"> This post was created on Splash. </span>
+        <span class="sr-only">{{ t("splashBridgePost") }}</span>
       </span>
-      <span
-        title="This post was created on the Revolt server."
-        v-if="post.u === 'RevowerJS'"
-      >
+      <span :title="t('revoltBridgePost')" v-if="post.u === 'RevowerJS'">
         <IconBuildingBridge class="inline-block w-5" />
-        <span class="sr-only">
-          This post was created on the Revolt server.
-        </span>
+        <span class="sr-only">{{ t("revoltBridgePost") }}</span>
       </span>
       <div
         class="visible absolute right-0 top-0 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
@@ -404,11 +383,11 @@ effect(() => {
         <template v-if="post.u === loginStatusStore.username">
           <button class="h-4 w-4" @click="remove">
             <IconTrash aria-hidden />
-            <span class="sr-only">Delete</span>
+            <span class="sr-only">{{ t("deletePost") }}</span>
           </button>
           <button class="h-4 w-4" @click="editing = true">
             <IconEdit aria-hidden />
-            <span class="sr-only">Edit</span>
+            <span class="sr-only">{{ t("editPost") }}</span>
           </button>
         </template>
         <button
@@ -417,11 +396,11 @@ effect(() => {
           v-if="post.u !== loginStatusStore.username"
         >
           <IconAlertTriangle aria-hidden />
-          <span class="sr-only">Report</span>
+          <span class="sr-only">{{ t("reportPost") }}</span>
         </button>
         <button class="h-4 w-4" @click="emit('reply', username, postContent)">
           <IconArrowForward aria-hidden />
-          <span class="sr-only">Reply</span>
+          <span class="sr-only">{{ t("replyPost") }}</span>
         </button>
       </div>
       <div
@@ -429,7 +408,7 @@ effect(() => {
           !isItalicUser ? 'sm:hidden sm:w-auto group-hover:sm:inline-block' : ''
         }`"
       >
-        {{ formatDate(post.t.e) }}
+        {{ formatDate(post.t.e, locale) }}
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
@@ -445,13 +424,13 @@ effect(() => {
       />
       <div class="space-x-2">
         <button type="submit" class="rounded-xl bg-slate-700 px-2 py-1">
-          Edit
+          {{ t("editPost") }}
         </button>
         <button
           class="rounded-xl bg-slate-700 px-2 py-1"
           @click="editing = false"
         >
-          Cancel
+          {{ t("cancelEditingPost") }}
         </button>
       </div>
     </form>
@@ -473,7 +452,7 @@ effect(() => {
         @click="reload"
       >
         <IconReload class="inline-block h-5 w-5" aria-hidden />
-        Reload
+        {{ t("reloadPostButton") }}
       </button>
     </div>
   </div>

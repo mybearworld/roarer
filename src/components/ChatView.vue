@@ -5,10 +5,12 @@ import {
   IconUser,
   IconUsersGroup,
 } from "@tabler/icons-vue";
+import { useI18n } from "vue-i18n";
 import { APIChat } from "../lib/chatSchema";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
 const loginStatusStore = useLoginStatusStore();
+const { t } = useI18n();
 
 const { chat } = defineProps<{
   chat: APIChat;
@@ -39,7 +41,7 @@ const emit = defineEmits<{
         </template>
         <template v-else>
           <IconMessage class="inline-block h-4 w-4 min-w-4" aria-hidden />
-          DM
+          {{ t("chatDM") }}
         </template>
       </p>
     </button>
@@ -54,7 +56,11 @@ const emit = defineEmits<{
       />
       <IconUsersGroup aria-hidden v-else />
       <span class="sr-only">
-        {{ chat.owner === loginStatusStore.username ? "Settings" : "People" }}
+        {{
+          chat.owner === loginStatusStore.username
+            ? t("chatSettings")
+            : t("chatPeople")
+        }}
       </span>
     </button>
   </div>

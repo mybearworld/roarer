@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
 import {
@@ -16,6 +17,7 @@ const { chat } = defineProps<{
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const { t } = useI18n();
 
 const postContent = ref("");
 const posting = ref(false);
@@ -123,7 +125,7 @@ defineExpose({ reply });
   <form @submit="post" class="flex space-x-2">
     <textarea
       class="w-full resize-none rounded-lg bg-slate-800 px-2 py-1"
-      placeholder="Say something!"
+      :placeholder="$t('enterPostPlaceholder')"
       @input="input"
       @keydown="keydown"
       v-model="postContent"
@@ -131,7 +133,7 @@ defineExpose({ reply });
       rows="1"
     />
     <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
-      Send!
+      {{ $t("enterPostSend") }}
     </button>
   </form>
   <p v-if="errorMessage">{{ errorMessage }}</p>

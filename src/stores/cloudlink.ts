@@ -1,11 +1,12 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useI18n } from "vue-i18n";
 import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
-import { useRelationshipStore } from "./relationship";
-import { individualRelationshipPacketSchema } from "../lib/relationshipSchema";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
+  const { t } = useI18n();
+
   const cloudlink = ref(
     new CloudlinkClient({
       url: "wss://api.meower.org/v0/cloudlink",
@@ -26,7 +27,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       });
     }
     if (cloudlink.value.status === 3) {
-      alert("You were disconnected. Clicking OK will reload the page.");
+      alert(t("disconnected"));
       location.reload();
     }
   }, 20000);
