@@ -32,9 +32,9 @@ export const en = {
   noTypingUsers: "No one is currently typing.",
   discordBridgePost: "This post was created on the Discord server.",
   webhookBridgePost:
-    "This post was created via a Webhook. These do not go through Meowers account system, anyone can create a message under any name.",
+    "This post was created via a Webhook. These do not go through Meower's account system, anyone can create a message under any name.",
   splashBridgePost:
-    "This post was created via Splash. These do not go through Meowers or Splashs account system, anyone can create a message under any name.",
+    "This post was created via Splash. These do not go through Meower's or Splash's account system, anyone can create a message under any name.",
   revoltBridgePost: "This post was created on the Revolt server.",
   deletePost: "Delete",
   editPost: "Edit",
