@@ -1,9 +1,7 @@
 {
   "projectName": "roarer",
   "projectOwner": "mybearworld",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "commitType": "docs",
   "commitConvention": "angular",
   "contributorsPerLine": 7,
@@ -13,38 +11,28 @@
       "name": "mybearworld",
       "avatar_url": "https://avatars.githubusercontent.com/u/130385691?v=4",
       "profile": "https://github.com/mybearworld",
-      "contributions": [
-        "infra",
-        "code",
-        "bug"
-      ]
+      "contributions": ["infra", "code"]
     },
     {
       "login": "OneShot-Niko",
       "name": "Chris (Niko/Zy!)",
       "avatar_url": "https://avatars.githubusercontent.com/u/150537842?v=4",
       "profile": "https://github.com/OneShot-Niko",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "NotFenixio",
       "name": "notfenixio",
       "avatar_url": "https://avatars.githubusercontent.com/u/103071021?v=4",
       "profile": "http://notfenixio.github.io",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "OregSamSas",
       "name": "Oreg Sam",
       "avatar_url": "https://avatars.githubusercontent.com/u/101597941?v=4",
       "profile": "https://github.com/OregSamSas",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     }
   ]
 }
