@@ -3,15 +3,19 @@ import { ref } from "vue";
 import { z } from "zod";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+import { useRelationshipStore } from "../stores/relationship";
+import { individualRelationshipPacketSchema } from "../lib/relationshipSchema";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const relationshipStore = useRelationshipStore();
 
 const logInSchema = z.object({
   mode: z.literal("auth"),
   payload: z.object({
     username: z.string(),
     token: z.string(),
+    relationships: individualRelationshipPacketSchema.array(),
   }),
 });
 
@@ -34,6 +38,11 @@ const login = async (username: string, password: string) => {
     logInSchema,
   );
   loginStatusStore.isLoggedIn = true;
+  relationshipStore.blockedUsers = new Set(
+    response.payload.relationships
+      .filter((relationship) => relationship.state === 2)
+      .map((relationship) => relationship.username),
+  );
   return response;
 };
 

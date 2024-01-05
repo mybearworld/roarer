@@ -42,6 +42,7 @@ const goTo = (location: Location) => {
         <button class="text-sky-400 underline" @click="goTo('settings')">
           Settings
         </button>
+        {{ relationshipStore.blockedUsers }}
       </div>
     </div>
     <p>

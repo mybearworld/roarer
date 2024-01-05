@@ -6,8 +6,6 @@ import { useRelationshipStore } from "./relationship";
 import { individualRelationshipPacketSchema } from "../lib/relationshipSchema";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
-  const relationshipStore = useRelationshipStore();
-
   const cloudlink = ref(
     new CloudlinkClient({
       url: "wss://api.meower.org/v0/cloudlink",
@@ -101,24 +99,6 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       fun(parsed.data);
     });
   };
-
-  lookFor(
-    z.object({
-      cmd: z.literal("direct"),
-      val: z.object({
-        mode: z.literal("auth"),
-        payload: z.object({
-          relationships: individualRelationshipPacketSchema.array(),
-        }),
-      }),
-    }),
-    (packet) => {
-      packet.val.payload.relationships.forEach((relationship) => {
-        relationshipStore.blockedUsers.add(relationship.username);
-        relationshipStore.blockedUsers = relationshipStore.blockedUsers;
-      });
-    },
-  );
 
   return { cloudlink, send, lookFor };
 });
