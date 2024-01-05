@@ -13,6 +13,7 @@ A Meower client.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mybearworld"><img src="https://avatars.githubusercontent.com/u/130385691?v=4?s=100" width="100px;" alt="mybearworld"/><br /><sub><b>mybearworld</b></sub></a><br /><a href="#infra-mybearworld" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#code-mybearworld" title="Code">💻</a> <a href="#bug-mybearworld" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/OneShot-Niko"><img src="https://avatars.githubusercontent.com/u/150537842?v=4?s=100" width="100px;" alt="Chris (Niko/Zy!)"/><br /><sub><b>Chris (Niko/Zy!)</b></sub></a><br /><a href="#translation-OneShot-Niko" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://notfenixio.github.io"><img src="https://avatars.githubusercontent.com/u/103071021?v=4?s=100" width="100px;" alt="notfenixio"/><br /><sub><b>notfenixio</b></sub></a><br /><a href="#translation-NotFenixio" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/OregSamSas"><img src="https://avatars.githubusercontent.com/u/101597941?v=4?s=100" width="100px;" alt="Oreg Sam"/><br /><sub><b>Oreg Sam</b></sub></a><br /><a href="#translation-OregSamSas" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
