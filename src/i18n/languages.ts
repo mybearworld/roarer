@@ -1,9 +1,9 @@
 import { en } from "./en";
-import { de } from "./de";
 import { es } from "./es";
+import { de } from "./de";
 
 export const languages = {
   en,
-  de,
   es,
+  de,
 };
