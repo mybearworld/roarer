@@ -9,7 +9,7 @@ export const hu = {
   signOut: "Kijelentkezés",
   developmentStatus: {
     start:
-      "A Roarer éppen nagyon korai ponton van a fejlesztésében, ha lenne ötlete vagy hibát találna, kérem mindképp tájékoztasson róla
+      "A Roarer éppen nagyon korai ponton van a fejlesztésében, ha lenne ötlete vagy hibát találna, kérem mindképp tájékoztasson róla",
     githubRepositoryLink: "Github-on",
     end: "!",
   },
