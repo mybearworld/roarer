@@ -124,4 +124,10 @@ export const en = {
     githubLink: "translate it on GitHub",
     end: "!",
   },
+  contributed: {
+    start:
+      "Have you had an idea for Roarer that got implemented? Have you found a bug in Roarer that got fixed? Please get your contribution counted at ",
+    issueLink: "this Github issue",
+    end: "!",
+  },
 };
