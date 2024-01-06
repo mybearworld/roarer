@@ -3,13 +3,14 @@ import { defineStore } from "pinia";
 import { useI18n } from "vue-i18n";
 import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
+import { cl } from "../lib/servers";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
   const { t } = useI18n();
 
   const cloudlink = ref(
     new CloudlinkClient({
-      url: "wss://api.meower.org/v0/cloudlink",
+      url: cl,
       log: false,
     }),
   );

@@ -1,5 +1,5 @@
 import { z, ZodSchema } from "zod";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { api } from "./servers";
 
 export const apiRequest = async (
   url: string,
@@ -9,7 +9,7 @@ export const apiRequest = async (
   const token = auth?.token;
   const authHeaders: { username: string; token: string } | {} =
     username && token ? { username, token } : {};
-  const response = await fetch(`https://api.meower.org${url}`, {
+  const response = await fetch(`${api}${url}`, {
     method,
     headers: {
       ...authHeaders,
