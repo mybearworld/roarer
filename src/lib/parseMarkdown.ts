@@ -33,6 +33,10 @@ export const parseMarkdown = (
       const span = document.createElement("span");
       span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
       img.replaceWith(span);
+      return;
+    }
+    if (!img.dataset.original) {
+      img.classList.add("inline-block");
     }
   });
   postDocument.querySelectorAll("a").forEach((element) => {
