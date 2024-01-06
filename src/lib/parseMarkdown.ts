@@ -35,7 +35,11 @@ export const parseMarkdown = (
       img.replaceWith(span);
       return;
     }
-    if (!img.dataset.original) {
+    if (img.dataset.original) {
+      const clonedImg = img.cloneNode();
+      postDocument.body.append(clonedImg);
+      img.remove();
+    } else {
       img.classList.add("inline-block");
     }
   });
