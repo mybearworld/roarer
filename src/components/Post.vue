@@ -199,6 +199,8 @@ const resizeTextarea = () => {
 const markdownPostContent = computed(() =>
   parseMarkdown(postContent.value, locationStore),
 );
+
+const reload = () => location.reload();
 </script>
 
 <template>
