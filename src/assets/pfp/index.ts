@@ -1,79 +1,79 @@
-import iconNeg4 from "./icon_-4.svg";
-import icon0 from "./icon_0.svg";
-import icon1 from "./icon_1.svg";
-import icon2 from "./icon_2.svg";
-import icon3 from "./icon_3.svg";
-import icon4 from "./icon_4.svg";
-import icon5 from "./icon_5.svg";
-import icon6 from "./icon_6.svg";
-import icon7 from "./icon_7.svg";
-import icon8 from "./icon_8.svg";
-import icon9 from "./icon_9.svg";
-import icon10 from "./icon_10.svg";
-import icon11 from "./icon_11.svg";
-import icon12 from "./icon_12.svg";
-import icon13 from "./icon_13.svg";
-import icon14 from "./icon_14.svg";
-import icon15 from "./icon_15.svg";
-import icon16 from "./icon_16.svg";
-import icon17 from "./icon_17.svg";
-import icon18 from "./icon_18.svg";
-import icon19 from "./icon_19.svg";
-import icon20 from "./icon_20.svg";
-import icon21 from "./icon_21.svg";
-import icon22 from "./icon_22.svg";
-import icon23 from "./icon_23.svg";
-import icon24 from "./icon_24.svg";
-import icon25 from "./icon_25.svg";
-import icon26 from "./icon_26.svg";
-import icon27 from "./icon_27.svg";
-import icon28 from "./icon_28.svg";
-import icon29 from "./icon_29.svg";
-import icon30 from "./icon_30.svg";
-import icon31 from "./icon_31.svg";
-import icon32 from "./icon_32.svg";
-import icon33 from "./icon_33.svg";
-import icon100 from "./icon_100.svg";
-import icon101 from "./icon_101.svg";
-import icon499 from "./icon_499.svg";
+import iconNeg3 from "./-3.svg";
+import icon1 from "./1.svg";
+import icon2 from "./2.svg";
+import icon3 from "./3.svg";
+import icon4 from "./4.svg";
+import icon5 from "./5.svg";
+import icon6 from "./6.svg";
+import icon7 from "./7.svg";
+import icon8 from "./8.svg";
+import icon9 from "./9.svg";
+import icon10 from "./10.svg";
+import icon11 from "./11.svg";
+import icon12 from "./12.svg";
+import icon13 from "./13.svg";
+import icon14 from "./14.svg";
+import icon15 from "./15.svg";
+import icon16 from "./16.svg";
+import icon17 from "./17.svg";
+import icon18 from "./18.svg";
+import icon19 from "./19.svg";
+import icon20 from "./20.svg";
+import icon21 from "./21.svg";
+import icon22 from "./22.svg";
+import icon23 from "./23.svg";
+import icon24 from "./24.svg";
+import icon25 from "./25.svg";
+import icon26 from "./26.svg";
+import icon27 from "./27.svg";
+import icon28 from "./28.svg";
+import icon29 from "./29.svg";
+import icon30 from "./30.svg";
+import icon31 from "./31.svg";
+import icon32 from "./32.svg";
+import icon33 from "./33.svg";
+import icon34 from "./34.svg";
+import icon101 from "./101.svg";
+import icon102 from "./102.svg";
+import icon500 from "./500.svg";
 
 export const profilePictures = new Map([
-  [1, icon0],
-  [2, icon1],
-  [3, icon2],
-  [4, icon3],
-  [5, icon4],
-  [6, icon5],
-  [7, icon6],
-  [8, icon7],
-  [9, icon8],
-  [10, icon9],
-  [11, icon10],
-  [12, icon11],
-  [13, icon12],
-  [14, icon13],
-  [15, icon14],
-  [16, icon15],
-  [17, icon16],
-  [18, icon17],
-  [19, icon18],
-  [20, icon19],
-  [21, icon20],
-  [22, icon21],
-  [23, icon22],
-  [24, icon23],
-  [25, icon24],
-  [26, icon25],
-  [27, icon26],
-  [28, icon27],
-  [29, icon28],
-  [30, icon29],
-  [31, icon30],
-  [32, icon31],
-  [33, icon32],
-  [34, icon33],
-  [101, icon100],
-  [102, icon101],
-  [500, icon499],
-  [-3, iconNeg4],
+  [1, icon1],
+  [2, icon2],
+  [3, icon3],
+  [4, icon4],
+  [5, icon5],
+  [6, icon6],
+  [7, icon7],
+  [8, icon8],
+  [9, icon9],
+  [10, icon10],
+  [11, icon11],
+  [12, icon12],
+  [13, icon13],
+  [14, icon14],
+  [15, icon15],
+  [16, icon16],
+  [17, icon17],
+  [18, icon18],
+  [19, icon19],
+  [20, icon20],
+  [21, icon21],
+  [22, icon22],
+  [23, icon23],
+  [24, icon24],
+  [25, icon25],
+  [26, icon26],
+  [27, icon27],
+  [28, icon28],
+  [29, icon29],
+  [30, icon30],
+  [31, icon31],
+  [32, icon32],
+  [33, icon33],
+  [34, icon34],
+  [101, icon101],
+  [102, icon102],
+  [500, icon500],
+  [-3, iconNeg3],
 ]);
