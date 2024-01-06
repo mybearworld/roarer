@@ -69,14 +69,6 @@ const goTo = (location: Location) => {
         >{{ t("developmentStatus.githubRepositoryLink") }}</a
       >{{ t("developmentStatus.end") }}
     </p>
-    <p>
-      {{ t("contributed.start")
-      }}<a
-        href="https://github.com/mybearworld/roarer/issues/38"
-        class="text-sky-400 underline"
-        >{{ t("contributed.issueLink") }}</a
-      >{{ t("contributed.end") }}
-    </p>
     <p class="text-red-200" v-if="isDevStore.isDev">
       {{ t("inDevelopmentMode") }}
       <a

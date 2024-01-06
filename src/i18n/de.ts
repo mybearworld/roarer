@@ -127,10 +127,4 @@ export const de = {
     githubLink: "auf GitHub übersetzen",
     end: "!",
   },
-  contributed: {
-    start:
-      "Hattest du eine Idee für Roarer, die eingeführt wurde? Hast du einen Fehler in Roarer gefunden, der gelöst wurde? Bitte lasse deine Mitwirkung bei ",
-    issueLink: "diesem Github-Issue",
-    end: " zählen!",
-  },
 };
