@@ -240,12 +240,11 @@ const reload = () => location.reload();
   />
   <div
     :class="`group flex rounded-xl bg-slate-800 ${
-      reply ? 'gap-2' : 'flex-col px-2 py-1'
+      reply ? 'gap-2 italic text-slate-400' : 'flex-col px-2 py-1'
     }`"
     v-else
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(username)"
   >
-    <Post :post="replyPost" reply v-if="replyPost" />
     <div class="relative flex items-center gap-x-2">
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <button
@@ -257,7 +256,7 @@ const reload = () => location.reload();
       </button>
       <span
         class="inline-block text-green-400"
-        v-if="onlineListStore.online.includes(username)"
+        v-if="onlineListStore.online.includes(username) && !reply"
       >
         <IconCircleFilled class="h-2 w-2" aria-hidden />
         <span class="sr-only">Online</span>
@@ -320,6 +319,9 @@ const reload = () => location.reload();
         {{ formatDate(post.t.e, locale) }}
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
+    </div>
+    <div v-if="replyPost">
+      <Post :post="replyPost" reply />
     </div>
     <form v-if="editing" @submit="edit">
       <textarea
