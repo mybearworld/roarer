@@ -21,7 +21,7 @@ const markdown = markdownit({
   },
 }).use(emoji, { shortcuts: {} });
 
-export const parseMarkdown = (
+export const parseMarkdown = async (
   md: string,
   locationStore: ReturnType<typeof useLocationStore>,
   inline = false,
@@ -59,22 +59,24 @@ export const parseMarkdown = (
       locationStore.location = "users";
     });
   });
-  postDocument.querySelectorAll("img").forEach(async (element) => {
-    const request = await fetch(element.src);
-    if (request.status !== 200) {
-      return;
-    }
-    const contentType = request.headers.get("content-type");
-    const isAudio = contentType?.startsWith("audio/");
-    const isVideo = contentType?.startsWith("video/");
-    if (!isAudio && !isVideo) {
-      return;
-    }
-    const newElement = document.createElement(isAudio ? "audio" : "video");
-    newElement.src = element.src;
-    newElement.controls = true;
-    element.replaceWith(newElement);
-  });
+  await Promise.all(
+    [...postDocument.querySelectorAll("img")].map(async (element) => {
+      const request = await fetch(element.src);
+      if (request.status !== 200) {
+        return;
+      }
+      const contentType = request.headers.get("content-type");
+      const isAudio = contentType?.startsWith("audio/");
+      const isVideo = contentType?.startsWith("video/");
+      if (!isAudio && !isVideo) {
+        return;
+      }
+      const newElement = document.createElement(isAudio ? "audio" : "video");
+      newElement.src = element.src;
+      newElement.controls = true;
+      element.replaceWith(newElement);
+    }),
+  );
   const sanitizedHTML = postDocument.body.innerHTML;
   // using the built in linkify feature of markdown-it would not allow the
   // above change for images

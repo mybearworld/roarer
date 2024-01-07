@@ -225,8 +225,15 @@ const resizeTextarea = () => {
   editInputValue.value.style.height = `${editInputValue.value.scrollHeight}px`;
 };
 
-const markdownPostContent = computed(() =>
-  parseMarkdown(postContent.value, locationStore, reply, !reply),
+const markdownPostContent = ref("");
+effect(
+  async () =>
+    (markdownPostContent.value = await parseMarkdown(
+      postContent.value,
+      locationStore,
+      reply,
+      !reply,
+    )),
 );
 
 const reload = () => location.reload();
