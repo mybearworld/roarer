@@ -61,14 +61,6 @@ const goTo = (location: Location) => {
         </button>
       </div>
     </div>
-    <p>
-      {{ t("developmentStatus.start")
-      }}<a
-        href="https://github.com/mybearworld/roarer"
-        class="text-sky-400 underline"
-        >{{ t("developmentStatus.githubRepositoryLink") }}</a
-      >{{ t("developmentStatus.end") }}
-    </p>
     <p class="text-red-200" v-if="isDevStore.isDev">
       {{ t("inDevelopmentMode") }}
       <a

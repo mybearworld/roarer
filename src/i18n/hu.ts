@@ -7,20 +7,13 @@ export const hu = {
   routeUsers: "Felhasználók",
   routeSettings: "Beállítások",
   signOut: "Kijelentkezés",
-  developmentStatus: {
-    start:
-      "A Roarer éppen nagyon korai ponton van a fejlesztésében, ha lenne ötlete vagy hibát találna, kérem mindképp tájékoztasson róla ",
-    githubRepositoryLink: "Github-on",
-    end: "!",
-  },
   inDevelopmentMode: "Éppen fejlesztői módban van.",
   loginHeader: "Bejelentkezés a Roarer-be",
   loginUsername: "Felhasználónév:",
   loginPassword: "Jelszó:",
   loginSubmit: "Bejelentkezés",
   loginSignUp: "Regisztráció",
-  loginFail:
-    "Nem sikerült bejelentkezni. Meg akarja próbálni újra?",
+  loginFail: "Nem sikerült bejelentkezni. Meg akarja próbálni újra?",
   loginSignoutConfirm: "Biztos ki akar jelentkezni?",
   loadMore: "Több betöltése",
   loadingMore: "Betöltés...",
@@ -61,7 +54,8 @@ export const hu = {
   chatOwner: "Készítő",
   chatPromote: "Előléptetés",
   chatRemove: "Eltávolítás",
-  profileInformationFail: "Nem sikerült megszerezni a profilinformációkat: {status}",
+  profileInformationFail:
+    "Nem sikerült megszerezni a profilinformációkat: {status}",
   configFail: "Nem sikerült frissíteni a profilját: {errmsg}",
   configSuccess: "Frissítette a profilját.",
   newPassword: "Mi legyen az új jelszava?",
@@ -100,7 +94,8 @@ export const hu = {
   },
   blockUserConfirm:
     "Biztosan blokkolni akarja ezt a felhasználót? Nem fogja látni ennek a felhasználónak az üzeneteit.",
-  unblockUserConfirm: "Biztosan fel akarja oldani a blokkolását ennek a felhasználónak?",
+  unblockUserConfirm:
+    "Biztosan fel akarja oldani a blokkolását ennek a felhasználónak?",
   blockFailed: "Nem sikerült blokkolni: {status}",
   unblockFailed: "Nem sikerült feloldani a felhasználó blokkolását: {status}",
   username: "Felhasználónév",
@@ -116,7 +111,8 @@ export const hu = {
   openDMFail: "Nem sikerült megnyitni a közvetlen üzenetet: {status}",
   chatCreateFail: "Nem sikerült csevegést készíteni: {status}",
   chatGetFail: "Nem sikerült megszerezni a csevegéseit: {status}",
-  disconnected: "Megszakadt a kapcsolat. Kattintson az OK gombra, hogy újratöltse az oldalt.",
+  disconnected:
+    "Megszakadt a kapcsolat. Kattintson az OK gombra, hogy újratöltse az oldalt.",
   myAccount: "Az én fiókom",
   languageContributing: {
     start:

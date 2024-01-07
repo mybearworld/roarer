@@ -7,12 +7,6 @@ export const es = {
   routeUsers: "Usuarios",
   routeSettings: "Ajustes",
   signOut: "Cerrar sesión",
-  developmentStatus: {
-    start:
-      "Nota: Roarer se encuentra actualmente en una etapa muy temprana de su desarrollo. Informe errores y/o sugiera funciones en ",
-    githubRepositoryLink: "el repositorio de GitHub",
-    end: "!",
-  },
   inDevelopmentMode: "Estás en modo desarrollo.",
   loginHeader: "Iniciar sesión en Roarer",
   loginUsername: "Nombre de usuario:",
