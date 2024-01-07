@@ -235,6 +235,7 @@ const reload = () => location.reload();
 <template>
   <Post
     :post="edited"
+    :reply="reply"
     v-if="edited && !relationshipStore.blockedUsers.has(username)"
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
