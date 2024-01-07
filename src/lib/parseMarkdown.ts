@@ -27,7 +27,6 @@ export const parseMarkdown = (
   inline = false,
   images = true,
 ) => {
-  console.log(images, md);
   const html = toHTML(md, inline);
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(html, "text/html");
@@ -88,7 +87,7 @@ export const parseMarkdown = (
 };
 
 const toHTML = (md: string, inline: boolean) => {
-  const tokens = inline?markdown.parseInline(md, {}) : markdown.parse(md, {});
+  const tokens = inline ? markdown.parseInline(md, {}) : markdown.parse(md, {});
   const newTokens: Token[] = [];
   tokens.forEach((token) => {
     if (token.type !== "inline" || !token.children) {
