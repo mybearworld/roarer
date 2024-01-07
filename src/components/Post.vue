@@ -313,7 +313,7 @@ const reload = () => location.reload();
       </div>
       <div
         :class="`visible w-full text-sm italic text-slate-400 ${
-          !isItalicUser ? 'sm:hidden sm:w-auto group-hover:sm:inline-block' : ''
+          !isItalicUser ? 'hidden w-auto group-hover:sm:inline-block' : ''
         }`"
         v-if="!reply"
       >
@@ -321,7 +321,16 @@ const reload = () => location.reload();
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
-    <div v-if="replyPost && !reply">
+    <div
+      :class="`w-full text-sm italic text-slate-400 sm:hidden ${
+        !isItalicUser ? 'inline-block w-auto' : ''
+      }`"
+      v-if="!reply"
+    >
+      {{ formatDate(post.t.e, locale) }}
+      <span v-if="edited || post.edited_at">(edited)</span>
+    </div>
+    <div class="overflow-hidden" v-if="replyPost && !reply">
       <Post :post="replyPost" reply />
     </div>
     <form v-if="editing" @submit="edit">
