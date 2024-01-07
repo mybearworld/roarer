@@ -24,10 +24,11 @@ const markdown = markdownit({
 export const parseMarkdown = (
   md: string,
   locationStore: ReturnType<typeof useLocationStore>,
+  inline = false,
   images = true,
 ) => {
   console.log(images, md);
-  const html = toHTML(md);
+  const html = toHTML(md, inline);
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(html, "text/html");
   postDocument.querySelectorAll("img").forEach((img) => {
@@ -86,8 +87,8 @@ export const parseMarkdown = (
   return linkifiedHTML;
 };
 
-const toHTML = (md: string) => {
-  const tokens = markdown.parse(md, {});
+const toHTML = (md: string, inline: boolean) => {
+  const tokens = inline?markdown.parseInline(md, {}) : markdown.parse(md, {});
   const newTokens: Token[] = [];
   tokens.forEach((token) => {
     if (token.type !== "inline" || !token.children) {

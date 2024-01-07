@@ -226,7 +226,7 @@ const resizeTextarea = () => {
 };
 
 const markdownPostContent = computed(() =>
-  parseMarkdown(postContent.value, locationStore, !reply),
+  parseMarkdown(postContent.value, locationStore, reply, !reply),
 );
 
 const reload = () => location.reload();
@@ -320,7 +320,7 @@ const reload = () => location.reload();
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
-    <div v-if="replyPost">
+    <div v-if="replyPost && !reply">
       <Post :post="replyPost" reply />
     </div>
     <form v-if="editing" @submit="edit">
