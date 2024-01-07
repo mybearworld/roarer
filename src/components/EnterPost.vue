@@ -7,6 +7,7 @@ import {
   autoResizeTextarea,
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
+import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
@@ -38,7 +39,10 @@ const post = async (e?: Event) => {
       {
         cmd: chat ? "post_chat" : "post_home",
         val: chat
-          ? { chatid: chat._id, p: postContent.value }
+          ? {
+              chatid: chat._id,
+              p: postContent.value,
+            }
           : postContent.value,
       },
       postSchema.and(
@@ -61,10 +65,8 @@ const post = async (e?: Event) => {
 };
 
 const trimmedPost = (post: string) => {
-  const quoteMatch = post.match(
-    /^@[a-z_0-9-]+(?: ".{0,40}…?"| \[[a-z0-9\-]+\])? (.*)$/i,
-  );
-  const postContent = quoteMatch ? quoteMatch[1] : post;
+  const reply = getReply(post);
+  const postContent = reply ? reply.postContent : post;
   const slicedPostContent = postContent.slice(0, 40);
   const replacedPostContent = slicedPostContent
     .slice(0, 40)
@@ -78,10 +80,13 @@ const trimmedPost = (post: string) => {
 };
 
 const inputRef = ref<HTMLTextAreaElement | null>(null);
-const reply = (username: string, content: string) => {
+const reply = (username: string, content: string, postId: string) => {
   postContent.value =
-    `@${username} ${trimmedPost(content)} ` + postContent.value;
-  inputRef.value?.focus();
+    `@${username} ${trimmedPost(content)} (${postId})\n` + postContent.value;
+  if (inputRef.value) {
+    inputRef.value.focus();
+    autoResizeTextarea(inputRef.value);
+  }
 };
 
 const lastTypingIndicatorSent = ref<number | null>(null);

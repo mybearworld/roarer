@@ -15,8 +15,9 @@ import {
 import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
-import { apiRequest } from "../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { bridgeBots } from "../lib/bridgeBots";
+import { getReply } from "../lib/getReply";
 import { formatDate } from "../lib/formatDate";
 import { parseMarkdown } from "../lib/parseMarkdown";
 import { postSchema, APIPost } from "../lib/postSchema";
@@ -33,13 +34,14 @@ const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const { t, locale } = useI18n();
 
-const { post, inbox, dontUpdate } = defineProps<{
+const { post, inbox, dontUpdate, reply } = defineProps<{
   post: APIPost;
   inbox?: boolean;
   dontUpdate?: boolean;
+  reply?: boolean;
 }>();
 const emit = defineEmits<{
-  reply: [username: string, postContent: string];
+  reply: [username: string, postContent: string, postId: string];
   delete: [];
 }>();
 
@@ -164,6 +166,33 @@ const editKeydown = (e: KeyboardEvent) => {
   }
 };
 
+const replyInfo = computed(() => {
+  const reply = getReply(postContent.value);
+  if (reply === null || reply.id === null) {
+    return null;
+  }
+  return reply;
+});
+const replyPost = ref<APIPost | null>(null);
+effect(async () => {
+  const safeReplyInfo = replyInfo.value;
+  if (safeReplyInfo === null) {
+    return;
+  }
+  const response = await getResponseFromAPIRequest(
+    `/posts?id=${safeReplyInfo.id}`,
+    {
+      schema: postSchema,
+      auth: loginStatusStore,
+    },
+  );
+  if ("status" in response) {
+    return;
+  }
+  postContent.value = safeReplyInfo.postContent;
+  replyPost.value = response;
+});
+
 const report = async () => {
   const reason = prompt("Reason:");
   if (!reason) {
@@ -197,7 +226,7 @@ const resizeTextarea = () => {
 };
 
 const markdownPostContent = computed(() =>
-  parseMarkdown(postContent.value, locationStore),
+  parseMarkdown(postContent.value, locationStore, !reply),
 );
 
 const reload = () => location.reload();
@@ -207,14 +236,18 @@ const reload = () => location.reload();
   <Post
     :post="edited"
     v-if="edited && !relationshipStore.blockedUsers.has(username)"
-    @reply="(u, p) => emit('reply', u, p)"
+    @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
-    class="group flex flex-col rounded-xl bg-slate-800 px-2 py-1"
+    :class="`group flex rounded-xl bg-slate-800 ${
+      reply ? 'gap-2' : 'flex-col px-2 py-1'
+    }`"
     v-else
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(username)"
   >
-    <div class="relative flex flex-wrap items-center gap-x-2">
+    <Post :post="replyPost" reply v-if="replyPost" />
+    <div class="relative flex items-center gap-x-2">
+      <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <button
         v-if="!isItalicUser"
         class="font-bold"
@@ -250,7 +283,7 @@ const reload = () => location.reload();
       </span>
       <div
         class="visible absolute right-0 top-0 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
-        v-if="!editing && !inbox"
+        v-if="!editing && !inbox && !reply"
       >
         <template v-if="post.u === loginStatusStore.username">
           <button class="h-4 w-4" @click="remove">
@@ -270,7 +303,10 @@ const reload = () => location.reload();
           <IconAlertTriangle aria-hidden />
           <span class="sr-only">{{ t("reportPost") }}</span>
         </button>
-        <button class="h-4 w-4" @click="emit('reply', username, postContent)">
+        <button
+          class="h-4 w-4"
+          @click="emit('reply', username, postContent, post.post_id)"
+        >
           <IconArrowForward aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>
         </button>
@@ -279,6 +315,7 @@ const reload = () => location.reload();
         :class="`visible w-full text-sm italic text-slate-400 ${
           !isItalicUser ? 'sm:hidden sm:w-auto group-hover:sm:inline-block' : ''
         }`"
+        v-if="!reply"
       >
         {{ formatDate(post.t.e, locale) }}
         <span v-if="edited || post.edited_at">(edited)</span>
@@ -308,9 +345,9 @@ const reload = () => location.reload();
     </form>
     <div v-else>
       <div
-        :class="`max-h-96 space-y-2 overflow-y-auto break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:text-slate-400 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-slate-500 [&_img]:max-h-96 [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc ${
+        :class="`max-h-96 space-y-2 break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:text-slate-400 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-slate-500 [&_img]:max-h-96 [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc ${
           isItalicUser ? 'italic' : ''
-        }`"
+        } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
         v-html="markdownPostContent"
         ref="postContentElement"
       ></div>
@@ -319,7 +356,8 @@ const reload = () => location.reload();
         v-if="
           postContent.endsWith('\u200c') &&
           username === 'mybearworld' &&
-          !isBridged
+          !isBridged &&
+          !reply
         "
         @click="reload"
       >

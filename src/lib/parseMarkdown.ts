@@ -24,12 +24,14 @@ const markdown = markdownit({
 export const parseMarkdown = (
   md: string,
   locationStore: ReturnType<typeof useLocationStore>,
+  images = true,
 ) => {
+  console.log(images, md);
   const html = toHTML(md);
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(html, "text/html");
   postDocument.querySelectorAll("img").forEach((img) => {
-    if (!hostWhitelist.some((host) => img.src.startsWith(host))) {
+    if (!images || !hostWhitelist.some((host) => img.src.startsWith(host))) {
       const span = document.createElement("span");
       span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
       img.replaceWith(span);
