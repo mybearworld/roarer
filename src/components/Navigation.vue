@@ -10,7 +10,7 @@ const { title } = defineProps<{
   title: string;
 }>();
 
-document.title = "Roarer - " + title;
+document.title = `${t("roarer")} - ${title}`;
 
 const isDevStore = useIsDevStore();
 const locationStore = useLocationStore();
@@ -25,7 +25,9 @@ const goTo = (location: Location) => {
   <div>
     <div class="mb-2 flex flex-col items-center gap-1">
       <div class="flex flex-wrap gap-x-4">
-        <h1 class="text-3xl font-bold">Roarer&nbsp;-&nbsp;{{ title }}</h1>
+        <h1 class="text-3xl font-bold">
+          {{ t("roarer") }}&nbsp;-&nbsp;{{ title }}
+        </h1>
         <Login />
       </div>
       <div class="flex flex-wrap items-center gap-2">

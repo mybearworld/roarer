@@ -137,7 +137,7 @@ defineExpose({ reply });
       ref="inputRef"
       rows="1"
     />
-    <button type="submit" class="rounded-xl bg-slate-800 px-2 py-1">
+    <button type="submit" class="text-nowrap rounded-xl bg-slate-800 px-2 py-1">
       {{ $t("enterPostSend") }}
     </button>
   </form>

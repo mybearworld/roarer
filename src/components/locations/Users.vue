@@ -102,7 +102,7 @@ const block = async () => {
         type="text"
         v-model="username"
       />
-      <button class="rounded-xl bg-slate-800 px-2 py-1">
+      <button class="text-nowrap rounded-xl bg-slate-800 px-2 py-1">
         {{ t("userSearch") }}
       </button>
     </form>
