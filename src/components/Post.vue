@@ -257,7 +257,7 @@ const reload = () => location.reload();
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <button
         v-if="!isItalicUser"
-        class="font-bold"
+        class="text-nowrap font-bold"
         @click="goToUser(username)"
       >
         {{ username }}
