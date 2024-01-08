@@ -61,7 +61,12 @@ export const parseMarkdown = async (
   });
   await Promise.all(
     [...postDocument.querySelectorAll("img")].map(async (element) => {
-      const request = await fetch(element.src);
+      let request;
+      try {
+        request = await fetch(element.src);
+      } catch {
+        return;
+      }
       if (request.status !== 200) {
         return;
       }
