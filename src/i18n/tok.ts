@@ -68,7 +68,7 @@ export const tok = {
     "sina wile e ni, anu seme? lon ilo ale la sina kama lon.",
   revokeTokensFail: "mi ken ala pini e lon ale: {errmsg}",
   deleteAccountConfirm:
-    "sina wile e ni, anu seme? sina pali e ni la sina KEN ALA ante e ni. suno luka tu la sina li weka lon TENPO ALE.",
+    "sina wile e ni, anu seme? sina pali e ni la sina KEN ALA ante e ni. suno luka tu la sina weka lon TENPO ALE.",
   deleteAccountPasswordPrompt: "seme li nimi len sina?",
   deleteAccountFail: "mi ken ala weka e sina: {err}",
   usersSectionMe: "mi",
