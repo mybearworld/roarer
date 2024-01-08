@@ -364,7 +364,7 @@ const reload = () => location.reload();
     </form>
     <div v-else>
       <div
-        :class="`max-h-96 space-y-2 break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:text-slate-400 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-slate-500 [&_img]:max-h-96 [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
+        :class="`max-h-96 space-y-2 break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-slate-500 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:text-slate-400 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-slate-500 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-slate-500 [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-slate-500 [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
           isItalicUser ? 'italic' : ''
         } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
         v-html="markdownPostContent"
