@@ -56,7 +56,7 @@ const createChat = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(t("createChatFail", { status: response.status }));
+    alert(t("chatCreateFail", { status: response.status }));
   }
 };
 
