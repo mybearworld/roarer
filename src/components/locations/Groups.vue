@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { effect, ref } from "vue";
+import { computed, effect, ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import ChatSettings from "../ChatSettings.vue";
@@ -33,6 +33,14 @@ effect(async () => {
   }
   chats.value = response.autoget;
 });
+
+const sortedChats = computed(() =>
+  chats.value.sort(
+    (a, b) =>
+      new Date(b.last_active * 1000).getTime() -
+      new Date(a.last_active * 1000).getTime(),
+  ),
+);
 
 const chatNickname = ref("");
 const createChat = async (e?: Event) => {
@@ -156,7 +164,7 @@ const settings = (chat: APIChat) => {
         :chat="chat"
         @open="open"
         @settings="settings"
-        v-for="chat in chats"
+        v-for="chat in sortedChats"
       />
     </template>
     <Posts :chat="openGroupchat" v-else-if="section === 'main'" />
