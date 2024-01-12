@@ -225,7 +225,7 @@ const deleteAccount = async () => {
     <p>
       {{ t("contributorsThanks.start")
       }}<a
-        href="https://github.com/mybearworld/roarer/graphs/contributors"
+        href="https://github.com/mybearworld/roarer?tab=readme-ov-file#contributors"
         class="text-sky-400 underline"
         >{{ t("contributorsThanks.contributorsLink") }}</a
       >{{ t("contributorsThanks.end") }}
