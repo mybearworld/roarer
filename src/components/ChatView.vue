@@ -37,7 +37,7 @@ const emit = defineEmits<{
         <template v-if="chat.nickname">
           <IconUser class="inline-block h-4 w-4 min-w-4" aria-hidden />
           <span class="sr-only">Members:</span>
-          {{ chat.members.join(", ") }}
+          <span class="line-clamp-1"> {{ chat.members.join(", ") }}</span>
         </template>
         <template v-else>
           <IconMessage class="inline-block h-4 w-4 min-w-4" aria-hidden />
