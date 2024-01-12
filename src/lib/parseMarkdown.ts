@@ -130,7 +130,6 @@ const toHTML = (md: string, inline: boolean) => {
         imageToken.attrs = [
           ["alt", ""],
           ["src", src],
-          // This is not used (yet?)
           ["data-original", fullMatch],
         ];
         const altTextToken = new Token("text", "", 0);
