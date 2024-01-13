@@ -121,4 +121,7 @@ export const de = {
     githubLink: "auf GitHub übersetzen",
     end: "!",
   },
+  editPostFail: "Post konnte nicht bearbeitet werden: {status}",
+  loadMoreFail: "Mehr Posts konnten nicht geladen werden: {status}",
+  getPostsFail: "Posts konnten nicht erhalten werden: {status}",
 };
