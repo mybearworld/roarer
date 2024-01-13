@@ -240,8 +240,9 @@ effect(() => {
   if (!postContentElement.value || !markdownPostContent.value) {
     return;
   }
+  postContentElement.value.innerHTML = "";
   postContentElement.value.append(
-    ...(markdownPostContent.value.children ?? []),
+    ...(markdownPostContent.value.childNodes ?? []),
   );
 });
 
