@@ -53,7 +53,7 @@ const username = ref(
     : post.u,
 );
 const postContent = ref(
-  settingsStore.filterSwears && post.unfiltered_p ? post.unfiltered_p : post.p,
+  !settingsStore.filterSwears && post.unfiltered_p ? post.unfiltered_p : post.p,
 );
 
 const isItalicUser = computed(() =>
