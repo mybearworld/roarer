@@ -16,6 +16,9 @@ const { chat, inbox } = defineProps<{
   chat?: APIChat;
   inbox?: boolean;
 }>();
+const emit = defineEmits<{
+  back: [];
+}>();
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
@@ -104,7 +107,12 @@ const loadMore = async () => {
 </script>
 
 <template>
-  <h2 class="text-lg font-bold" v-if="chat">{{ chat.nickname }}</h2>
+  <div class="flex items-center gap-2" v-if="chat">
+    <h2 class="text-lg font-bold" v-if="chat">{{ chat.nickname }}</h2>
+    <button class="text-sky-400 underline" @click="emit('back')">
+      {{ t("back") }}
+    </button>
+  </div>
   <OnlineList :chat="chat" v-if="!inbox" />
   <EnterPost ref="enterPost" :chat="chat" v-if="!inbox" />
   <TypingIndicator :chat="chat" v-if="!inbox" />

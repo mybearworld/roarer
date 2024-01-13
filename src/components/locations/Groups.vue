@@ -167,7 +167,11 @@ const settings = (chat: APIChat) => {
         v-for="chat in sortedChats"
       />
     </template>
-    <Posts :chat="openGroupchat" v-else-if="section === 'main'" />
+    <Posts
+      :chat="openGroupchat"
+      @back="openGroupchat = null"
+      v-else-if="section === 'main'"
+    />
     <ChatSettings :chat="openGroupchat" @back="openGroupchat = null" v-else />
   </div>
 </template>
