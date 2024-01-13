@@ -129,6 +129,7 @@ const permissions = computed(() =>
           height="70"
           :src="meowy"
           class="brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
+          v-else
         />
       </div>
       <div class="">
