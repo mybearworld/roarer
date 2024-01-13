@@ -2,6 +2,7 @@ import { effect, ref } from "vue";
 import { defineStore } from "pinia";
 
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
+const FILTER_SWEARS_STORAGE = "roarer:anyImageHost";
 
 export const useSettingsStore = defineStore("settings", () => {
   const anyImageHost = ref(
@@ -13,6 +14,15 @@ export const useSettingsStore = defineStore("settings", () => {
       anyImageHost.value ? "true" : "false",
     );
   });
+  const filterSwears = ref(
+    ["true", null].includes(localStorage.getItem(FILTER_SWEARS_STORAGE)),
+  );
+  effect(() => {
+    localStorage.setItem(
+      FILTER_SWEARS_STORAGE,
+      anyImageHost.value ? "true" : "false",
+    );
+  });
 
-  return { anyImageHost };
+  return { anyImageHost, filterSwears };
 });

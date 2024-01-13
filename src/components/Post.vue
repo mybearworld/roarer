@@ -52,7 +52,9 @@ const username = ref(
       : "Announcement"
     : post.u,
 );
-const postContent = ref(post.p);
+const postContent = ref(
+  settingsStore.filterSwears && post.unfiltered_p ? post.unfiltered_p : post.p,
+);
 
 const isItalicUser = computed(() =>
   ["Server", "Notification", "Announcement"].includes(username.value),
