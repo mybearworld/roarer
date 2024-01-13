@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import App from "./App.vue";
 import Chat from "./components/locations/Chat.vue";
 import ChatSettings from "./components/locations/ChatSettings.vue";
@@ -21,7 +21,7 @@ const i18n = createI18n({
   messages: languages,
 });
 const router = createRouter({
-  history: createWebHistory("/roarer/"),
+  history: createWebHashHistory(),
   routes: [
     { path: "/", redirect: "/home" },
     { path: "/home", component: Home },
