@@ -194,9 +194,14 @@ const deleteAccount = async () => {
       </button>
     </form>
     <h2 class="text-lg font-bold">{{ t("roarer") }}</h2>
-    <label>
+    <label class="flex items-baseline gap-2">
       <input type="checkbox" v-model="settingsStore.anyImageHost" />
-      {{ t("settingAnyImageHost") }}
+      <div>
+        {{ t("settingAnyImageHost") }}
+        <p>
+          <strong>{{ t("settingAnyImageHostWarn") }}</strong>
+        </p>
+      </div>
     </label>
     <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>

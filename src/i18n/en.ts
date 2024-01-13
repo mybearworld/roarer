@@ -145,4 +145,6 @@ export const en = {
   permSendAnnouncements: "Can send announcements",
   settingAnyImageHost:
     "Allow any image host, even outside of the standard whitelist.",
+  settingAnyImageHostWarn:
+    "WARNING: This will allow any website to be used as an image host, and a request will automatically be made to it. This might lead to your IP being shown to the website. Use this responsibly.",
 };
