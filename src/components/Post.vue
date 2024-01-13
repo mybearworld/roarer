@@ -339,7 +339,7 @@ const reload = () => location.reload();
       {{ formatDate(post.t.e, locale) }}
       <span v-if="edited || post.edited_at">(edited)</span>
     </div>
-    <div class="overflow-hidden" v-if="replyPost && !reply">
+    <div class="overflow-hidden" v-if="replyPost && !reply && !editing">
       <Post :post="replyPost" reply />
     </div>
     <form v-if="editing" @submit="edit">
@@ -347,7 +347,7 @@ const reload = () => location.reload();
         class="my-2 block w-full resize-none rounded-lg bg-slate-700 px-2 py-1"
         type="text"
         rows="1"
-        :value="post.unfiltered_p ?? postContent"
+        :value="post.unfiltered_p ?? post.p"
         ref="editInputValue"
         @keydown="editKeydown"
         @input="resizeTextarea"
