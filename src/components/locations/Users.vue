@@ -3,6 +3,7 @@ import { computed, effect, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { profilePictures } from "../../assets/pfp";
+import meowy from "../../assets/pfp/22.svg";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
@@ -28,9 +29,11 @@ const submit = (e: Event) => {
   router.push(`/users/${username.value}`);
 };
 
-const dm = (user: string) => {
-  router.push(`/groups/dm/${user}`);
-};
+const profilePicture = computed(() =>
+  userProfile.value
+    ? profilePictures.get(userProfile.value.pfp_data)
+    : undefined,
+);
 
 const userProfile = ref<APIProfile | null>(null);
 effect(async () => {
@@ -118,7 +121,14 @@ const permissions = computed(() =>
         <img
           width="70"
           height="70"
-          :src="profilePictures.get(userProfile.pfp_data)"
+          :src="profilePicture"
+          v-if="profilePicture"
+        />
+        <img
+          width="70"
+          height="70"
+          :src="meowy"
+          class="brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
         />
       </div>
       <div class="">
