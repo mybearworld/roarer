@@ -6,12 +6,4 @@ import topLevelAwait from "vite-plugin-top-level-await";
 export default defineConfig({
   plugins: [vue(), topLevelAwait()],
   base: "/roarer",
-  build: {
-    rollupOptions: {
-      input: {
-        index: "./index.html",
-        "404": "./404.html",
-      },
-    },
-  },
 });
