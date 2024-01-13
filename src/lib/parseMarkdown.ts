@@ -45,7 +45,19 @@ export const parseMarkdown = async (
       img.classList.add("inline-block");
     }
   });
-  postDocument.querySelectorAll("a").forEach((element) => {
+  const sanitizedHTML = postDocument.body.innerHTML;
+  // using the built in linkify feature of markdown-it would not allow the
+  // above change for images
+  const linkifiedHTML = linkifyHtml(sanitizedHTML, {
+    formatHref: {
+      mention: (href) => `https://app.meower.org/users${href}`,
+    },
+  });
+  const linkifiedDocument = domParser.parseFromString(
+    linkifiedHTML,
+    "text/html",
+  );
+  linkifiedDocument.querySelectorAll("a").forEach((element) => {
     const text = element.textContent;
     if (!text || !element.textContent?.startsWith("@")) {
       return;
@@ -60,7 +72,7 @@ export const parseMarkdown = async (
     });
   });
   await Promise.all(
-    [...postDocument.querySelectorAll("img")].map(async (element) => {
+    [...linkifiedDocument.querySelectorAll("img")].map(async (element) => {
       let request;
       try {
         request = await fetch(element.src);
@@ -82,15 +94,8 @@ export const parseMarkdown = async (
       element.replaceWith(newElement);
     }),
   );
-  const sanitizedHTML = postDocument.body.innerHTML;
-  // using the built in linkify feature of markdown-it would not allow the
-  // above change for images
-  const linkifiedHTML = linkifyHtml(sanitizedHTML, {
-    formatHref: {
-      mention: (href) => `https://app.meower.org/users${href}`,
-    },
-  });
-  return linkifiedHTML;
+
+  return linkifiedDocument.body;
 };
 
 const toHTML = (md: string, inline: boolean) => {
