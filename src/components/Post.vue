@@ -25,11 +25,13 @@ import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
 import { useRelationshipStore } from "../stores/relationship";
+import { useSettingsStore } from "../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
+const settingsStore = useSettingsStore();
 const { t, locale } = useI18n();
 
 const { post, inbox, dontUpdate, reply } = defineProps<{
@@ -222,11 +224,11 @@ const markdownPostContent = ref<HTMLElement | null>(null);
 const postContentElement = ref<HTMLDivElement | null>(null);
 effect(
   async () =>
-    (markdownPostContent.value = await parseMarkdown(
-      postContent.value,
-      reply,
-      !reply,
-    )),
+    (markdownPostContent.value = await parseMarkdown(postContent.value, {
+      inline: reply,
+      images: !reply,
+      anyImageHost: settingsStore.anyImageHost,
+    })),
 );
 effect(() => {
   if (!postContentElement.value || !markdownPostContent.value) {

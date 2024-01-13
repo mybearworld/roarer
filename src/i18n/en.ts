@@ -143,4 +143,6 @@ export const en = {
   permViewChats: "Can view any chat",
   permEditChats: "Can configure any chat",
   permSendAnnouncements: "Can send announcements",
+  settingAnyImageHost:
+    "Allow any image host, even outside of the standard whitelist.",
 };

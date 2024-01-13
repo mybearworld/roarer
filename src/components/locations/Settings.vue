@@ -9,9 +9,11 @@ import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/profileSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useSettingsStore } from "../../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const settingsStore = useSettingsStore();
 const { t } = useI18n();
 const router = useRouter();
 
@@ -191,6 +193,11 @@ const deleteAccount = async () => {
         {{ t("updateProfile") }}
       </button>
     </form>
+    <h2 class="text-lg font-bold">{{ t("roarer") }}</h2>
+    <label>
+      <input type="checkbox" v-model="settingsStore.anyImageHost" />
+      {{ t("settingAnyImageHost") }}
+    </label>
     <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">

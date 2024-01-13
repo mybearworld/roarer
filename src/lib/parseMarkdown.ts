@@ -23,14 +23,16 @@ const markdown = markdownit({
 
 export const parseMarkdown = async (
   md: string,
-  inline = false,
-  images = true,
+  { inline = false, images = true, anyImageHost = false },
 ) => {
   const html = toHTML(md, inline);
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(html, "text/html");
   postDocument.querySelectorAll("img").forEach((img) => {
-    if (!images || !hostWhitelist.some((host) => img.src.startsWith(host))) {
+    if (
+      !images ||
+      (!anyImageHost && !hostWhitelist.some((host) => img.src.startsWith(host)))
+    ) {
       const span = document.createElement("span");
       span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
       img.replaceWith(span);
