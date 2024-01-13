@@ -5,6 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 import { profilePictures } from "../../assets/pfp";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
+import { getPermissions } from "../../lib/permissions";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useOnlinelistStore } from "../../stores/onlinelist";
@@ -83,6 +84,12 @@ const block = async () => {
     );
   }
 };
+
+const permissions = computed(() =>
+  userProfile.value?.permissions
+    ? getPermissions(userProfile.value?.permissions)
+    : null,
+);
 </script>
 
 <template>
@@ -144,6 +151,11 @@ const block = async () => {
             })
           }}
         </p>
+        <ul class="mt-2" v-if="permissions && permissions.length">
+          <li v-for="permission in permissions">
+            {{ t(permission) }}
+          </li>
+        </ul>
         <div class="mt-2"></div>
         <div class="space-x-2">
           <RouterLink
