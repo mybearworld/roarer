@@ -119,4 +119,7 @@ export const tok = {
     githubLink: "toki ante lon ilo Kita",
     end: "!",
   },
+  editPostFail: "toki ken ala ante: {status}",
+  loadMoreFail: "toki ante ken ala lon: {status}",
+  getPostsFail: "mi ken ala pana e toki: {status}",
 };
