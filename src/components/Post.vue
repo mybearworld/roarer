@@ -22,13 +22,11 @@ import { formatDate } from "../lib/formatDate";
 import { parseMarkdown } from "../lib/parseMarkdown";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLocationStore } from "../stores/location";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
 import { useRelationshipStore } from "../stores/relationship";
 
 const cloudlinkStore = useCloudlinkStore();
-const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
@@ -103,11 +101,6 @@ if (!dontUpdate) {
     edited.value = packet.val.payload;
   });
 }
-
-const goToUser = (username: string) => {
-  locationStore.sublocation = username;
-  locationStore.location = "users";
-};
 
 const remove = async () => {
   if (!confirm(t("deletePostConfirm"))) {
@@ -231,7 +224,6 @@ effect(
   async () =>
     (markdownPostContent.value = await parseMarkdown(
       postContent.value,
-      locationStore,
       reply,
       !reply,
     )),
@@ -265,13 +257,13 @@ const reload = () => location.reload();
   >
     <div class="relative flex items-center gap-x-2">
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
-      <button
+      <RouterLink
         v-if="!isItalicUser"
         class="text-nowrap font-bold"
-        @click="goToUser(username)"
+        :to="`/users/${username}`"
       >
         {{ username }}
-      </button>
+      </RouterLink>
       <span
         class="inline-block text-green-400"
         v-if="onlineListStore.online.includes(username) && !reply"

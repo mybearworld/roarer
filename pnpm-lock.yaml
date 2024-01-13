@@ -35,6 +35,9 @@ dependencies:
   vue-i18n:
     specifier: ^9.8.0
     version: 9.8.0(vue@3.3.13)
+  vue-router:
+    specifier: ^4.2.5
+    version: 4.2.5(vue@3.3.13)
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -1814,6 +1817,15 @@ packages:
     dependencies:
       '@intlify/core-base': 9.8.0
       '@intlify/shared': 9.8.0
+      '@vue/devtools-api': 6.5.1
+      vue: 3.3.13(typescript@5.3.3)
+    dev: false
+
+  /vue-router@4.2.5(vue@3.3.13):
+    resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
       '@vue/devtools-api': 6.5.1
       vue: 3.3.13(typescript@5.3.3)
     dev: false

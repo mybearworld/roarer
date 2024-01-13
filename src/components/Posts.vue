@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import EnterPost from "./EnterPost.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
@@ -15,9 +16,6 @@ import { z } from "zod";
 const { chat, inbox } = defineProps<{
   chat?: APIChat;
   inbox?: boolean;
-}>();
-const emit = defineEmits<{
-  back: [];
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
@@ -108,10 +106,15 @@ const loadMore = async () => {
 
 <template>
   <div class="flex items-center gap-2" v-if="chat">
-    <h2 class="text-lg font-bold" v-if="chat">{{ chat.nickname }}</h2>
-    <button class="text-sky-400 underline" @click="emit('back')">
+    <h2 class="text-lg font-bold" v-if="chat">
+      {{
+        chat.nickname ||
+        chat.members.find((member) => member !== loginStatusStore.username)
+      }}
+    </h2>
+    <RouterLink to="/chats" class="text-sky-400 underline">
       {{ t("back") }}
-    </button>
+    </RouterLink>
   </div>
   <OnlineList :chat="chat" v-if="!inbox" />
   <EnterPost ref="enterPost" :chat="chat" v-if="!inbox" />

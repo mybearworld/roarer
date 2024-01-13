@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [vue(), topLevelAwait()],
   base: "/roarer",
   build: {
-    minify: false,
+    rollupOptions: {
+      input: {
+        index: "./index.html",
+        "404": "./404.html",
+      },
+    },
   },
 });

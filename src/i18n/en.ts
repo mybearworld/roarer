@@ -121,4 +121,7 @@ export const en = {
   editPostFail: "Couldn't edit post: {status}",
   loadMoreFail: "Couldnt load more: {status}",
   getPostsFail: "Couldn't get posts: {status}",
+  getChatFail: "Couldn't get chat: {status}",
+  message404:
+    "This page couldn't be found. Click on one of the links above to get on a page that does exist!",
 };

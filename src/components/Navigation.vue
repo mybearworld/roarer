@@ -1,24 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import Login from "./Login.vue";
-import { useLocationStore, Location } from "../stores/location";
 import { useIsDevStore } from "../stores/isDev";
 
 const { t } = useI18n();
 
-const { title } = defineProps<{
-  title: string;
-}>();
-
-document.title = `${t("roarer")} - ${title}`;
-
 const isDevStore = useIsDevStore();
-const locationStore = useLocationStore();
-
-const goTo = (location: Location) => {
-  locationStore.location = location;
-  locationStore.sublocation = null;
-};
 </script>
 
 <template>
@@ -26,58 +14,46 @@ const goTo = (location: Location) => {
     <div class="mb-2 flex flex-col items-center gap-1">
       <div class="flex flex-wrap gap-x-4">
         <h1 class="text-3xl font-bold">
-          {{ t("roarer") }}&nbsp;-&nbsp;{{ title }}
+          {{ t("roarer") }}
         </h1>
         <Login />
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <button
-          class="flex text-nowrap text-sky-400 underline"
-          @click="goTo('home')"
-        >
+        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/">
           {{ t("routeHome") }}
-        </button>
-        <button
-          class="flex text-nowrap text-sky-400 underline"
-          @click="goTo('inbox')"
-        >
+        </RouterLink>
+        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/inbox">
           {{ t("routeInbox") }}
-        </button>
-        <button
-          class="flex text-nowrap text-sky-400 underline"
-          @click="goTo('group')"
-        >
+        </RouterLink>
+        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/chats">
           {{ t("routeGroups") }}
-        </button>
-        <button
-          class="flex text-nowrap text-sky-400 underline"
-          @click="goTo('users')"
-        >
+        </RouterLink>
+        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/users">
           {{ t("routeUsers") }}
-        </button>
-        <button
+        </RouterLink>
+        <RouterLink
           class="flex text-nowrap text-sky-400 underline"
-          @click="goTo('settings')"
+          to="/settings"
         >
           {{ t("routeSettings") }}
-        </button>
+        </RouterLink>
       </div>
+      <p class="text-red-200" v-if="isDevStore.isDev">
+        {{ t("inDevelopmentMode") }}
+        <a
+          href="https://github.com/meower-media-co/Meower-Server/tree/main"
+          class="text-sky-400 underline"
+          target="_blank"
+          >Meower Server</a
+        >
+        -
+        <a
+          href="https://github.com/meower-media-co/Meower-Svelte/tree/master"
+          class="text-sky-400 underline"
+          target="_blank"
+          >Meower Svelte</a
+        >
+      </p>
     </div>
-    <p class="text-red-200" v-if="isDevStore.isDev">
-      {{ t("inDevelopmentMode") }}
-      <a
-        href="https://github.com/meower-media-co/Meower-Server/tree/main"
-        class="text-sky-400 underline"
-        target="_blank"
-        >Meower Server</a
-      >
-      -
-      <a
-        href="https://github.com/meower-media-co/Meower-Svelte/tree/master"
-        class="text-sky-400 underline"
-        target="_blank"
-        >Meower Svelte</a
-      >
-    </p>
   </div>
 </template>

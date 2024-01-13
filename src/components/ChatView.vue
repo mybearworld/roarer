@@ -6,6 +6,7 @@ import {
   IconUsersGroup,
 } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import { APIChat } from "../lib/chatSchema";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
@@ -15,17 +16,19 @@ const { t } = useI18n();
 const { chat } = defineProps<{
   chat: APIChat;
 }>();
-const emit = defineEmits<{
-  open: [chat: APIChat];
-  settings: [chat: APIChat];
-}>();
 </script>
 
 <template>
   <div class="flex gap-2">
-    <button
+    <RouterLink
       class="block w-full rounded-xl bg-slate-800 px-2 py-1 text-left"
-      @click="emit('open', chat)"
+      :to="
+        chat.nickname
+          ? `/chats/${chat._id}`
+          : `/users/${chat.members.find(
+              (user) => user !== loginStatusStore.username,
+            )}/dm`
+      "
     >
       <p class="text-xl font-bold">
         {{
@@ -44,10 +47,10 @@ const emit = defineEmits<{
           {{ t("chatDM") }}
         </template>
       </p>
-    </button>
-    <button
-      class="rounded-xl bg-slate-800 px-2 py-1"
-      @click="emit('settings', chat)"
+    </RouterLink>
+    <RouterLink
+      class="flex items-center rounded-xl bg-slate-800 px-2 py-1"
+      :to="`/chats/${chat._id}/settings`"
       v-if="chat.nickname"
     >
       <IconSettings
@@ -62,6 +65,6 @@ const emit = defineEmits<{
             : t("chatPeople")
         }}
       </span>
-    </button>
+    </RouterLink>
   </div>
 </template>

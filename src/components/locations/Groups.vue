@@ -2,20 +2,15 @@
 import { computed, effect, ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
-import ChatSettings from "../ChatSettings.vue";
 import ChatView from "../ChatView.vue";
-import Posts from "../Posts.vue";
-import Navigation from "../Navigation.vue";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { updateChatSchema } from "../../lib/updateChatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
-import { useLocationStore } from "../../stores/location";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
-const locationStore = useLocationStore();
 const { t } = useI18n();
 
 const chats = ref<APIChat[]>([]);
@@ -85,9 +80,6 @@ const deleteChatSchema = z.object({
 });
 cloudlinkStore.lookFor(deleteChatSchema, (packet) => {
   chats.value = chats.value.filter((chat) => chat._id !== packet.val.id);
-  if (openGroupchat.value?._id === packet.val.id) {
-    openGroupchat.value = null;
-  }
 });
 
 cloudlinkStore.lookFor(
@@ -109,69 +101,24 @@ cloudlinkStore.lookFor(
   },
   false,
 );
-
-effect(async () => {
-  if (
-    !locationStore.sublocation ||
-    !locationStore.sublocation.startsWith("dm:")
-  ) {
-    return;
-  }
-  const dmUser = locationStore.sublocation.slice(3);
-  const response = await getResponseFromAPIRequest(`/users/${dmUser}/dm`, {
-    auth: loginStatusStore,
-    schema: chatSchema,
-  });
-  if ("status" in response) {
-    alert(t("openDMFail", { status: response.status }));
-    return;
-  }
-  openGroupchat.value = response;
-  section.value = "main";
-});
-
-const openGroupchat = ref<APIChat | null>(null);
-const section = ref<null | "settings" | "main">(null);
-const open = (chat: APIChat) => {
-  openGroupchat.value = chat;
-  section.value = "main";
-};
-const settings = (chat: APIChat) => {
-  openGroupchat.value = chat;
-  section.value = "settings";
-};
 </script>
 
 <template>
   <div class="block space-y-2">
-    <Navigation :title="t('routeGroups')" />
-    <template v-if="openGroupchat === null">
-      <form class="flex gap-2" @submit="createChat">
-        <input
-          type="text"
-          :placeholder="t('chatNickname')"
-          class="w-full rounded-lg bg-slate-800 px-2 py-1"
-          v-model="chatNickname"
-        />
-        <button
-          type="submit"
-          class="text-nowrap rounded-xl bg-slate-800 px-2 py-1"
-        >
-          {{ t("createChat") }}
-        </button>
-      </form>
-      <ChatView
-        :chat="chat"
-        @open="open"
-        @settings="settings"
-        v-for="chat in sortedChats"
+    <form class="flex gap-2" @submit="createChat">
+      <input
+        type="text"
+        :placeholder="t('chatNickname')"
+        class="w-full rounded-lg bg-slate-800 px-2 py-1"
+        v-model="chatNickname"
       />
-    </template>
-    <Posts
-      :chat="openGroupchat"
-      @back="openGroupchat = null"
-      v-else-if="section === 'main'"
-    />
-    <ChatSettings :chat="openGroupchat" @back="openGroupchat = null" v-else />
+      <button
+        type="submit"
+        class="text-nowrap rounded-xl bg-slate-800 px-2 py-1"
+      >
+        {{ t("createChat") }}
+      </button>
+    </form>
+    <ChatView :chat="chat" v-for="chat in sortedChats" />
   </div>
 </template>

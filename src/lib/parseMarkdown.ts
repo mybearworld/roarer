@@ -3,11 +3,11 @@ import "highlight.js/styles/github-dark.css";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
+import { useLink, RouterLink } from "vue-router";
 // @ts-expect-error - the type definitions aren't correct
 import { full as emoji } from "markdown-it-emoji";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
-import { useLocationStore } from "../stores/location";
 
 const IMAGE_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/g;
 
@@ -23,7 +23,6 @@ const markdown = markdownit({
 
 export const parseMarkdown = async (
   md: string,
-  locationStore: ReturnType<typeof useLocationStore>,
   inline = false,
   images = true,
 ) => {
@@ -63,13 +62,8 @@ export const parseMarkdown = async (
       return;
     }
     const user = text.slice(1);
-    element.href = "#";
-    element.role = "button";
-    element.addEventListener("click", (e) => {
-      e.preventDefault();
-      locationStore.sublocation = user;
-      locationStore.location = "users";
-    });
+    const link = useLink({ to: `users/${user}` });
+    element.href = link.href.value;
   });
   await Promise.all(
     [...linkifiedDocument.querySelectorAll("img")].map(async (element) => {

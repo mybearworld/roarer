@@ -2,19 +2,18 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
-import Navigation from "../Navigation.vue";
+import { useRouter } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/profileSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
-import { useLocationStore } from "../../stores/location";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
-const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const { t } = useI18n();
+const router = useRouter();
 
 const quote = ref("");
 const profilePicture = ref(0);
@@ -156,7 +155,6 @@ const deleteAccount = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <Navigation :title="t('routeSettings')" />
     <div>
       <h2 class="text-lg font-bold">{{ t("usersSectionMe") }}</h2>
     </div>
@@ -234,10 +232,7 @@ const deleteAccount = async () => {
       {{ t("mascotThanks.start")
       }}<button
         class="text-sky-400 underline"
-        @click="
-          locationStore.location = 'users';
-          locationStore.sublocation = 'Supernoodles99';
-        "
+        @click="router.push('/users/Supernoodles99')"
       >
         @Supernoodles99</button
       >{{ t("mascotThanks.end") }}

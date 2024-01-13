@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 import { computed, effect, ref } from "vue";
-import Navigation from "../Navigation.vue";
 import { useI18n } from "vue-i18n";
+import { useRouter, useRoute } from "vue-router";
 import { profilePictures } from "../../assets/pfp";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
-import { useLocationStore } from "../../stores/location";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useOnlinelistStore } from "../../stores/onlinelist";
 import { useRelationshipStore } from "../../stores/relationship";
 
-const locationStore = useLocationStore();
 const loginStatusStore = useLoginStatusStore();
 const onlinelistStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const { t, locale } = useI18n();
+const router = useRouter();
+const route = useRoute();
 
 const username = ref("");
 
@@ -24,24 +24,20 @@ const submit = (e: Event) => {
   if (!username.value) {
     return;
   }
-  locationStore.sublocation = username.value;
+  router.push(`/users/${username.value}`);
 };
 
 const dm = (user: string) => {
-  locationStore.location = "group";
-  locationStore.sublocation = `dm:${user}`;
+  router.push(`/groups/dm/${user}`);
 };
 
 const userProfile = ref<APIProfile | null>(null);
 effect(async () => {
-  if (
-    locationStore.sublocation === null ||
-    locationStore.location !== "users"
-  ) {
+  if (!route.params.username) {
     return;
   }
   const response = await getResponseFromAPIRequest(
-    `/users/${locationStore.sublocation}`,
+    `/users/${route.params.username}`,
     {
       schema: profileSchemaOrError,
     },
@@ -61,10 +57,7 @@ const isBlocked = computed(() =>
   relationshipStore.blockedUsers.has(username.value),
 );
 const block = async () => {
-  if (
-    locationStore.sublocation === null ||
-    locationStore.location !== "users"
-  ) {
+  if (!route.params.username) {
     return;
   }
   if (
@@ -73,7 +66,7 @@ const block = async () => {
     return;
   }
   const response = await apiRequest(
-    `/users/${locationStore.sublocation}/relationship`,
+    `/users/${route.params.username}/relationship`,
     {
       method: "PATCH",
       auth: loginStatusStore,
@@ -94,7 +87,6 @@ const block = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <Navigation :title="t('routeUsers')" />
     <form class="flex gap-2" @submit="submit">
       <input
         class="w-full rounded-lg bg-slate-800 px-2 py-1"
@@ -130,8 +122,8 @@ const block = async () => {
         <div class="mt-2"></div>
         <p
           v-if="
-            locationStore.sublocation &&
-            onlinelistStore.online.includes(locationStore.sublocation)
+            typeof route.params.username === 'string' &&
+            onlinelistStore.online.includes(route.params.username)
           "
         >
           {{ t("online") }}
@@ -154,19 +146,18 @@ const block = async () => {
         </p>
         <div class="mt-2"></div>
         <div class="space-x-2">
-          <button
-            type="button"
+          <RouterLink
+            :to="`/users/${userProfile._id}/dm`"
             class="rounded-xl bg-slate-800 px-2 py-1"
-            @click="dm(userProfile._id)"
             v-if="!isBlocked && loginStatusStore.username !== userProfile._id"
           >
             {{ t("chatDM") }}
-          </button>
+          </RouterLink>
           <button
             type="button"
             class="rounded-xl bg-slate-800 px-2 py-1"
             @click="block"
-            v-if="locationStore.sublocation !== loginStatusStore.username"
+            v-if="route.params.username !== loginStatusStore.username"
           >
             {{ t(isBlocked ? "unblock" : "block") }}
           </button>

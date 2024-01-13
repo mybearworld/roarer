@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import { IconCrown, IconX } from "@tabler/icons-vue";
 import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/chatSchema";
@@ -135,9 +136,9 @@ cloudlinkStore.lookFor(
   <div class="space-y-4">
     <div class="flex items-center gap-2">
       <h2 class="text-xl font-bold">{{ name }}</h2>
-      <button class="text-sky-400 underline" @click="emit('back')">
+      <RouterLink to="/chats" class="text-sky-400 underline">
         {{ t("back") }}
-      </button>
+      </RouterLink>
     </div>
     <div class="space-y-2" v-if="loginStatusStore.username === owner">
       <h3 class="text-lg font-bold">{{ t("chatSettings") }}</h3>
