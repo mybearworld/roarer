@@ -44,7 +44,7 @@ const postsSchema = z.object({
     schema: postsSchema,
   });
   if ("status" in response) {
-    alert("Failed to get posts.");
+    alert(t("getPostsFail", { status: response.status }));
     return;
   }
   posts.value = response.autoget;
@@ -94,7 +94,7 @@ const loadMore = async () => {
     },
   );
   if ("status" in response) {
-    alert(`Couldn't load more: ${response.status}`);
+    alert(t("loadMoreFail", { status: response.status }));
     return;
   }
   const newPosts = response.autoget.slice(postsToRemove);

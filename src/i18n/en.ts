@@ -118,4 +118,7 @@ export const en = {
     githubLink: "translate it on GitHub",
     end: "!",
   },
+  editPostFail: "Couldn't edit post: {status}",
+  loadMoreFail: "Couldnt load more: {status}",
+  getPostsFail: "Couldn't get posts: {status}",
 };

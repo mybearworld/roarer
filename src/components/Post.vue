@@ -153,7 +153,7 @@ const edit = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(`Unexpected ${response.status} when editing`);
+    alert(t("editPostFail", { status: response.status }));
   }
 };
 
