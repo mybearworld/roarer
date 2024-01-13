@@ -158,7 +158,7 @@ const block = async () => {
             type="button"
             class="rounded-xl bg-slate-800 px-2 py-1"
             @click="dm(userProfile._id)"
-            v-if="!isBlocked"
+            v-if="!isBlocked && loginStatusStore.username !== userProfile._id"
           >
             {{ t("chatDM") }}
           </button>
