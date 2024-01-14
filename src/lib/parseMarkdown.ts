@@ -73,6 +73,8 @@ export const parseMarkdown = async (
     element.href = link.href.value;
   });
   const doneProjectEmbeds = new Set<string>();
+  const buttons = document.createElement("div");
+  buttons.className = "flex gap-2 flex-wrap";
   linkifiedDocument.querySelectorAll("a").forEach((element) => {
     if (inline) {
       return;
@@ -103,8 +105,11 @@ export const parseMarkdown = async (
     button.addEventListener("click", () => {
       button.replaceWith(iframe);
     });
-    linkifiedDocument.body.append(button);
+    buttons.append(button);
   });
+  if (buttons.childElementCount) {
+    linkifiedDocument.body.append(buttons);
+  }
   [...linkifiedDocument.querySelectorAll("img")].forEach(async (element) => {
     let request;
     try {
