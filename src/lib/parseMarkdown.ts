@@ -120,7 +120,7 @@ const toHTML = (md: string, inline: boolean) => {
         if (index === undefined) {
           return;
         }
-        const beforeText = content.slice(0, index);
+        const beforeText = content.slice(0, index).replace(IMAGE_REGEX, "");
         const beforeTextToken = new Token("text", "", 0);
         beforeTextToken.content = beforeText;
         newTextTokens.push(beforeTextToken);
