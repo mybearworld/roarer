@@ -230,6 +230,7 @@ effect(
       inline: reply,
       images: !reply,
       anyImageHost: settingsStore.anyImageHost,
+      loadProjectText: t("loadProjectEmbed")
     })),
 );
 effect(() => {

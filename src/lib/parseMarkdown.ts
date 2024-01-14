@@ -23,7 +23,12 @@ const markdown = markdownit({
 
 export const parseMarkdown = async (
   md: string,
-  { inline = false, images = true, anyImageHost = false },
+  {
+    inline = false,
+    images = true,
+    anyImageHost = false,
+    loadProjectText = "Load project",
+  },
 ) => {
   const html = toHTML(md, inline);
   const domParser = new DOMParser();
@@ -66,6 +71,34 @@ export const parseMarkdown = async (
     const user = text.slice(1);
     const link = useLink({ to: `users/${user}` });
     element.href = link.href.value;
+  });
+  linkifiedDocument.querySelectorAll("a").forEach((element) => {
+    if (inline) {
+      return;
+    }
+    const link = element.href;
+    if (link !== element.textContent) {
+      return;
+    }
+    const match = link.match(
+      /(?:https?:\/\/)?(scratch.mit.edu\/projects|turbowarp.org)\/(\d+)\/?/,
+    );
+    if (!match) {
+      return;
+    }
+    const url = match[1];
+    const projectId = match[2];
+    const button = document.createElement("button");
+    button.textContent = loadProjectText;
+    button.className = "bg-slate-700 px-2 py-1 rounded-xl";
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://${url}/${projectId}/embed`;
+    iframe.width = "485";
+    iframe.height = "402";
+    button.addEventListener("click", () => {
+      button.replaceWith(iframe);
+    });
+    linkifiedDocument.body.append(button);
   });
   await Promise.all(
     [...linkifiedDocument.querySelectorAll("img")].map(async (element) => {
