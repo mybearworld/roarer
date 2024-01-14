@@ -2,7 +2,7 @@ import { effect, ref } from "vue";
 import { defineStore } from "pinia";
 
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
-const FILTER_SWEARS_STORAGE = "roarer:anyImageHost";
+const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
 
 export const useSettingsStore = defineStore("settings", () => {
   const anyImageHost = ref(
