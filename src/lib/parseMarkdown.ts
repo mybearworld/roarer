@@ -100,29 +100,27 @@ export const parseMarkdown = async (
     });
     linkifiedDocument.body.append(button);
   });
-  await Promise.all(
-    [...linkifiedDocument.querySelectorAll("img")].map(async (element) => {
-      let request;
-      try {
-        request = await fetch(element.src);
-      } catch {
-        return;
-      }
-      if (request.status !== 200) {
-        return;
-      }
-      const contentType = request.headers.get("content-type");
-      const isAudio = contentType?.startsWith("audio/");
-      const isVideo = contentType?.startsWith("video/");
-      if (!isAudio && !isVideo) {
-        return;
-      }
-      const newElement = document.createElement(isAudio ? "audio" : "video");
-      newElement.src = element.src;
-      newElement.controls = true;
-      element.replaceWith(newElement);
-    }),
-  );
+  [...linkifiedDocument.querySelectorAll("img")].forEach(async (element) => {
+    let request;
+    try {
+      request = await fetch(element.src);
+    } catch {
+      return;
+    }
+    if (request.status !== 200) {
+      return;
+    }
+    const contentType = request.headers.get("content-type");
+    const isAudio = contentType?.startsWith("audio/");
+    const isVideo = contentType?.startsWith("video/");
+    if (!isAudio && !isVideo) {
+      return;
+    }
+    const newElement = document.createElement(isAudio ? "audio" : "video");
+    newElement.src = element.src;
+    newElement.controls = true;
+    element.replaceWith(newElement);
+  });
 
   return linkifiedDocument.body;
 };
