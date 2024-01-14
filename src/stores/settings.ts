@@ -20,7 +20,7 @@ export const useSettingsStore = defineStore("settings", () => {
   effect(() => {
     localStorage.setItem(
       FILTER_SWEARS_STORAGE,
-      anyImageHost.value ? "true" : "false",
+      filterSwears.value ? "true" : "false",
     );
   });
 
