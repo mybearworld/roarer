@@ -72,6 +72,7 @@ export const parseMarkdown = async (
     const link = useLink({ to: `users/${user}` });
     element.href = link.href.value;
   });
+  const doneProjectEmbeds = new Set<string>();
   linkifiedDocument.querySelectorAll("a").forEach((element) => {
     if (inline) {
       return;
@@ -88,8 +89,12 @@ export const parseMarkdown = async (
     }
     const url = match[1];
     const projectId = match[2];
+    if (doneProjectEmbeds.has(projectId)) {
+      return;
+    }
+    doneProjectEmbeds.add(projectId);
     const button = document.createElement("button");
-    button.textContent = loadProjectText;
+    button.textContent = loadProjectText + ` (${projectId})`;
     button.className = "bg-slate-700 px-2 py-1 rounded-xl";
     const iframe = document.createElement("iframe");
     iframe.src = `https://${url}/${projectId}/embed`;
