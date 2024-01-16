@@ -28,6 +28,7 @@ const requestURL = chat
   : `/${inbox ? "inbox" : "home"}?autoget=1`;
 
 const posts = ref<APIPost[]>([]);
+const gotPosts = ref(false);
 const newPostsAmount = ref(0);
 const stopShowingLoadMore = ref(false);
 
@@ -67,6 +68,7 @@ const postsSchema = z.object({
     );
   }
   newPostsAmount.value = 25;
+  gotPosts.value = true;
 })();
 
 const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
@@ -134,7 +136,7 @@ const loadMore = async () => {
     class="w-full rounded-xl bg-slate-800 py-1"
     :disabled="loadingMore"
     @click="loadMore"
-    v-if="!stopShowingLoadMore || posts.length === 0"
+    v-if="!stopShowingLoadMore && gotPosts"
   >
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
