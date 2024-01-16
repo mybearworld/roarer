@@ -7,8 +7,9 @@ import {
   autoResizeTextarea,
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
+import { getResponseFromAPIRequest } from "../lib/apiRequest";
 import { getReply } from "../lib/getReply";
-import { postSchema } from "../lib/postSchema";
+import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useSettingsStore } from "../stores/settings";
@@ -24,40 +25,29 @@ const { t } = useI18n();
 
 const postContent = ref("");
 const posting = ref(false);
-const errorMessage = ref("");
 
 const post = async (e?: Event) => {
   e?.preventDefault();
   if (posting.value) {
     return;
   }
-  const username = loginStatusStore.username;
-  if (username === null) {
-    throw new Error("Not logged in");
-  }
   posting.value = true;
-  try {
-    await cloudlinkStore.send(
-      {
-        cmd: chat ? "post_chat" : "post_home",
-        val: chat
-          ? {
-              chatid: chat._id,
-              p: postContent.value,
-            }
-          : postContent.value,
-      },
-      postSchema.and(
-        z.object({
-          post_origin: z.literal(chat?._id ?? "home"),
-          u: z.literal(username),
-        }),
-      ),
-    );
-    errorMessage.value = "";
-  } catch (e) {
+  console.log(chat ? chat._id : "livechat");
+  const response = await getResponseFromAPIRequest(
+    chat ? `/posts/${chat._id}` : "/home",
+    {
+      method: "POST",
+      auth: loginStatusStore,
+      body: JSON.stringify({
+        content: postContent.value,
+      }),
+      schema: postSchema,
+    },
+  );
+  if ("status" in response) {
+    alert(t("postFail", { status: response.status }));
     posting.value = false;
-    errorMessage.value = e as string;
+    return;
   }
   postContent.value = "";
   if (inputRef.value) {
@@ -143,5 +133,4 @@ defineExpose({ reply });
       {{ $t("enterPostSend") }}
     </button>
   </form>
-  <p v-if="errorMessage">{{ errorMessage }}</p>
 </template>
