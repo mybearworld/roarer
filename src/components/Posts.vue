@@ -29,7 +29,6 @@ const requestURL = chat
 
 const posts = ref<APIPost[]>([]);
 const newPostsAmount = ref(0);
-const pagesAmount = ref(1);
 const stopShowingLoadMore = ref(false);
 
 const postsSchema = z.object({
@@ -67,6 +66,7 @@ const postsSchema = z.object({
       false,
     );
   }
+  newPostsAmount.value = 25;
 })();
 
 const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
@@ -77,13 +77,16 @@ const loadMore = async () => {
     return;
   }
   loadingMore.value = true;
-  const pagesToSkip = Math.floor(newPostsAmount.value / POSTS_PER_REQUESTS);
+  const page =
+    newPostsAmount.value < 1
+      ? 1
+      : Math.floor(newPostsAmount.value / POSTS_PER_REQUESTS) + 1;
   const postsToRemove =
-    newPostsAmount.value >= 0
-      ? newPostsAmount.value % POSTS_PER_REQUESTS
-      : POSTS_PER_REQUESTS -
-        Math.abs(newPostsAmount.value % POSTS_PER_REQUESTS);
-  const page = pagesAmount.value + pagesToSkip + 1;
+    newPostsAmount.value <= -25
+      ? 0
+      : newPostsAmount.value < 0
+        ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
+        : newPostsAmount.value % POSTS_PER_REQUESTS;
   const response = await getResponseFromAPIRequest(
     requestURL + `&page=${page}`,
     {
@@ -97,7 +100,6 @@ const loadMore = async () => {
   }
   const newPosts = response.autoget.slice(postsToRemove);
   posts.value.push(...newPosts);
-  pagesAmount.value = page;
   newPostsAmount.value += newPosts.length;
   loadingMore.value = false;
   stopShowingLoadMore.value = response.pages === page;
@@ -132,7 +134,7 @@ const loadMore = async () => {
     class="w-full rounded-xl bg-slate-800 py-1"
     :disabled="loadingMore"
     @click="loadMore"
-    v-if="!stopShowingLoadMore"
+    v-if="!stopShowingLoadMore || posts.length === 0"
   >
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
