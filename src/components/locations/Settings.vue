@@ -209,6 +209,12 @@ const deleteAccount = async () => {
         {{ t("settingFilterSwears") }}
       </div>
     </label>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.enterSends" />
+      <div>
+        {{ t("settingEnterSends") }}
+      </div>
+    </label>
     <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>
       <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">

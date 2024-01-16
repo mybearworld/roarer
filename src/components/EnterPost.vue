@@ -11,6 +11,7 @@ import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+import { useSettingsStore } from "../stores/settings";
 
 const { chat } = defineProps<{
   chat?: APIChat;
@@ -18,6 +19,7 @@ const { chat } = defineProps<{
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
 const postContent = ref("");
@@ -115,7 +117,7 @@ const input = () => {
 };
 
 const keydown = (e: KeyboardEvent) => {
-  if (e.key === "Enter") {
+  if (e.key === "Enter" && settingsStore.enterSends) {
     if (!e.shiftKey) {
       e.preventDefault();
       post();

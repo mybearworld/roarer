@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
 const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
+const ENTER_SENDS_STORAGE = "roarer:enterSends";
 
 export const useSettingsStore = defineStore("settings", () => {
   const anyImageHost = ref(
@@ -10,6 +11,9 @@ export const useSettingsStore = defineStore("settings", () => {
   );
   const filterSwears = ref(
     ["true", null].includes(localStorage.getItem(FILTER_SWEARS_STORAGE)),
+  );
+  const enterSends = ref(
+    ["true", null].includes(localStorage.getItem(ENTER_SENDS_STORAGE)),
   );
 
   effect(() => {
@@ -24,6 +28,12 @@ export const useSettingsStore = defineStore("settings", () => {
       filterSwears.value ? "true" : "false",
     );
   });
+  effect(() => {
+    localStorage.setItem(
+      ENTER_SENDS_STORAGE,
+      enterSends.value ? "true" : "false",
+    );
+  });
 
-  return { anyImageHost, filterSwears };
+  return { anyImageHost, filterSwears, enterSends };
 });

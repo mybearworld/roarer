@@ -150,4 +150,6 @@ export const en = {
   settingFilterSwears:
     'Filter out swear words of posts and replace them with "****".',
   loadProjectEmbed: "Load project",
+  settingEnterSends:
+    "Send post on Enter. You can still create new lines by hitting Shift+Enter.",
 };
