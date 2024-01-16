@@ -9,7 +9,9 @@ export const useOnlinelistStore = defineStore("onlinelist", () => {
   const online = ref<string[]>(
     cloudlinkStore.cloudlink.ulist
       ? // the type of ulist is phenomenally awful
-        (cloudlinkStore.cloudlink.ulist as unknown as string).split(";")
+        (cloudlinkStore.cloudlink.ulist as unknown as string)
+          .slice(0, -1)
+          .split(";")
       : [],
   );
 
