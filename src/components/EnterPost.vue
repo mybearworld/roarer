@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { z } from "zod";
 import { APIChat } from "../lib/chatSchema";
 import {
   autoResizeTextarea,
@@ -9,7 +8,7 @@ import {
 } from "../lib/autoResizeTextarea";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
 import { getReply } from "../lib/getReply";
-import { postSchema, APIPost } from "../lib/postSchema";
+import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useSettingsStore } from "../stores/settings";

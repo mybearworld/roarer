@@ -1,5 +1,3 @@
-import { Component } from "vue";
-
 export const getPermissions = (permissionSet: number) => {
   let counter = 0;
   const allPermissions: Permission[] = [];

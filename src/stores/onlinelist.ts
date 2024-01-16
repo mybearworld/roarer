@@ -2,7 +2,6 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { z } from "zod";
 import { useCloudlinkStore } from "./cloudlink";
-import CloudlinkClient from "@williamhorning/cloudlink";
 
 export const useOnlinelistStore = defineStore("onlinelist", () => {
   const online = ref<string[]>([]);

@@ -1,11 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { z } from "zod";
 import { useCloudlinkStore } from "./cloudlink";
-import {
-  relationshipPacketSchema,
-  individualRelationshipPacketSchema,
-} from "../lib/relationshipSchema";
+import { relationshipPacketSchema } from "../lib/relationshipSchema";
 
 export const useRelationshipStore = defineStore("relationshipStore", () => {
   const blockedUsers = ref(new Set<string>());

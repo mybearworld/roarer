@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import Navigation from "../Navigation.vue";
 import Posts from "../Posts.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { APIChat, chatSchema } from "../../lib/chatSchema";

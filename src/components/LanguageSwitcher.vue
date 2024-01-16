@@ -2,7 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { effect } from "vue";
 
-const { t, locale, availableLocales, getLocaleMessage } = useI18n();
+const { locale, availableLocales, getLocaleMessage } = useI18n();
 
 effect(() => {
   localStorage.setItem("roarer:locale", locale.value);
