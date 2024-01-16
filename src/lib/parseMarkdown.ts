@@ -3,7 +3,6 @@ import "highlight.js/styles/github-dark.css";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
-import { useLink, RouterLink } from "vue-router";
 // @ts-expect-error - the type definitions aren't correct
 import { full as emoji } from "markdown-it-emoji";
 import Token from "markdown-it/lib/token";
@@ -69,8 +68,7 @@ export const parseMarkdown = async (
       return;
     }
     const user = text.slice(1);
-    const link = useLink({ to: `users/${user}` });
-    element.href = link.href.value;
+    element.href = `#/users/${user}`;
   });
   const doneProjectEmbeds = new Set<string>();
   const buttons = document.createElement("div");
