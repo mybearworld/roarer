@@ -110,21 +110,15 @@ const remove = async () => {
   if (!confirm(t("deletePostConfirm"))) {
     return;
   }
-  try {
-    await cloudlinkStore.send(
-      {
-        cmd: "delete_post",
-        val: post.post_id,
-      },
-      z.object({
-        mode: z.literal("delete"),
-        id: z.literal(post.post_id),
-      }),
-    );
-    emit("delete");
-  } catch (e) {
-    alert(e); // i can do error handling!
+  const response = await apiRequest(`/posts?id=${post.post_id}`, {
+    method: "DELETE",
+    auth: loginStatusStore,
+  });
+  if (response.status !== 200) {
+    alert(t("deletePostFail", { status: response.status }));
+    return;
   }
+  emit("delete");
 };
 
 const editing = ref(false);
@@ -230,7 +224,7 @@ effect(
       inline: reply,
       images: !reply,
       anyImageHost: settingsStore.anyImageHost,
-      loadProjectText: t("loadProjectEmbed")
+      loadProjectText: t("loadProjectEmbed"),
     })),
 );
 effect(() => {

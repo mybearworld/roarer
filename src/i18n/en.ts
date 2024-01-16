@@ -153,4 +153,5 @@ export const en = {
   settingEnterSends:
     "Send post on Enter. You can still create new lines by hitting Shift+Enter.",
   postFail: "Failed to send post: {status}",
+  deletePostFail: "Failed to delete post: {status}",
 };
