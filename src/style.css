@@ -6,3 +6,7 @@
   font-family: "Noto Color Emoji";
   src: url("./assets/fonts/emoji/NotoColorEmoji-Regular.ttf");
 }
+
+:root {
+  color-scheme: dark;
+}
