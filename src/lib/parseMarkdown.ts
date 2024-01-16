@@ -3,12 +3,15 @@ import "highlight.js/styles/github-dark.css";
 import linkifyHtml from "linkify-html";
 import "linkify-plugin-mention";
 import markdownit from "markdown-it";
-// @ts-expect-error - the type definitions aren't correct
-import { full as emoji } from "markdown-it-emoji";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
 
-const IMAGE_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/g;
+const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
+const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
+const IMAGE_REGEX = new RegExp(
+  ATTACHMENT_REGEX.source + "|" + DISCORD_REGEX.source,
+  "g",
+);
 
 const markdown = markdownit({
   breaks: true,
@@ -18,7 +21,7 @@ const markdown = markdownit({
     }
     return "";
   },
-}).use(emoji, { shortcuts: {} });
+});
 
 export const parseMarkdown = async (
   md: string,
@@ -42,7 +45,7 @@ export const parseMarkdown = async (
       img.replaceWith(span);
       return;
     }
-    if (img.dataset.original) {
+    if (img.dataset.original && !img.dataset.original.startsWith("<")) {
       const clonedImg = img.cloneNode();
       postDocument.body.append(clonedImg);
       img.remove();
@@ -154,8 +157,20 @@ const toHTML = (md: string, inline: boolean) => {
         return;
       }
       const newTextTokens: Token[] = [];
-      images.forEach((image, i) => {
-        const index = image.index;
+      const matches = images.map(
+        (image) =>
+          ({
+            originalMatch: image,
+            specificMatch:
+              image[0].match(ATTACHMENT_REGEX) ??
+              image[0].match(DISCORD_REGEX) ??
+              (() => {
+                throw new Error("this can't happen");
+              })(),
+          }) as const,
+      );
+      matches.forEach(({ originalMatch, specificMatch }, i) => {
+        const index = originalMatch.index;
         if (index === undefined) {
           return;
         }
@@ -163,13 +178,20 @@ const toHTML = (md: string, inline: boolean) => {
         const beforeTextToken = new Token("text", "", 0);
         beforeTextToken.content = beforeText;
         newTextTokens.push(beforeTextToken);
-        const [fullMatch, alt, src] = image;
+        const [fullMatch, alt, src] = specificMatch;
         const imageToken = new Token("image", "", 0);
         imageToken.content = alt;
         imageToken.tag = "img";
         imageToken.attrs = [
           ["alt", ""],
-          ["src", src],
+          [
+            "src",
+            fullMatch.startsWith("<")
+              ? `https://cdn.discordapp.com/emojis/${src}.${
+                  fullMatch.startsWith("a") ? "gif" : "webp"
+                }?size=32&quality=lossless`
+              : src,
+          ],
           ["data-original", fullMatch],
         ];
         const altTextToken = new Token("text", "", 0);
