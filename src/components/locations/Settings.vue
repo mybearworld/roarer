@@ -258,5 +258,8 @@ const deleteAccount = async () => {
         @Supernoodles99</RouterLink
       >{{ t("mascotThanks.end") }}
     </p>
+    <p>
+      {{ t("notoColorEmoji") }}
+    </p>
   </div>
 </template>

@@ -154,4 +154,6 @@ export const en = {
     "Send post on Enter. You can still create new lines by hitting Shift+Enter.",
   postFail: "Failed to send post: {status}",
   deletePostFail: "Failed to delete post: {status}",
+  notoColorEmoji:
+    "Emojis use the Noto Color Emoji font, licensed under the Open Font License.",
 };
