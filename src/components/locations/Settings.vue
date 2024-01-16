@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, RouterLink } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
@@ -254,11 +254,8 @@ const deleteAccount = async () => {
     </p>
     <p>
       {{ t("mascotThanks.start")
-      }}<button
-        class="text-sky-400 underline"
-        @click="router.push('/users/Supernoodles99')"
-      >
-        @Supernoodles99</button
+      }}<RouterLink class="text-sky-400 underline" to="/users/Supernoodles99">
+        @Supernoodles99</RouterLink
       >{{ t("mascotThanks.end") }}
     </p>
   </div>
