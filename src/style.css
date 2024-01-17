@@ -6,3 +6,27 @@
   font-family: "Noto Color Emoji";
   src: url("./assets/fonts/emoji/NotoColorEmoji-Regular.ttf");
 }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/sans/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  src: url("./assets/fonts/sans/Roboto-Italic.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: bold;
+  src: url("./assets/fonts/sans/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-style: italic;
+  src: url("./assets/fonts/sans/Roboto-BoldItalic.ttf");
+}
