@@ -12,7 +12,7 @@ const isDevStore = useIsDevStore();
 <template>
   <div>
     <div class="mb-2 flex flex-col items-center gap-1">
-      <div class="flex flex-wrap gap-x-4">
+      <div class="flex flex-wrap items-center gap-x-4">
         <h1 class="text-3xl font-bold">
           {{ t("roarer") }}
         </h1>
