@@ -8,13 +8,6 @@ export default {
       fontFamily: {
         sans: ["ui-sans-serif", "system-ui", "sans-serif", "Noto Color Emoji"],
         mono: "monospace",
-        comic: [
-          "Comic Sans MS",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-          "Noto Color Emoji",
-        ],
       },
     },
   },

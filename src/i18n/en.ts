@@ -1,5 +1,4 @@
 export const en = {
-  _font: "font-sans", // dont put this in translations unless specifically necessary
   languageName: "English",
   roarer: "Roarer",
   routeHome: "Home",
