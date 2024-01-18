@@ -169,12 +169,16 @@ const toHTML = (md: string, inline: boolean) => {
               })(),
           }) as const,
       );
+      let previousIndex: number | null = null;
       matches.forEach(({ originalMatch, specificMatch }, i) => {
         const index = originalMatch.index;
         if (index === undefined) {
           return;
         }
-        const beforeText = content.slice(0, index).replace(IMAGE_REGEX, "");
+        const beforeText = content
+          .slice(previousIndex ?? 0, index)
+          .replace(IMAGE_REGEX, "");
+        previousIndex = index;
         const beforeTextToken = new Token("text", "", 0);
         beforeTextToken.content = beforeText;
         newTextTokens.push(beforeTextToken);
