@@ -333,7 +333,7 @@ const reload = () => location.reload();
       :class="`w-full text-sm italic text-slate-400 sm:hidden ${
         !isItalicUser ? 'inline-block w-auto' : ''
       }`"
-      v-if="!reply"
+      v-if="!reply && !isItalicUser"
     >
       {{ formatDate(post.t.e, locale) }}
       <span v-if="edited || post.edited_at">(edited)</span>
