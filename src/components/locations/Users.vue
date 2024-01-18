@@ -116,7 +116,7 @@ const permissions = computed(() =>
     </div>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div
-        class="flex items-center rounded-xl border-2 border-slate-500 bg-white p-2"
+        class="flex min-w-[calc(70px+theme(spacing.4))] items-center rounded-xl border-2 border-slate-500 bg-white p-2"
       >
         <img
           width="70"
