@@ -58,21 +58,13 @@ export const parseMarkdown = async (
   // above change for images
   const linkifiedHTML = linkifyHtml(sanitizedHTML, {
     formatHref: {
-      mention: (href) => `https://app.meower.org/users${href}`,
+      mention: (href) => `#/users${href}`,
     },
   });
   const linkifiedDocument = domParser.parseFromString(
     linkifiedHTML,
     "text/html",
   );
-  linkifiedDocument.querySelectorAll("a").forEach((element) => {
-    const text = element.textContent;
-    if (!text || !element.textContent?.startsWith("@")) {
-      return;
-    }
-    const user = text.slice(1);
-    element.href = `#/users/${user}`;
-  });
   const doneProjectEmbeds = new Set<string>();
   const buttons = document.createElement("div");
   buttons.className = "flex gap-2 flex-wrap";
