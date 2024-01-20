@@ -60,6 +60,7 @@ export const parseMarkdown = async (
     formatHref: {
       mention: (href) => `#/users${href}`,
     },
+    ignoreTags: ["code"],
   });
   const linkifiedDocument = domParser.parseFromString(
     linkifiedHTML,
