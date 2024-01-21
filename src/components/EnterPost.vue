@@ -162,6 +162,7 @@ defineExpose({ reply });
                   emoji.isGif ? 'gif' : 'webp'
                 }?size=24&quality=lossless`"
                 :alt="emoji.name"
+                :title="emoji.name"
               />
             </button>
           </div>
