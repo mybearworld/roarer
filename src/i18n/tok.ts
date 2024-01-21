@@ -29,8 +29,7 @@ export const tok = {
   discordBridgePost: "toki ni li pali lon kulupu Siko.",
   webhookBridgePost:
     "toki ni li pali tan ni: ona li wile e toki e ni. jan ale li sona ala e ni: lon la jan ni li jan ni. jan ale ken toki e ni: ona li jan ni.",
-  splashBridgePost:
-    "toki ni li pali lon kulupu Sulasu. jan ale li sona ala e ni: lon la jan ni li jan ni. jan ale ken toki e ni: ona li jan ni.",
+  splashBridgePost: "toki ni li pali lon kulupu Sulasu.",
   revoltBridgePost: "toki ni li pali lon kulupu Lipo.",
   deletePost: "o weka",
   editPost: "o ante",
