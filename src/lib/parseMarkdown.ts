@@ -186,7 +186,7 @@ const toHTML = (md: string, inline: boolean) => {
             fullMatch.startsWith("<")
               ? `https://cdn.discordapp.com/emojis/${src}.${
                   fullMatch.startsWith("a") ? "gif" : "webp"
-                }?size=32&quality=lossless`
+                }?size=24&quality=lossless`
               : src,
           ],
           ["data-original", fullMatch],
