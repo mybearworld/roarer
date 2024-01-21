@@ -125,6 +125,7 @@ const addEmoji = (emoji: Emoji) => {
     inputRef.value.value.slice(0, inputRef.value.selectionStart) +
     emoji.emoji +
     inputRef.value.value.slice(inputRef.value.selectionEnd);
+  autoResizeTextarea(inputRef.value);
 };
 
 defineExpose({ reply });
