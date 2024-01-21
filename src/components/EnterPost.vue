@@ -34,7 +34,6 @@ const post = async (e?: Event) => {
     return;
   }
   posting.value = true;
-  console.log(chat ? chat._id : "livechat");
   const response = await getResponseFromAPIRequest(
     chat ? `/posts/${chat._id}` : "/home",
     {
