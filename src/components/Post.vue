@@ -72,10 +72,6 @@ const isBridged = bridgeBots.includes(username.value);
 if (isBridged) {
   separatePost(postContent.value);
 }
-const isSplash = post.u === "Webhooks" && username.value === "SplashBridge";
-if (isSplash) {
-  separatePost(postContent.value);
-}
 
 const isDeleted = ref(false);
 const edited = ref<null | APIPost>(null);
@@ -276,12 +272,12 @@ const reload = () => location.reload();
       </span>
       <span
         :title="t('webhookBridgePost')"
-        v-if="post.u === 'Webhooks' && !isSplash"
+        v-if="post.u === 'Webhooks'"
       >
         <IconWebhook class="inline-block w-5" />
         <span class="sr-only">{{ t("webhookBridgePost") }}</span>
       </span>
-      <span :title="t('splashBridgePost')" v-if="isSplash">
+      <span :title="t('splashBridgePost')" v-if="post.u === 'SplashBridge'">
         <IconSailboat class="inline-block w-5" />
         <span class="sr-only">{{ t("splashBridgePost") }}</span>
       </span>
