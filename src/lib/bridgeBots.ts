@@ -1,1 +1,1 @@
-export const bridgeBots = ["Discord", "Webhooks", "RevowerJS"];
+export const bridgeBots = ["Discord", "Webhooks", "RevowerJS", "SplashBridge"];
