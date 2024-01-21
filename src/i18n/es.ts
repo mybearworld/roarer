@@ -28,7 +28,7 @@ export const es = {
   webhookBridgePost:
     "Esta post fue creado a través de un webhook. Estos no pasan por el sistema de cuentas de Meower, cualquiera puede crear un mensaje con cualquier nombre.",
   splashBridgePost:
-    "Esta post fue creado a través de Splash. Estos no pasan por el sistema de cuentas de Meower o Splash, cualquiera puede crear un mensaje con cualquier nombre.",
+    "Esta post fue creado a través de Splash.",
   revoltBridgePost: "Este post fue creado en el servidor de Revolt.",
   deletePost: "Eliminar",
   editPost: "Editar",
