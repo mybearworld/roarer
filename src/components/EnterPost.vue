@@ -120,10 +120,7 @@ const addEmoji = (emoji: Emoji) => {
   if (!inputRef.value) {
     return;
   }
-  postContent.value =
-    inputRef.value.value.slice(0, inputRef.value.selectionStart) +
-    emoji.emoji +
-    inputRef.value.value.slice(inputRef.value.selectionEnd);
+  postContent.value += emoji.emoji;
   autoResizeTextarea(inputRef.value);
 };
 
