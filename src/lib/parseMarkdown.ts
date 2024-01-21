@@ -104,6 +104,24 @@ export const parseMarkdown = async (
   if (buttons.childElementCount) {
     linkifiedDocument.body.append(buttons);
   }
+  [...linkifiedDocument.querySelectorAll("a")].forEach((element) => {
+    if (element.href !== element.textContent) {
+      return;
+    }
+    const url = new URL(element.href);
+    if (url.host !== "cdn.discordapp.com") {
+      return;
+    }
+    const alt = url.searchParams.get("name");
+    if (!alt) {
+      return;
+    }
+    const image = document.createElement("img");
+    image.src = element.href;
+    image.alt = alt;
+    image.className = "inline-block w-6 h-6";
+    element.replaceWith(image);
+  });
   [...linkifiedDocument.querySelectorAll("img")].forEach(async (element) => {
     let request;
     try {
