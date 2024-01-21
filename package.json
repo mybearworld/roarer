@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ark-ui/vue": "^0.10.0",
     "@tabler/icons-vue": "^2.44.0",
     "@williamhorning/cloudlink": "^4.1.1",
     "highlight.js": "^11.9.0",

@@ -156,4 +156,5 @@ export const en = {
   deletePostFail: "Failed to delete post: {status}",
   notoColorEmoji:
     "Emojis use the Noto Color Emoji font, licensed under the Open Font License.",
+  chooseEmoji: "Choose an emoji",
 };

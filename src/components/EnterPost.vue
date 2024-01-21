@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { Popover } from "@ark-ui/vue";
+import { IconMoodHappy } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { APIChat } from "../lib/chatSchema";
 import {
@@ -7,6 +9,7 @@ import {
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { discordEmoji, Emoji } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -114,11 +117,21 @@ const keydown = (e: KeyboardEvent) => {
   }
 };
 
+const addEmoji = (emoji: Emoji) => {
+  if (!inputRef.value) {
+    return;
+  }
+  postContent.value =
+    inputRef.value.value.slice(0, inputRef.value.selectionStart) +
+    emoji.emoji +
+    inputRef.value.value.slice(inputRef.value.selectionEnd);
+};
+
 defineExpose({ reply });
 </script>
 
 <template>
-  <form @submit="post" class="flex space-x-2">
+  <form @submit="post" class="flex gap-2">
     <textarea
       class="w-full resize-none rounded-lg bg-slate-800 px-2 py-1"
       :placeholder="$t('enterPostPlaceholder')"
@@ -127,7 +140,34 @@ defineExpose({ reply });
       v-model="postContent"
       ref="inputRef"
       rows="1"
-    />
+    ></textarea>
+    <Popover.Root :positioning="{ placement: 'bottom' }">
+      <Popover.Trigger class="rounded-xl bg-slate-800 px-2 py-1">
+        <IconMoodHappy aria-hidden />
+        <span class="sr-only">Emoji</span>
+      </Popover.Trigger>
+      <Popover.Positioner>
+        <Popover.Content
+          class="z-10 max-w-60 rounded-lg bg-slate-800 px-2 py-1 shadow-lg"
+        >
+          <strong>{{ t("chooseEmoji") }}</strong>
+          <div class="flex flex-wrap gap-2">
+            <button
+              type="button"
+              @click="addEmoji(emoji)"
+              v-for="emoji in discordEmoji"
+            >
+              <img
+                :src="`https://cdn.discordapp.com/emojis/${emoji.id}.${
+                  emoji.isGif ? 'gif' : 'webp'
+                }?size=24&quality=lossless`"
+                :alt="emoji.name"
+              />
+            </button>
+          </div>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
     <button type="submit" class="text-nowrap rounded-xl bg-slate-800 px-2 py-1">
       {{ $t("enterPostSend") }}
     </button>

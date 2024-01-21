@@ -6,9 +6,9 @@ import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
 
-const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
-const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
-const IMAGE_REGEX = new RegExp(
+export const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
+export const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
+export const IMAGE_REGEX = new RegExp(
   ATTACHMENT_REGEX.source + "|" + DISCORD_REGEX.source,
   "g",
 );
