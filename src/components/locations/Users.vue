@@ -99,13 +99,13 @@ const permissions = computed(() =>
   <div class="flex flex-col gap-2">
     <form class="flex gap-2" @submit="submit">
       <input
-        class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+        class="border-accent w-full rounded-lg border-2 bg-transparent px-2 py-1"
         :placeholder="t('username')"
         type="text"
         v-model="username"
       />
       <button
-        class="text-nowrap rounded-xl border-2 border-accent bg-transparent px-2 py-1"
+        class="border-accent text-nowrap rounded-xl border-2 bg-transparent px-2 py-1"
       >
         {{ t("userSearch") }}
       </button>
@@ -118,7 +118,7 @@ const permissions = computed(() =>
     </div>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div
-        class="flex min-w-[calc(70px+theme(spacing.4))] items-center rounded-xl border-2 border-text bg-white p-2"
+        class="border-text flex min-w-[calc(70px+theme(spacing.4))] items-center rounded-xl border-2 bg-white p-2"
       >
         <img
           width="70"
@@ -173,14 +173,14 @@ const permissions = computed(() =>
         <div class="space-x-2">
           <RouterLink
             :to="`/users/${userProfile._id}/dm`"
-            class="rounded-xl bg-accent px-2 py-1"
+            class="bg-accent text-accent-text rounded-xl px-2 py-1"
             v-if="!isBlocked && loginStatusStore.username !== userProfile._id"
           >
             {{ t("chatDM") }}
           </RouterLink>
           <button
             type="button"
-            class="rounded-xl bg-accent px-2 py-1"
+            class="bg-accent text-accent-text rounded-xl px-2 py-1"
             @click="block"
             v-if="route.params.username !== loginStatusStore.username"
           >

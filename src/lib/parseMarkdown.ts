@@ -91,7 +91,7 @@ export const parseMarkdown = async (
     doneProjectEmbeds.add(projectId);
     const button = document.createElement("button");
     button.textContent = loadProjectText + ` (${projectId})`;
-    button.className = "bg-accent px-2 py-1 rounded-xl";
+    button.className = "bg-accent text-accent-text px-2 py-1 rounded-xl";
     const iframe = document.createElement("iframe");
     iframe.src = `https://${url}/${projectId}/embed`;
     iframe.width = "485";

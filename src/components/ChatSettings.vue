@@ -144,22 +144,28 @@ cloudlinkStore.lookFor(
       <h3 class="text-lg font-bold">{{ t("chatSettings") }}</h3>
       <form class="flex gap-2" @submit="rename">
         <input
-          class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+          class="border-accent w-full rounded-lg border-2 bg-transparent px-2 py-1"
           type="text"
           v-model="newChatName"
         />
-        <button type="submit" class="rounded-xl bg-accent px-2 py-1">
+        <button
+          type="submit"
+          class="bg-accent text-accent-text rounded-xl px-2 py-1"
+        >
           {{ t("chatRename") }}
         </button>
       </form>
       <form class="flex gap-2" @submit="addUser">
         <input
-          class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+          class="border-accent w-full rounded-lg border-2 bg-transparent px-2 py-1"
           placeholder="User..."
           type="text"
           v-model="addUserName"
         />
-        <button type="submit" class="rounded-xl bg-accent px-2 py-1">
+        <button
+          type="submit"
+          class="bg-accent text-accent-text rounded-xl px-2 py-1"
+        >
           {{ t("chatAddMember") }}
         </button>
       </form>
@@ -168,7 +174,7 @@ cloudlinkStore.lookFor(
       <h3 class="text-lg font-bold">{{ t("chatPeople") }}</h3>
       <div class="flex gap-2" v-for="person in members">
         <div
-          class="flex w-full items-center gap-2 rounded-xl bg-accent px-2 py-1"
+          class="bg-accent text-accent-text flex w-full items-center gap-2 rounded-xl px-2 py-1"
         >
           <h3 class="inline-block text-lg font-bold">{{ person }}</h3>
           <IconCrown class="inline-block" aria-hidden v-if="person === owner" />
@@ -176,7 +182,7 @@ cloudlinkStore.lookFor(
         </div>
         <button
           type="button"
-          class="rounded-xl bg-accent px-2 py-1"
+          class="bg-accent text-accent-text rounded-xl px-2 py-1"
           @click="promote(person)"
           v-if="
             owner === loginStatusStore.username &&
@@ -188,7 +194,7 @@ cloudlinkStore.lookFor(
         </button>
         <button
           type="button"
-          class="rounded-xl bg-accent px-2 py-1"
+          class="bg-accent text-accent-text rounded-xl px-2 py-1"
           @click="
             person === loginStatusStore.username ? leave() : remove(person)
           "
