@@ -27,8 +27,7 @@ export const en = {
   discordBridgePost: "This post was created on the Discord server.",
   webhookBridgePost:
     "This post was created via a Webhook. These do not go through Meower's account system, anyone can create a message under any name.",
-  splashBridgePost:
-    "This post was created via Splash.",
+  splashBridgePost: "This post was created via Splash.",
   revoltBridgePost: "This post was created on the Revolt server.",
   deletePost: "Delete",
   editPost: "Edit",

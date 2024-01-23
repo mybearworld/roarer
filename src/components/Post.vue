@@ -237,9 +237,9 @@ const reload = () => location.reload();
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
-    :class="`border-accent group flex rounded-xl border-2 ${
+    :class="`group flex rounded-xl border-2 border-accent ${
       reply
-        ? 'text-text gap-2 border-none italic opacity-40'
+        ? 'gap-2 border-none italic text-text opacity-40'
         : 'flex-col px-2 py-1'
     }`"
     v-else
@@ -331,7 +331,7 @@ const reload = () => location.reload();
     </div>
     <form v-if="editing" @submit="edit">
       <textarea
-        class="border-accent mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1"
+        class="mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 border-accent bg-transparent px-2 py-1"
         type="text"
         rows="1"
         :value="post.unfiltered_p ?? post.p"
@@ -340,11 +340,11 @@ const reload = () => location.reload();
         @input="editInputValue && autoResizeTextarea(editInputValue)"
       />
       <div class="space-x-2">
-        <button type="submit" class="bg-accent rounded-xl px-2 py-1">
+        <button type="submit" class="rounded-xl bg-accent px-2 py-1">
           {{ t("editPost") }}
         </button>
         <button
-          class="bg-accent rounded-xl px-2 py-1"
+          class="rounded-xl bg-accent px-2 py-1"
           type="button"
           @click="editing = false"
         >
@@ -354,13 +354,13 @@ const reload = () => location.reload();
     </form>
     <div :class="editing ? 'hidden' : ''">
       <div
-        :class="`[&_blockquote]:border-text [&_hr]:border-text [&_td]:border-text [&_th]:border-text [&_a]:text-link max-h-96 space-y-2 break-words [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:opacity-40 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
+        :class="`max-h-96 space-y-2 break-words [&_a]:text-link [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:opacity-40 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
           isItalicUser ? 'italic' : ''
         } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
         ref="postContentElement"
       ></div>
       <button
-        class="bg-accent mt-2 flex items-center gap-1 rounded-xl px-2 py-1"
+        class="mt-2 flex items-center gap-1 rounded-xl bg-accent px-2 py-1"
         v-if="
           postContent.endsWith('\u200c') &&
           username === 'mybearworld' &&
