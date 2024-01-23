@@ -87,8 +87,8 @@ const loadMore = async () => {
     newPostsAmount.value <= -25
       ? 0
       : newPostsAmount.value < 0
-        ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
-        : newPostsAmount.value % POSTS_PER_REQUESTS;
+      ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
+      : newPostsAmount.value % POSTS_PER_REQUESTS;
   const response = await getResponseFromAPIRequest(
     requestURL + `&page=${page}`,
     {
@@ -133,7 +133,7 @@ const loadMore = async () => {
   />
   <button
     type="button"
-    class="bg-accent text-accent-text w-full rounded-xl py-1"
+    class="w-full rounded-xl bg-accent py-1 text-accent-text"
     :disabled="loadingMore"
     @click="loadMore"
     v-if="!stopShowingLoadMore && gotPosts"

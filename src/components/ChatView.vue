@@ -21,7 +21,7 @@ const { chat } = defineProps<{
 <template>
   <div class="flex gap-2">
     <RouterLink
-      class="bg-accent text-accent-text block w-full rounded-xl px-2 py-1 text-left"
+      class="block w-full rounded-xl bg-accent px-2 py-1 text-left text-accent-text"
       :to="
         chat.nickname
           ? `/chats/${chat._id}`
@@ -49,7 +49,7 @@ const { chat } = defineProps<{
       </p>
     </RouterLink>
     <RouterLink
-      class="bg-accent text-accent-text flex items-center rounded-xl px-2 py-1"
+      class="flex items-center rounded-xl bg-accent px-2 py-1 text-accent-text"
       :to="`/chats/${chat._id}/settings`"
       v-if="chat.nickname"
     >

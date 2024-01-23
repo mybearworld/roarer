@@ -130,7 +130,7 @@ defineExpose({ reply });
 <template>
   <form @submit="post" class="flex gap-2">
     <textarea
-      class="border-accent w-full resize-none rounded-lg border-2 bg-transparent px-2 py-1"
+      class="w-full resize-none rounded-lg border-2 border-accent bg-transparent px-2 py-1"
       :placeholder="$t('enterPostPlaceholder')"
       @input="input"
       @keydown="keydown"
@@ -139,13 +139,13 @@ defineExpose({ reply });
       rows="1"
     ></textarea>
     <Popover.Root :positioning="{ placement: 'bottom' }">
-      <Popover.Trigger class="bg-accent text-accent-text rounded-xl px-2 py-1">
+      <Popover.Trigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
         <IconMoodHappy aria-hidden />
         <span class="sr-only">Emoji</span>
       </Popover.Trigger>
       <Popover.Positioner>
         <Popover.Content
-          class="bg-accent text-accent-text z-10 max-w-60 rounded-lg px-2 py-1 shadow-lg"
+          class="z-10 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
         >
           <strong>{{ t("chooseEmoji") }}</strong>
           <div class="flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ defineExpose({ reply });
     </Popover.Root>
     <button
       type="submit"
-      class="bg-accent text-accent-text text-nowrap rounded-xl px-2 py-1"
+      class="text-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
     >
       {{ $t("enterPostSend") }}
     </button>

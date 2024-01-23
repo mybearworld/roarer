@@ -137,7 +137,7 @@ const signOut = async () => {
       class="absolute left-0 top-0 flex h-screen w-screen items-center justify-center"
     >
       <form
-        class="border-accent rounded-xl border-2 bg-transparent px-5 py-4"
+        class="rounded-xl border-2 border-accent bg-transparent px-5 py-4"
         v-on:submit="loginEvent"
       >
         <div class="space-y-4">
@@ -148,7 +148,7 @@ const signOut = async () => {
           <label class="block">
             {{ t("loginUsername") }}
             <input
-              class="border-accent rounded-lg border-2 bg-transparent px-1"
+              class="rounded-lg border-2 border-accent bg-transparent px-1"
               type="text"
               v-model="username"
             />
@@ -156,21 +156,21 @@ const signOut = async () => {
           <label class="block">
             {{ t("loginPassword") }}
             <input
-              class="border-accent rounded-lg border-2 bg-transparent px-1"
+              class="rounded-lg border-2 border-accent bg-transparent px-1"
               type="password"
               v-model="password"
             />
           </label>
           <div class="space-x-2">
             <button
-              class="bg-accent text-accent-text rounded-xl px-2 py-1"
+              class="rounded-xl bg-accent px-2 py-1 text-accent-text"
               type="submit"
               :disabled="loading"
             >
               {{ t("loginSubmit") }}
             </button>
             <button
-              class="bg-accent text-accent-text rounded-xl px-2 py-1"
+              class="rounded-xl bg-accent px-2 py-1 text-accent-text"
               type="button"
               :disabled="loading"
               @click="signUp"
@@ -187,7 +187,7 @@ const signOut = async () => {
   </template>
   <div class="inline-flex flex-col" v-else>
     <button
-      class="bg-accent text-accent-text inline-block rounded-xl px-2 py-1 text-sm"
+      class="inline-block rounded-xl bg-accent px-2 py-1 text-sm text-accent-text"
       v-on:click="signOut"
     >
       {{ t("signOut") }}

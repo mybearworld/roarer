@@ -11,7 +11,7 @@ effect(() => {
 
 <template>
   <select
-    class="bg-accent text-accent-text rounded-xl px-2 py-1"
+    class="rounded-xl bg-accent px-2 py-1 text-accent-text"
     v-model="locale"
   >
     <option
