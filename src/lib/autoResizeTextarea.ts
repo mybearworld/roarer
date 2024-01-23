@@ -1,8 +1,7 @@
 export const autoResizeTextarea = (el: HTMLTextAreaElement) => {
   requestAnimationFrame(() => {
-    el.style.maxHeight = "0px";
-    el.style.height = `${el.scrollHeight}px`;
-    el.style.maxHeight = "";
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight + 4}px`;
   });
 };
 

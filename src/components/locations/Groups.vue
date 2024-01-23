@@ -109,13 +109,10 @@ cloudlinkStore.lookFor(
       <input
         type="text"
         :placeholder="t('chatNickname')"
-        class="w-full rounded-lg bg-slate-800 px-2 py-1"
+        class="border-accent w-full rounded-lg border-2 bg-transparent px-2 py-1"
         v-model="chatNickname"
       />
-      <button
-        type="submit"
-        class="text-nowrap rounded-xl bg-slate-800 px-2 py-1"
-      >
+      <button type="submit" class="bg-accent text-nowrap rounded-xl px-2 py-1">
         {{ t("createChat") }}
       </button>
     </form>

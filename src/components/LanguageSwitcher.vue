@@ -10,7 +10,7 @@ effect(() => {
 </script>
 
 <template>
-  <select class="rounded-xl bg-slate-800 px-2 py-1" v-model="locale">
+  <select class="rounded-xl bg-accent px-2 py-1" v-model="locale">
     <option
       :value="locale"
       :selected="locale === locale"

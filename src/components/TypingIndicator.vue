@@ -63,7 +63,7 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
       <span class="sr-only">{{ t("typingUsers") }}</span>
       {{ [...shownTypingUsers.values()].join(", ") }}
     </span>
-    <span class="italic text-slate-400" v-else>
+    <span class="italic opacity-40" v-else>
       <IconKeyboardOff class="inline-block" aria-hidden />
       {{ t("noTypingUsers") }}
     </span>

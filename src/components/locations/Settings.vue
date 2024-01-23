@@ -165,7 +165,7 @@ const deleteAccount = async () => {
         {{ t("usersMeQuote") }}
         <input
           type="text"
-          class="w-full rounded-lg bg-slate-800 px-2 py-1"
+          class="border-accent w-full rounded-lg border-2 bg-transparent px-2 py-1"
           v-model="quote"
         />
       </label>
@@ -173,7 +173,7 @@ const deleteAccount = async () => {
         {{ t("usersMePfp") }}
         <div class="flex flex-wrap gap-2">
           <button
-            class="rounded-xl border-2 border-slate-500 bg-white p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
+            class="border-text rounded-xl border-2 bg-white p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
             :aria-selected="profilePicture === key"
             type="button"
             :title="`Profile picture #${key}`"
@@ -189,7 +189,7 @@ const deleteAccount = async () => {
           </button>
         </div>
       </label>
-      <button class="rounded-xl bg-slate-800 px-2 py-1" type="submit">
+      <button class="bg-accent rounded-xl px-2 py-1" type="submit">
         {{ t("updateProfile") }}
       </button>
     </form>
@@ -217,18 +217,18 @@ const deleteAccount = async () => {
     </label>
     <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>
-      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="changePassword">
+      <button class="bg-accent rounded-xl px-2 py-1" @click="changePassword">
         {{ t("changePassword") }}
       </button>
     </div>
     <div>
-      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="revokeTokens">
+      <button class="bg-accent rounded-xl px-2 py-1" @click="revokeTokens">
         {{ t("revokeTokens") }}
       </button>
       {{ t("revokeTokensInfo") }}
     </div>
     <div>
-      <button class="rounded-xl bg-slate-800 px-2 py-1" @click="deleteAccount">
+      <button class="bg-accent rounded-xl px-2 py-1" @click="deleteAccount">
         {{ t("deleteAccount") }}
       </button>
       {{ t("deleteAccountInfo") }}

@@ -9,6 +9,13 @@ export default {
         sans: ["ui-sans-serif", "system-ui", "sans-serif", "Noto Color Emoji"],
         mono: "monospace",
       },
+      colors: {
+        accent: "var(--accent, theme(colors.slate.800))",
+        link: "var(--link, theme(colors.sky.400))",
+        background: "var(--background, theme(colors.slate.950))",
+        text: "var(--text, theme(colors.slate.200))",
+        buttonText: "var(--button-text, theme(colors.slate.200))",
+      },
     },
   },
   plugins: [],

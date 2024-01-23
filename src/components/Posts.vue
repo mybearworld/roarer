@@ -133,7 +133,7 @@ const loadMore = async () => {
   />
   <button
     type="button"
-    class="w-full rounded-xl bg-slate-800 py-1"
+    class="w-full rounded-xl bg-accent py-1"
     :disabled="loadingMore"
     @click="loadMore"
     v-if="!stopShowingLoadMore && gotPosts"

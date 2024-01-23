@@ -136,7 +136,10 @@ const signOut = async () => {
     <div
       class="absolute left-0 top-0 flex h-screen w-screen items-center justify-center"
     >
-      <form class="rounded-xl bg-slate-900 px-5 py-4" v-on:submit="loginEvent">
+      <form
+        class="border-accent rounded-xl border-2 bg-transparent px-5 py-4"
+        v-on:submit="loginEvent"
+      >
         <div class="space-y-4">
           <div class="flex gap-2">
             <strong class="text-xl">{{ t("loginHeader") }} </strong>
@@ -145,7 +148,7 @@ const signOut = async () => {
           <label class="block">
             {{ t("loginUsername") }}
             <input
-              class="rounded-lg bg-slate-700 px-1"
+              class="border-accent rounded-lg border-2 bg-transparent px-1"
               type="text"
               v-model="username"
             />
@@ -153,21 +156,21 @@ const signOut = async () => {
           <label class="block">
             {{ t("loginPassword") }}
             <input
-              class="rounded-lg bg-slate-700 px-1"
+              class="border-accent rounded-lg border-2 bg-transparent px-1"
               type="password"
               v-model="password"
             />
           </label>
           <div class="space-x-2">
             <button
-              class="rounded-xl bg-slate-700 px-2 py-1"
+              class="bg-accent rounded-xl px-2 py-1"
               type="submit"
               :disabled="loading"
             >
               {{ t("loginSubmit") }}
             </button>
             <button
-              class="rounded-xl bg-slate-700 px-2 py-1"
+              class="bg-accent rounded-xl px-2 py-1"
               type="button"
               :disabled="loading"
               @click="signUp"
@@ -184,7 +187,7 @@ const signOut = async () => {
   </template>
   <div class="inline-flex flex-col" v-else>
     <button
-      class="inline-block rounded-xl bg-slate-800 px-2 py-1 text-sm"
+      class="inline-block rounded-xl bg-accent px-2 py-1 text-sm"
       v-on:click="signOut"
     >
       {{ t("signOut") }}
