@@ -145,7 +145,7 @@ defineExpose({ reply });
       </Popover.Trigger>
       <Popover.Positioner>
         <Popover.Content
-          class="z-10 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
+          class="z-20 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
         >
           <strong>{{ t("chooseEmoji") }}</strong>
           <div class="flex flex-wrap gap-2">
