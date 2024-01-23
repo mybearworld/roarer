@@ -239,7 +239,7 @@ const deleteAccount = async () => {
       {{ t("languageContributing.start")
       }}<a
         href="https://github.com/mybearworld/roarer/tree/main/src/i18n"
-        class="text-sky-400 underline"
+        class="text-link underline"
         >{{ t("languageContributing.githubLink") }}</a
       >{{ t("languageContributing.end") }}
     </p>
@@ -248,13 +248,13 @@ const deleteAccount = async () => {
       {{ t("contributorsThanks.start")
       }}<a
         href="https://github.com/mybearworld/roarer?tab=readme-ov-file#contributors"
-        class="text-sky-400 underline"
+        class="text-link underline"
         >{{ t("contributorsThanks.contributorsLink") }}</a
       >{{ t("contributorsThanks.end") }}
     </p>
     <p>
       {{ t("mascotThanks.start")
-      }}<RouterLink class="text-sky-400 underline" to="/users/Supernoodles99">
+      }}<RouterLink class="text-link underline" to="/users/Supernoodles99">
         @Supernoodles99</RouterLink
       >{{ t("mascotThanks.end") }}
     </p>

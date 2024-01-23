@@ -354,7 +354,7 @@ const reload = () => location.reload();
     </form>
     <div :class="editing ? 'hidden' : ''">
       <div
-        :class="`[&_blockquote]:border-text [&_hr]:border-text [&_td]:border-text [&_th]:border-text max-h-96 space-y-2 break-words [&_a]:text-sky-400 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:opacity-40 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
+        :class="`[&_blockquote]:border-text [&_hr]:border-text [&_td]:border-text [&_th]:border-text [&_a]:text-link max-h-96 space-y-2 break-words [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:opacity-40 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
           isItalicUser ? 'italic' : ''
         } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
         ref="postContentElement"

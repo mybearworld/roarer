@@ -116,7 +116,7 @@ const loadMore = async () => {
         chat.members.find((member) => member !== loginStatusStore.username)
       }}
     </h2>
-    <RouterLink to="/chats" class="text-sky-400 underline">
+    <RouterLink to="/chats" class="text-link underline">
       {{ t("back") }}
     </RouterLink>
   </div>
@@ -133,7 +133,7 @@ const loadMore = async () => {
   />
   <button
     type="button"
-    class="w-full rounded-xl bg-accent py-1"
+    class="bg-accent w-full rounded-xl py-1"
     :disabled="loadingMore"
     @click="loadMore"
     v-if="!stopShowingLoadMore && gotPosts"

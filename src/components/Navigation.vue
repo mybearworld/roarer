@@ -19,22 +19,19 @@ const isDevStore = useIsDevStore();
         <Login />
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/">
+        <RouterLink class="text-link flex text-nowrap underline" to="/">
           {{ t("routeHome") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/inbox">
+        <RouterLink class="text-link flex text-nowrap underline" to="/inbox">
           {{ t("routeInbox") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/chats">
+        <RouterLink class="text-link flex text-nowrap underline" to="/chats">
           {{ t("routeGroups") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-sky-400 underline" to="/users">
+        <RouterLink class="text-link flex text-nowrap underline" to="/users">
           {{ t("routeUsers") }}
         </RouterLink>
-        <RouterLink
-          class="flex text-nowrap text-sky-400 underline"
-          to="/settings"
-        >
+        <RouterLink class="text-link flex text-nowrap underline" to="/settings">
           {{ t("routeSettings") }}
         </RouterLink>
       </div>
@@ -42,14 +39,14 @@ const isDevStore = useIsDevStore();
         {{ t("inDevelopmentMode") }}
         <a
           href="https://github.com/meower-media-co/Meower-Server/tree/main"
-          class="text-sky-400 underline"
+          class="text-link underline"
           target="_blank"
           >Meower Server</a
         >
         -
         <a
           href="https://github.com/meower-media-co/Meower-Svelte/tree/master"
-          class="text-sky-400 underline"
+          class="text-link underline"
           target="_blank"
           >Meower Svelte</a
         >
