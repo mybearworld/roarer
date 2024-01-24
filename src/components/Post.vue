@@ -239,7 +239,9 @@ const reload = () => location.reload();
   <div
     :class="`group flex rounded-xl ${
       settingsStore.theme.roarer_postStyle === 'filled'
-        ? 'bg-accent text-accent-text'
+        ? editing
+          ? ''
+          : 'bg-accent text-accent-text'
         : 'border-2 border-accent bg-transparent'
     } ${
       reply

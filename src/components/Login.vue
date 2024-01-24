@@ -133,19 +133,9 @@ const signOut = async () => {
 <template>
   <template v-if="loginStatusStore.username === null">
     <div
-      class="absolute left-0 top-0 -z-50 h-screen w-screen bg-black opacity-20"
-    ></div>
-    <div
       class="absolute left-0 top-0 flex h-screen w-screen items-center justify-center"
     >
-      <form
-        :class="`rounded-xl ${
-          settingsStore.theme.roarer_postStyle === 'filled'
-            ? 'bg-accent text-accent-text'
-            : 'border-2 border-accent bg-transparent'
-        } px-5 py-4`"
-        v-on:submit="loginEvent"
-      >
+      <form :class="`rounded-xl px-5 py-4`" v-on:submit="loginEvent">
         <div class="space-y-4">
           <div class="flex gap-2">
             <strong class="text-xl">{{ t("loginHeader") }} </strong>
