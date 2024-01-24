@@ -104,9 +104,7 @@ const permissions = computed(() =>
         type="text"
         v-model="username"
       />
-      <button
-        class="text-nowrap rounded-xl border-2 border-accent bg-transparent px-2 py-1"
-      >
+      <button class="text-nowrap rounded-xl bg-accent px-2 py-1">
         {{ t("userSearch") }}
       </button>
     </form>
