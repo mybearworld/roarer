@@ -237,7 +237,11 @@ const reload = () => location.reload();
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
-    :class="`group flex rounded-xl border-2 border-accent ${
+    :class="`group flex rounded-xl ${
+      settingsStore.theme.roarer_postStyle === 'filled'
+        ? 'bg-accent'
+        : 'border-2 border-accent bg-transparent'
+    } ${
       reply
         ? 'gap-2 border-none italic text-text opacity-40'
         : 'flex-col px-2 py-1'

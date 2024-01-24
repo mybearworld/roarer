@@ -10,6 +10,7 @@ import Home from "./components/locations/Home.vue";
 import Inbox from "./components/locations/Inbox.vue";
 import NotFound from "./components/locations/NotFound.vue";
 import Settings from "./components/locations/Settings.vue";
+import ThemeSettings from "./components/locations/ThemeSettings.vue";
 import Users from "./components/locations/Users.vue";
 import "./style.css";
 import { languages } from "./i18n/languages";
@@ -30,6 +31,7 @@ const router = createRouter({
     { path: "/chats/:id/settings", component: ChatSettings },
     { path: "/inbox", component: Inbox },
     { path: "/settings", component: Settings },
+    { path: "/settings/theme", component: ThemeSettings },
     { path: "/users", component: Users },
     { path: "/users/:username", component: Users },
     { path: "/users/:username/dm", component: Chat },

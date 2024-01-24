@@ -218,6 +218,16 @@ const deleteAccount = async () => {
         {{ t("settingEnterSends") }}
       </div>
     </label>
+    <div>
+      <button
+        type="button"
+        class="justify-start rounded-xl bg-accent px-2 py-1 text-accent-text"
+      >
+        <RouterLink to="/settings/theme">
+          {{ t("themeSettings") }}
+        </RouterLink>
+      </button>
+    </div>
     <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
     <div>
       <button

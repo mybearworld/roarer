@@ -6,11 +6,13 @@ import LanguageSwitcher from "./LanguageSwitcher.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useRelationshipStore } from "../stores/relationship";
+import { useSettingsStore } from "../stores/settings";
 import { individualRelationshipPacketSchema } from "../lib/relationshipSchema";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
+const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
 const logInSchema = z.object({
@@ -137,7 +139,11 @@ const signOut = async () => {
       class="absolute left-0 top-0 flex h-screen w-screen items-center justify-center"
     >
       <form
-        class="rounded-xl border-2 border-accent bg-transparent px-5 py-4"
+        :class="`rounded-xl ${
+          settingsStore.theme.roarer_postStyle === 'filled'
+            ? 'bg-accent'
+            : 'border-2 border-accent bg-transparent'
+        } px-5 py-4`"
         v-on:submit="loginEvent"
       >
         <div class="space-y-4">

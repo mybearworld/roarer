@@ -35,7 +35,7 @@ const isDevStore = useIsDevStore();
           {{ t("routeSettings") }}
         </RouterLink>
       </div>
-      <p class="text-red-200" v-if="isDevStore.isDev">
+      <p v-if="isDevStore.isDev">
         {{ t("inDevelopmentMode") }}
         <a
           href="https://github.com/meower-media-co/Meower-Server/tree/main"
