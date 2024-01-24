@@ -141,7 +141,7 @@ const signOut = async () => {
       <form
         :class="`rounded-xl ${
           settingsStore.theme.roarer_postStyle === 'filled'
-            ? 'bg-accent'
+            ? 'bg-accent text-accent-text'
             : 'border-2 border-accent bg-transparent'
         } px-5 py-4`"
         v-on:submit="loginEvent"
