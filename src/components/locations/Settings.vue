@@ -173,7 +173,7 @@ const deleteAccount = async () => {
         {{ t("usersMePfp") }}
         <div class="flex flex-wrap gap-2">
           <button
-            class="rounded-xl border-2 border-text bg-white p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
+            class="rounded-xl bg-accent p-2 aria-selected:border-2 aria-selected:border-green-500"
             :aria-selected="profilePicture === key"
             type="button"
             :title="`Profile picture #${key}`"
