@@ -2,6 +2,7 @@
 import { computed, effect, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
+import Statistics from "../Statistics.vue";
 import { profilePictures } from "../../assets/pfp";
 import meowy from "../../assets/pfp/22.svg";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
@@ -108,11 +109,8 @@ const permissions = computed(() =>
         {{ t("userSearch") }}
       </button>
     </form>
-    <div
-      class="opacity-400 mt-5 text-center text-xl italic"
-      v-if="userProfile === null"
-    >
-      {{ t("noUserPlaceholder") }}
+    <div class="mt-5 text-center text-xl italic" v-if="userProfile === null">
+      <Statistics />
     </div>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div

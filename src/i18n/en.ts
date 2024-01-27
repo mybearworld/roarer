@@ -172,4 +172,9 @@ export const en = {
   theme_dark: "Dark",
   theme_stone: "Stone",
   theme_meower: "Meower",
+  statsFail: "Failed to get stats: {status}",
+  statsLoading: "Loading stats...",
+  statsMessage:
+    "There are {posts} posts, posted in home and {chats} other chats. {users} users contributed to that number!",
+  statsDontSpam: "Don't spam just to make these numbers go up.",
 };
