@@ -13,10 +13,7 @@ const onlineListStore = useOnlinelistStore();
 const { t } = useI18n();
 
 const shownOnlineList = computed(() =>
-  onlineListStore.online.filter(
-    (user) =>
-      (!chat || chat.members.includes(user)) && !bridgeBots.includes(user),
-  ),
+  onlineListStore.online.filter((user) => !chat || chat.members.includes(user)),
 );
 </script>
 
