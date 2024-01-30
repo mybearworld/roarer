@@ -58,9 +58,12 @@ effect(async () => {
   userProfile.value = response;
 });
 
-const isBlocked = computed(() =>
-  relationshipStore.blockedUsers.has(route.params.username),
-);
+const isBlocked = computed(() => {
+  if (typeof route.params.username !== "string") {
+    throw new Error(`Incorrect query param type: ${route.params.username}`);
+  }
+  return relationshipStore.blockedUsers.has(route.params.username);
+});
 const block = async () => {
   if (!route.params.username) {
     return;
