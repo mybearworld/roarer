@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Popover } from "@ark-ui/vue";
 import { IconMoodHappy } from "@tabler/icons-vue";
+import {
+  PopoverContent,
+  PopoverPortal,
+  PopoverRoot,
+  PopoverTrigger,
+} from "radix-vue";
 import { useI18n } from "vue-i18n";
 import { APIChat } from "../lib/chatSchema";
 import {
@@ -138,14 +143,14 @@ defineExpose({ reply });
       ref="inputRef"
       rows="1"
     ></textarea>
-    <Popover.Root :positioning="{ placement: 'bottom' }">
-      <Popover.Trigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
+    <PopoverRoot :positioning="{ placement: 'bottom' }">
+      <PopoverTrigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
         <IconMoodHappy aria-hidden />
         <span class="sr-only">Emoji</span>
-      </Popover.Trigger>
-      <Popover.Positioner>
-        <Popover.Content
-          class="z-20 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
+      </PopoverTrigger>
+      <PopoverPortal>
+        <PopoverContent
+          class="z-20 mt-2 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
         >
           <strong>{{ t("chooseEmoji") }}</strong>
           <div class="flex flex-wrap gap-2">
@@ -163,9 +168,9 @@ defineExpose({ reply });
               />
             </button>
           </div>
-        </Popover.Content>
-      </Popover.Positioner>
-    </Popover.Root>
+        </PopoverContent>
+      </PopoverPortal>
+    </PopoverRoot>
     <button
       type="submit"
       class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
