@@ -59,7 +59,7 @@ effect(async () => {
 });
 
 const isBlocked = computed(() =>
-  relationshipStore.blockedUsers.has(username.value),
+  relationshipStore.blockedUsers.has(route.params.username),
 );
 const block = async () => {
   if (!route.params.username) {
