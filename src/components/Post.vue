@@ -255,7 +255,7 @@ const reload = () => location.reload();
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <RouterLink
         v-if="!isItalicUser"
-        class="text-nowrap font-bold"
+        class="whitespace-nowrap font-bold"
         :to="`/users/${username}`"
       >
         {{ username }}

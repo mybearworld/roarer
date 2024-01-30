@@ -114,7 +114,7 @@ cloudlinkStore.lookFor(
       />
       <button
         type="submit"
-        class="text-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
+        class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
       >
         {{ t("createChat") }}
       </button>

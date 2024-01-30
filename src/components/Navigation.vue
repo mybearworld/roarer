@@ -19,19 +19,31 @@ const isDevStore = useIsDevStore();
         <Login />
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <RouterLink class="flex text-nowrap text-link underline" to="/">
+        <RouterLink class="flex whitespace-nowrap text-link underline" to="/">
           {{ t("routeHome") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-link underline" to="/inbox">
+        <RouterLink
+          class="flex whitespace-nowrap text-link underline"
+          to="/inbox"
+        >
           {{ t("routeInbox") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-link underline" to="/chats">
+        <RouterLink
+          class="flex whitespace-nowrap text-link underline"
+          to="/chats"
+        >
           {{ t("routeGroups") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-link underline" to="/users">
+        <RouterLink
+          class="flex whitespace-nowrap text-link underline"
+          to="/users"
+        >
           {{ t("routeUsers") }}
         </RouterLink>
-        <RouterLink class="flex text-nowrap text-link underline" to="/settings">
+        <RouterLink
+          class="flex whitespace-nowrap text-link underline"
+          to="/settings"
+        >
           {{ t("routeSettings") }}
         </RouterLink>
       </div>
