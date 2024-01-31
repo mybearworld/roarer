@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { EmojiClickEventDetail } from "emoji-picker-element/shared";
 import { IconMoodHappy } from "@tabler/icons-vue";
 import {
   PopoverContent,
@@ -8,13 +9,13 @@ import {
   PopoverTrigger,
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
+import PickEmoji from "./PickEmoji.vue";
 import { APIChat } from "../lib/chatSchema";
 import {
   autoResizeTextarea,
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
-import { discordEmoji, Emoji } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -121,11 +122,11 @@ const keydown = (e: KeyboardEvent) => {
   }
 };
 
-const addEmoji = (emoji: Emoji) => {
+const addEmoji = (emoji: EmojiClickEventDetail) => {
   if (!inputRef.value) {
     return;
   }
-  postContent.value += emoji.emoji;
+  postContent.value += emoji.unicode ?? emoji.emoji.shortcodes?.[0];
   autoResizeTextarea(inputRef.value);
 };
 
@@ -150,24 +151,9 @@ defineExpose({ reply });
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
-          class="z-20 mt-2 max-w-60 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
+          class="z-20 mt-2 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
         >
-          <strong>{{ t("chooseEmoji") }}</strong>
-          <div class="flex flex-wrap gap-2">
-            <button
-              type="button"
-              @click="addEmoji(emoji)"
-              v-for="emoji in discordEmoji"
-            >
-              <img
-                :src="`https://cdn.discordapp.com/emojis/${emoji.id}.${
-                  emoji.isGif ? 'gif' : 'webp'
-                }?size=24&quality=lossless`"
-                :alt="emoji.name"
-                :title="emoji.name"
-              />
-            </button>
-          </div>
+          <PickEmoji @emoji="addEmoji" />
         </PopoverContent>
       </PopoverPortal>
     </PopoverRoot>

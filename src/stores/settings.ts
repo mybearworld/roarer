@@ -96,9 +96,9 @@ export const roarerThemeSchema = baseThemeSchema.and(
 export type Theme = z.infer<typeof themeSchema>;
 export type RoarerTheme = z.infer<typeof roarerThemeSchema>;
 export const themeVariables = [
-  ["orange", "--accent"],
-  ["background", "--background"],
-  ["foreground", "--text"],
-  ["foregroundOrange", "--button-text"],
-  ["roarer_link", "--link"],
+  ["orange", "---accent"],
+  ["background", "---background"],
+  ["foreground", "---text"],
+  ["foregroundOrange", "---button-text"],
+  ["roarer_link", "---link"],
 ] as const;

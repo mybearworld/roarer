@@ -11,6 +11,9 @@ dependencies:
   '@williamhorning/cloudlink':
     specifier: ^4.1.1
     version: 4.1.1
+  emoji-picker-element:
+    specifier: ^1.21.0
+    version: 1.21.0
   highlight.js:
     specifier: ^11.9.0
     version: 11.9.0
@@ -1017,6 +1020,10 @@ packages:
   /electron-to-chromium@1.4.616:
     resolution: {integrity: sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==}
     dev: true
+
+  /emoji-picker-element@1.21.0:
+    resolution: {integrity: sha512-0ZyR+4Iwci8p2aaTCl43uuYgLI5z5kg/SozAyX1b1pBkvtFykeQfsmFaX/AripHyL/ZsN5Nkin4bm88UW3CGow==}
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}

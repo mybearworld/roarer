@@ -15,4 +15,17 @@
   .ToastRoot[data-swipe="move"] {
     transition: none;
   }
+
+  emoji-picker {
+    --emoji-font-family: inherit;
+    --background: theme(colors.accent);
+    --border-color: transparent;
+    --button-active-background: transparent;
+    --button-hover-background: transparent;
+    --indicator-color: theme(colors.accent-text);
+    --input-border-color: theme(colors.background);
+    --input-border-radius: theme(borderRadius.lg);
+    --input-padding: theme(padding.1) theme(padding.2);
+    --input-border-size: theme(borderWidth.2);
+  }
 }
