@@ -67,12 +67,12 @@ cloudlinkStore.lookFor(
   <ToastProvider label="DM">
     <ToastRoot
       class="ToastRoot flex gap-2 rounded-xl bg-slate-800 px-2 py-1 text-accent-text shadow-lg"
+      :delay="5000"
       @update:open="
         (open: boolean) => {
           if (open) {
             return;
           }
-          console.log(index, newPosts[index].post);
           newPosts = newPosts.slice(0, index).concat(newPosts.slice(index + 1));
           newPosts = newPosts;
         }
