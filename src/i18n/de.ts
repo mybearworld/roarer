@@ -1,3 +1,6 @@
+import emojiPicker from "emoji-picker-element/i18n/de";
+import { escape } from "./helpers";
+
 export const de = {
   languageName: "Deutsch",
   roarer: "Roarer",
@@ -150,4 +153,6 @@ export const de = {
     "WARNUNG: Dies wird jeder Website erlauben, ein Bildhost zu sein, und eine Nachricht wird automatisch zu ihr gesendet. Dies könnte dazu führen, dass dieser Website deine IP-Adresse gezeigt wird. Nutze dies verantwortungsbewusst.",
   settingFilterSwears: 'Ersetze Schimpfwörtern in Posts mit "****".',
   loadProjectEmbed: "Projekt laden",
+  // ...
+  emojiPicker: escape(JSON.stringify(emojiPicker)),
 };

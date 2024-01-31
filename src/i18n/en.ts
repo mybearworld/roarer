@@ -1,3 +1,6 @@
+import emojiPicker from "emoji-picker-element/i18n/en";
+import { escape } from "./helpers";
+
 export const en = {
   languageName: "English",
   roarer: "Roarer",
@@ -180,4 +183,6 @@ export const en = {
   newDMToast: "New DM from {username}",
   newChatMessageToast: "New message in {chat} from {username}",
   chatActionAlt: "Go to this chat to view the message.",
+  emojiPicker: escape(JSON.stringify(emojiPicker)),
+  a: "{'{'}",
 };

@@ -1,3 +1,6 @@
+import emojiPicker from "emoji-picker-element/i18n/es";
+import { escape } from "./helpers";
+
 export const es = {
   languageName: "Español",
   roarer: "Roarer",
@@ -120,4 +123,7 @@ export const es = {
     githubLink: "traducirlo en GitHub",
     end: "!",
   },
+  // ...
+  emojiPicker: escape(JSON.stringify(emojiPicker)),
+  
 };
