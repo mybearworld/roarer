@@ -120,11 +120,12 @@ const edit = async (e?: Event) => {
 };
 
 const editKeydown = (e: KeyboardEvent) => {
-  if (e.key === "Enter") {
-    if (!e.shiftKey) {
-      e.preventDefault();
-      edit();
-    }
+  if (
+    (e.key === "Enter" && !e.shiftKey && settingsStore.enterSends) ||
+    (e.shiftKey && !settingsStore.enterSends)
+  ) {
+    e.preventDefault();
+    edit();
   }
 };
 
