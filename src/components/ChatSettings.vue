@@ -140,9 +140,13 @@ cloudlinkStore.lookFor(
         {{ t("back") }}
       </RouterLink>
     </div>
-    <div class="space-y-2" v-if="loginStatusStore.username === owner">
+    <div class="space-y-2">
       <h3 class="text-lg font-bold">{{ t("chatSettings") }}</h3>
-      <form class="flex gap-2" @submit="rename">
+      <form
+        class="flex gap-2"
+        v-if="loginStatusStore.username === owner"
+        @submit="rename"
+      >
         <input
           class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
           type="text"

@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  IconMessage,
-  IconSettings,
-  IconUser,
-  IconUsersGroup,
-} from "@tabler/icons-vue";
+import { IconMessage, IconSettings, IconUser } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { APIChat } from "../lib/chatSchema";
@@ -53,17 +48,9 @@ const { chat } = defineProps<{
       :to="`/chats/${chat._id}/settings`"
       v-if="chat.nickname"
     >
-      <IconSettings
-        aria-hidden
-        v-if="chat.owner === loginStatusStore.username"
-      />
-      <IconUsersGroup aria-hidden v-else />
+      <IconSettings aria-hidden />
       <span class="sr-only">
-        {{
-          chat.owner === loginStatusStore.username
-            ? t("chatSettings")
-            : t("chatPeople")
-        }}
+        {{ t("chatSettings") }}
       </span>
     </RouterLink>
   </div>
