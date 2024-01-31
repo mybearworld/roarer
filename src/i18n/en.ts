@@ -177,4 +177,7 @@ export const en = {
   statsMessage:
     "There are {posts} posts, posted in home and {chats} other chats. {users} users contributed to that number!",
   statsDontSpam: "Don't spam just to make these numbers go up.",
+  newDMToast: "New DM from {username}",
+  newChatMessageToast: "New message in {chat} from {username}",
+  chatActionAlt: "Go to this chat to view the message.",
 };

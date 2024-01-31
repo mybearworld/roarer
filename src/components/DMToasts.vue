@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { IconMessage } from "@tabler/icons-vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, RouterLink } from "vue-router";
 import {
   ToastAction,
@@ -23,6 +24,7 @@ const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
+const { t } = useI18n();
 
 const newPosts = ref<{ post: PostInfo; chat: APIChat }[]>([]);
 
@@ -80,19 +82,23 @@ cloudlinkStore.lookFor(
     >
       <div>
         <ToastTitle class="line-clamp-1 font-bold">
-          <span v-if="chat.nickname === null"
-            >New DM from {{ post.username }}</span
-          >
-          <span v-else
-            >New message from in {{ chat.nickname }} from
-            {{ post.username }}</span
-          >
+          <span v-if="chat.nickname === null">
+            {{ t("newDMToast", { username: post.username }) }}
+          </span>
+          <span v-else>
+            {{
+              t("newChatMessageToast", {
+                username: post.username,
+                chat: chat.nickname,
+              })
+            }}
+          </span>
         </ToastTitle>
         <ToastDescription class="line-clamp-1">
           {{ post.content }}
         </ToastDescription>
       </div>
-      <ToastAction altText="Go to this chat to view the message.">
+      <ToastAction :altText="t('chatActionAlt')">
         <RouterLink
           class="underline"
           :to="
