@@ -27,7 +27,7 @@ const router = createRouter({
     { path: "/", redirect: "/home" },
     { path: "/home", component: Home },
     { path: "/chats", component: Groups },
-    { path: "/chats/:id", component: Chat },
+    { path: "/chats/:id", component: Chat, meta: { isChat: true } },
     { path: "/chats/:id/settings", component: ChatSettings },
     { path: "/inbox", component: Inbox },
     { path: "/settings", component: Settings },

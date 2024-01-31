@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { effect } from "vue";
 import { RouterView } from "vue-router";
+import DMToasts from "./components/DMToasts.vue";
 import Login from "./components/Login.vue";
 import Navigation from "./components/Navigation.vue";
 import { useLoginStatusStore } from "./stores/loginStatus";
@@ -20,5 +21,6 @@ effect(() => {
   <div class="space-y-2" v-else>
     <Navigation />
     <RouterView />
+    <DMToasts />
   </div>
 </template>

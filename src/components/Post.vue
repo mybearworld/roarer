@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, effect, ref } from "vue";
+import { computed, effect, reactive, ref } from "vue";
 import {
   IconAlertTriangle,
   IconArrowForward,
@@ -20,6 +20,7 @@ import { bridgeBots } from "../lib/bridgeBots";
 import { getReply } from "../lib/getReply";
 import { formatDate } from "../lib/formatDate";
 import { parseMarkdown } from "../lib/parseMarkdown";
+import { getPostInfo } from "../lib/postInfo";
 import { postSchema, APIPost } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
@@ -45,33 +46,7 @@ const emit = defineEmits<{
   delete: [];
 }>();
 
-const username = ref(
-  inbox
-    ? post.u === loginStatusStore.username
-      ? "Notification"
-      : "Announcement"
-    : post.u,
-);
-const postContent = ref(
-  !settingsStore.filterSwears && post.unfiltered_p ? post.unfiltered_p : post.p,
-);
-
-const isItalicUser = computed(() =>
-  ["Server", "Notification", "Announcement"].includes(username.value),
-);
-
-const separatePost = (content: string) => {
-  const match = content.match(/^(.*?): (.*)$/s);
-  if (match) {
-    username.value = match[1];
-    postContent.value = match[2];
-  }
-};
-
-const isBridged = bridgeBots.includes(username.value);
-if (isBridged) {
-  separatePost(postContent.value);
-}
+const postInfo = getPostInfo(post, { inbox });
 
 const isDeleted = ref(false);
 const edited = ref<null | APIPost>(null);
@@ -153,30 +128,26 @@ const editKeydown = (e: KeyboardEvent) => {
   }
 };
 
-const replyInfo = computed(() => {
-  const reply = getReply(postContent.value);
-  if (reply === null || reply.id === null) {
-    return null;
-  }
-  return reply;
-});
-const replyPost = ref<APIPost | null>(null);
+const replyPost = ref<APIPost | string | null>(null);
 effect(async () => {
-  const safeReplyInfo = replyInfo.value;
-  if (safeReplyInfo === null) {
+  if (!postInfo.reply) {
+    return;
+  }
+  if (!postInfo.reply.id) {
+    replyPost.value = postInfo.reply.replyText;
     return;
   }
   const response = await getResponseFromAPIRequest(
-    `/posts?id=${safeReplyInfo.id}`,
+    `/posts?id=${postInfo.reply.id}`,
     {
       schema: postSchema,
       auth: loginStatusStore,
     },
   );
   if ("status" in response) {
+    replyPost.value = postInfo.reply.replyText;
     return;
   }
-  postContent.value = safeReplyInfo.postContent;
   replyPost.value = response;
 });
 
@@ -209,12 +180,17 @@ const markdownPostContent = ref<HTMLElement | null>(null);
 const postContentElement = ref<HTMLDivElement | null>(null);
 effect(
   async () =>
-    (markdownPostContent.value = await parseMarkdown(postContent.value, {
-      inline: reply,
-      images: !reply,
-      anyImageHost: settingsStore.anyImageHost,
-      loadProjectText: t("loadProjectEmbed"),
-    })),
+    (markdownPostContent.value = await parseMarkdown(
+      `${typeof replyPost.value === "string" ? replyPost.value : ""}${
+        postInfo.content
+      }`,
+      {
+        inline: reply,
+        images: !reply,
+        anyImageHost: settingsStore.anyImageHost,
+        loadProjectText: t("loadProjectEmbed"),
+      },
+    )),
 );
 effect(() => {
   if (!postContentElement.value || !markdownPostContent.value) {
@@ -233,7 +209,7 @@ const reload = () => location.reload();
   <Post
     :post="edited"
     :reply="reply"
-    v-if="edited && !relationshipStore.blockedUsers.has(username)"
+    v-if="edited && !relationshipStore.blockedUsers.has(postInfo.username)"
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
@@ -249,20 +225,20 @@ const reload = () => location.reload();
         : 'flex-col px-2 py-1'
     }`"
     v-else
-    v-if="!isDeleted && !relationshipStore.blockedUsers.has(username)"
+    v-if="!isDeleted && !relationshipStore.blockedUsers.has(postInfo.username)"
   >
     <div class="relative flex items-center gap-x-2">
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <RouterLink
-        v-if="!isItalicUser"
+        v-if="!postInfo.italic"
         class="whitespace-nowrap font-bold"
-        :to="`/users/${username}`"
+        :to="`/users/${postInfo.username}`"
       >
-        {{ username }}
+        {{ postInfo.username }}
       </RouterLink>
       <span
         class="inline-block text-green-400"
-        v-if="onlineListStore.online.includes(username) && !reply"
+        v-if="onlineListStore.online.includes(postInfo.username) && !reply"
       >
         <IconCircleFilled class="h-2 w-2" aria-hidden />
         <span class="sr-only">Online</span>
@@ -307,7 +283,9 @@ const reload = () => location.reload();
         </button>
         <button
           class="h-4 w-4"
-          @click="emit('reply', username, postContent, post.post_id)"
+          @click="
+            emit('reply', postInfo.username, postInfo.content, post.post_id)
+          "
         >
           <IconArrowForward aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>
@@ -315,7 +293,7 @@ const reload = () => location.reload();
       </div>
       <div
         :class="`visible w-full text-sm italic opacity-40 ${
-          !isItalicUser ? 'hidden w-auto group-hover:sm:inline-block' : ''
+          !postInfo.italic ? 'hidden w-auto group-hover:sm:inline-block' : ''
         }`"
         v-if="!reply"
       >
@@ -325,14 +303,17 @@ const reload = () => location.reload();
     </div>
     <div
       :class="`w-full text-sm italic opacity-40 sm:hidden ${
-        !isItalicUser ? 'inline-block w-auto' : ''
+        !postInfo.italic ? 'inline-block w-auto' : ''
       }`"
-      v-if="!reply && !isItalicUser"
+      v-if="!reply && !postInfo.italic"
     >
       {{ formatDate(post.t.e, locale) }}
       <span v-if="edited || post.edited_at">(edited)</span>
     </div>
-    <div class="overflow-hidden" v-if="replyPost && !reply && !editing">
+    <div
+      class="overflow-hidden"
+      v-if="replyPost && typeof replyPost !== 'string' && !reply && !editing"
+    >
       <Post :post="replyPost" reply />
     </div>
     <form v-if="editing" @submit="edit">
@@ -364,16 +345,16 @@ const reload = () => location.reload();
     <div :class="editing ? 'hidden' : ''">
       <div
         :class="`max-h-96 space-y-2 break-words [&_a]:text-link [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_blockquote]:opacity-40 [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
-          isItalicUser ? 'italic' : ''
+          postInfo.italic ? 'italic' : ''
         } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
         ref="postContentElement"
       ></div>
       <button
         class="mt-2 flex items-center gap-1 rounded-xl bg-accent px-2 py-1 text-accent-text"
         v-if="
-          postContent.endsWith('\u200c') &&
-          username === 'mybearworld' &&
-          !isBridged &&
+          postInfo.content.endsWith('\u200c') &&
+          postInfo.username === 'mybearworld' &&
+          !postInfo.bridged &&
           !reply
         "
         @click="reload"
