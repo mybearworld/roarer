@@ -114,11 +114,12 @@ const input = () => {
 };
 
 const keydown = (e: KeyboardEvent) => {
-  if (e.key === "Enter" && settingsStore.enterSends) {
-    if (!e.shiftKey) {
-      e.preventDefault();
-      post();
-    }
+  if (
+    (e.key === "Enter" && !e.shiftKey && settingsStore.enterSends) ||
+    (e.shiftKey && !settingsStore.enterSends)
+  ) {
+    e.preventDefault();
+    post();
   }
 };
 
