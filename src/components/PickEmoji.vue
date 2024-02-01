@@ -43,5 +43,5 @@ effect(() => {
 </script>
 
 <template>
-  <div ref="mainRef"></div>
+  <div ref="mainRef" class="emoji-picker"></div>
 </template>
