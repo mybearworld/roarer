@@ -157,8 +157,11 @@ const deleteAccount = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div>
-      <h2 class="text-lg font-bold">{{ t("usersSectionMe") }}</h2>
+    <div class="flex items-baseline gap-2">
+      <h2 class="inline-block text-lg font-bold">{{ t("usersSectionMe") }}</h2>
+      <RouterLink to="/settings/reportHistory" class="text-link underline">
+        {{ t("reportHistory") }}
+      </RouterLink>
     </div>
     <form class="contents" @submit="me">
       <label class="flex items-center gap-2">

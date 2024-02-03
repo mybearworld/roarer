@@ -188,4 +188,17 @@ export const en = {
     "Hide any message that mentions someone you've blocked.",
   blockedUsers:
     "You have currently blocked the following users. Click on any of them to open their profile. You can also unblock them from there.",
+  reportHistory: "Report history",
+  reportsLoading: "Loading reports...",
+  reportsFail: "Couldn't load reports: {status}",
+  reportHistoryPost: "Post",
+  reportHistoryReason: "Reason",
+  reportHistoryStatus: "Status",
+  reportHistoryDate: "Time",
+  reportHistoryDeletedPost: "Deleted post by {name}",
+  reportHistoryKnownPost: "Post by {name}",
+  reportHistoryUnknownPost: "Unknown post",
+  reportHistory_pending: "Pending",
+  reportHistory_action_taken: "Action taken",
+  reportHistory_no_action_taken: "No action taken",
 };
