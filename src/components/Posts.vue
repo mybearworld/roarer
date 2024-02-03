@@ -41,7 +41,7 @@ const showPosts = computed(() =>
     (post) =>
       !settingsStore.hideBlockedMentions ||
       ![...relationshipStore.blockedUsers].some((user) =>
-        post.p.includes(`@${user}`),
+        post.p.toLowerCase().includes(`@${user.toLowerCase()}`),
       ),
   ),
 );
