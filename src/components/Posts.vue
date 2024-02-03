@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import EnterPost from "./EnterPost.vue";
@@ -8,6 +8,8 @@ import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
+import { useRelationshipStore } from "../stores/relationship";
+import { useSettingsStore } from "../stores/settings";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/chatSchema";
 import { postSchema, APIPost } from "../lib/postSchema";
@@ -20,6 +22,8 @@ const { chat, inbox } = defineProps<{
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
+const relationshipStore = useRelationshipStore();
+const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
 const POSTS_PER_REQUESTS = 25;
@@ -31,6 +35,16 @@ const posts = ref<APIPost[]>([]);
 const gotPosts = ref(false);
 const newPostsAmount = ref(0);
 const stopShowingLoadMore = ref(false);
+
+const showPosts = computed(() =>
+  posts.value.filter(
+    (post) =>
+      !settingsStore.hideBlockedMentions ||
+      ![...relationshipStore.blockedUsers].some((user) =>
+        post.p.includes(`@${user}`),
+      ),
+  ),
+);
 
 const postsSchema = z.object({
   autoget: postSchema.array(),
@@ -87,8 +101,8 @@ const loadMore = async () => {
     newPostsAmount.value <= -25
       ? 0
       : newPostsAmount.value < 0
-      ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
-      : newPostsAmount.value % POSTS_PER_REQUESTS;
+        ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
+        : newPostsAmount.value % POSTS_PER_REQUESTS;
   const response = await getResponseFromAPIRequest(
     requestURL + `&page=${page}`,
     {
@@ -129,7 +143,7 @@ const loadMore = async () => {
     :inbox="inbox"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
-    v-for="post in posts"
+    v-for="post in showPosts"
   />
   <button
     type="button"

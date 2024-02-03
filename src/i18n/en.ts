@@ -184,5 +184,6 @@ export const en = {
   newChatMessageToast: "New message in {chat} from {username}",
   chatActionAlt: "Go to this chat to view the message.",
   emojiPicker: escape(JSON.stringify(emojiPicker)),
-  a: "{'{'}",
+  settingHideBlockedMentions:
+    "Hide any message that mentions someone you've blocked.",
 };

@@ -218,6 +218,12 @@ const deleteAccount = async () => {
         {{ t("settingEnterSends") }}
       </div>
     </label>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.hideBlockedMentions" />
+      <div>
+        {{ t("settingHideBlockedMentions") }}
+      </div>
+    </label>
     <div>
       <button
         type="button"

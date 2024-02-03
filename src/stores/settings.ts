@@ -6,6 +6,7 @@ import { themes } from "../lib/themes";
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
 const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
 const ENTER_SENDS_STORAGE = "roarer:enterSends";
+const HIDE_BLOCKED_MENTIONS_STORAGE = "roarer:hideBlockedMentions";
 const THEME_STORAGE = "roarer:theme";
 
 const COLOR_REGEX = /^#[0-9a-f]{6}$/i;
@@ -19,6 +20,9 @@ export const useSettingsStore = defineStore("settings", () => {
   );
   const enterSends = ref(
     ["true", null].includes(localStorage.getItem(ENTER_SENDS_STORAGE)),
+  );
+  const hideBlockedMentions = ref(
+    localStorage.getItem(HIDE_BLOCKED_MENTIONS_STORAGE) === "true",
   );
   const theme = ref<RoarerTheme>(themes.dark);
   const themeStorage = localStorage.getItem(THEME_STORAGE);
@@ -47,6 +51,12 @@ export const useSettingsStore = defineStore("settings", () => {
     );
   });
   effect(() => {
+    localStorage.setItem(
+      HIDE_BLOCKED_MENTIONS_STORAGE,
+      enterSends.value ? "true" : "false",
+    );
+  });
+  effect(() => {
     localStorage.setItem(THEME_STORAGE, JSON.stringify(theme.value));
   });
 
@@ -55,6 +65,7 @@ export const useSettingsStore = defineStore("settings", () => {
     filterSwears,
     enterSends,
     theme,
+    hideBlockedMentions,
     setTheme(newTheme: RoarerTheme) {
       theme.value = newTheme;
     },
