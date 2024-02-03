@@ -186,4 +186,6 @@ export const en = {
   emojiPicker: escape(JSON.stringify(emojiPicker)),
   settingHideBlockedMentions:
     "Hide any message that mentions someone you've blocked.",
+  blockedUsers:
+    "You have currently blocked the following users. Click on any of them to open their profile. You can also unblock them from there.",
 };

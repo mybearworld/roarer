@@ -112,8 +112,23 @@ const permissions = computed(() =>
         {{ t("userSearch") }}
       </button>
     </form>
-    <div class="mt-5 text-center text-xl italic" v-if="userProfile === null">
-      <Statistics />
+    <div class="mt-5 space-y-5" v-if="userProfile === null">
+      <div class="text-center text-xl italic">
+        <Statistics />
+      </div>
+      <div>
+        <p>{{ t("blockedUsers") }}</p>
+        <ul>
+          <li
+            class="list-inside list-disc"
+            v-for="user in relationshipStore.blockedUsers"
+          >
+            <RouterLink :to="`/users/${user}`" class="text-link underline">
+              {{ user }}
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div
