@@ -155,7 +155,7 @@ effect(async () => {
 });
 
 const report = async () => {
-  const reason = prompt("Reason:");
+  const reason = prompt(t("reportReason"));
   if (!reason) {
     return;
   }

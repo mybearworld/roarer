@@ -201,4 +201,8 @@ export const en = {
   reportHistory_pending: "Pending",
   reportHistory_action_taken: "Action taken",
   reportHistory_no_action_taken: "No action taken",
+  reportUser: "Report",
+  confirmUserReport:
+    "Are you absolutely sure? You are reporting for the following reason:\n{reason}\n\nUser:\n{username}",
+  reportHistoryUser: "User {username}",
 };

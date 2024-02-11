@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { profileSchema } from "./profileSchema";
 
 export const reportSchema = z.object({
   _id: z.string(),
@@ -9,6 +10,7 @@ export const reportSchema = z.object({
       isDeleted: z.boolean(),
       u: z.string(),
     })
+    .or(profileSchema)
     .nullable(),
   content_id: z.string(),
   reason: z.string(),

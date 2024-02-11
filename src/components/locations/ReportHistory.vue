@@ -44,14 +44,19 @@ const reportHistory = ref<APIReport[] | number | null>(null);
       <tbody>
         <tr v-for="report in reportHistory">
           <td>
-            <span v-if="report.content">{{
-              t(
-                report.content.isDeleted
-                  ? "reportHistoryDeletedPost"
-                  : "reportHistoryKnownPost",
-                { name: report.content.u },
-              )
-            }}</span>
+            <span v-if="report.content">
+              <span v-if="'lower_username' in report.content">
+                {{ t("reportHistoryUser", { username: report.content._id }) }}
+              </span>
+              <span v-else>{{
+                t(
+                  report.content.isDeleted
+                    ? "reportHistoryDeletedPost"
+                    : "reportHistoryKnownPost",
+                  { name: report.content.u },
+                )
+              }}</span></span
+            >
             <span v-else>{{ t("reportHistoryUnknownPost") }}</span>
           </td>
           <td>{{ report.reason }}<br />{{ report.comment }}</td>

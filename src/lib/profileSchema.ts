@@ -6,7 +6,6 @@ export const profileSchema = z.object({
   banned: z.boolean(),
   created: z.number(),
   flags: z.number(),
-  error: z.literal(false),
   last_seen: z.number().nullable(),
   lower_username: z.string(),
   lvl: z.number(),

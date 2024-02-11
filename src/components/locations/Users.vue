@@ -2,6 +2,7 @@
 import { computed, effect, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
+import { z } from "zod";
 import Statistics from "../Statistics.vue";
 import { profilePictures } from "../../assets/pfp";
 import meowy from "../../assets/pfp/22.svg";
@@ -9,10 +10,12 @@ import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
 import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
+import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useOnlinelistStore } from "../../stores/onlinelist";
 import { useRelationshipStore } from "../../stores/relationship";
 
+const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const onlinelistStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
@@ -90,6 +93,38 @@ const block = async () => {
       }),
     );
   }
+};
+
+const report = async () => {
+  if (!userProfile.value) {
+    return;
+  }
+  const reason = prompt(t("reportReason"));
+  if (!reason) {
+    return;
+  }
+  if (
+    !confirm(
+      t("confirmUserReport", { reason, username: userProfile.value._id }),
+    )
+  ) {
+    return;
+  }
+  try {
+    await cloudlinkStore.send(
+      {
+        cmd: "report",
+        val: {
+          type: 1,
+          id: userProfile.value._id,
+          reason,
+          comment: "Reported with Roarer.",
+        },
+      },
+      z.object({}), // for obvious reasons, reports aren't public and there's no response associated with them
+    );
+  } catch {}
+  alert(t("reportSuccess"));
 };
 
 const permissions = computed(() =>
@@ -199,6 +234,13 @@ const permissions = computed(() =>
             v-if="route.params.username !== loginStatusStore.username"
           >
             {{ t(isBlocked ? "unblock" : "block") }}
+          </button>
+          <button
+            type="button"
+            class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+            @click="report"
+          >
+            {{ t("reportUser") }}
           </button>
         </div>
       </div>
