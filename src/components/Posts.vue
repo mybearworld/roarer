@@ -141,6 +141,7 @@ const loadMore = async () => {
     :post="post"
     :key="post.post_id"
     :inbox="inbox"
+    :isChatOwner="chat && chat.owner === loginStatusStore.username"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
     v-for="post in showPosts"

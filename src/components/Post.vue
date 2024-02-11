@@ -35,11 +35,12 @@ const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
 const { t, locale } = useI18n();
 
-const { post, inbox, dontUpdate, reply } = defineProps<{
+const { post, inbox, dontUpdate, reply, isChatOwner } = defineProps<{
   post: APIPost;
   inbox?: boolean;
   dontUpdate?: boolean;
   reply?: boolean;
+  isChatOwner?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string, postId: string];
@@ -265,16 +266,22 @@ const reload = () => location.reload();
         class="visible absolute right-0 top-0 z-10 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
         v-if="!editing && !inbox && !reply"
       >
-        <template v-if="post.u === loginStatusStore.username">
-          <button class="h-4 w-4" @click="remove">
-            <IconTrash aria-hidden />
-            <span class="sr-only">{{ t("deletePost") }}</span>
-          </button>
-          <button class="h-4 w-4" @click="editing = true">
-            <IconEdit aria-hidden />
-            <span class="sr-only">{{ t("editPost") }}</span>
-          </button>
-        </template>
+        <button
+          class="h-4 w-4"
+          @click="remove"
+          v-if="isChatOwner || post.u === loginStatusStore.username"
+        >
+          <IconTrash aria-hidden />
+          <span class="sr-only">{{ t("deletePost") }}</span>
+        </button>
+        <button
+          class="h-4 w-4"
+          @click="editing = true"
+          v-if="post.u === loginStatusStore.username"
+        >
+          <IconEdit aria-hidden />
+          <span class="sr-only">{{ t("editPost") }}</span>
+        </button>
         <button
           class="h-4 w-4"
           @click="report"
