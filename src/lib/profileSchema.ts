@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-export type APIProfile = z.infer<typeof profileSchema>;
-export const profileSchema = z.object({
+export const profileSchemaNoError = z.object({
   _id: z.string(),
   banned: z.boolean(),
   created: z.number(),
@@ -14,6 +13,12 @@ export const profileSchema = z.object({
   quote: z.string(),
   uuid: z.string(),
 });
+export type APIProfile = z.infer<typeof profileSchema>;
+export const profileSchema = profileSchemaNoError.and(
+  z.object({
+    error: z.literal(false),
+  }),
+);
 export type APIProfileOrError = z.infer<typeof profileSchemaOrError>;
 export const profileSchemaOrError = profileSchema.or(
   z.object({
