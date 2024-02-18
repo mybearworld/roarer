@@ -47,6 +47,7 @@ export const discordEmoji = [
   "<:wow:952755842095132752>",
   "<:shakespeare:982709311702716457>",
   "<:sus:1199167654972375090>",
+  "<:zed:1208625071766114364>",
 ].map((emoji) => {
   const match = emoji.match(DISCORD_REGEX);
   if (!match) {
