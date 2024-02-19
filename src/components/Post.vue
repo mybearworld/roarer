@@ -241,7 +241,11 @@ const reload = () => location.reload();
       </RouterLink>
       <span
         class="inline-block text-green-400"
-        v-if="onlineListStore.online.includes(postInfo.username) && !reply"
+        v-if="
+          onlineListStore.online.includes(postInfo.username) &&
+          !reply &&
+          !postInfo.italic
+        "
       >
         <IconCircleFilled class="h-2 w-2" aria-hidden />
         <span class="sr-only">Online</span>
