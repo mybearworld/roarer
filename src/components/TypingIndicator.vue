@@ -17,9 +17,9 @@ const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 
-const typingUsers = ref(new Set<string>());
+const typingUsers = ref(new Map<string, number>());
 const shownTypingUsers = computed(() =>
-  [...typingUsers.value].filter(
+  [...typingUsers.value.keys()].filter(
     (item) =>
       item !== loginStatusStore.username &&
       (!chat || chat.members.includes(item)) &&
@@ -47,9 +47,13 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
   if (!safeTypingIndicator.success) {
     return;
   }
-  typingUsers.value.add(safeTypingIndicator.data.val.u);
+  const time = new Date().getTime();
+  typingUsers.value.set(safeTypingIndicator.data.val.u, time);
   typingUsers.value = typingUsers.value;
   setTimeout(() => {
+    if (typingUsers.value.get(safeTypingIndicator.data.val.u) !== time) {
+      return;
+    }
     typingUsers.value.delete(safeTypingIndicator.data.val.u);
     typingUsers.value = typingUsers.value;
   }, 3000);
@@ -61,7 +65,7 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
     <span v-if="shownTypingUsers.length">
       <IconKeyboard class="inline-block" aria-hidden />
       <span class="sr-only">{{ t("typingUsers") }}</span>
-      {{ [...shownTypingUsers.values()].join(", ") }}
+      {{ shownTypingUsers.join(", ") }}
     </span>
     <span class="italic opacity-40" v-else>
       <IconKeyboardOff class="inline-block" aria-hidden />
