@@ -205,4 +205,6 @@ export const en = {
   confirmUserReport:
     "Are you absolutely sure? You are reporting for the following reason:\n{reason}\n\nUser:\n{username}",
   reportHistoryUser: "User {username}",
+  april1st2024Cl3Message:
+    "> **Added by Roarer:**\n>Roarer has been updated not to use any of these commands. Your Roarer experience will not change. Thank you for using Roarer!\n\n",
 };

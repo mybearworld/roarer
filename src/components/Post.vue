@@ -16,8 +16,7 @@ import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
-import { bridgeBots } from "../lib/bridgeBots";
-import { getReply } from "../lib/getReply";
+import { addOntoPost } from "../lib/addOntoPost";
 import { formatDate } from "../lib/formatDate";
 import { parseMarkdown } from "../lib/parseMarkdown";
 import { getPostInfo } from "../lib/postInfo";
@@ -35,7 +34,13 @@ const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
 const { t, locale } = useI18n();
 
-const { post, inbox, dontUpdate, reply, isChatOwner } = defineProps<{
+const {
+  post: rawPost,
+  inbox,
+  dontUpdate,
+  reply,
+  isChatOwner,
+} = defineProps<{
   post: APIPost;
   inbox?: boolean;
   dontUpdate?: boolean;
@@ -46,6 +51,8 @@ const emit = defineEmits<{
   reply: [username: string, postContent: string, postId: string];
   delete: [];
 }>();
+
+const post = addOntoPost(rawPost);
 
 const postInfo = getPostInfo(post, { inbox });
 
