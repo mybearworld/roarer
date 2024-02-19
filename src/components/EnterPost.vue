@@ -15,7 +15,7 @@ import {
   autoResizeTextarea,
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
-import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -89,7 +89,7 @@ const reply = (username: string, content: string, postId: string) => {
 };
 
 const lastTypingIndicatorSent = ref<number | null>(null);
-const input = () => {
+const input = async () => {
   const currentDate = new Date().getTime();
   if (inputRef.value) {
     autoResizeTextarea(inputRef.value);
@@ -99,17 +99,17 @@ const input = () => {
     lastTypingIndicatorSent.value + 1500 < currentDate
   ) {
     lastTypingIndicatorSent.value = currentDate;
-    cloudlinkStore.cloudlink.send({
-      cmd: "direct",
-      listener: "typing_indicator",
-      val: {
-        cmd: "set_chat_state",
-        val: {
-          chatid: chat ? chat._id : "livechat",
-          state: chat ? 100 : 101,
-        },
+    const status = await apiRequest(
+      chat ? `/chats/${chat._id}/typing` : "/home/typing",
+      {
+        auth: loginStatusStore,
+        method: "POST",
       },
-    });
+    );
+    if (status.status !== 200) {
+      // intentionally not localized, this is a console error
+      console.error(`Failed to send typing indicator (${status})`);
+    }
   }
 };
 
