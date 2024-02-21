@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { effect } from "vue";
-import { useRoute, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import DMToasts from "./components/DMToasts.vue";
 import Login from "./components/Login.vue";
 import Navigation from "./components/Navigation.vue";
@@ -9,7 +9,6 @@ import { useSettingsStore, themeVariables } from "./stores/settings";
 
 const loginStatusStore = useLoginStatusStore();
 const settingsStore = useSettingsStore();
-const route = useRoute();
 effect(() => {
   themeVariables.forEach(([key, name]) => {
     document.documentElement.style.setProperty(name, settingsStore.theme[key]);
@@ -20,8 +19,8 @@ effect(() => {
 <template>
   <Login v-if="!loginStatusStore.username" />
   <div class="space-y-2" v-else>
-    <Navigation v-if="!('noLayout' in route.meta)" />
+    <Navigation />
     <RouterView />
-    <DMToasts v-if="!('noLayout' in route.meta)" />
+    <DMToasts />
   </div>
 </template>
