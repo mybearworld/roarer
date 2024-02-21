@@ -1,5 +1,4 @@
 import { z, ZodSchema } from "zod";
-import { api } from "./servers";
 
 export const apiRequest = async (
   url: string,
@@ -9,7 +8,7 @@ export const apiRequest = async (
   const token = auth?.token;
   const authHeaders: { username: string; token: string } | {} =
     username && token ? { username, token } : {};
-  const response = await fetch(`${api}${url}`, {
+  const response = await fetch(`${import.meta.env.VITE_API}${url}`, {
     method,
     headers: {
       ...authHeaders,
