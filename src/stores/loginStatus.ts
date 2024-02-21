@@ -1,4 +1,4 @@
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 const USERNAME_STORAGE = "roarer:username";
@@ -9,7 +9,7 @@ export const useLoginStatusStore = defineStore("loginStatus", () => {
     localStorage.getItem(USERNAME_STORAGE) ?? null,
   );
   const token = ref<string | null>(localStorage.getItem(TOKEN_STORAGE) ?? null);
-  const isLoggedIn = ref(false);
+  const isLoggedIn = computed(() => !!username);
 
   watch([username, token], (n) => {
     const [u, t] = n;

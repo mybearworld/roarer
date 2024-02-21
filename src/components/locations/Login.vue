@@ -42,7 +42,6 @@ const login = async (username: string, password: string) => {
     },
     logInSchema,
   );
-  loginStatusStore.isLoggedIn = true;
   relationshipStore.blockedUsers = new Set(
     response.payload.relationships
       .filter((relationship) => relationship.state === 2)
