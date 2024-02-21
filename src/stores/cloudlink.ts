@@ -3,9 +3,15 @@ import { defineStore } from "pinia";
 import { useI18n } from "vue-i18n";
 import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
+import { relationshipPacketSchema } from "../lib/relationshipSchema";
+import { loginSchema } from "../lib/loginSchema";
+import { useLoginStatusStore } from "./loginStatus";
+import { useRelationshipStore } from "./relationship";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
   const { t } = useI18n();
+  const loginStatusStore = useLoginStatusStore();
+  const relationshipStore = useRelationshipStore();
 
   const cloudlink = ref(
     new CloudlinkClient({
@@ -95,5 +101,63 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
     });
   };
 
-  return { cloudlink, send, lookFor };
+  const login = async (username: string, password: string) => {
+    const response = await send(
+      {
+        cmd: "authpswd",
+        val: { username: username, pswd: password },
+      },
+      loginSchema,
+    );
+    relationshipStore.blockedUsers = new Set(
+      response.payload.relationships
+        .filter((relationship) => relationship.state === 2)
+        .map((relationship) => relationship.username),
+    );
+    loginStatusStore.isLoggedIn = true;
+    return response;
+  };
+
+  if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
+    let nonNullCredentials: [string, string] = [
+      loginStatusStore.username,
+      loginStatusStore.token,
+    ];
+
+    const syntaxErrorSchema = z.object({
+      val: z.literal("E:101 | Syntax"),
+    });
+    cloudlink.value.on("statuscode", async (packet: unknown) => {
+      if (loginStatusStore.isLoggedIn) {
+        return;
+      }
+      if (syntaxErrorSchema.safeParse(packet).success) {
+        try {
+          await login(...nonNullCredentials);
+        } catch (e) {
+          if (!confirm(t("loginFail"))) {
+            loginStatusStore.username = null;
+            loginStatusStore.token = null;
+          }
+          location.reload();
+        }
+      }
+    });
+  }
+
+  lookFor(
+    relationshipPacketSchema,
+    (packet) => {
+      if (packet.val.payload.state === 0) {
+        relationshipStore.blockedUsers.delete(packet.val.payload.username);
+        relationshipStore.blockedUsers = relationshipStore.blockedUsers;
+      } else {
+        relationshipStore.blockedUsers.add(packet.val.payload.username);
+        relationshipStore.blockedUsers = relationshipStore.blockedUsers;
+      }
+    },
+    false,
+  );
+
+  return { cloudlink, send, lookFor, login };
 });

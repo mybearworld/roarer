@@ -2,27 +2,16 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { z } from "zod";
-import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useRelationshipStore } from "../../stores/relationship";
-import { individualRelationshipPacketSchema } from "../../lib/relationshipSchema";
+import { loginSchema } from "../../lib/loginSchema";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 const router = useRouter();
-
-const logInSchema = z.object({
-  mode: z.literal("auth"),
-  payload: z.object({
-    username: z.string(),
-    token: z.string(),
-    relationships: individualRelationshipPacketSchema.array(),
-  }),
-});
 
 const username = ref("");
 const password = ref("");
@@ -34,29 +23,13 @@ const resetFormFields = () => {
   password.value = "";
 };
 
-const login = async (username: string, password: string) => {
-  const response = await cloudlinkStore.send(
-    {
-      cmd: "authpswd",
-      val: { username: username, pswd: password },
-    },
-    logInSchema,
-  );
-  relationshipStore.blockedUsers = new Set(
-    response.payload.relationships
-      .filter((relationship) => relationship.state === 2)
-      .map((relationship) => relationship.username),
-  );
-  return response;
-};
-
 const loginEvent = async (e: Event) => {
   e.preventDefault();
   loading.value = true;
   message.value = "";
   let data;
   try {
-    data = await login(username.value, password.value);
+    data = await cloudlinkStore.login(username.value, password.value);
   } catch (e) {
     message.value = e as string;
     loading.value = false;
@@ -80,7 +53,7 @@ const signUp = async () => {
         cmd: "gen_account",
         val: { username: username.value, pswd: password.value },
       },
-      logInSchema,
+      loginSchema,
     );
   } catch (e) {
     message.value = e as string;
@@ -92,33 +65,6 @@ const signUp = async () => {
   loading.value = false;
   resetFormFields();
 };
-
-if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
-  let nonNullCredentials: [string, string] = [
-    loginStatusStore.username,
-    loginStatusStore.token,
-  ];
-
-  const syntaxErrorSchema = z.object({
-    val: z.literal("E:101 | Syntax"),
-  });
-  cloudlinkStore.cloudlink.on("statuscode", async (packet: unknown) => {
-    if (loginStatusStore.isLoggedIn) {
-      return;
-    }
-    if (syntaxErrorSchema.safeParse(packet).success) {
-      try {
-        await login(...nonNullCredentials);
-      } catch (e) {
-        if (!confirm(t("loginFail"))) {
-          loginStatusStore.username = null;
-          loginStatusStore.token = null;
-        }
-        location.reload();
-      }
-    }
-  });
-}
 </script>
 
 <template>

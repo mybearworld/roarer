@@ -6,20 +6,8 @@ import { relationshipPacketSchema } from "../lib/relationshipSchema";
 export const useRelationshipStore = defineStore("relationshipStore", () => {
   const blockedUsers = ref(new Set<string>());
 
-  const cloudlinkStore = useCloudlinkStore();
-  cloudlinkStore.lookFor(
-    relationshipPacketSchema,
-    (packet) => {
-      if (packet.val.payload.state === 0) {
-        blockedUsers.value.delete(packet.val.payload.username);
-        blockedUsers.value = blockedUsers.value;
-      } else {
-        blockedUsers.value.add(packet.val.payload.username);
-        blockedUsers.value = blockedUsers.value;
-      }
-    },
-    false,
-  );
+  // see cloudlink.ts for the logic of adding and removing blocked users, it
+  // can't be here because that would lead to circular dependencies
 
   return { blockedUsers };
 });
