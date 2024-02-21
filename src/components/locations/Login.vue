@@ -6,12 +6,19 @@ import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useRelationshipStore } from "../../stores/relationship";
 import { loginSchema } from "../../lib/loginSchema";
+import { effect } from "vue";
 
 const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 const router = useRouter();
+
+effect(() => {
+  if (loginStatusStore.isLoggedIn) {
+    router.push("/home");
+  }
+});
 
 const username = ref("");
 const password = ref("");
