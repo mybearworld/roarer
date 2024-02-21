@@ -211,11 +211,11 @@ export const en = {
   loadingPost: "Loading post...",
   backToHome: "Back to home",
   logIn: "Sign in",
-  loginRequiredHeader: "This page is only accessible with a Meower account.",
+  loginRequiredHeader: "Log in to use social features of Roarer",
   loginRequiredExplanation:
     "You can look around on Meower and use Roarer without logging in, but in order to use most social features, you'll have to log in.",
   loginRequiredCta:
-    "If you want to create an account or log into your existing one, click here:",
+    "If you want to create an account, you can do that below. This will create an account on Meower. If you already have an acconut on Meower, you don't need to do that - just log in with your preexisting account.",
   loginRequiredBack: {
     start: "If not, you can ",
     link: "go back to home",

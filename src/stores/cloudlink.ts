@@ -114,6 +114,8 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
         .filter((relationship) => relationship.state === 2)
         .map((relationship) => relationship.username),
     );
+    loginStatusStore.username = response.payload.username;
+    loginStatusStore.token = response.payload.token;
     loginStatusStore.isLoggedIn = true;
     return response;
   };
