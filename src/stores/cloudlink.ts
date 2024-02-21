@@ -14,12 +14,6 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       log: false,
     }),
   );
-  const interval = setInterval(() => {
-    if (cloudlink.value.status === 1) {
-      clearInterval(interval);
-      cloudlink.value.send({ cmd: "direct", val: "meower" });
-    }
-  });
   setInterval(() => {
     if (cloudlink.value.status === 1) {
       cloudlink.value.send({
