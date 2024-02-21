@@ -20,7 +20,7 @@ const signOut = async () => {
   <button
     class="inline-block rounded-xl bg-accent px-2 py-1 text-sm text-accent-text"
     v-on:click="signOut"
-    v-if="loginStatusStore.username"
+    v-if="loginStatusStore.isLoggedIn"
   >
     {{ t("signOut") }}
     <div class="text-xs font-bold">@{{ loginStatusStore.username }}</div>

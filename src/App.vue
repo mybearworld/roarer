@@ -22,7 +22,7 @@ effect(() => {
   <div class="flex flex-col gap-2">
     <Navigation />
     <LoginRequired
-      v-if="!loginStatusStore.username && 'requiresLogin' in route.meta"
+      v-if="!loginStatusStore.isLoggedIn && 'requiresLogin' in route.meta"
     />
     <RouterView v-else />
     <DMToasts />
