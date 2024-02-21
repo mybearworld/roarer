@@ -7,12 +7,14 @@ import {
   IconBuildingBridge,
   IconCircleFilled,
   IconEdit,
+  IconLink,
   IconSailboat,
   IconReload,
   IconTrash,
   IconWebhook,
 } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import { z } from "zod";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
@@ -46,6 +48,7 @@ const {
   dontUpdate?: boolean;
   reply?: boolean;
   isChatOwner?: boolean;
+  hideControls?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string, postId: string];
@@ -275,8 +278,14 @@ const reload = () => location.reload();
       </span>
       <div
         class="visible absolute right-0 top-0 z-10 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
-        v-if="!editing && !inbox && !reply"
+        v-if="!editing && !inbox && !reply && !hideControls"
       >
+        <button class="h-4 w-4" v-if="post.post_origin === 'home'">
+          <RouterLink :to="`/posts/${post.post_id}`">
+            <IconLink aria-hidden />
+            <span class="sr-only">{{ t("deletePost") }}</span>
+          </RouterLink>
+        </button>
         <button
           class="h-4 w-4"
           @click="remove"
@@ -313,7 +322,9 @@ const reload = () => location.reload();
       </div>
       <div
         :class="`visible w-full text-sm italic opacity-40 ${
-          !postInfo.italic ? 'hidden w-auto group-hover:sm:inline-block' : ''
+          !postInfo.italic && !hideControls
+            ? 'hidden w-auto group-hover:sm:inline-block'
+            : ''
         }`"
         v-if="!reply"
       >
@@ -325,7 +336,7 @@ const reload = () => location.reload();
       :class="`w-full text-sm italic opacity-40 sm:hidden ${
         !postInfo.italic ? 'inline-block w-auto' : ''
       }`"
-      v-if="!reply && !postInfo.italic"
+      v-if="!reply && !postInfo.italic && !hideControls"
     >
       {{ formatDate(post.t.e, locale) }}
       <span v-if="edited || post.edited_at">(edited)</span>

@@ -207,4 +207,7 @@ export const en = {
   reportHistoryUser: "User {username}",
   april1st2024Cl3Message:
     "> **Added by Roarer:**\n>Roarer has been updated not to use any of these commands. Your Roarer experience will not change. Thank you for using Roarer!\n\n",
+  getPostFail: "Failed to get post: {status}",
+  loadingPost: "Loading post...",
+  backToHome: "Back to home"
 };

@@ -9,6 +9,7 @@ import Groups from "./components/locations/Groups.vue";
 import Home from "./components/locations/Home.vue";
 import Inbox from "./components/locations/Inbox.vue";
 import NotFound from "./components/locations/NotFound.vue";
+import PostShare from "./components/locations/PostShare.vue";
 import ReportHistory from "./components/locations/ReportHistory.vue";
 import Settings from "./components/locations/Settings.vue";
 import ThemeSettings from "./components/locations/ThemeSettings.vue";
@@ -37,6 +38,7 @@ const router = createRouter({
     { path: "/users", component: Users },
     { path: "/users/:username", component: Users },
     { path: "/users/:username/dm", component: Chat },
+    { path: "/posts/:post", component: PostShare },
     { path: "/:path(.*)", component: NotFound },
   ],
 });
