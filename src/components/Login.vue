@@ -10,6 +10,7 @@ const signOut = async () => {
   if (!confirm(t("loginSignoutConfirm"))) {
     return;
   }
+  loginStatusStore.isLoggedIn = false;
   loginStatusStore.username = null;
   loginStatusStore.token = null;
   location.reload();
