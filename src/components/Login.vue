@@ -28,6 +28,7 @@ const signOut = async () => {
   <RouterLink
     class="inline-block rounded-xl bg-accent px-2 py-1 text-sm text-accent-text"
     to="/login"
+    v-else
   >
     {{ t("logIn") }}
   </RouterLink>
