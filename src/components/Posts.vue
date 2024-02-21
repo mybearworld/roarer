@@ -135,7 +135,11 @@ const loadMore = async () => {
     </RouterLink>
   </div>
   <OnlineList :chat="chat" v-if="!inbox" />
-  <EnterPost ref="enterPost" :chat="chat" v-if="!inbox" />
+  <EnterPost
+    ref="enterPost"
+    :chat="chat"
+    v-if="!inbox && loginStatusStore.isLoggedIn"
+  />
   <TypingIndicator :chat="chat" v-if="!inbox" />
   <Post
     :post="post"

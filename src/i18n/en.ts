@@ -209,5 +209,16 @@ export const en = {
     "> **Added by Roarer:**\n>Roarer has been updated not to use any of these commands. Your Roarer experience will not change. Thank you for using Roarer!\n\n",
   getPostFail: "Failed to get post: {status}",
   loadingPost: "Loading post...",
-  backToHome: "Back to home"
+  backToHome: "Back to home",
+  logIn: "Sign in",
+  loginRequiredHeader: "This page is only accessible with a Meower account.",
+  loginRequiredExplanation:
+    "You can look around on Meower and use Roarer without logging in, but in order to use most social features, you'll have to log in.",
+  loginRequiredCta:
+    "If you want to create an account or log into your existing one, click here:",
+  loginRequiredBack: {
+    start: "If not, you can ",
+    link: "go back to home",
+    end: ". You'll always be able to log in via the link at the top of the page.",
+  },
 };

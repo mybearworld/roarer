@@ -305,7 +305,9 @@ const reload = () => location.reload();
         <button
           class="h-4 w-4"
           @click="report"
-          v-if="post.u !== loginStatusStore.username"
+          v-if="
+            post.u !== loginStatusStore.username && loginStatusStore.isLoggedIn
+          "
         >
           <IconAlertTriangle aria-hidden />
           <span class="sr-only">{{ t("reportPost") }}</span>
@@ -315,6 +317,7 @@ const reload = () => location.reload();
           @click="
             emit('reply', postInfo.username, postInfo.content, post.post_id)
           "
+          v-if="loginStatusStore.isLoggedIn"
         >
           <IconArrowForward aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>

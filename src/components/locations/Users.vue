@@ -151,7 +151,7 @@ const permissions = computed(() =>
       <div class="text-center text-xl italic">
         <Statistics />
       </div>
-      <div>
+      <div v-if="loginStatusStore.isLoggedIn">
         <p>{{ t("blockedUsers") }}</p>
         <ul>
           <li
@@ -219,7 +219,7 @@ const permissions = computed(() =>
           </li>
         </ul>
         <div class="mt-2"></div>
-        <div class="space-x-2">
+        <div class="space-x-2" v-if="loginStatusStore.isLoggedIn">
           <RouterLink
             :to="`/users/${userProfile._id}/dm`"
             class="rounded-xl bg-accent px-2 py-1 text-accent-text"

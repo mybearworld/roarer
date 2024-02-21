@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { effect } from "vue";
-import { RouterView } from "vue-router";
+import { useRoute, RouterView } from "vue-router";
 import DMToasts from "./components/DMToasts.vue";
-import Login from "./components/Login.vue";
 import Navigation from "./components/Navigation.vue";
+import LoginRequired from "./components/locations/LoginRequired.vue";
 import { useLoginStatusStore } from "./stores/loginStatus";
 import { useSettingsStore, themeVariables } from "./stores/settings";
 
 const loginStatusStore = useLoginStatusStore();
 const settingsStore = useSettingsStore();
+const route = useRoute();
+
 effect(() => {
   themeVariables.forEach(([key, name]) => {
     document.documentElement.style.setProperty(name, settingsStore.theme[key]);
@@ -17,10 +19,12 @@ effect(() => {
 </script>
 
 <template>
-  <Login v-if="!loginStatusStore.username" />
-  <div class="space-y-2" v-else>
+  <div class="flex flex-col gap-2">
     <Navigation />
-    <RouterView />
+    <LoginRequired
+      v-if="!loginStatusStore.username && 'requiresLogin' in route.meta"
+    />
+    <RouterView v-else />
     <DMToasts />
   </div>
 </template>

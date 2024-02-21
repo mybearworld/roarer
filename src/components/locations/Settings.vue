@@ -157,48 +157,52 @@ const deleteAccount = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex items-baseline gap-2">
-      <h2 class="inline-block text-lg font-bold">{{ t("usersSectionMe") }}</h2>
-      <RouterLink to="/settings/reportHistory" class="text-link underline">
-        {{ t("reportHistory") }}
-      </RouterLink>
-    </div>
-    <form class="contents" @submit="me">
-      <label class="flex items-center gap-2">
-        {{ t("usersMeQuote") }}
-        <input
-          type="text"
-          class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
-          v-model="quote"
-        />
-      </label>
-      <label>
-        {{ t("usersMePfp") }}
-        <div class="flex flex-wrap gap-2">
-          <button
-            class="rounded-xl bg-accent p-2 aria-selected:border-2 aria-selected:border-green-500"
-            :aria-selected="profilePicture === key"
-            type="button"
-            :title="`Profile picture #${key}`"
-            @click="profilePicture = key"
-            v-for="[key, value] of profilePictures"
-          >
-            <img
-              width="70"
-              height="70"
-              :src="value"
-              :alt="t('profilePictureAlt', { n: key })"
-            />
-          </button>
-        </div>
-      </label>
-      <button
-        class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-        type="submit"
-      >
-        {{ t("updateProfile") }}
-      </button>
-    </form>
+    <template v-if="loginStatusStore.isLoggedIn">
+      <div class="flex items-baseline gap-2">
+        <h2 class="inline-block text-lg font-bold">
+          {{ t("usersSectionMe") }}
+        </h2>
+        <RouterLink to="/settings/reportHistory" class="text-link underline">
+          {{ t("reportHistory") }}
+        </RouterLink>
+      </div>
+      <form class="contents" @submit="me">
+        <label class="flex items-center gap-2">
+          {{ t("usersMeQuote") }}
+          <input
+            type="text"
+            class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+            v-model="quote"
+          />
+        </label>
+        <label>
+          {{ t("usersMePfp") }}
+          <div class="flex flex-wrap gap-2">
+            <button
+              class="rounded-xl bg-accent p-2 aria-selected:border-2 aria-selected:border-green-500"
+              :aria-selected="profilePicture === key"
+              type="button"
+              :title="`Profile picture #${key}`"
+              @click="profilePicture = key"
+              v-for="[key, value] of profilePictures"
+            >
+              <img
+                width="70"
+                height="70"
+                :src="value"
+                :alt="t('profilePictureAlt', { n: key })"
+              />
+            </button>
+          </div>
+        </label>
+        <button
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          type="submit"
+        >
+          {{ t("updateProfile") }}
+        </button>
+      </form>
+    </template>
     <h2 class="text-lg font-bold">{{ t("roarer") }}</h2>
     <label class="flex items-baseline gap-2">
       <input type="checkbox" v-model="settingsStore.anyImageHost" />
@@ -215,13 +219,13 @@ const deleteAccount = async () => {
         {{ t("settingFilterSwears") }}
       </div>
     </label>
-    <label class="flex items-baseline gap-2">
+    <label class="flex items-baseline gap-2" v-if="loginStatusStore.isLoggedIn">
       <input type="checkbox" v-model="settingsStore.enterSends" />
       <div>
         {{ t("settingEnterSends") }}
       </div>
     </label>
-    <label class="flex items-baseline gap-2">
+    <label class="flex items-baseline gap-2" v-if="loginStatusStore.isLoggedIn">
       <input type="checkbox" v-model="settingsStore.hideBlockedMentions" />
       <div>
         {{ t("settingHideBlockedMentions") }}
@@ -237,33 +241,35 @@ const deleteAccount = async () => {
         </RouterLink>
       </button>
     </div>
-    <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
-    <div>
-      <button
-        class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-        @click="changePassword"
-      >
-        {{ t("changePassword") }}
-      </button>
-    </div>
-    <div>
-      <button
-        class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-        @click="revokeTokens"
-      >
-        {{ t("revokeTokens") }}
-      </button>
-      {{ t("revokeTokensInfo") }}
-    </div>
-    <div>
-      <button
-        class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-        @click="deleteAccount"
-      >
-        {{ t("deleteAccount") }}
-      </button>
-      {{ t("deleteAccountInfo") }}
-    </div>
+    <template v-if="loginStatusStore.isLoggedIn">
+      <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
+      <div>
+        <button
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          @click="changePassword"
+        >
+          {{ t("changePassword") }}
+        </button>
+      </div>
+      <div>
+        <button
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          @click="revokeTokens"
+        >
+          {{ t("revokeTokens") }}
+        </button>
+        {{ t("revokeTokensInfo") }}
+      </div>
+      <div>
+        <button
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          @click="deleteAccount"
+        >
+          {{ t("deleteAccount") }}
+        </button>
+        {{ t("deleteAccountInfo") }}
+      </div>
+    </template>
     <h2 class="text-lg font-bold">{{ t("language") }}</h2>
     <LanguageSwitcher />
     <p>
