@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { z } from "zod";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { useCloudlinkStore } from "../../stores/cloudlink";
@@ -12,6 +13,7 @@ const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
+const router = useRouter();
 
 const logInSchema = z.object({
   mode: z.literal("auth"),
@@ -65,6 +67,7 @@ const loginEvent = async (e: Event) => {
   loginStatusStore.token = data.payload.token;
   loading.value = false;
   resetFormFields();
+  router.push("/home");
   return;
 };
 
