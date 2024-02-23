@@ -59,3 +59,31 @@ export const discordEmoji = [
 });
 
 export type Emoji = (typeof discordEmoji)[number];
+
+export const discordStickers = [
+  {
+    url: "https://i.ibb.co/tYw2wy5/toasty.png",
+    name: "toasty",
+  },
+  {
+    url: "https://i.ibb.co/LxWpX0H/holy.png",
+    name: "holy",
+  },
+  {
+    url: "https://i.ibb.co/JqbvChz/wagoogus.png",
+    name: "wagoogus",
+  },
+  {
+    url: "https://i.ibb.co/Bs13n70/toasty-stare.png",
+    name: "toasty stare",
+  },
+  {
+    url: "https://i.ibb.co/34SWHyN/screwyou.png",
+    name: "screwyou",
+  },
+] satisfies DiscordSticker[];
+
+export type DiscordSticker = {
+  url: string;
+  name: string;
+};

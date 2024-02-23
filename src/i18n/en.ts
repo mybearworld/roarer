@@ -224,4 +224,6 @@ export const en = {
   themeColorScheme: "Color scheme",
   themeColorSchemeDark: "Dark",
   themeColorSchemeLight: "Light",
+  emojiPickerTabEmoji: "Emoji",
+  emojiPickerTabStickers: "Stickers",
 };

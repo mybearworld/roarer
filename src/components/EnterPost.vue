@@ -16,6 +16,7 @@ import {
   resetTextareaSize,
 } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
+import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -132,6 +133,14 @@ const addEmoji = (emoji: EmojiClickEventDetail) => {
   autoResizeTextarea(inputRef.value);
 };
 
+const postSticker = (sticker: DiscordSticker) => {
+  if (!inputRef.value) {
+    return;
+  }
+  postContent.value += ` [(sticker) ${sticker.name}: ${sticker.url}]`;
+  autoResizeTextarea(inputRef.value);
+};
+
 defineExpose({ reply });
 </script>
 
@@ -155,7 +164,7 @@ defineExpose({ reply });
         <PopoverContent
           class="z-20 mt-2 rounded-lg bg-accent px-2 py-1 text-accent-text shadow-lg"
         >
-          <PickEmoji @emoji="addEmoji" />
+          <PickEmoji @emoji="addEmoji" @sticker="postSticker" />
         </PopoverContent>
       </PopoverPortal>
     </PopoverRoot>

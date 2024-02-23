@@ -104,6 +104,12 @@ export const parseMarkdown = async (
   if (buttons.childElementCount) {
     linkifiedDocument.body.append(buttons);
   }
+  [...linkifiedDocument.querySelectorAll("img")].forEach((element) => {
+    if (element.alt.startsWith("(sticker) ")) {
+      element.alt = element.alt.replace("(sticker) ", "");
+      element.classList.add("rounded-xl");
+    }
+  });
   [...linkifiedDocument.querySelectorAll("img")].forEach(async (element) => {
     let request;
     try {
