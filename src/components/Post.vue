@@ -348,7 +348,7 @@ const reload = () => location.reload();
     >
       <Post :post="replyPost" reply />
     </div>
-    <form v-if="editing" @submit="edit">
+    <form class="mt-2" v-if="editing" @submit="edit">
       <textarea
         :class="`mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 ${
           settingsStore.theme.roarer_postStyle === 'filled'
