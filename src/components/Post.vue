@@ -228,9 +228,7 @@ const reload = () => location.reload();
   <div
     :class="`group flex rounded-xl ${
       settingsStore.theme.roarer_postStyle === 'filled'
-        ? editing
-          ? ''
-          : 'bg-accent text-accent-text'
+        ? 'bg-accent text-accent-text'
         : 'border-2 border-accent bg-transparent'
     } ${
       reply
@@ -352,7 +350,11 @@ const reload = () => location.reload();
     </div>
     <form v-if="editing" @submit="edit">
       <textarea
-        class="mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+        :class="`mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 ${
+          settingsStore.theme.roarer_postStyle === 'filled'
+            ? 'border-background'
+            : 'border-accent'
+        }`"
         type="text"
         rows="1"
         :value="post.unfiltered_p ?? post.p"
@@ -363,12 +365,20 @@ const reload = () => location.reload();
       <div class="space-x-2">
         <button
           type="submit"
-          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          :class="`rounded-xl px-2 py-1 ${
+            settingsStore.theme.roarer_postStyle === 'filled'
+              ? 'bg-background text-text'
+              : 'bg-accent text-accent-text'
+          }`"
         >
           {{ t("editPost") }}
         </button>
         <button
-          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          :class="`rounded-xl px-2 py-1 ${
+            settingsStore.theme.roarer_postStyle === 'filled'
+              ? 'bg-background text-text'
+              : 'bg-accent text-accent-text'
+          }`"
           type="button"
           @click="editing = false"
         >
@@ -384,7 +394,11 @@ const reload = () => location.reload();
         ref="postContentElement"
       ></div>
       <button
-        class="mt-2 flex items-center gap-1 rounded-xl bg-accent px-2 py-1 text-accent-text"
+        :class="`mt-2 flex items-center gap-1 rounded-xl px-2 py-1 ${
+          settingsStore.theme.roarer_postStyle === 'filled'
+            ? 'bg-background text-text'
+            : 'bg-accent text-accent-text'
+        }`"
         v-if="
           postInfo.content.endsWith('\u200c') &&
           postInfo.username === 'mybearworld' &&
