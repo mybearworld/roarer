@@ -66,7 +66,7 @@ cloudlinkStore.lookFor(
 <template>
   <ToastProvider label="DM">
     <ToastRoot
-      class="ToastRoot flex gap-2 rounded-xl bg-slate-800 px-2 py-1 text-accent-text shadow-lg"
+      class="ToastRoot z-20 flex gap-2 rounded-xl bg-slate-800 px-2 py-1 text-accent-text shadow-lg"
       :delay="5000"
       @update:open="
         (open: boolean) => {
