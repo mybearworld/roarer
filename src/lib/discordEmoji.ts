@@ -49,6 +49,7 @@ export const discordEmoji = [
   "<:sus:1199167654972375090>",
   "<:stretchcat:1210253516417798194>",
   "<:zed:1208625071766114364>",
+  "<:fortune:1210379302328078356>",
 ].map((emoji) => {
   const match = emoji.match(DISCORD_REGEX);
   if (!match) {
