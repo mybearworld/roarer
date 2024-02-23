@@ -46,6 +46,7 @@ const updateTheme = () => {
     ...safeTheme.data,
     roarer_link: safeTheme.data.roarer_link ?? safeTheme.data.orange,
     roarer_postStyle: safeTheme.data.roarer_postStyle ?? "bordered",
+    roarer_colorScheme: "dark",
   };
 };
 
@@ -108,6 +109,27 @@ const colorSettings = [
           name="postStyleRadio"
         />
         {{ t("themePostStyleFilled") }}
+      </label>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="font-bold">{{ t("themeColorScheme") }}</span>
+      <label>
+        <input
+          type="radio"
+          :checked="settingsStore.theme.roarer_colorScheme === 'dark'"
+          @input="settingsStore.theme.roarer_colorScheme = 'dark'"
+          name="darkThemeRadio"
+        />
+        {{ t("themeColorSchemeDark") }}
+      </label>
+      <label>
+        <input
+          type="radio"
+          :checked="settingsStore.theme.roarer_colorScheme === 'light'"
+          @input="settingsStore.theme.roarer_colorScheme = 'light'"
+          name="darkThemeRadio"
+        />
+        {{ t("themeColorSchemeLight") }}
       </label>
     </div>
     <div>

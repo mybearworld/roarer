@@ -221,4 +221,7 @@ export const en = {
     link: "go back to home",
     end: ". You'll always be able to log in via the link at the top of the page.",
   },
+  themeColorScheme: "Color scheme",
+  themeColorSchemeDark: "Dark",
+  themeColorSchemeLight: "Light",
 };

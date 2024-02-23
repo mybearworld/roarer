@@ -9,6 +9,7 @@ export const themes = {
     foregroundOrange: "#0f172a",
     roarer_link: "#0369a1",
     roarer_postStyle: "filled",
+    roarer_colorScheme: "light",
   },
   dark: {
     v: 1,
@@ -18,6 +19,7 @@ export const themes = {
     foregroundOrange: "#e2e8f0",
     roarer_link: "#38bdf8",
     roarer_postStyle: "filled",
+    roarer_colorScheme: "dark",
   },
   stone: {
     v: 1,
@@ -27,6 +29,7 @@ export const themes = {
     foregroundOrange: "#e7e5e4",
     roarer_link: "#38bdf8",
     roarer_postStyle: "filled",
+    roarer_colorScheme: "dark",
   },
   meower: {
     v: 1,
@@ -36,5 +39,6 @@ export const themes = {
     foregroundOrange: "#181818",
     roarer_link: "#e48b26",
     roarer_postStyle: "bordered",
+    roarer_colorScheme: "dark",
   },
 } satisfies { [k in string]: RoarerTheme };

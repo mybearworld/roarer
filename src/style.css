@@ -8,6 +8,10 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: var(---color-scheme);
+  }
+
   .ToastRoot {
     transform: translateX(var(--radix-toast-swipe-move-x, 0));
     transition: transform 200ms ease-out;

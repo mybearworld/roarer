@@ -86,6 +86,12 @@ const roarerSpecificSettingsSchema = z.object(
         invalid_type_error: "invalidThemePostStyleType",
       })
       .or(z.literal("filled")),
+    roarer_colorScheme: z
+      .literal("dark", {
+        invalid_type_error: "invalidThemeIsDark",
+      })
+      .or(z.literal("light"))
+      .default("dark"),
   },
   {
     invalid_type_error: "invalidThemeRoarerType",
@@ -112,4 +118,5 @@ export const themeVariables = [
   ["foreground", "---text"],
   ["foregroundOrange", "---button-text"],
   ["roarer_link", "---link"],
+  ["roarer_colorScheme", "---color-scheme"],
 ] as const;
