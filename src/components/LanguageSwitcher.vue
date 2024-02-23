@@ -20,6 +20,9 @@ effect(() => {
       v-for="locale of availableLocales"
     >
       {{ getLocaleMessage(locale).languageName }}
+      <span v-if="locale !== 'en'">
+        ({{ getLocaleMessage(locale).percentageDone }})
+      </span>
     </option>
   </select>
 </template>
