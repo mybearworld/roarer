@@ -200,11 +200,7 @@ const reload = () => location.reload();
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
-    :class="`group flex rounded-xl ${
-      settingsStore.theme.roarer_postStyle === 'filled'
-        ? 'bg-accent text-accent-text'
-        : 'border-2 border-accent bg-transparent'
-    } ${
+    :class="`group flex rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
       reply
         ? 'gap-2 border-none italic text-text opacity-40'
         : 'flex-col px-2 py-1'
@@ -322,11 +318,7 @@ const reload = () => location.reload();
     </div>
     <form class="mt-2" v-if="editing" @submit="edit">
       <textarea
-        :class="`mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 ${
-          settingsStore.theme.roarer_postStyle === 'filled'
-            ? 'border-background'
-            : 'border-accent'
-        }`"
+        class="mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 filled:border-background bordered:border-accent"
         type="text"
         rows="1"
         :value="post.unfiltered_p ?? post.p"
@@ -337,20 +329,12 @@ const reload = () => location.reload();
       <div class="space-x-2">
         <button
           type="submit"
-          :class="`rounded-xl px-2 py-1 ${
-            settingsStore.theme.roarer_postStyle === 'filled'
-              ? 'bg-background text-text'
-              : 'bg-accent text-accent-text'
-          }`"
+          class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
         >
           {{ t("editPost") }}
         </button>
         <button
-          :class="`rounded-xl px-2 py-1 ${
-            settingsStore.theme.roarer_postStyle === 'filled'
-              ? 'bg-background text-text'
-              : 'bg-accent text-accent-text'
-          }`"
+          class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
           type="button"
           @click="editing = false"
         >
@@ -373,11 +357,7 @@ const reload = () => location.reload();
         />
       </div>
       <button
-        :class="`mt-2 flex items-center gap-1 rounded-xl px-2 py-1 ${
-          settingsStore.theme.roarer_postStyle === 'filled'
-            ? 'bg-background text-text'
-            : 'bg-accent text-accent-text'
-        }`"
+        class="mt-2 flex items-center gap-1 rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
         v-if="
           postInfo.content.endsWith('\u200c') &&
           postInfo.username === 'mybearworld' &&
