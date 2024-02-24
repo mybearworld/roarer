@@ -24,77 +24,18 @@ const markdown = markdownit({
   },
 });
 
-export const parseMarkdown = async (
-  md: string,
-  { inline = false, images = true },
-) => {
-  const settingsStore = useSettingsStore();
+// export const parseMarkdown = async (
+//   md: string,
+//   { inline = false, images = true },
+// ) => {
+//   const settingsStore = useSettingsStore();
 
-  const html = toHTML(md, inline);
-  const domParser = new DOMParser();
-  const postDocument = domParser.parseFromString(html, "text/html");
-  postDocument.querySelectorAll("img").forEach((img) => {
-    if (
-      !images ||
-      (!settingsStore.anyImageHost &&
-        !hostWhitelist.some((host) => img.src.startsWith(host)))
-    ) {
-      const span = document.createElement("span");
-      span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
-      img.replaceWith(span);
-      return;
-    }
-    if (img.dataset.original && !img.dataset.original.startsWith("<")) {
-      const clonedImg = img.cloneNode();
-      postDocument.body.append(clonedImg);
-      img.remove();
-    } else {
-      img.classList.add("inline-block");
-    }
-  });
-  const sanitizedHTML = postDocument.body.innerHTML;
-  // using the built in linkify feature of markdown-it would not allow the
-  // above change for images
-  const linkifiedHTML = linkifyHtml(sanitizedHTML, {
-    formatHref: {
-      mention: (href) => `#/users${href}`,
-    },
-    ignoreTags: ["code"],
-  });
-  const linkifiedDocument = domParser.parseFromString(
-    linkifiedHTML,
-    "text/html",
-  );
-  [...linkifiedDocument.querySelectorAll("img")].forEach((element) => {
-    if (element.alt.startsWith("(sticker) ")) {
-      element.alt = element.alt.replace("(sticker) ", "");
-      element.classList.add("rounded-xl");
-    }
-  });
-  [...linkifiedDocument.querySelectorAll("img")].forEach(async (element) => {
-    let request;
-    try {
-      request = await fetch(element.src);
-    } catch {
-      return;
-    }
-    if (request.status !== 200) {
-      return;
-    }
-    const contentType = request.headers.get("content-type");
-    const isAudio = contentType?.startsWith("audio/");
-    const isVideo = contentType?.startsWith("video/");
-    if (!isAudio && !isVideo) {
-      return;
-    }
-    const newElement = document.createElement(isAudio ? "audio" : "video");
-    newElement.src = element.src;
-    newElement.controls = true;
-    element.replaceWith(newElement);
-  });
+//   const html = toHTML(md, inline);
+//   const domParser = new DOMParser();
+//   const postDocument = domParser.parseFromString(html, "text/html");
 
-  return linkifiedDocument.body;
-};
+//   return linkifiedDocument.body;
+// };
 
 const toHTML = (md: string, inline: boolean) => {
   const tokens = inline ? markdown.parseInline(md, {}) : markdown.parse(md, {});

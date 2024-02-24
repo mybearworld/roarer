@@ -16,11 +16,11 @@ import {
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { z } from "zod";
+import Markdown from "./Markdown.vue";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { addOntoPost } from "../lib/addOntoPost";
 import { formatDate } from "../lib/formatDate";
-import { parseMarkdown } from "../lib/parseMarkdown";
 import { getPostInfo } from "../lib/postInfo";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -188,30 +188,6 @@ const report = async () => {
   } catch {}
   alert(t("reportSuccess"));
 };
-
-const markdownPostContent = ref<HTMLElement | null>(null);
-const postContentElement = ref<HTMLDivElement | null>(null);
-effect(
-  async () =>
-    (markdownPostContent.value = await parseMarkdown(
-      `${typeof replyPost.value === "string" ? replyPost.value : ""}${
-        postInfo.content
-      }`,
-      {
-        inline: reply,
-        images: !reply,
-      },
-    )),
-);
-effect(() => {
-  if (!postContentElement.value || !markdownPostContent.value) {
-    return;
-  }
-  postContentElement.value.innerHTML = "";
-  postContentElement.value.append(
-    ...(markdownPostContent.value.childNodes ?? []),
-  );
-});
 
 const reload = () => location.reload();
 </script>
@@ -384,11 +360,18 @@ const reload = () => location.reload();
     </form>
     <div :class="editing ? 'hidden' : ''">
       <div
-        :class="`max-h-96 space-y-2 break-words [&>blockquote]:opacity-40 [&_a]:text-link [&_a]:underline [&_blockquote]:min-h-5 [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96 ${
-          postInfo.italic ? 'italic' : ''
-        } ${reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'}`"
-        ref="postContentElement"
-      ></div>
+        :class="`${postInfo.italic ? 'italic' : ''} ${
+          reply ? 'line-clamp-1 overflow-hidden' : 'overflow-y-auto'
+        }`"
+      >
+        <Markdown
+          :md="`${typeof replyPost === 'string' ? replyPost : ''}${
+            postInfo.content
+          }`"
+          :inline="reply"
+          :noImages="reply"
+        />
+      </div>
       <button
         :class="`mt-2 flex items-center gap-1 rounded-xl px-2 py-1 ${
           settingsStore.theme.roarer_postStyle === 'filled'
