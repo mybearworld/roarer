@@ -120,4 +120,3 @@ cloudlinkStore.lookFor(
     <ChatView :chat="chat" v-for="chat in sortedChats" />
   </div>
 </template>
-../../lib/schemas/chatSchema ../../lib/schemas/updateChat

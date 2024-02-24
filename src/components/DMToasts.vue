@@ -115,4 +115,3 @@ cloudlinkStore.lookFor(
     <ToastViewport class="fixed bottom-0 right-0 max-w-80 space-y-2 p-2" />
   </ToastProvider>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/post ../stores/auth

@@ -73,4 +73,3 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
     </span>
   </p>
 </template>
-../lib/schemas/chatSchema ../stores/auth

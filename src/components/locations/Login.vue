@@ -123,4 +123,3 @@ const signUp = async () => {
     </div>
   </form>
 </template>
-../../stores/auth

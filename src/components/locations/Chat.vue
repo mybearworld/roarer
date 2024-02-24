@@ -33,4 +33,3 @@ const chat = ref<APIChat | null>(null);
     <Posts :chat="chat" v-if="chat" />
   </div>
 </template>
-../../lib/schemas/chatSchema

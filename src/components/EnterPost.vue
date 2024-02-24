@@ -174,4 +174,3 @@ defineExpose({ reply });
     </button>
   </form>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/post

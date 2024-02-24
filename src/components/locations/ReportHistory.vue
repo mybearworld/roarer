@@ -65,4 +65,3 @@ const reportHistory = ref<APIReport[] | number | null>(null);
     </table>
   </div>
 </template>
-../../lib/schemas/report

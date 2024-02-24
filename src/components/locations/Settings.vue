@@ -306,4 +306,3 @@ const deleteAccount = async () => {
     </p>
   </div>
 </template>
-../../lib/schemas/profile ../../stores/auth

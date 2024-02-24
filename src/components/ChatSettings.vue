@@ -206,4 +206,3 @@ cloudlinkStore.lookFor(
     </div>
   </div>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/updateChat ../stores/auth

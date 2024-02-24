@@ -25,4 +25,3 @@ const shownOnlineList = computed(() =>
     {{ shownOnlineList.join(", ") }}
   </details>
 </template>
-../lib/schemas/chatSchema

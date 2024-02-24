@@ -39,4 +39,3 @@ const post = ref<APIPost | number | null>(null);
     </RouterLink>
   </div>
 </template>
-../../lib/schemas/post

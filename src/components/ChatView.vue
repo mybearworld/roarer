@@ -55,4 +55,3 @@ const { chat } = defineProps<{
     </RouterLink>
   </div>
 </template>
-../lib/schemas/chatSchema ../stores/auth

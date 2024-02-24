@@ -392,4 +392,3 @@ const reload = () => location.reload();
     </div>
   </div>
 </template>
-../lib/schemas/post ../stores/auth

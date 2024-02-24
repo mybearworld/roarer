@@ -34,4 +34,3 @@ const signOut = async () => {
     {{ t("logIn") }}
   </RouterLink>
 </template>
-../stores/auth

@@ -160,4 +160,3 @@ const loadMore = async () => {
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/post ../stores/auth

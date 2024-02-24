@@ -247,4 +247,3 @@ const permissions = computed(() =>
     </div>
   </div>
 </template>
-../../lib/schemas/profile ../../stores/auth

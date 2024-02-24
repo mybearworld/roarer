@@ -33,4 +33,3 @@ effect(() => {
     <DMToasts />
   </div>
 </template>
-./stores/auth
