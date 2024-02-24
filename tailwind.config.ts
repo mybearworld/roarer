@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import defaultTheme from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
 
 export default {
   content: ["./index.html", "./src/**/*.{vue,ts}"],
@@ -18,5 +18,10 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addVariant }) => {
+      addVariant("filled", ".post-style-filled &");
+      addVariant("bordered", ".post-style-bordered &");
+    }),
+  ],
 } satisfies Config;

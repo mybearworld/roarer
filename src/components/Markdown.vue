@@ -7,6 +7,7 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
+import { DISCORD_REGEX } from "../lib/discordEmoji";
 import { useMarkdownIdsStore } from "../stores/markdownIds";
 import { useSettingsStore } from "../stores/settings";
 import { effect } from "vue";
@@ -22,7 +23,6 @@ const { md, inline, noImages } = defineProps<{
 const settingsStore = useSettingsStore();
 
 const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
-const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
 const IMAGE_REGEX = new RegExp(
   ATTACHMENT_REGEX.source + "|" + DISCORD_REGEX.source,
   "g",

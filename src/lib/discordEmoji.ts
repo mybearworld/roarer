@@ -1,4 +1,4 @@
-import { DISCORD_REGEX } from "./parseMarkdown";
+export const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
 
 export const discordEmoji = [
   "<:zed:1208625071766114364>",
