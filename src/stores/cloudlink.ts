@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { useI18n } from "vue-i18n";
 import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
-import { relationshipPacketSchema } from "../lib/relationshipSchema";
+import { relationshipPacketSchema } from "../lib/schemas/relationship";
 import { loginSchema } from "../lib/loginSchema";
 import { useLoginStatusStore } from "./loginStatus";
 import { useRelationshipStore } from "./relationship";

@@ -5,8 +5,8 @@ import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { IconCrown, IconX } from "@tabler/icons-vue";
 import { apiRequest } from "../lib/apiRequest";
-import { APIChat } from "../lib/chatSchema";
-import { updateChatSchema } from "../lib/updateChatSchema";
+import { APIChat } from "../lib/schemas/chat";
+import { updateChatSchema } from "../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
@@ -214,3 +214,4 @@ cloudlinkStore.lookFor(
     </div>
   </div>
 </template>
+../lib/schemas/chatSchema ../lib/schemas/updateChat

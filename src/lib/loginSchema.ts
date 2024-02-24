@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { individualRelationshipPacketSchema } from "./relationshipSchema";
+import { individualRelationshipPacketSchema } from "./schemas/relationship";
 
 export const loginSchema = z.object({
   mode: z.literal("auth"),

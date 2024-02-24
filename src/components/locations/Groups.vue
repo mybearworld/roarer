@@ -4,8 +4,8 @@ import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import ChatView from "../ChatView.vue";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
-import { chatSchema, APIChat } from "../../lib/chatSchema";
-import { updateChatSchema } from "../../lib/updateChatSchema";
+import { chatSchema, APIChat } from "../../lib/schemas/chat";
+import { updateChatSchema } from "../../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 
 const cloudlinkStore = useCloudlinkStore();
@@ -120,3 +120,4 @@ cloudlinkStore.lookFor(
     <ChatView :chat="chat" v-for="chat in sortedChats" />
   </div>
 </template>
+../../lib/schemas/chatSchema ../../lib/schemas/updateChat

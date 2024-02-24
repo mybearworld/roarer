@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
-import { reportSchema, APIReport } from "../../lib/reportSchema";
+import { reportSchema, APIReport } from "../../lib/schemas/report";
 
 const { t } = useI18n();
 
@@ -65,3 +65,4 @@ const reportHistory = ref<APIReport[] | number | null>(null);
     </table>
   </div>
 </template>
+../../lib/schemas/report

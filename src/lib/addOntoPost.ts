@@ -1,5 +1,5 @@
 import { useI18n } from "vue-i18n";
-import { APIPost } from "./postSchema";
+import { APIPost } from "./schemas/post";
 
 export const addOntoPost = (post: APIPost): APIPost => {
   const { t } = useI18n();

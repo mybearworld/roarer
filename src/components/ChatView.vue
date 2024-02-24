@@ -2,7 +2,7 @@
 import { IconMessage, IconSettings, IconUser } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
-import { APIChat } from "../lib/chatSchema";
+import { APIChat } from "../lib/schemas/chat";
 import { useLoginStatusStore } from "../stores/loginStatus";
 
 const loginStatusStore = useLoginStatusStore();
@@ -55,3 +55,4 @@ const { chat } = defineProps<{
     </RouterLink>
   </div>
 </template>
+../lib/schemas/chatSchema

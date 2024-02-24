@@ -6,7 +6,7 @@ import { useRouter, RouterLink } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
-import { profileSchema } from "../../lib/profileSchema";
+import { profileSchema } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useSettingsStore } from "../../stores/settings";
@@ -300,3 +300,4 @@ const deleteAccount = async () => {
     </p>
   </div>
 </template>
+../../lib/schemas/profile

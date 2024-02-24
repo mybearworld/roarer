@@ -10,7 +10,7 @@ import {
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
 import PickEmoji from "./PickEmoji.vue";
-import { APIChat } from "../lib/chatSchema";
+import { APIChat } from "../lib/schemas/chat";
 import {
   autoResizeTextarea,
   resetTextareaSize,
@@ -18,7 +18,7 @@ import {
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
-import { postSchema } from "../lib/postSchema";
+import { postSchema } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useSettingsStore } from "../stores/settings";
 
@@ -174,3 +174,4 @@ defineExpose({ reply });
     </button>
   </form>
 </template>
+../lib/schemas/chatSchema ../lib/schemas/post

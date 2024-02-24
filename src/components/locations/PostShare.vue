@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Post from "../Post.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
-import { postSchema, APIPost } from "../../lib/postSchema";
+import { postSchema, APIPost } from "../../lib/schemas/post";
 
 const route = useRoute();
 const { t } = useI18n();
@@ -39,3 +39,4 @@ const post = ref<APIPost | number | null>(null);
     </RouterLink>
   </div>
 </template>
+../../lib/schemas/post

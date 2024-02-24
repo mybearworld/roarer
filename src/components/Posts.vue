@@ -11,8 +11,8 @@ import { useLoginStatusStore } from "../stores/loginStatus";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
-import { APIChat } from "../lib/chatSchema";
-import { postSchema, APIPost } from "../lib/postSchema";
+import { APIChat } from "../lib/schemas/chat";
+import { postSchema, APIPost } from "../lib/schemas/post";
 import { z } from "zod";
 
 const { chat, inbox } = defineProps<{
@@ -160,3 +160,4 @@ const loadMore = async () => {
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
 </template>
+../lib/schemas/chatSchema ../lib/schemas/post

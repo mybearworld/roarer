@@ -9,7 +9,7 @@ import meowy from "../../assets/pfp/22.svg";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
-import { profileSchemaOrError, APIProfile } from "../../lib/profileSchema";
+import { profileSchemaOrError, APIProfile } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useLoginStatusStore } from "../../stores/loginStatus";
 import { useOnlinelistStore } from "../../stores/onlinelist";
@@ -247,3 +247,4 @@ const permissions = computed(() =>
     </div>
   </div>
 </template>
+../../lib/schemas/profile

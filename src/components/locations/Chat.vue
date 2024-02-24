@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import Posts from "../Posts.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
-import { APIChat, chatSchema } from "../../lib/chatSchema";
+import { APIChat, chatSchema } from "../../lib/schemas/chat";
 
 const route = useRoute();
 const { t } = useI18n();
@@ -33,3 +33,4 @@ const chat = ref<APIChat | null>(null);
     <Posts :chat="chat" v-if="chat" />
   </div>
 </template>
+../../lib/schemas/chatSchema

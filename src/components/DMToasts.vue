@@ -13,9 +13,9 @@ import {
 } from "radix-vue";
 import { z } from "zod";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
-import { chatSchema, APIChat } from "../lib/chatSchema";
+import { chatSchema, APIChat } from "../lib/schemas/chat";
 import { getPostInfo, PostInfo } from "../lib/postInfo";
-import { postSchema, APIPost } from "../lib/postSchema";
+import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useSettingsStore } from "../stores/settings";
@@ -115,3 +115,4 @@ cloudlinkStore.lookFor(
     <ToastViewport class="fixed bottom-0 right-0 max-w-80 space-y-2 p-2" />
   </ToastProvider>
 </template>
+../lib/schemas/chatSchema ../lib/schemas/post

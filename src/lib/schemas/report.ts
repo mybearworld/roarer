@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { profileSchemaNoError } from "./profileSchema";
+import { profileSchemaNoError } from "./profile";
 
 export const reportSchema = z.object({
   _id: z.string(),

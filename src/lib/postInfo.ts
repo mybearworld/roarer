@@ -1,7 +1,7 @@
 import { createPinia } from "pinia";
 import { bridgeBots } from "./bridgeBots";
 import { getReply, Reply } from "./getReply";
-import { APIPost } from "./postSchema";
+import { APIPost } from "./schemas/post";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useSettingsStore } from "../stores/settings";
 

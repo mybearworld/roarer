@@ -22,7 +22,7 @@ import { addOntoPost } from "../lib/addOntoPost";
 import { formatDate } from "../lib/formatDate";
 import { parseMarkdown } from "../lib/parseMarkdown";
 import { getPostInfo } from "../lib/postInfo";
-import { postSchema, APIPost } from "../lib/postSchema";
+import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useOnlinelistStore } from "../stores/onlinelist";
@@ -411,3 +411,4 @@ const reload = () => location.reload();
     </div>
   </div>
 </template>
+../lib/schemas/post

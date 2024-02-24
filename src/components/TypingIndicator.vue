@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import { IconKeyboard, IconKeyboardOff } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { z } from "zod";
-import { APIChat } from "../lib/chatSchema";
+import { APIChat } from "../lib/schemas/chat";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useLoginStatusStore } from "../stores/loginStatus";
 import { useRelationshipStore } from "../stores/relationship";
@@ -73,3 +73,4 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
     </span>
   </p>
 </template>
+../lib/schemas/chatSchema
