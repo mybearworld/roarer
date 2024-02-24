@@ -228,4 +228,5 @@ export const en = {
   emojiPickerTabStickers: "Stickers",
   settingUseScratch2Blocks:
     "Use Scratch 2.0 style for Scratch blocks when the version is not specified.",
+  download: "Download {fileName} ({contentType})",
 };
