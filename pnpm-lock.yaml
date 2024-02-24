@@ -35,6 +35,9 @@ dependencies:
   radix-vue:
     specifier: ^1.3.2
     version: 1.3.2(vue@3.3.13)
+  scratchblocks:
+    specifier: ^3.6.4
+    version: 3.6.4
   vue:
     specifier: ^3.3.11
     version: 3.3.13(typescript@5.3.3)
@@ -1622,6 +1625,10 @@ packages:
     dependencies:
       queue-microtask: 1.2.3
     dev: true
+
+  /scratchblocks@3.6.4:
+    resolution: {integrity: sha512-2qesRNViXrceNG7OvMim3D2rBQ2qDjH24VwRVijef1XQlLmEKNiMItx/3dQpdybnUDXTnfZyRU41vc/if+Au7w==}
+    dev: false
 
   /semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}

@@ -7,8 +7,11 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
+import { useMarkdownIdsStore } from "../stores/markdownIds";
 import { useSettingsStore } from "../stores/settings";
 import { effect } from "vue";
+// @ts-expect-error
+import scratchblocks from "scratchblocks";
 
 const { md, inline, noImages } = defineProps<{
   md: string;
@@ -24,6 +27,8 @@ const IMAGE_REGEX = new RegExp(
   ATTACHMENT_REGEX.source + "|" + DISCORD_REGEX.source,
   "g",
 );
+
+const id = useMarkdownIdsStore().getNewId();
 
 const markdown = markdownit({
   breaks: true,
@@ -175,12 +180,22 @@ effect(() => {
     newElement.controls = true;
     element.replaceWith(newElement);
   });
+  scratchblocks.renderMatching(`#${id} pre code.language-scratch`, {
+    style: settingsStore.useScratch2Blocks ? "scratch2" : "scratch3",
+    scale: settingsStore.useScratch2Blocks ? 1 : 0.675,
+  });
+  scratchblocks.renderMatching(`#${id} pre code.language-scratch3`, {
+    style: "scratch3",
+    scale: 0.675,
+  });
+  scratchblocks.renderMatching(`#${id} pre code.language-scratch2`);
 });
 </script>
 
 <template>
   <div
     class="max-h-96 space-y-2 break-words [&>blockquote]:opacity-40 [&_a]:text-link [&_a]:underline [&_blockquote]:min-h-5 [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96"
+    :id="id"
     ref="main"
   ></div>
 </template>

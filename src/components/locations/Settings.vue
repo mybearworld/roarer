@@ -231,6 +231,12 @@ const deleteAccount = async () => {
         {{ t("settingHideBlockedMentions") }}
       </div>
     </label>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.useScratch2Blocks" />
+      <div>
+        {{ t("settingUseScratch2Blocks") }}
+      </div>
+    </label>
     <div>
       <button
         type="button"
