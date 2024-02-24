@@ -11,12 +11,12 @@ import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
 import { profileSchemaOrError, APIProfile } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
-import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useAuthStore } from "../../stores/auth";
 import { useOnlinelistStore } from "../../stores/onlinelist";
 import { useRelationshipStore } from "../../stores/relationship";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const onlinelistStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
@@ -151,7 +151,7 @@ const permissions = computed(() =>
       <div class="text-center text-xl italic">
         <Statistics />
       </div>
-      <div v-if="loginStatusStore.isLoggedIn">
+      <div v-if="authStore.isLoggedIn">
         <p>{{ t("blockedUsers") }}</p>
         <ul>
           <li
@@ -219,11 +219,11 @@ const permissions = computed(() =>
           </li>
         </ul>
         <div class="mt-2"></div>
-        <div class="space-x-2" v-if="loginStatusStore.isLoggedIn">
+        <div class="space-x-2" v-if="authStore.isLoggedIn">
           <RouterLink
             :to="`/users/${userProfile._id}/dm`"
             class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-            v-if="!isBlocked && loginStatusStore.username !== userProfile._id"
+            v-if="!isBlocked && authStore.username !== userProfile._id"
           >
             {{ t("chatDM") }}
           </RouterLink>
@@ -231,7 +231,7 @@ const permissions = computed(() =>
             type="button"
             class="rounded-xl bg-accent px-2 py-1 text-accent-text"
             @click="block"
-            v-if="route.params.username !== loginStatusStore.username"
+            v-if="route.params.username !== authStore.username"
           >
             {{ t(isBlocked ? "unblock" : "block") }}
           </button>
@@ -247,4 +247,4 @@ const permissions = computed(() =>
     </div>
   </div>
 </template>
-../../lib/schemas/profile
+../../lib/schemas/profile ../../stores/auth

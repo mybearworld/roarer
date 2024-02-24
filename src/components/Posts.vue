@@ -7,7 +7,7 @@ import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
@@ -21,7 +21,7 @@ const { chat, inbox } = defineProps<{
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
@@ -127,7 +127,7 @@ const loadMore = async () => {
     <h2 class="text-lg font-bold" v-if="chat">
       {{
         chat.nickname ||
-        chat.members.find((member) => member !== loginStatusStore.username)
+        chat.members.find((member) => member !== authStore.username)
       }}
     </h2>
     <RouterLink to="/chats" class="text-link underline">
@@ -138,14 +138,14 @@ const loadMore = async () => {
   <EnterPost
     ref="enterPost"
     :chat="chat"
-    v-if="!inbox && loginStatusStore.isLoggedIn"
+    v-if="!inbox && authStore.isLoggedIn"
   />
   <TypingIndicator :chat="chat" v-if="!inbox" />
   <Post
     :post="post"
     :key="post.post_id"
     :inbox="inbox"
-    :isChatOwner="chat && chat.owner === loginStatusStore.username"
+    :isChatOwner="chat && chat.owner === authStore.username"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
     v-for="post in showPosts"
@@ -160,4 +160,4 @@ const loadMore = async () => {
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/post
+../lib/schemas/chatSchema ../lib/schemas/post ../stores/auth

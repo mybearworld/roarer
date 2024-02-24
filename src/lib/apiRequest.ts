@@ -1,14 +1,14 @@
 import { z, ZodSchema } from "zod";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 
 export const apiRequest = async (
   url: string,
   { auth = false, method = "GET", body }: APIRequest,
 ) => {
-  const loginStatusStore = useLoginStatusStore();
+  const authStore = useAuthStore();
 
-  const username = auth ? loginStatusStore.username : null;
-  const token = auth ? loginStatusStore.token : null;
+  const username = auth ? authStore.username : null;
+  const token = auth ? authStore.token : null;
   const authHeaders: { username: string; token: string } | {} =
     username && token ? { username, token } : {};
   const response = await fetch(`${import.meta.env.VITE_API}${url}`, {

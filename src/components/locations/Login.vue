@@ -3,19 +3,19 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useCloudlinkStore } from "../../stores/cloudlink";
-import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useAuthStore } from "../../stores/auth";
 import { useRelationshipStore } from "../../stores/relationship";
 import { loginSchema } from "../../lib/loginSchema";
 import { effect } from "vue";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 const router = useRouter();
 
 effect(() => {
-  if (loginStatusStore.isLoggedIn) {
+  if (authStore.isLoggedIn) {
     router.push("/home");
   }
 });
@@ -63,8 +63,8 @@ const signUp = async () => {
     loading.value = false;
     return;
   }
-  loginStatusStore.username = data.payload.username;
-  loginStatusStore.token = data.payload.token;
+  authStore.username = data.payload.username;
+  authStore.token = data.payload.token;
   location.reload();
 };
 </script>
@@ -123,3 +123,4 @@ const signUp = async () => {
     </div>
   </form>
 </template>
+../../stores/auth

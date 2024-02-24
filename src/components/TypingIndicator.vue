@@ -5,7 +5,7 @@ import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { APIChat } from "../lib/schemas/chat";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 import { useRelationshipStore } from "../stores/relationship";
 
 const { chat } = defineProps<{
@@ -13,7 +13,7 @@ const { chat } = defineProps<{
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 
@@ -21,7 +21,7 @@ const typingUsers = ref(new Map<string, number>());
 const shownTypingUsers = computed(() =>
   [...typingUsers.value.keys()].filter(
     (item) =>
-      item !== loginStatusStore.username &&
+      item !== authStore.username &&
       (!chat || chat.members.includes(item)) &&
       !relationshipStore.blockedUsers.has(item),
   ),
@@ -73,4 +73,4 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
     </span>
   </p>
 </template>
-../lib/schemas/chatSchema
+../lib/schemas/chatSchema ../stores/auth

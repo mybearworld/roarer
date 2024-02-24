@@ -3,9 +3,9 @@ import { IconMessage, IconSettings, IconUser } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { APIChat } from "../lib/schemas/chat";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const { t } = useI18n();
 
 const { chat } = defineProps<{
@@ -21,14 +21,14 @@ const { chat } = defineProps<{
         chat.nickname
           ? `/chats/${chat._id}`
           : `/users/${chat.members.find(
-              (user) => user !== loginStatusStore.username,
+              (user) => user !== authStore.username,
             )}/dm`
       "
     >
       <p class="text-xl font-bold">
         {{
           chat.nickname ??
-          chat.members.find((user) => user !== loginStatusStore.username)
+          chat.members.find((user) => user !== authStore.username)
         }}
       </p>
       <p class="flex items-center gap-1">
@@ -55,4 +55,4 @@ const { chat } = defineProps<{
     </RouterLink>
   </div>
 </template>
-../lib/schemas/chatSchema
+../lib/schemas/chatSchema ../stores/auth

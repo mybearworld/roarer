@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const { t } = useI18n();
 
 const signOut = async () => {
   if (!confirm(t("loginSignoutConfirm"))) {
     return;
   }
-  loginStatusStore.isLoggedIn = false;
-  loginStatusStore.username = null;
-  loginStatusStore.token = null;
+  authStore.isLoggedIn = false;
+  authStore.username = null;
+  authStore.token = null;
   location.reload();
 };
 </script>
@@ -21,10 +21,10 @@ const signOut = async () => {
   <button
     class="inline-block rounded-xl bg-accent px-2 py-1 text-sm text-accent-text"
     v-on:click="signOut"
-    v-if="loginStatusStore.isLoggedIn"
+    v-if="authStore.isLoggedIn"
   >
     {{ t("signOut") }}
-    <div class="text-xs font-bold">@{{ loginStatusStore.username }}</div>
+    <div class="text-xs font-bold">@{{ authStore.username }}</div>
   </button>
   <RouterLink
     class="inline-block rounded-xl bg-accent px-2 py-1 text-sm text-accent-text"
@@ -34,3 +34,4 @@ const signOut = async () => {
     {{ t("logIn") }}
   </RouterLink>
 </template>
+../stores/auth

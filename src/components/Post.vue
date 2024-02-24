@@ -24,13 +24,13 @@ import { parseMarkdown } from "../lib/parseMarkdown";
 import { getPostInfo } from "../lib/postInfo";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 import { useOnlinelistStore } from "../stores/onlinelist";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
@@ -285,7 +285,7 @@ const reload = () => location.reload();
         <button
           class="h-4 w-4"
           @click="remove"
-          v-if="isChatOwner || post.u === loginStatusStore.username"
+          v-if="isChatOwner || post.u === authStore.username"
         >
           <IconTrash aria-hidden />
           <span class="sr-only">{{ t("deletePost") }}</span>
@@ -293,7 +293,7 @@ const reload = () => location.reload();
         <button
           class="h-4 w-4"
           @click="editing = true"
-          v-if="post.u === loginStatusStore.username"
+          v-if="post.u === authStore.username"
         >
           <IconEdit aria-hidden />
           <span class="sr-only">{{ t("editPost") }}</span>
@@ -301,9 +301,7 @@ const reload = () => location.reload();
         <button
           class="h-4 w-4"
           @click="report"
-          v-if="
-            post.u !== loginStatusStore.username && loginStatusStore.isLoggedIn
-          "
+          v-if="post.u !== authStore.username && authStore.isLoggedIn"
         >
           <IconAlertTriangle aria-hidden />
           <span class="sr-only">{{ t("reportPost") }}</span>
@@ -313,7 +311,7 @@ const reload = () => location.reload();
           @click="
             emit('reply', postInfo.username, postInfo.content, post.post_id)
           "
-          v-if="loginStatusStore.isLoggedIn"
+          v-if="authStore.isLoggedIn"
         >
           <IconArrowForward aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>
@@ -411,4 +409,4 @@ const reload = () => location.reload();
     </div>
   </div>
 </template>
-../lib/schemas/post
+../lib/schemas/post ../stores/auth

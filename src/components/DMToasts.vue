@@ -17,11 +17,11 @@ import { chatSchema, APIChat } from "../lib/schemas/chat";
 import { getPostInfo, PostInfo } from "../lib/postInfo";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 import { useSettingsStore } from "../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
 const { t } = useI18n();
@@ -40,7 +40,7 @@ cloudlinkStore.lookFor(
               origin !== "home" &&
               !("isChat" in route.meta && route.params.id === origin),
           ),
-        u: z.string().refine((name) => name !== loginStatusStore.username),
+        u: z.string().refine((name) => name !== authStore.username),
       }),
     ),
   }),
@@ -115,4 +115,4 @@ cloudlinkStore.lookFor(
     <ToastViewport class="fixed bottom-0 right-0 max-w-80 space-y-2 p-2" />
   </ToastProvider>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/post
+../lib/schemas/chatSchema ../lib/schemas/post ../stores/auth

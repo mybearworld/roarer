@@ -8,11 +8,11 @@ import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
-import { useLoginStatusStore } from "../../stores/loginStatus";
+import { useAuthStore } from "../../stores/auth";
 import { useSettingsStore } from "../../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
 const router = useRouter();
@@ -22,7 +22,7 @@ const profilePicture = ref(0);
 
 (async () => {
   const response = await getResponseFromAPIRequest(
-    `/users/${loginStatusStore.username}`,
+    `/users/${authStore.username}`,
     {
       schema: profileSchema,
     },
@@ -123,8 +123,8 @@ const revokeTokens = async () => {
     alert(t("revokeTokensFail", { errmsg: e }));
     return;
   }
-  loginStatusStore.username = null;
-  loginStatusStore.token = null;
+  authStore.username = null;
+  authStore.token = null;
   location.reload();
 };
 
@@ -149,15 +149,15 @@ const deleteAccount = async () => {
     alert(t("deleteAccountFail", { errmsg: e }));
     return;
   }
-  loginStatusStore.username = null;
-  loginStatusStore.token = null;
+  authStore.username = null;
+  authStore.token = null;
   location.reload();
 };
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <template v-if="loginStatusStore.isLoggedIn">
+    <template v-if="authStore.isLoggedIn">
       <div class="flex items-baseline gap-2">
         <h2 class="inline-block text-lg font-bold">
           {{ t("usersSectionMe") }}
@@ -219,13 +219,13 @@ const deleteAccount = async () => {
         {{ t("settingFilterSwears") }}
       </div>
     </label>
-    <label class="flex items-baseline gap-2" v-if="loginStatusStore.isLoggedIn">
+    <label class="flex items-baseline gap-2" v-if="authStore.isLoggedIn">
       <input type="checkbox" v-model="settingsStore.enterSends" />
       <div>
         {{ t("settingEnterSends") }}
       </div>
     </label>
-    <label class="flex items-baseline gap-2" v-if="loginStatusStore.isLoggedIn">
+    <label class="flex items-baseline gap-2" v-if="authStore.isLoggedIn">
       <input type="checkbox" v-model="settingsStore.hideBlockedMentions" />
       <div>
         {{ t("settingHideBlockedMentions") }}
@@ -241,7 +241,7 @@ const deleteAccount = async () => {
         </RouterLink>
       </button>
     </div>
-    <template v-if="loginStatusStore.isLoggedIn">
+    <template v-if="authStore.isLoggedIn">
       <h2 class="text-lg font-bold">{{ t("myAccount") }}</h2>
       <div>
         <button
@@ -300,4 +300,4 @@ const deleteAccount = async () => {
     </p>
   </div>
 </template>
-../../lib/schemas/profile
+../../lib/schemas/profile ../../stores/auth

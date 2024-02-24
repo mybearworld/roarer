@@ -5,12 +5,12 @@ import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
 import { relationshipPacketSchema } from "../lib/schemas/relationship";
 import { loginSchema } from "../lib/loginSchema";
-import { useLoginStatusStore } from "./loginStatus";
+import { useAuthStore } from "./auth";
 import { useRelationshipStore } from "./relationship";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
   const { t } = useI18n();
-  const loginStatusStore = useLoginStatusStore();
+  const authStore = useAuthStore();
   const relationshipStore = useRelationshipStore();
 
   const cloudlink = ref(
@@ -114,23 +114,23 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
         .filter((relationship) => relationship.state === 2)
         .map((relationship) => relationship.username),
     );
-    loginStatusStore.username = response.payload.username;
-    loginStatusStore.token = response.payload.token;
-    loginStatusStore.isLoggedIn = true;
+    authStore.username = response.payload.username;
+    authStore.token = response.payload.token;
+    authStore.isLoggedIn = true;
     return response;
   };
 
-  if (loginStatusStore.username !== null && loginStatusStore.token !== null) {
+  if (authStore.username !== null && authStore.token !== null) {
     let nonNullCredentials: [string, string] = [
-      loginStatusStore.username,
-      loginStatusStore.token,
+      authStore.username,
+      authStore.token,
     ];
 
     const syntaxErrorSchema = z.object({
       val: z.literal("E:101 | Syntax"),
     });
     cloudlink.value.on("statuscode", async (packet: unknown) => {
-      if (loginStatusStore.isLoggedIn) {
+      if (authStore.isLoggedIn) {
         return;
       }
       if (syntaxErrorSchema.safeParse(packet).success) {
@@ -138,8 +138,8 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
           await login(...nonNullCredentials);
         } catch (e) {
           if (!confirm(t("loginFail"))) {
-            loginStatusStore.username = null;
-            loginStatusStore.token = null;
+            authStore.username = null;
+            authStore.token = null;
           }
           location.reload();
         }

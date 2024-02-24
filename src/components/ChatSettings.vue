@@ -8,10 +8,10 @@ import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/schemas/chat";
 import { updateChatSchema } from "../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const { t } = useI18n();
 
 const { chat } = defineProps<{
@@ -144,7 +144,7 @@ cloudlinkStore.lookFor(
       <h3 class="text-lg font-bold">{{ t("chatSettings") }}</h3>
       <form
         class="flex gap-2"
-        v-if="loginStatusStore.username === owner"
+        v-if="authStore.username === owner"
         @submit="rename"
       >
         <input
@@ -188,10 +188,7 @@ cloudlinkStore.lookFor(
           type="button"
           class="rounded-xl bg-accent px-2 py-1 text-accent-text"
           @click="promote(person)"
-          v-if="
-            owner === loginStatusStore.username &&
-            person !== loginStatusStore.username
-          "
+          v-if="owner === authStore.username && person !== authStore.username"
         >
           <IconCrown aria-hidden />
           <span class="sr-only">{{ t("chatPromote") }}</span>
@@ -199,13 +196,8 @@ cloudlinkStore.lookFor(
         <button
           type="button"
           class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-          @click="
-            person === loginStatusStore.username ? leave() : remove(person)
-          "
-          v-if="
-            owner === loginStatusStore.username ||
-            person === loginStatusStore.username
-          "
+          @click="person === authStore.username ? leave() : remove(person)"
+          v-if="owner === authStore.username || person === authStore.username"
         >
           <IconX aria-hidden />
           <span class="sr-only">{{ t("chatRemove") }}</span>
@@ -214,4 +206,4 @@ cloudlinkStore.lookFor(
     </div>
   </div>
 </template>
-../lib/schemas/chatSchema ../lib/schemas/updateChat
+../lib/schemas/chatSchema ../lib/schemas/updateChat ../stores/auth

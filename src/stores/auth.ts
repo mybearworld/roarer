@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 const USERNAME_STORAGE = "roarer:username";
 const TOKEN_STORAGE = "roarer:token";
 
-export const useLoginStatusStore = defineStore("loginStatus", () => {
+export const useAuthStore = defineStore("auth", () => {
   const username = ref<string | null>(
     localStorage.getItem(USERNAME_STORAGE) ?? null,
   );

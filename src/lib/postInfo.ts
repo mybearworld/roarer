@@ -2,7 +2,7 @@ import { createPinia } from "pinia";
 import { bridgeBots } from "./bridgeBots";
 import { getReply, Reply } from "./getReply";
 import { APIPost } from "./schemas/post";
-import { useLoginStatusStore } from "../stores/loginStatus";
+import { useAuthStore } from "../stores/auth";
 import { useSettingsStore } from "../stores/settings";
 
 createPinia();

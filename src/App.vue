@@ -4,10 +4,10 @@ import { useRoute, RouterView } from "vue-router";
 import DMToasts from "./components/DMToasts.vue";
 import Navigation from "./components/Navigation.vue";
 import Login from "./components/locations/Login.vue";
-import { useLoginStatusStore } from "./stores/loginStatus";
+import { useAuthStore } from "./stores/auth";
 import { useSettingsStore, themeVariables } from "./stores/settings";
 
-const loginStatusStore = useLoginStatusStore();
+const authStore = useAuthStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
 
@@ -21,10 +21,9 @@ effect(() => {
 <template>
   <div class="flex flex-col gap-2">
     <Navigation />
-    <Login
-      v-if="!loginStatusStore.isLoggedIn && 'requiresLogin' in route.meta"
-    />
+    <Login v-if="!authStore.isLoggedIn && 'requiresLogin' in route.meta" />
     <RouterView v-else />
     <DMToasts />
   </div>
 </template>
+./stores/auth
