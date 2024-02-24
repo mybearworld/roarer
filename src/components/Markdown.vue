@@ -188,6 +188,9 @@ effect(() => {
       element.replaceWith(newElement);
       return;
     }
+    if (contentType.startsWith("image/")) {
+      return;
+    }
     const downloadButton = document.createElement("button");
     downloadButton.className =
       "rounded-xl px-2 py-1 bordered:bg-accent bordered:text-accent-text filled:bg-background filled:text-text";
