@@ -30,6 +30,8 @@ const IMAGE_REGEX = new RegExp(
 
 const id = useMarkdownIdsStore().getNewId();
 
+const trimmedMarkdown = md.replace(/(?:\s|\u200c)+$/, "");
+
 const markdown = markdownit({
   breaks: true,
   highlight(str, lang) {
@@ -41,7 +43,9 @@ const markdown = markdownit({
 });
 const main = ref<HTMLDivElement | null>(null);
 
-const tokens = inline ? markdown.parseInline(md, {}) : markdown.parse(md, {});
+const tokens = inline
+  ? markdown.parseInline(trimmedMarkdown, {})
+  : markdown.parse(trimmedMarkdown, {});
 const newTokens: Token[] = [];
 tokens.forEach((token) => {
   if (token.type !== "inline" || !token.children) {
