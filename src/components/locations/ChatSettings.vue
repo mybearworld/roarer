@@ -5,9 +5,7 @@ import { useRoute } from "vue-router";
 import ChatSettings from "../ChatSettings.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { APIChat, chatSchema } from "../../lib/chatSchema";
-import { useLoginStatusStore } from "../../stores/loginStatus";
 
-const loginStatusStore = useLoginStatusStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -17,7 +15,7 @@ const chat = ref<APIChat | null>(null);
     `/chats/${route.params.id}`,
     {
       schema: chatSchema,
-      auth: loginStatusStore,
+      auth: true,
     },
   );
   if ("status" in response) {

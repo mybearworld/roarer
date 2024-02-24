@@ -19,7 +19,7 @@ const cloudlinkStore = useCloudlinkStore();
 const loginStatusStore = useLoginStatusStore();
 const onlinelistStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
@@ -80,7 +80,7 @@ const block = async () => {
     `/users/${route.params.username}/relationship`,
     {
       method: "PATCH",
-      auth: loginStatusStore,
+      auth: true,
       body: JSON.stringify({
         state: isBlocked.value ? 0 : 2,
       }),
@@ -200,7 +200,7 @@ const permissions = computed(() =>
         <p v-else-if="userProfile.last_seen">
           {{
             t("lastSeenUser", {
-              date: formatDate(userProfile!.last_seen, locale),
+              date: formatDate(userProfile!.last_seen),
             })
           }}
         </p>
@@ -209,7 +209,7 @@ const permissions = computed(() =>
         <p>
           {{
             t("accountCreated", {
-              date: formatDate(userProfile.created, locale),
+              date: formatDate(userProfile.created),
             })
           }}
         </p>

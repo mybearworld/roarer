@@ -7,10 +7,8 @@ import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { chatSchema, APIChat } from "../../lib/chatSchema";
 import { updateChatSchema } from "../../lib/updateChatSchema";
 import { useCloudlinkStore } from "../../stores/cloudlink";
-import { useLoginStatusStore } from "../../stores/loginStatus";
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
 const { t } = useI18n();
 
 const chats = ref<APIChat[]>([]);
@@ -19,7 +17,7 @@ const schema = z.object({
 });
 effect(async () => {
   const response = await getResponseFromAPIRequest("/chats?autoget=1", {
-    auth: loginStatusStore,
+    auth: true,
     schema,
   });
   if ("status" in response) {
@@ -45,7 +43,7 @@ const createChat = async (e?: Event) => {
   }
   const response = await apiRequest("/chats", {
     method: "POST",
-    auth: loginStatusStore,
+    auth: true,
     body: JSON.stringify({
       nickname: chatNickname.value,
     }),

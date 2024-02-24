@@ -20,7 +20,6 @@ import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema } from "../lib/postSchema";
 import { useCloudlinkStore } from "../stores/cloudlink";
-import { useLoginStatusStore } from "../stores/loginStatus";
 import { useSettingsStore } from "../stores/settings";
 
 const { chat } = defineProps<{
@@ -28,7 +27,6 @@ const { chat } = defineProps<{
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
-const loginStatusStore = useLoginStatusStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
@@ -45,7 +43,7 @@ const post = async (e?: Event) => {
     chat ? `/posts/${chat._id}` : "/home",
     {
       method: "POST",
-      auth: loginStatusStore,
+      auth: true,
       body: JSON.stringify({
         content: postContent.value,
       }),
@@ -103,7 +101,7 @@ const input = async () => {
     const status = await apiRequest(
       chat ? `/chats/${chat._id}/typing` : "/home/typing",
       {
-        auth: loginStatusStore,
+        auth: true,
         method: "POST",
       },
     );

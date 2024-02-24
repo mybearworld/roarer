@@ -1,11 +1,14 @@
 import { z, ZodSchema } from "zod";
+import { useLoginStatusStore } from "../stores/loginStatus";
 
 export const apiRequest = async (
   url: string,
-  { auth = null, method = "GET", body }: APIRequest,
+  { auth = false, method = "GET", body }: APIRequest,
 ) => {
-  const username = auth?.username;
-  const token = auth?.token;
+  const loginStatusStore = useLoginStatusStore();
+
+  const username = auth ? loginStatusStore.username : null;
+  const token = auth ? loginStatusStore.token : null;
   const authHeaders: { username: string; token: string } | {} =
     username && token ? { username, token } : {};
   const response = await fetch(`${import.meta.env.VITE_API}${url}`, {
@@ -23,7 +26,7 @@ export const apiRequest = async (
 };
 export const getResponseFromAPIRequest = async <TSchema extends ZodSchema>(
   url: string,
-  { auth = null, method = "GET", body, schema }: APIRequestResponse<TSchema>,
+  { auth = false, method = "GET", body, schema }: APIRequestResponse<TSchema>,
 ): Promise<APIRequestResponseReturn<TSchema>> => {
   const { status, response } = await apiRequest(url, { auth, method, body });
   if (status !== 200) {
@@ -33,7 +36,7 @@ export const getResponseFromAPIRequest = async <TSchema extends ZodSchema>(
 };
 
 type APIRequest = {
-  auth?: null | { username: string | null; token: string | null };
+  auth?: boolean;
   method?: string;
   body?: string;
 };

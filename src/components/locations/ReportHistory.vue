@@ -5,15 +5,13 @@ import { z } from "zod";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { reportSchema, APIReport } from "../../lib/reportSchema";
-import { useLoginStatusStore } from "../../stores/loginStatus";
 
-const loginStatusStore = useLoginStatusStore();
-const { locale, t } = useI18n();
+const { t } = useI18n();
 
 const reportHistory = ref<APIReport[] | number | null>(null);
 (async () => {
   const response = await getResponseFromAPIRequest("/me/reports?autoget=1", {
-    auth: loginStatusStore,
+    auth: true,
     schema: z.object({
       autoget: reportSchema.array(),
     }),
@@ -61,7 +59,7 @@ const reportHistory = ref<APIReport[] | number | null>(null);
           </td>
           <td>{{ report.reason }}<br />{{ report.comment }}</td>
           <td>{{ t(`reportHistory_${report.status}`) }}</td>
-          <td>{{ formatDate(report.time, locale) }}</td>
+          <td>{{ formatDate(report.time) }}</td>
         </tr>
       </tbody>
     </table>

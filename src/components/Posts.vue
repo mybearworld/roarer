@@ -52,7 +52,7 @@ const postsSchema = z.object({
 });
 (async () => {
   const response = await getResponseFromAPIRequest(requestURL, {
-    auth: loginStatusStore,
+    auth: true,
     schema: postsSchema,
   });
   if ("status" in response) {
@@ -106,7 +106,7 @@ const loadMore = async () => {
   const response = await getResponseFromAPIRequest(
     requestURL + `&page=${page}`,
     {
-      auth: loginStatusStore,
+      auth: true,
       schema: postsSchema,
     },
   );

@@ -5,6 +5,7 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import { hostWhitelist } from "../lib/hostWhitelist";
+import { useSettingsStore } from "../stores/settings";
 
 export const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
 export const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
@@ -25,20 +26,18 @@ const markdown = markdownit({
 
 export const parseMarkdown = async (
   md: string,
-  {
-    inline = false,
-    images = true,
-    anyImageHost = false,
-    loadProjectText = "Load project",
-  },
+  { inline = false, images = true },
 ) => {
+  const settingsStore = useSettingsStore();
+
   const html = toHTML(md, inline);
   const domParser = new DOMParser();
   const postDocument = domParser.parseFromString(html, "text/html");
   postDocument.querySelectorAll("img").forEach((img) => {
     if (
       !images ||
-      (!anyImageHost && !hostWhitelist.some((host) => img.src.startsWith(host)))
+      (!settingsStore.anyImageHost &&
+        !hostWhitelist.some((host) => img.src.startsWith(host)))
     ) {
       const span = document.createElement("span");
       span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;

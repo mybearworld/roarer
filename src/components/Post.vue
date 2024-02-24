@@ -34,7 +34,7 @@ const loginStatusStore = useLoginStatusStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
-const { t, locale } = useI18n();
+const { t } = useI18n();
 
 const {
   post: rawPost,
@@ -94,7 +94,7 @@ const remove = async () => {
   }
   const response = await apiRequest(`/posts?id=${post.post_id}`, {
     method: "DELETE",
-    auth: loginStatusStore,
+    auth: true,
   });
   if (response.status !== 200) {
     alert(t("deletePostFail", { status: response.status }));
@@ -120,7 +120,7 @@ const edit = async (e?: Event) => {
   autoResizeTextarea(editInputValue.value);
   const response = await apiRequest(`/posts?id=${post.post_id}`, {
     method: "PATCH",
-    auth: loginStatusStore,
+    auth: true,
     body: JSON.stringify({
       content: editInputValue.value.value,
     }),
@@ -154,7 +154,7 @@ effect(async () => {
     `/posts?id=${postInfo.reply.id}`,
     {
       schema: postSchema,
-      auth: loginStatusStore,
+      auth: true,
     },
   );
   if ("status" in response) {
@@ -200,8 +200,6 @@ effect(
       {
         inline: reply,
         images: !reply,
-        anyImageHost: settingsStore.anyImageHost,
-        loadProjectText: t("loadProjectEmbed"),
       },
     )),
 );
@@ -329,7 +327,7 @@ const reload = () => location.reload();
         }`"
         v-if="!reply"
       >
-        {{ formatDate(post.t.e, locale) }}
+        {{ formatDate(post.t.e) }}
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
@@ -339,7 +337,7 @@ const reload = () => location.reload();
       }`"
       v-if="!reply && !postInfo.italic && !hideControls"
     >
-      {{ formatDate(post.t.e, locale) }}
+      {{ formatDate(post.t.e) }}
       <span v-if="edited || post.edited_at">(edited)</span>
     </div>
     <div

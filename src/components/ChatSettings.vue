@@ -33,7 +33,7 @@ const newChatName = ref(name.value);
 const rename = async (e?: Event) => {
   e?.preventDefault();
   const response = await apiRequest(`/chats/${chat._id}`, {
-    auth: loginStatusStore,
+    auth: true,
     method: "PATCH",
     body: JSON.stringify({
       nickname: newChatName.value,
@@ -50,7 +50,7 @@ const addUser = async (e?: Event) => {
   const response = await apiRequest(
     `/chats/${chat._id}/members/${addUserName.value}`,
     {
-      auth: loginStatusStore,
+      auth: true,
       method: "PUT",
     },
   );
@@ -69,7 +69,7 @@ const remove = async (person: string) => {
   }
   const response = await apiRequest(`/chats/${chat._id}/members/${person}`, {
     method: "DELETE",
-    auth: loginStatusStore,
+    auth: true,
   });
   if (response.status !== 200) {
     alert(t("removeMemberChatFail", { status: response.status }));
@@ -79,7 +79,7 @@ const remove = async (person: string) => {
 const leave = async () => {
   const response = await apiRequest(`/chats/${chat._id}`, {
     method: "DELETE",
-    auth: loginStatusStore,
+    auth: true,
   });
   if (response.status !== 200) {
     alert(t("leaveChatFail", { status: response.status }));
@@ -98,7 +98,7 @@ const promote = async (person: string) => {
     `/chats/${chat._id}/members/${person}/transfer`,
     {
       method: "POST",
-      auth: loginStatusStore,
+      auth: true,
     },
   );
   if (response.status !== 200) {

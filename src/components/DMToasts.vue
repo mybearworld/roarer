@@ -48,7 +48,7 @@ cloudlinkStore.lookFor(
     const chat = await getResponseFromAPIRequest(
       `/chats/${packet.val.post_origin}`,
       {
-        auth: loginStatusStore,
+        auth: true,
         schema: chatSchema,
       },
     );
