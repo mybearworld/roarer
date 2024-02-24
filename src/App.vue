@@ -28,8 +28,6 @@ effect(() => {
 <template>
   <div class="flex flex-col gap-2">
     <Navigation />
-    <div class="filled:block z hidden">Filled</div>
-    <div class="bordered:block z hidden">Bordered</div>
     <Login v-if="!authStore.isLoggedIn && 'requiresLogin' in route.meta" />
     <RouterView v-else />
     <DMToasts />
