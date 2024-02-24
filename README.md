@@ -1,6 +1,6 @@
 # Roarer
 
-A Meower client.
+A simple mobile-friendly Meower client.
 
 ## Contributors
 
