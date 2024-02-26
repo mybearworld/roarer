@@ -314,7 +314,9 @@ const reload = () => location.reload();
       class="overflow-hidden"
       v-if="replyPost && typeof replyPost !== 'string' && !reply && !editing"
     >
-      <Post :post="replyPost" reply />
+      <RouterLink :to="`/posts/${replyPost.post_id}`">
+        <Post :post="replyPost" reply />
+      </RouterLink>
     </div>
     <form class="mt-2" v-if="editing" @submit="edit">
       <textarea
