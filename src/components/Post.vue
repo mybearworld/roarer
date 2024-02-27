@@ -257,7 +257,13 @@ const reload = () => location.reload();
       </div>
       <div
         class="visible flex grow space-x-3 sm:invisible group-hover:sm:visible"
-        v-if="!editing && !inbox && !reply && !hideControls"
+        v-if="
+          !editing &&
+          !inbox &&
+          !reply &&
+          !hideControls &&
+          !post.post_id.startsWith('_')
+        "
       >
         <button class="h-4 w-4" v-if="post.post_origin === 'home'">
           <RouterLink :to="`/posts/${post.post_id}`">

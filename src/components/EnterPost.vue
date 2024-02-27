@@ -18,16 +18,24 @@ import {
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
-import { postSchema } from "../lib/schemas/post";
+import { postSchema, APIPost } from "../lib/schemas/post";
+import { useAuthStore } from "../stores/auth";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
 
 const { chat } = defineProps<{
   chat?: APIChat;
 }>();
+const emit = defineEmits<{
+  optimistic: [post: APIPost];
+  pessimistic: [id: string];
+}>();
 
+const authStore = useAuthStore();
 const cloudlinkStore = useCloudlinkStore();
 const settingsStore = useSettingsStore();
+const idsStore = useIdsStore();
 const { t } = useI18n();
 
 const postContent = ref("");
@@ -39,13 +47,19 @@ const post = async (e?: Event) => {
     return;
   }
   posting.value = true;
+  const content = postContent.value.trim();
+  postContent.value = "";
+  if (inputRef.value) {
+    resetTextareaSize(inputRef.value);
+  }
+  const id = emitOptimistic(content);
   const response = await getResponseFromAPIRequest(
     chat ? `/posts/${chat._id}` : "/home",
     {
       method: "POST",
       auth: true,
       body: JSON.stringify({
-        content: postContent.value,
+        content: content,
       }),
       schema: postSchema,
     },
@@ -53,11 +67,8 @@ const post = async (e?: Event) => {
   if ("status" in response) {
     alert(t("postFail", { status: response.status }));
     posting.value = false;
+    emit("pessimistic", id);
     return;
-  }
-  postContent.value = "";
-  if (inputRef.value) {
-    resetTextareaSize(inputRef.value);
   }
   posting.value = false;
 };
@@ -75,6 +86,27 @@ const trimmedPost = (post: string) => {
   return `"${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
   }"`;
+};
+
+const emitOptimistic = (content: string) => {
+  if (!authStore.username) {
+    throw new Error("Auth required to post");
+  }
+  const id = idsStore.newOptimisicPostId();
+  emit("optimistic", {
+    edited_at: undefined,
+    isDeleted: false,
+    p: content,
+    post_id: id,
+    post_origin: chat ? chat._id : "home",
+    t: {
+      e: new Date().getTime(),
+    },
+    type: 1,
+    u: authStore.username,
+    unfiltered_p: undefined,
+  });
+  return id;
 };
 
 const inputRef = ref<HTMLTextAreaElement | null>(null);

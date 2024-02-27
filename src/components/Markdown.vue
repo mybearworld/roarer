@@ -9,7 +9,7 @@ import Token from "markdown-it/lib/token";
 import { useI18n } from "vue-i18n";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
-import { useMarkdownIdsStore } from "../stores/markdownIds";
+import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
 import { effect } from "vue";
 // @ts-expect-error
@@ -30,7 +30,7 @@ const IMAGE_REGEX = new RegExp(
   "g",
 );
 
-const id = useMarkdownIdsStore().getNewId();
+const id = useIdsStore().newMarkdownId();
 
 const trimmedMarkdown = md.replace(/(?:\s|\u200c)+$/, "");
 

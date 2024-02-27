@@ -74,9 +74,7 @@ const postsSchema = z.object({
     cloudlinkStore.lookFor(
       newPostSchema,
       ({ val: post }) => {
-        posts.value.unshift(post);
-        posts.value = posts.value;
-        newPostsAmount.value++;
+        newPost(post);
       },
       false,
     );
@@ -84,6 +82,35 @@ const postsSchema = z.object({
   newPostsAmount.value = 25;
   gotPosts.value = true;
 })();
+
+const newPost = (newPost: APIPost) => {
+  posts.value.unshift(newPost);
+  posts.value = posts.value;
+  newPostsAmount.value++;
+  const duplicateIndex = posts.value.findIndex(
+    (post) =>
+      post.post_id.startsWith("_") &&
+      post.p === (newPost.unfiltered_p ?? newPost.p),
+  );
+  if (duplicateIndex) {
+    posts.value = posts.value
+      .slice(0, duplicateIndex)
+      .concat(posts.value.slice(duplicateIndex + 1));
+    newPostsAmount.value--;
+  }
+};
+
+const handleOptimisic = (post: APIPost) => {
+  newPost(post);
+};
+
+const handlePessmistic = (id: string) => {
+  const index = posts.value.findIndex((post) => post.post_id === id);
+  posts.value = posts.value
+    .slice(0, index)
+    .concat(posts.value.slice(index + 1));
+  newPostsAmount.value--;
+};
 
 const enterPost = ref<InstanceType<typeof EnterPost> | null>(null);
 
@@ -138,6 +165,8 @@ const loadMore = async () => {
   <EnterPost
     ref="enterPost"
     :chat="chat"
+    @optimistic="handleOptimisic"
+    @pessimistic="handlePessmistic"
     v-if="!inbox && authStore.isLoggedIn"
   />
   <TypingIndicator :chat="chat" v-if="!inbox" />
