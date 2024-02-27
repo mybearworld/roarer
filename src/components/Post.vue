@@ -17,7 +17,7 @@ import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { z } from "zod";
 import Markdown from "./Markdown.vue";
-import { admin } from "../lib/admin";
+import { admin } from "../lib/env";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { addOntoPost } from "../lib/addOntoPost";

@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import { ZodSchema, z } from "zod";
 import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
 import { relationshipPacketSchema } from "../lib/schemas/relationship";
+import { cloudlinkURL } from "../lib/env";
 import { loginSchema } from "../lib/loginSchema";
 import { useAuthStore } from "./auth";
 import { useRelationshipStore } from "./relationship";
@@ -15,7 +16,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
 
   const cloudlink = ref(
     new CloudlinkClient({
-      url: import.meta.env.VITE_CLOUDLINK,
+      url: cloudlinkURL,
       log: false,
     }),
   );
