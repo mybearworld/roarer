@@ -256,7 +256,7 @@ const reload = () => location.reload();
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
       <div
-        class="visible flex grow space-x-1 sm:invisible group-hover:sm:visible"
+        class="visible flex grow justify-end space-x-1 sm:invisible sm:grow group-hover:sm:visible"
         v-if="
           !editing &&
           !inbox &&
