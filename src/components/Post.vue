@@ -208,7 +208,7 @@ const reload = () => location.reload();
     v-else
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(postInfo.username)"
   >
-    <div class="relative flex items-center gap-x-2">
+    <div class="flex items-center gap-x-2">
       <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
       <RouterLink
         v-if="!postInfo.italic"
@@ -245,7 +245,18 @@ const reload = () => location.reload();
         <span class="sr-only">{{ t("revoltBridgePost") }}</span>
       </span>
       <div
-        class="visible absolute right-0 top-0 z-10 ml-auto space-x-3 sm:invisible group-hover:sm:visible"
+        :class="`visible w-full text-sm italic opacity-40 ${
+          !postInfo.italic && !hideControls
+            ? 'hidden w-auto group-hover:sm:inline-block'
+            : ''
+        }`"
+        v-if="!reply"
+      >
+        {{ formatDate(post.t.e) }}
+        <span v-if="edited || post.edited_at">(edited)</span>
+      </div>
+      <div
+        class="visible flex grow space-x-3 sm:invisible group-hover:sm:visible"
         v-if="!editing && !inbox && !reply && !hideControls"
       >
         <button class="h-4 w-4" v-if="post.post_origin === 'home'">
@@ -288,17 +299,6 @@ const reload = () => location.reload();
           <IconArrowForward aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>
         </button>
-      </div>
-      <div
-        :class="`visible w-full text-sm italic opacity-40 ${
-          !postInfo.italic && !hideControls
-            ? 'hidden w-auto group-hover:sm:inline-block'
-            : ''
-        }`"
-        v-if="!reply"
-      >
-        {{ formatDate(post.t.e) }}
-        <span v-if="edited || post.edited_at">(edited)</span>
       </div>
     </div>
     <div
