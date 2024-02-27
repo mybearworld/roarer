@@ -87,16 +87,18 @@ const newPost = (newPost: APIPost) => {
   posts.value.unshift(newPost);
   posts.value = posts.value;
   newPostsAmount.value++;
-  const duplicateIndex = posts.value.findIndex(
-    (post) =>
-      post.post_id.startsWith("_") &&
-      post.p === (newPost.unfiltered_p ?? newPost.p),
-  );
-  if (duplicateIndex) {
-    posts.value = posts.value
-      .slice(0, duplicateIndex)
-      .concat(posts.value.slice(duplicateIndex + 1));
-    newPostsAmount.value--;
+  if (!newPost.post_id.startsWith("_")) {
+    const duplicateIndex = posts.value.findIndex(
+      (post) =>
+        post.post_id.startsWith("_") &&
+        post.p === (newPost.unfiltered_p ?? newPost.p),
+    );
+    if (duplicateIndex !== -1) {
+      posts.value = posts.value
+        .slice(0, duplicateIndex)
+        .concat(posts.value.slice(duplicateIndex + 1));
+      newPostsAmount.value--;
+    }
   }
 };
 
