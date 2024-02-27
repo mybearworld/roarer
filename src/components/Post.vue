@@ -268,7 +268,7 @@ const reload = () => location.reload();
         <button class="h-4 w-4" v-if="post.post_origin === 'home'">
           <RouterLink :to="`/posts/${post.post_id}`">
             <IconLink aria-hidden />
-            <span class="sr-only">{{ t("deletePost") }}</span>
+            <span class="sr-only">{{ t("linkPost") }}</span>
           </RouterLink>
         </button>
         <button
