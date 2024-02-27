@@ -256,7 +256,7 @@ const reload = () => location.reload();
         <span v-if="edited || post.edited_at">(edited)</span>
       </div>
       <div
-        class="visible flex grow space-x-3 sm:invisible group-hover:sm:visible"
+        class="visible flex grow space-x-1 sm:invisible group-hover:sm:visible"
         v-if="
           !editing &&
           !inbox &&
@@ -265,44 +265,37 @@ const reload = () => location.reload();
           !post.post_id.startsWith('_')
         "
       >
-        <button class="h-4 w-4" v-if="post.post_origin === 'home'">
+        <button v-if="post.post_origin === 'home'">
           <RouterLink :to="`/posts/${post.post_id}`">
-            <IconLink aria-hidden />
+            <IconLink class="h-6 w-6" aria-hidden />
             <span class="sr-only">{{ t("linkPost") }}</span>
           </RouterLink>
         </button>
         <button
-          class="h-4 w-4"
           @click="remove"
           v-if="isChatOwner || post.u === authStore.username"
         >
-          <IconTrash aria-hidden />
+          <IconTrash class="h-6 w-6" aria-hidden />
           <span class="sr-only">{{ t("deletePost") }}</span>
         </button>
-        <button
-          class="h-4 w-4"
-          @click="editing = true"
-          v-if="post.u === authStore.username"
-        >
-          <IconEdit aria-hidden />
+        <button @click="editing = true" v-if="post.u === authStore.username">
+          <IconEdit class="h-6 w-6" aria-hidden />
           <span class="sr-only">{{ t("editPost") }}</span>
         </button>
         <button
-          class="h-4 w-4"
           @click="report"
           v-if="post.u !== authStore.username && authStore.isLoggedIn"
         >
-          <IconAlertTriangle aria-hidden />
+          <IconAlertTriangle class="h-6 w-6" heigh aria-hidden />
           <span class="sr-only">{{ t("reportPost") }}</span>
         </button>
         <button
-          class="h-4 w-4"
           @click="
             emit('reply', postInfo.username, postInfo.content, post.post_id)
           "
           v-if="authStore.isLoggedIn"
         >
-          <IconArrowForward aria-hidden />
+          <IconArrowForward class="h-6 w-6" heigh aria-hidden />
           <span class="sr-only">{{ t("replyPost") }}</span>
         </button>
       </div>
