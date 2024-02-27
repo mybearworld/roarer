@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: pnpm install
-      - run: VITE_API="https://api.meower.org" VITE_CLOUDLINK="wss://api.meower.org/v0/cloudlink" pnpm run build
+      - run: VITE_API="https://api.meower.org" VITE_CLOUDLINK="wss://api.meower.org/v0/cloudlink" VITE_ADMIN="mybearworld" pnpm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

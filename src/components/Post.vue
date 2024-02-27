@@ -17,6 +17,7 @@ import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { z } from "zod";
 import Markdown from "./Markdown.vue";
+import { admin } from "../lib/admin";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { addOntoPost } from "../lib/addOntoPost";
@@ -361,7 +362,7 @@ const reload = () => location.reload();
         class="mt-2 flex items-center gap-1 rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
         v-if="
           postInfo.content.endsWith('\u200c') &&
-          postInfo.username === 'mybearworld' &&
+          postInfo.username === admin &&
           !postInfo.bridged &&
           !reply
         "
