@@ -185,7 +185,7 @@ defineExpose({ reply });
       ref="inputRef"
       rows="1"
     ></textarea>
-    <PopoverRoot :positioning="{ placement: 'bottom' }">
+    <PopoverRoot>
       <PopoverTrigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
         <IconMoodHappy aria-hidden />
         <span class="sr-only">Emoji</span>
