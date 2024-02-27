@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import { bridgeBots } from "../lib/bridgeBots";
 import { APIChat } from "../lib/schemas/chat";
 import { useOnlinelistStore } from "../stores/onlinelist";
@@ -22,6 +23,10 @@ const shownOnlineList = computed(() =>
     <summary class="cursor-pointer">
       {{ t("onlineUsers", { n: shownOnlineList.length }) }}
     </summary>
-    {{ shownOnlineList.join(", ") }}
+    <span v-for="(user, index) in shownOnlineList">
+      <RouterLink class="text-link underline" :to="`/users/${user}`">
+        {{ user }} </RouterLink
+      >{{ index === shownOnlineList.length - 1 ? "" : ", " }}
+    </span>
   </details>
 </template>
