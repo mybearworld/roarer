@@ -185,6 +185,13 @@ effect(() => {
       const newElement = document.createElement(isAudio ? "audio" : "video");
       newElement.src = element.src;
       newElement.controls = true;
+      if (isVideo) {
+        newElement.addEventListener("loadeddata", () => {
+          const computedStyle = getComputedStyle(newElement);
+          newElement.style.height = computedStyle.height;
+          newElement.style.width = computedStyle.width;
+        });
+      }
       element.replaceWith(newElement);
       return;
     }
