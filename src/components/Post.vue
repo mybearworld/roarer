@@ -333,7 +333,7 @@ const reload = () => location.reload();
         ref="editInputValue"
         @keydown="editKeydown"
         @input="editInputValue && autoResizeTextarea(editInputValue)"
-      />
+      ></textarea>
       <div class="space-x-2">
         <button
           type="submit"
