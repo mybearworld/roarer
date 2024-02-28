@@ -226,7 +226,7 @@ effect(() => {
 
 <template>
   <div
-    class="max-h-96 space-y-2 break-words [&>blockquote]:opacity-40 [&_a:not(.no-style)]:text-link [&_a:not(.no-style)]:underline [&_blockquote]:min-h-5 [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_h1]:text-4xl [&_h1]:font-bold [&_h2]:text-3xl [&_h2]:font-bold [&_h3]:text-2xl [&_h3]:font-bold [&_h4]:text-xl [&_h4]:font-bold [&_h5]:text-lg [&_h5]:font-bold [&_h6]:text-sm [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96"
+    class="max-h-96 space-y-2 break-words [&>blockquote]:opacity-40 [&_a:not(.no-style)]:text-link [&_a:not(.no-style)]:underline [&_blockquote]:min-h-5 [&_blockquote]:border-l-2 [&_blockquote]:border-text [&_blockquote]:pl-2 [&_blockquote]:italic [&_h1]:text-4xl/[inherit] [&_h1]:font-bold [&_h2]:text-3xl/[inherit] [&_h2]:font-bold [&_h3]:text-2xl/[inherit] [&_h3]:font-bold [&_h4]:text-xl/[inherit] [&_h4]:font-bold [&_h5]:text-lg/[inherit] [&_h5]:font-bold [&_h6]:text-sm/[inherit] [&_h6]:font-bold [&_hr]:mx-8 [&_hr]:my-2 [&_hr]:border-text [&_hr]:opacity-40 [&_img]:max-h-96 [&_img]:align-top [&_li]:list-inside [&_ol_li]:list-decimal [&_td]:border-[1px] [&_td]:border-text [&_td]:px-2 [&_td]:py-1 [&_th]:border-[1px] [&_th]:border-text [&_th]:px-2 [&_th]:py-1 [&_ul_li]:list-disc [&_video]:max-h-96"
     :id="id"
     ref="main"
   ></div>
