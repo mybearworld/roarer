@@ -26,12 +26,14 @@ import { getPostInfo } from "../lib/postInfo";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useAuthStore } from "../stores/auth";
+import { useDialogStore } from "../stores/dialog";
 import { useOnlinelistStore } from "../stores/onlinelist";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
 const authStore = useAuthStore();
+const dialogStore = useDialogStore();
 const onlineListStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
@@ -90,7 +92,7 @@ if (!dontUpdate) {
 }
 
 const remove = async () => {
-  if (!confirm(t("deletePostConfirm"))) {
+  if (!(await dialogStore.confirm(t("deletePostConfirm")))) {
     return;
   }
   const response = await apiRequest(`/posts?id=${post.post_id}`, {
@@ -98,7 +100,7 @@ const remove = async () => {
     auth: true,
   });
   if (response.status !== 200) {
-    alert(t("deletePostFail", { status: response.status }));
+    await dialogStore.alert(t("deletePostFail", { status: response.status }));
     return;
   }
   emit("delete");
@@ -127,7 +129,7 @@ const edit = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(t("editPostFail", { status: response.status }));
+    await dialogStore.alert(t("editPostFail", { status: response.status }));
   }
 };
 
@@ -166,11 +168,16 @@ effect(async () => {
 });
 
 const report = async () => {
-  const reason = prompt(t("reportReason"));
+  const reason = await dialogStore.prompt(
+    t("reportReason"),
+    t("reportReasonPlaceholder"),
+  );
   if (!reason) {
     return;
   }
-  if (!confirm(t("confirmReport", { reason, post: post.p }))) {
+  if (
+    !(await dialogStore.confirm(t("confirmReport", { reason, post: post.p })))
+  ) {
     return;
   }
   try {
@@ -187,7 +194,7 @@ const report = async () => {
       z.object({}), // for obvious reasons, reports aren't public and there's no response associated with them
     );
   } catch {}
-  alert(t("reportSuccess"));
+  await dialogStore.alert(t("reportSuccess"));
 };
 
 const reload = () => location.reload();

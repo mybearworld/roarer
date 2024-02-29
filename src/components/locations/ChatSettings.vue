@@ -5,7 +5,9 @@ import { useRoute } from "vue-router";
 import ChatSettings from "../ChatSettings.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { APIChat, chatSchema } from "../../lib/schemas/chat";
+import { useDialogStore } from "../../stores/dialog";
 
+const dialogStore = useDialogStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -19,7 +21,7 @@ const chat = ref<APIChat | null>(null);
     },
   );
   if ("status" in response) {
-    alert(t("getChatFail", { status: response.status }));
+    await dialogStore.alert(t("getChatFail", { status: response.status }));
     return;
   }
   chat.value = response;

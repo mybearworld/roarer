@@ -21,6 +21,7 @@ import { getReply } from "../lib/getReply";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useAuthStore } from "../stores/auth";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
 
@@ -34,6 +35,7 @@ const emit = defineEmits<{
 
 const authStore = useAuthStore();
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const settingsStore = useSettingsStore();
 const idsStore = useIdsStore();
 const { t } = useI18n();
@@ -65,7 +67,7 @@ const post = async (e?: Event) => {
     },
   );
   if ("status" in response) {
-    alert(t("postFail", { status: response.status }));
+    await dialogStore.alert(t("postFail", { status: response.status }));
     posting.value = false;
     emit("pessimistic", id);
     return;

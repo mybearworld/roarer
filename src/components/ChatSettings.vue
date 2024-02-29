@@ -8,9 +8,11 @@ import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/schemas/chat";
 import { updateChatSchema } from "../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../stores/cloudlink";
+import { useDialogStore } from "../stores/dialog";
 import { useAuthStore } from "../stores/auth";
 
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const authStore = useAuthStore();
 const { t } = useI18n();
 
@@ -40,7 +42,7 @@ const rename = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(t("renameChatFail", { status: response.status }));
+    await dialogStore.alert(t("renameChatFail", { status: response.status }));
   }
 };
 
@@ -55,13 +57,15 @@ const addUser = async (e?: Event) => {
     },
   );
   if (response.status !== 200) {
-    alert(t("addMemberChatFail", { status: response.status }));
+    await dialogStore.alert(
+      t("addMemberChatFail", { status: response.status }),
+    );
   }
 };
 
 const remove = async (person: string) => {
   if (
-    !confirm(
+    !await dialogStore.confirm(
       `Are you sure you want to remove ${person}? You can add them back afterwards.`,
     )
   ) {
@@ -72,7 +76,9 @@ const remove = async (person: string) => {
     auth: true,
   });
   if (response.status !== 200) {
-    alert(t("removeMemberChatFail", { status: response.status }));
+    await dialogStore.alert(
+      t("removeMemberChatFail", { status: response.status }),
+    );
   }
 };
 
@@ -82,13 +88,13 @@ const leave = async () => {
     auth: true,
   });
   if (response.status !== 200) {
-    alert(t("leaveChatFail", { status: response.status }));
+    await dialogStore.alert(t("leaveChatFail", { status: response.status }));
   }
 };
 
 const promote = async (person: string) => {
   if (
-    !confirm(
+    !await dialogStore.confirm(
       `Are you sure you want to promote ${person}?\nYou will lose ownership of the group.`,
     )
   ) {
@@ -102,7 +108,7 @@ const promote = async (person: string) => {
     },
   );
   if (response.status !== 200) {
-    alert(t("promoteChatFail", { status: response.status }));
+    await dialogStore.alert(t("promoteChatFail", { status: response.status }));
   }
 };
 

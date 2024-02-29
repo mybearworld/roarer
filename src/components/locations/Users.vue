@@ -11,11 +11,13 @@ import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
 import { profileSchemaOrError, APIProfile } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
+import { useDialogStore } from "../../stores/dialog";
 import { useAuthStore } from "../../stores/auth";
 import { useOnlinelistStore } from "../../stores/onlinelist";
 import { useRelationshipStore } from "../../stores/relationship";
 
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const authStore = useAuthStore();
 const onlinelistStore = useOnlinelistStore();
 const relationshipStore = useRelationshipStore();
@@ -51,11 +53,15 @@ effect(async () => {
     },
   );
   if ("status" in response) {
-    alert(t("profileInformationFail", { status: response.status }));
+    await dialogStore.alert(
+      t("profileInformationFail", { status: response.status }),
+    );
     return;
   }
   if (response.error) {
-    alert(t("profileInformationFail", { status: response.type }));
+    await dialogStore.alert(
+      t("profileInformationFail", { status: response.type }),
+    );
     return;
   }
   userProfile.value = response;
@@ -72,7 +78,9 @@ const block = async () => {
     return;
   }
   if (
-    !confirm(t(isBlocked.value ? "unblockUserConfirm" : "blockUserConfirm"))
+    !(await dialogStore.confirm(
+      t(isBlocked.value ? "unblockUserConfirm" : "blockUserConfirm"),
+    ))
   ) {
     return;
   }
@@ -87,7 +95,7 @@ const block = async () => {
     },
   );
   if (response.status !== 200) {
-    alert(
+    await dialogStore.alert(
       t(isBlocked.value ? "blockFail" : "unblockFail", {
         status: response.status,
       }),
@@ -99,14 +107,17 @@ const report = async () => {
   if (!userProfile.value) {
     return;
   }
-  const reason = prompt(t("reportReason"));
+  const reason = await dialogStore.prompt(
+    t("reportReason"),
+    t("reportReasonPlaceholder"),
+  );
   if (!reason) {
     return;
   }
   if (
-    !confirm(
+    !(await dialogStore.confirm(
       t("confirmUserReport", { reason, username: userProfile.value._id }),
-    )
+    ))
   ) {
     return;
   }
@@ -124,7 +135,7 @@ const report = async () => {
       z.object({}), // for obvious reasons, reports aren't public and there's no response associated with them
     );
   } catch {}
-  alert(t("reportSuccess"));
+  await dialogStore.alert(t("reportSuccess"));
 };
 
 const permissions = computed(() =>

@@ -7,8 +7,10 @@ import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { chatSchema, APIChat } from "../../lib/schemas/chat";
 import { updateChatSchema } from "../../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../../stores/cloudlink";
+import { useDialogStore } from "../../stores/dialog";
 
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const { t } = useI18n();
 
 const chats = ref<APIChat[]>([]);
@@ -21,7 +23,7 @@ effect(async () => {
     schema,
   });
   if ("status" in response) {
-    alert(t("getChatsFail", { status: response.status }));
+    await dialogStore.alert(t("getChatsFail", { status: response.status }));
     return;
   }
   chats.value = response.autoget;
@@ -49,7 +51,7 @@ const createChat = async (e?: Event) => {
     }),
   });
   if (response.status !== 200) {
-    alert(t("chatCreateFail", { status: response.status }));
+    await dialogStore.alert(t("chatCreateFail", { status: response.status }));
   }
 };
 

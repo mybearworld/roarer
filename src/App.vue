@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { effect } from "vue";
 import { useRoute, RouterView } from "vue-router";
+import Dialogs from "./components/Dialogs.vue";
 import DMToasts from "./components/DMToasts.vue";
 import Navigation from "./components/Navigation.vue";
 import Login from "./components/locations/Login.vue";
@@ -32,4 +33,5 @@ effect(() => {
     <RouterView v-else />
     <DMToasts />
   </div>
+  <Dialogs />
 </template>

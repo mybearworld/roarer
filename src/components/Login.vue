@@ -2,12 +2,14 @@
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "../stores/auth";
+import { useDialogStore } from "../stores/dialog"
 
 const authStore = useAuthStore();
+const dialogStore = useDialogStore();
 const { t } = useI18n();
 
 const signOut = async () => {
-  if (!confirm(t("loginSignoutConfirm"))) {
+  if (!await dialogStore.confirm(t("loginSignoutConfirm"))) {
     return;
   }
   authStore.isLoggedIn = false;

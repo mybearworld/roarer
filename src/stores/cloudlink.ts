@@ -6,11 +6,13 @@ import CloudlinkClient, { CloudlinkPacket } from "@williamhorning/cloudlink";
 import { relationshipPacketSchema } from "../lib/schemas/relationship";
 import { cloudlinkURL } from "../lib/env";
 import { loginSchema } from "../lib/loginSchema";
+import { useDialogStore } from "./dialog";
 import { useAuthStore } from "./auth";
 import { useRelationshipStore } from "./relationship";
 
 export const useCloudlinkStore = defineStore("cloudlink", () => {
   const { t } = useI18n();
+  const dialogStore = useDialogStore();
   const authStore = useAuthStore();
   const relationshipStore = useRelationshipStore();
 
@@ -20,7 +22,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       log: false,
     }),
   );
-  setInterval(() => {
+  setInterval(async () => {
     if (cloudlink.value.status === 1) {
       cloudlink.value.send({
         cmd: "ping",
@@ -28,7 +30,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       });
     }
     if (cloudlink.value.status === 3) {
-      alert(t("disconnected"));
+      await dialogStore.alert(t("disconnected"));
       location.reload();
     }
   }, 20000);
@@ -138,7 +140,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
         try {
           await login(...nonNullCredentials);
         } catch (e) {
-          if (!confirm(t("loginFail"))) {
+          if (!(await dialogStore.confirm(t("loginFail")))) {
             authStore.username = null;
             authStore.token = null;
           }

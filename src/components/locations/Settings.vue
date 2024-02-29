@@ -8,10 +8,12 @@ import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/schemas/profile";
 import { useCloudlinkStore } from "../../stores/cloudlink";
+import { useDialogStore } from "../../stores/dialog";
 import { useAuthStore } from "../../stores/auth";
 import { useSettingsStore } from "../../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const authStore = useAuthStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
@@ -28,7 +30,9 @@ const profilePicture = ref(0);
     },
   );
   if ("status" in response) {
-    alert(t("profileInformationFail", { status: response.status }));
+    await dialogStore.alert(
+      t("profileInformationFail", { status: response.status }),
+    );
     return;
   }
   quote.value = response.quote;
@@ -68,18 +72,26 @@ const me = async (e: Event) => {
       updateConfigSchema,
     );
   } catch (e) {
-    alert(t("configFail", { errmsg: e }));
+    await dialogStore.alert(t("configFail", { errmsg: e }));
     return;
   }
-  alert(t("configSuccess"));
+  await dialogStore.alert(t("configSuccess"));
 };
 
 const changePassword = async () => {
-  const newPassword = prompt(t("newPassword"));
+  const newPassword = await dialogStore.prompt(
+    t("newPassword"),
+    t("newPasswordPlaceholder"),
+    { password: true },
+  );
   if (!newPassword) {
     return;
   }
-  const oldPassword = prompt(t("oldPassword"));
+  const oldPassword = await dialogStore.prompt(
+    t("oldPassword"),
+    t("oldPasswordPlaceholder"),
+    { password: true },
+  );
   if (!oldPassword) {
     return;
   }
@@ -99,16 +111,16 @@ const changePassword = async () => {
       false,
     );
   } catch (e) {
-    alert(t("passwordChangeFail", { errmsg: e }));
+    await dialogStore.alert(t("passwordChangeFail", { errmsg: e }));
     return;
   }
-  if (confirm(t("alsoRevokeTokens"))) {
+  if (await dialogStore.confirm(t("alsoRevokeTokens"))) {
     revokeTokens();
   }
 };
 
 const revokeTokens = async () => {
-  if (!confirm(t("revokeTokensConfirm"))) {
+  if (!(await dialogStore.confirm(t("revokeTokensConfirm")))) {
     return;
   }
   try {
@@ -120,7 +132,7 @@ const revokeTokens = async () => {
       z.literal("I:024 | Logged out"),
     );
   } catch (e) {
-    alert(t("revokeTokensFail", { errmsg: e }));
+    await dialogStore.alert(t("revokeTokensFail", { errmsg: e }));
     return;
   }
   authStore.username = null;
@@ -129,10 +141,14 @@ const revokeTokens = async () => {
 };
 
 const deleteAccount = async () => {
-  if (!confirm(t("deleteAccountConfirm"))) {
+  if (!(await dialogStore.confirm(t("deleteAccountConfirm")))) {
     return;
   }
-  const password = prompt(t("deleteAccountPassword"));
+  const password = await dialogStore.prompt(
+    t("deleteAccountPassword"),
+    t("deleteAccountPasswordPlaceholder"),
+    { password: true },
+  );
   if (!password) {
     return;
   }
@@ -146,7 +162,7 @@ const deleteAccount = async () => {
       // true,
     );
   } catch (e) {
-    alert(t("deleteAccountFail", { errmsg: e }));
+    await dialogStore.alert(t("deleteAccountFail", { errmsg: e }));
     return;
   }
   authStore.username = null;

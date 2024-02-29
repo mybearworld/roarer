@@ -8,6 +8,7 @@ import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useAuthStore } from "../stores/auth";
+import { useDialogStore } from "../stores/dialog";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
@@ -21,6 +22,7 @@ const { chat, inbox } = defineProps<{
 }>();
 
 const cloudlinkStore = useCloudlinkStore();
+const dialogStore = useDialogStore();
 const authStore = useAuthStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
@@ -56,7 +58,7 @@ const postsSchema = z.object({
     schema: postsSchema,
   });
   if ("status" in response) {
-    alert(t("getPostsFail", { status: response.status }));
+    await dialogStore.alert(t("getPostsFail", { status: response.status }));
     return;
   }
   posts.value = response.autoget;
@@ -140,7 +142,7 @@ const loadMore = async () => {
     },
   );
   if ("status" in response) {
-    alert(t("loadMoreFail", { status: response.status }));
+    await dialogStore.alert(t("loadMoreFail", { status: response.status }));
     return;
   }
   const newPosts = response.autoget.slice(postsToRemove);

@@ -2,9 +2,11 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { themes } from "../../lib/themes";
+import { useDialogStore } from "../../stores/dialog";
 import { useSettingsStore, themeSchema } from "../../stores/settings";
 import { effect } from "vue";
 
+const dialogStore = useDialogStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
@@ -24,7 +26,7 @@ effect(() => {
   }
   themeInputRef.value.value = stringifyTheme();
 });
-const updateTheme = () => {
+const updateTheme = async () => {
   if (!themeInputRef.value) {
     return;
   }
@@ -32,13 +34,13 @@ const updateTheme = () => {
   try {
     objectTheme = JSON.parse(themeInputRef.value.value);
   } catch {
-    alert(t("themeInvalidJSON"));
+    await dialogStore.alert(t("themeInvalidJSON"));
     themeInputRef.value.value = stringifyTheme();
     return;
   }
   const safeTheme = themeSchema.safeParse(objectTheme);
   if (!safeTheme.success) {
-    alert(safeTheme.error.errors[0].message);
+    await dialogStore.alert(safeTheme.error.errors[0].message);
     themeInputRef.value.value = stringifyTheme();
     return;
   }
