@@ -6,10 +6,12 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-5">
+  <div class="flex max-w-full flex-col items-center gap-5">
     <h2 class="text-6xl font-bold">🤖 {{ t("routeRoarBot") }}</h2>
     <div class="text-3xl">{{ t("roarBotTagline") }}</div>
     <Markdown
+      class="max-w-full overflow-x-auto"
+      style="max-height: initial"
       md='
 ```ts
 import { Bot } from "roarbot";
@@ -53,8 +55,8 @@ declare global {
       </p>
     </div>
     <h3 class="mt-10 text-5xl font-bold">{{ t("roarBotTryIt") }}</h3>
-    <code class="text-center text-2xl">
-      npm install https://github.com/mybearworld/roarbot.git
+    <code class="max-w-full overflow-auto text-center text-2xl">
+      npm install https://github.com<wbr />/mybearworld<wbr />/roarbot.git
     </code>
   </div>
 </template>
