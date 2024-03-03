@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { RouterLink } from "vue-router";
+import { RouterLink, onBeforeRouteLeave } from "vue-router";
 import EnterPost from "./EnterPost.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
@@ -17,7 +17,7 @@ import { postSchema, APIPost } from "../lib/schemas/post";
 import { z } from "zod";
 
 const { chat, inbox } = defineProps<{
-  chat?: APIChat;
+  chat?: APIChat | "livechat";
   inbox?: boolean;
 }>();
 
@@ -29,9 +29,12 @@ const settingsStore = useSettingsStore();
 const { t } = useI18n();
 
 const POSTS_PER_REQUESTS = 25;
-const requestURL = chat
-  ? `/posts/${chat._id}?autoget=1`
-  : `/${inbox ? "inbox" : "home"}?autoget=1`;
+const requestURL =
+  chat === "livechat"
+    ? ""
+    : chat
+      ? `/posts/${chat._id}?autoget=1`
+      : `/${inbox ? "inbox" : "home"}?autoget=1`;
 
 const posts = ref<APIPost[]>([]);
 const gotPosts = ref(false);
@@ -53,22 +56,76 @@ const postsSchema = z.object({
   pages: z.number(),
 });
 (async () => {
-  const response = await getResponseFromAPIRequest(requestURL, {
-    auth: true,
-    schema: postsSchema,
-  });
-  if ("status" in response) {
-    await dialogStore.alert(t("getPostsFail", { status: response.status }));
-    return;
+  if (chat !== "livechat") {
+    const response = await getResponseFromAPIRequest(requestURL, {
+      auth: true,
+      schema: postsSchema,
+    });
+    if ("status" in response) {
+      await dialogStore.alert(t("getPostsFail", { status: response.status }));
+      return;
+    }
+    posts.value = response.autoget;
+    stopShowingLoadMore.value = response.pages === 1;
+  } else {
+    cloudlinkStore.lookFor(
+      z.object({
+        cmd: z.literal("direct"),
+        val: z.object({
+          chatid: z.literal("livechat"),
+          state: z.literal(1).or(z.literal(0)),
+          u: z.string(),
+        }),
+      }),
+      (packet) => {
+        newPost({
+          isDeleted: false,
+          p: t(`livechat${packet.val.state === 1 ? "Join" : "Leave"}`, {
+            username: packet.val.u,
+          }),
+          post_id: "Livechat Post",
+          post_origin: "livechat",
+          t: {
+            e: new Date().getTime() / 1000,
+          },
+          type: 1,
+          u: "Server",
+        });
+      },
+      false,
+    );
+    cloudlinkStore.send(
+      {
+        cmd: "set_chat_state",
+        val: {
+          chatid: "livechat",
+          state: 1,
+        },
+      },
+      z.any(),
+    );
+    onBeforeRouteLeave(() => {
+      cloudlinkStore.send(
+        {
+          cmd: "set_chat_state",
+          val: {
+            chatid: "livechat",
+            state: 0,
+          },
+        },
+        z.any(),
+      );
+    });
+    stopShowingLoadMore.value = true;
   }
-  posts.value = response.autoget;
-  stopShowingLoadMore.value = response.pages === 1;
 
   const newPostSchema = z.object({
     cmd: z.literal("direct"),
     val: postSchema.and(
       z.object({
-        post_origin: z.literal(chat?._id ?? "home"),
+        post_origin: z.literal(
+          chat === "livechat" ? "livechat" : chat?._id ?? "home",
+        ),
       }),
     ),
   });
@@ -157,15 +214,17 @@ const loadMore = async () => {
   <div class="flex items-center gap-2" v-if="chat">
     <h2 class="text-lg font-bold" v-if="chat">
       {{
-        chat.nickname ||
-        chat.members.find((member) => member !== authStore.username)
+        chat === "livechat"
+          ? t("livechat")
+          : chat.nickname ||
+            chat.members.find((member) => member !== authStore.username)
       }}
     </h2>
     <RouterLink to="/chats" class="text-link underline">
       {{ t("back") }}
     </RouterLink>
   </div>
-  <OnlineList :chat="chat" v-if="!inbox" />
+  <OnlineList :chat="chat" v-if="!inbox && chat !== 'livechat'" />
   <EnterPost
     ref="enterPost"
     :chat="chat"
@@ -173,12 +232,15 @@ const loadMore = async () => {
     @pessimistic="handlePessmistic"
     v-if="!inbox && authStore.isLoggedIn"
   />
-  <TypingIndicator :chat="chat" v-if="!inbox" />
+  <TypingIndicator :chat="chat" v-if="!inbox && chat !== 'livechat'" />
   <Post
     :post="post"
     :key="post.post_id"
     :inbox="inbox"
-    :isChatOwner="chat && chat.owner === authStore.username"
+    :isChatOwner="
+      chat && chat !== 'livechat' && chat.owner === authStore.username
+    "
+    :hideControls="chat === 'livechat'"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
     v-for="post in showPosts"

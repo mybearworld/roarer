@@ -119,6 +119,7 @@ cloudlinkStore.lookFor(
         {{ t("createChat") }}
       </button>
     </form>
+    <ChatView chat="livechat" />
     <ChatView :chat="chat" v-for="chat in sortedChats" />
   </div>
 </template>

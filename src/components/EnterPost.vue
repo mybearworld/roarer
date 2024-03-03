@@ -26,7 +26,7 @@ import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
 
 const { chat } = defineProps<{
-  chat?: APIChat;
+  chat?: APIChat | "livechat";
 }>();
 const emit = defineEmits<{
   optimistic: [post: APIPost];
@@ -56,7 +56,7 @@ const post = async (e?: Event) => {
   }
   const id = emitOptimistic(content);
   const response = await getResponseFromAPIRequest(
-    chat ? `/posts/${chat._id}` : "/home",
+    chat ? `/posts/${chat === "livechat" ? "livechat" : chat._id}` : "/home",
     {
       method: "POST",
       auth: true,
@@ -100,7 +100,7 @@ const emitOptimistic = (content: string) => {
     isDeleted: false,
     p: content,
     post_id: id,
-    post_origin: chat ? chat._id : "home",
+    post_origin: chat === "livechat" ? "livechat" : chat ? chat._id : "home",
     t: {
       e: new Date().getTime(),
     },
@@ -123,6 +123,9 @@ const reply = (username: string, content: string, postId: string) => {
 
 const lastTypingIndicatorSent = ref<number | null>(null);
 const input = async () => {
+  if (chat === "livechat") {
+    return;
+  }
   const currentDate = new Date().getTime();
   if (inputRef.value) {
     autoResizeTextarea(inputRef.value);

@@ -8,6 +8,7 @@ import ChatSettings from "./components/locations/ChatSettings.vue";
 import Groups from "./components/locations/Groups.vue";
 import Home from "./components/locations/Home.vue";
 import Inbox from "./components/locations/Inbox.vue";
+import Livechat from "./components/locations/Livechat.vue";
 import Login from "./components/locations/Login.vue";
 import NotFound from "./components/locations/NotFound.vue";
 import PostShare from "./components/locations/PostShare.vue";
@@ -36,6 +37,10 @@ const router = createRouter({
       path: "/chats/:id",
       component: Chat,
       meta: { isChat: true, requiresLogin: true },
+    },
+    {
+      path: "/chats/livechat",
+      component: Livechat,
     },
     {
       path: "/chats/:id/settings",
