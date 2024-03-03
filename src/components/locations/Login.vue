@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useAuthStore } from "../../stores/auth";
 import { useRelationshipStore } from "../../stores/relationship";
@@ -13,9 +13,10 @@ const authStore = useAuthStore();
 const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 const router = useRouter();
+const route = useRoute();
 
 effect(() => {
-  if (authStore.isLoggedIn) {
+  if (authStore.isLoggedIn && route.path === "/login") {
     router.push("/home");
   }
 });
