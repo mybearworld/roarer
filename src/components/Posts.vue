@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, effect } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink, onBeforeRouteLeave } from "vue-router";
 import EnterPost from "./EnterPost.vue";
@@ -94,28 +94,6 @@ const postsSchema = z.object({
       },
       false,
     );
-    cloudlinkStore.send(
-      {
-        cmd: "set_chat_state",
-        val: {
-          chatid: "livechat",
-          state: 1,
-        },
-      },
-      z.any(),
-    );
-    onBeforeRouteLeave(() => {
-      cloudlinkStore.send(
-        {
-          cmd: "set_chat_state",
-          val: {
-            chatid: "livechat",
-            state: 0,
-          },
-        },
-        z.any(),
-      );
-    });
     stopShowingLoadMore.value = true;
   }
 
@@ -141,6 +119,34 @@ const postsSchema = z.object({
   newPostsAmount.value = 25;
   gotPosts.value = true;
 })();
+
+effect(() => {
+  if (chat === "livechat" && authStore.isLoggedIn) {
+    cloudlinkStore.send(
+      {
+        cmd: "set_chat_state",
+        val: {
+          chatid: "livechat",
+          state: 1,
+        },
+      },
+      z.any(),
+    );
+  }
+});
+
+onBeforeRouteLeave(() => {
+  cloudlinkStore.send(
+    {
+      cmd: "set_chat_state",
+      val: {
+        chatid: "livechat",
+        state: 0,
+      },
+    },
+    z.any(),
+  );
+});
 
 const newPost = (newPost: APIPost) => {
   posts.value.unshift(newPost);
