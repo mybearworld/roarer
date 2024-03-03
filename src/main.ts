@@ -11,6 +11,7 @@ import Inbox from "./components/locations/Inbox.vue";
 import Login from "./components/locations/Login.vue";
 import NotFound from "./components/locations/NotFound.vue";
 import PostShare from "./components/locations/PostShare.vue";
+import RoarBot from "./components/locations/RoarBot.vue";
 import ReportHistory from "./components/locations/ReportHistory.vue";
 import Settings from "./components/locations/Settings.vue";
 import ThemeSettings from "./components/locations/ThemeSettings.vue";
@@ -57,6 +58,7 @@ const router = createRouter({
       meta: { requiresLogin: true },
     },
     { path: "/posts/:post", component: PostShare },
+    { path: "/bot", component: RoarBot },
     { path: "/:path(.*)", component: NotFound },
   ],
 });

@@ -241,4 +241,17 @@ export const en = {
   newPasswordPlaceholder: "New password",
   oldPasswordPlaceholder: "Current password",
   deleteAccountPasswordPlaceholder: "Password",
+  routeRelated: "Related",
+  routeRoarBot: "RoarBot",
+  roarBotTagline: "Robots for Meower.",
+  roarBotTypeSafe: "Type-safe",
+  roarBotTypeSafeDescription: {
+    start:
+      "Written in Typescript, RoarBot provides type definitions, so you can confidently write RoarBot code and not have to worry about whether a function takes in a string or a number. But it goes further than that - with the ",
+    end: " function, you can be sure that each command gets exactly the arguments with the types it needs.",
+  },
+  roarBotSimple: "Simple",
+  roarBotSimpleDescription:
+    "No confusing and unknown syntax, no templates necessary to get started. You'll always understand your RoarBot code. When clarification is needed, you can hover over any function for a description.",
+  roarBotTryIt: "Try it!",
 };

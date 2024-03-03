@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { IconChevronDown } from "@tabler/icons-vue";
+import {
+  DropdownMenuRoot,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from "radix-vue";
 import { RouterLink } from "vue-router";
 import Login from "./Login.vue";
 import { useIsDevStore } from "../stores/isDev";
@@ -46,6 +54,30 @@ const isDevStore = useIsDevStore();
         >
           {{ t("routeSettings") }}
         </RouterLink>
+        <DropdownMenuRoot>
+          <DropdownMenuTrigger>
+            <span
+              class="flex items-center whitespace-nowrap text-link underline"
+            >
+              {{ t("routeRelated") }}
+              <IconChevronDown class="h-5 w-5" />
+            </span>
+          </DropdownMenuTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuContent
+              class="ml-2 mt-0.5 rounded-xl bg-accent px-2 py-1 text-accent-text shadow-lg"
+            >
+              <DropdownMenuItem>
+                <RouterLink
+                  class="flex whitespace-nowrap text-link underline"
+                  to="/bot"
+                >
+                  {{ t("routeRoarBot") }}
+                </RouterLink>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenuPortal>
+        </DropdownMenuRoot>
       </div>
       <p v-if="isDevStore.isDev">
         {{ t("inDevelopmentMode") }}
