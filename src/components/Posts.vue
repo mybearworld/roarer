@@ -136,16 +136,18 @@ effect(() => {
 });
 
 onBeforeRouteLeave(() => {
-  cloudlinkStore.send(
-    {
-      cmd: "set_chat_state",
-      val: {
-        chatid: "livechat",
-        state: 0,
+  if (chat === "livechat" && authStore.isLoggedIn) {
+    cloudlinkStore.send(
+      {
+        cmd: "set_chat_state",
+        val: {
+          chatid: "livechat",
+          state: 0,
+        },
       },
-    },
-    z.any(),
-  );
+      z.any(),
+    );
+  }
 });
 
 const newPost = (newPost: APIPost) => {
