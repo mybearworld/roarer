@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const profileSchemaNoError = z.object({
   _id: z.string(),
+  avatar: z.string(),
+  avatar_color: z.string(),
   banned: z.boolean(),
   created: z.number(),
   flags: z.number(),

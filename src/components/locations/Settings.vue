@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { effect, ref } from "vue";
+import { IconUpload } from "@tabler/icons-vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { useRouter, RouterLink } from "vue-router";
@@ -7,6 +8,7 @@ import LanguageSwitcher from "../LanguageSwitcher.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/schemas/profile";
+import { upload } from "../../lib/upload";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useDialogStore } from "../../stores/dialog";
 import { useAuthStore } from "../../stores/auth";
@@ -20,7 +22,8 @@ const { t } = useI18n();
 const router = useRouter();
 
 const quote = ref("");
-const profilePicture = ref(0);
+const profilePicture = ref<number | string>(0);
+const uploadedProfilePicture = ref<string | null>(null);
 
 (async () => {
   const response = await getResponseFromAPIRequest(
@@ -37,6 +40,9 @@ const profilePicture = ref(0);
   }
   quote.value = response.quote;
   profilePicture.value = response.pfp_data;
+  if (typeof response.pfp_data === "string") {
+    uploadedProfilePicture.value = response.pfp_data;
+  }
 })();
 
 const updateConfigSchema = z.object({
@@ -66,7 +72,8 @@ const me = async (e: Event) => {
         cmd: "update_config",
         val: {
           quote: quote.value,
-          pfp_data: profilePicture.value,
+          [typeof profilePicture.value === "string" ? "avatar" : "pfp_data"]:
+            profilePicture.value,
         },
       },
       updateConfigSchema,
@@ -77,6 +84,30 @@ const me = async (e: Event) => {
   }
   await dialogStore.alert(t("configSuccess"));
 };
+
+const pfpUpload = ref<HTMLInputElement | null>(null);
+effect(() => {
+  if (!pfpUpload.value) {
+    return;
+  }
+  pfpUpload.value.addEventListener("change", async (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) {
+      return;
+    }
+    const result = await upload(file);
+    if (result.error === "tokenFail") {
+      alert(t("uploadTokenFail", { status: result.status }));
+      return;
+    }
+    if (result.error === "tooLarge") {
+      alert(t("uploadTooLarge", { size: result.readableMaxSize }));
+      return;
+    }
+    uploadedProfilePicture.value = result.image.id;
+    profilePicture.value = result.image.id;
+  });
+});
 
 const changePassword = async () => {
   const newPassword = await dialogStore.prompt(
@@ -195,7 +226,37 @@ const deleteAccount = async () => {
           {{ t("usersMePfp") }}
           <div class="flex flex-wrap gap-2">
             <button
-              class="rounded-xl bg-accent p-2 aria-selected:border-2 aria-selected:border-green-500"
+              class="box-content flex h-[70px] w-[70px] items-center justify-center rounded-xl bg-accent p-2"
+              type="button"
+              :title="t('uploadProfilePicture')"
+              @click="pfpUpload?.click()"
+            >
+              <IconUpload class="h-12 w-12" />
+              <input
+                type="file"
+                class="hidden"
+                accept="image/png, image/jpeg, image/webp, image/gif"
+                ref="pfpUpload"
+              />
+            </button>
+            <button
+              class="rounded-xl bg-accent p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
+              :aria-selected="profilePicture === uploadedProfilePicture"
+              type="button"
+              :title="t('uploadedPfp')"
+              @click="profilePicture = uploadedProfilePicture"
+              v-if="uploadedProfilePicture"
+            >
+              <img
+                width="70"
+                height="70"
+                :src="`https://uploads.meower.org/icons/${uploadedProfilePicture}`"
+                class="h-[70px] w-[70px]"
+                :title="t('uploadedPfp')"
+              />
+            </button>
+            <button
+              class="rounded-xl bg-accent p-2 aria-selected:outline aria-selected:outline-2 aria-selected:outline-green-500"
               :aria-selected="profilePicture === key"
               type="button"
               :title="`Profile picture #${key}`"

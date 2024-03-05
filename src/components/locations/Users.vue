@@ -37,7 +37,9 @@ const submit = (e: Event) => {
 
 const profilePicture = computed(() =>
   userProfile.value
-    ? profilePictures.get(userProfile.value.pfp_data)
+    ? userProfile.value.avatar
+      ? `https://uploads.meower.org/icons/${userProfile.value.avatar}`
+      : profilePictures.get(userProfile.value.pfp_data)
     : undefined,
 );
 
