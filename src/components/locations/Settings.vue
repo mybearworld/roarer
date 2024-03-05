@@ -40,8 +40,9 @@ const uploadedProfilePicture = ref<string | null>(null);
   }
   quote.value = response.quote;
   profilePicture.value = response.pfp_data;
-  if (typeof response.pfp_data === "string") {
-    uploadedProfilePicture.value = response.pfp_data;
+  if (response.avatar) {
+    profilePicture.value = response.avatar;
+    uploadedProfilePicture.value = response.avatar;
   }
 })();
 
