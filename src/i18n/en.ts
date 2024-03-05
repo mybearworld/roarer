@@ -254,7 +254,7 @@ export const en = {
   roarBotSimpleDescription:
     "No confusing and unknown syntax, no templates necessary to get started. You'll always understand your RoarBot code. When clarification is needed, you can hover over any function for a description.",
   roarBotTryIt: "Try it!",
-  livechat: "Live chat",
+  livechat: "Livechat",
   livechatJoin: "{'@'}{username} joined the chat.",
   livechatLeave: "{'@'}{username} left the chat.",
   liveChatDescription:
