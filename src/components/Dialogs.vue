@@ -28,7 +28,7 @@ const promptResponse = ref("");
         class="fixed left-0 top-0 flex h-full w-full items-center justify-center"
       >
         <DialogContent
-          class="space-y-2 rounded-xl px-2 py-1 filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent"
+          class="space-y-2 rounded-xl bg-accent px-2 py-1 text-accent-text"
         >
           <DialogTitle class="sr-only">
             {{ t(`dialogTitle_${dialogStore.shownDialog.type}`) }}
@@ -37,7 +37,7 @@ const promptResponse = ref("");
             {{ dialogStore.shownDialog.message }}
           </DialogDescription>
           <DialogClose
-            class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
+            class="rounded-xl bg-background px-2 py-1 text-text"
             @click="dialogStore.shownDialog.okClick()"
             v-if="dialogStore.shownDialog.type === 'alert'"
           >
@@ -48,13 +48,13 @@ const promptResponse = ref("");
             v-else-if="dialogStore.shownDialog.type === 'confirm'"
           >
             <DialogClose
-              class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
+              class="rounded-xl bg-background px-2 py-1 text-text"
               @click="dialogStore.shownDialog.yesClick()"
             >
               {{ t("yesButton") }}
             </DialogClose>
             <DialogClose
-              class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
+              class="rounded-xl bg-background px-2 py-1 text-text"
               @click="dialogStore.shownDialog.noClick()"
             >
               {{ t("noButton") }}
@@ -63,7 +63,7 @@ const promptResponse = ref("");
           <template v-else-if="dialogStore.shownDialog.type === 'prompt'">
             <input
               :type="dialogStore.shownDialog.password ? 'password' : 'text'"
-              class="rounded-lg border-2 bg-transparent px-2 py-1 filled:border-background bordered:border-accent"
+              class="rounded-lg border-2 border-background bg-transparent px-2 py-1"
               @input="
                 (event) => {
                   promptResponse = (event.target as HTMLInputElement).value;
@@ -73,7 +73,7 @@ const promptResponse = ref("");
             />
             <div class="space-x-2">
               <DialogClose
-                class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
+                class="rounded-xl bg-background px-2 py-1 text-text"
                 @click="
                   promptResponse = '';
                   dialogStore.shownDialog.okClick(promptResponse);
@@ -82,7 +82,7 @@ const promptResponse = ref("");
                 {{ t("okButton") }}
               </DialogClose>
               <DialogClose
-                class="rounded-xl px-2 py-1 filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text"
+                class="rounded-xl bg-background px-2 py-1 text-text"
                 @click="dialogStore.shownDialog.cancelClick()"
               >
                 {{ t("cancelButton") }}
