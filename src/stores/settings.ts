@@ -8,6 +8,7 @@ const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
 const ENTER_SENDS_STORAGE = "roarer:enterSends";
 const HIDE_BLOCKED_MENTIONS_STORAGE = "roarer:hideBlockedMentions";
 const USE_SCRATCH_2_BLOCKS_STORAGE = "roarer:useScratch2Blocks";
+const SHOW_PFPS_STORAGE = "roarer:showPfps";
 const THEME_STORAGE = "roarer:theme";
 
 const COLOR_REGEX = /^#[0-9a-f]{6}$/i;
@@ -27,6 +28,9 @@ export const useSettingsStore = defineStore("settings", () => {
   );
   const useScratch2Blocks = ref(
     localStorage.getItem(USE_SCRATCH_2_BLOCKS_STORAGE) === "true",
+  );
+  const showPfps = ref(
+    ["true", null].includes(localStorage.getItem(SHOW_PFPS_STORAGE)),
   );
   const theme = ref<RoarerTheme>(themes.dark);
   const themeStorage = localStorage.getItem(THEME_STORAGE);
@@ -67,6 +71,9 @@ export const useSettingsStore = defineStore("settings", () => {
     );
   });
   effect(() => {
+    localStorage.setItem(SHOW_PFPS_STORAGE, showPfps.value ? "true" : "false");
+  });
+  effect(() => {
     localStorage.setItem(THEME_STORAGE, JSON.stringify(theme.value));
   });
 
@@ -77,6 +84,7 @@ export const useSettingsStore = defineStore("settings", () => {
     theme,
     hideBlockedMentions,
     useScratch2Blocks,
+    showPfps,
     setTheme(newTheme: RoarerTheme) {
       theme.value = newTheme;
     },

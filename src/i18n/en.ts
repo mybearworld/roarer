@@ -263,4 +263,6 @@ export const en = {
   uploadTokenFail: "Failed to get token to upload: {status}",
   uploadTooLarge: "Your asset is too large. Please keep it at or under {size}.",
   uploadedPfp: "Uploaded profile picture",
+  profilePictureCustomAlt: "Custom profile picture",
+  settingShowPfps: "Show profile pictures in posts.",
 };

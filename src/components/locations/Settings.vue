@@ -227,12 +227,12 @@ const deleteAccount = async () => {
           {{ t("usersMePfp") }}
           <div class="flex flex-wrap gap-2">
             <button
-              class="box-content flex h-[70px] w-[70px] items-center justify-center rounded-xl bg-accent p-2"
+              class="box-content flex items-center justify-center rounded-xl bg-accent p-2"
               type="button"
               :title="t('uploadProfilePicture')"
               @click="pfpUpload?.click()"
             >
-              <IconUpload class="h-12 w-12" />
+              <IconUpload class="h-16 w-16" />
               <input
                 type="file"
                 class="hidden"
@@ -249,10 +249,8 @@ const deleteAccount = async () => {
               v-if="uploadedProfilePicture"
             >
               <img
-                width="70"
-                height="70"
+                class="h-16 w-16"
                 :src="`https://uploads.meower.org/icons/${uploadedProfilePicture}`"
-                class="h-[70px] w-[70px]"
                 :title="t('uploadedPfp')"
               />
             </button>
@@ -265,8 +263,7 @@ const deleteAccount = async () => {
               v-for="[key, value] of profilePictures"
             >
               <img
-                width="70"
-                height="70"
+                class="h-16 w-16"
                 :src="value"
                 :alt="t('profilePictureAlt', { n: key })"
               />
@@ -313,6 +310,12 @@ const deleteAccount = async () => {
       <input type="checkbox" v-model="settingsStore.useScratch2Blocks" />
       <div>
         {{ t("settingUseScratch2Blocks") }}
+      </div>
+    </label>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.showPfps" />
+      <div>
+        {{ t("settingShowPfps") }}
       </div>
     </label>
     <div>
