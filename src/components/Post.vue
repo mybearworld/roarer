@@ -229,8 +229,7 @@ const reload = () => location.reload();
         class="h-10 min-h-10 w-10 min-w-10 rounded-xl"
         height="40"
         width="40"
-        :avatar="profile.avatar"
-        :pfp="profile.pfp_data"
+        :pfp="{ pfp: profile.pfp_data, avatar: profile.avatar }"
       />
     </div>
     <div

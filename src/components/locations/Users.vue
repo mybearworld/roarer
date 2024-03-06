@@ -3,8 +3,8 @@ import { computed, effect, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { z } from "zod";
+import ProfilePicture from "../ProfilePicture.vue";
 import Statistics from "../Statistics.vue";
-import { profilePictures } from "../../assets/pfp";
 import meowy from "../../assets/pfp/22.svg";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
@@ -34,14 +34,6 @@ const submit = (e: Event) => {
   }
   router.push(`/users/${username.value}`);
 };
-
-const profilePicture = computed(() =>
-  userProfile.value
-    ? userProfile.value.avatar
-      ? `https://uploads.meower.org/icons/${userProfile.value.avatar}`
-      : profilePictures.get(userProfile.value.pfp_data)
-    : undefined,
-);
 
 const userProfile = ref<APIProfile | null>(null);
 effect(async () => {
@@ -182,18 +174,9 @@ const permissions = computed(() =>
       <div
         class="flex min-w-[calc(70px+theme(spacing.4))] items-center rounded-xl bg-accent p-2"
       >
-        <img
-          width="70"
-          height="70"
-          :src="profilePicture"
-          v-if="profilePicture"
-        />
-        <img
-          width="70"
-          height="70"
-          :src="meowy"
-          class="brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
-          v-else
+        <ProfilePicture
+          class="h-16 w-16"
+          :pfp="{ pfp: userProfile.pfp_data, avatar: userProfile.avatar }"
         />
       </div>
       <div class="">

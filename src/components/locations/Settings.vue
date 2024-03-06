@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { useRouter, RouterLink } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
+import ProfilePicture from "../ProfilePicture.vue";
 import { profilePictures } from "../../assets/pfp";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/schemas/profile";
@@ -248,10 +249,9 @@ const deleteAccount = async () => {
               @click="profilePicture = uploadedProfilePicture"
               v-if="uploadedProfilePicture"
             >
-              <img
+              <ProfilePicture
                 class="h-16 w-16"
-                :src="`https://uploads.meower.org/icons/${uploadedProfilePicture}`"
-                :title="t('uploadedPfp')"
+                :pfp="{ avatar: uploadedProfilePicture }"
               />
             </button>
             <button
@@ -262,11 +262,12 @@ const deleteAccount = async () => {
               @click="profilePicture = key"
               v-for="[key, value] of profilePictures"
             >
-              <img
+              <ProfilePicture class="h-16 w-16" :pfp="{ pfp: key }" />
+              <!-- <img
                 class="h-16 w-16"
                 :src="value"
                 :alt="t('profilePictureAlt', { n: key })"
-              />
+              /> -->
             </button>
           </div>
         </label>
