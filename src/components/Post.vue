@@ -223,7 +223,7 @@ const reload = () => location.reload();
   >
     <div
       class="mr-2 mt-1 flex px-1"
-      v-if="!reply && profile && settingsStore.showPfps"
+      v-if="!reply && profile && !inbox && settingsStore.showPfps"
     >
       <ProfilePicture
         class="h-10 min-h-10 w-10 min-w-10 rounded-xl"
