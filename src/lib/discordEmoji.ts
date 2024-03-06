@@ -1,4 +1,4 @@
-export const DISCORD_REGEX = /<a?:(\w+):(\d+)>/;
+export const DISCORD_REGEX = /<a?:([\w\*]+):(\d+)>/;
 
 export const discordEmoji = [
   "<:zed:1208625071766114364>",
