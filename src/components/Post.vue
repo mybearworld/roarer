@@ -217,23 +217,29 @@ const reload = () => location.reload();
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
-    :class="`group flex gap-2 rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
-      reply ? 'gap-2 border-none italic text-text opacity-40' : 'px-2 py-1'
-    }`"
+    class="flex gap-2"
     v-else
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(postInfo.username)"
   >
     <div
-      class="mr-2 flex items-center px-1"
+      class="mr-2 mt-1 flex px-1"
       v-if="!reply && profile && settingsStore.showPfps"
     >
       <ProfilePicture
         class="h-10 min-h-10 w-10 min-w-10 rounded-xl"
+        height="40"
+        width="40"
         :avatar="profile.avatar"
         :pfp="profile.pfp_data"
       />
     </div>
-    <div :class="`flex ${reply ? 'gap-2' : 'flex-col'} w-full overflow-auto`">
+    <div
+      :class="`group flex w-full rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
+        reply
+          ? 'gap-2 border-none italic text-text opacity-40'
+          : 'flex-col px-2 py-1'
+      }`"
+    >
       <div class="flex items-center gap-x-2">
         <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
         <RouterLink
