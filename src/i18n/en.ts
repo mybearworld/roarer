@@ -265,4 +265,6 @@ export const en = {
   uploadedPfp: "Uploaded profile picture",
   profilePictureCustomAlt: "Custom profile picture",
   settingShowPfps: "Show profile pictures in posts.",
+  adminPost:
+    "This was posted by a moderator. Go to their user page for further information.",
 };

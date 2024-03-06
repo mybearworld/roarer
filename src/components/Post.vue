@@ -6,6 +6,7 @@ import {
   IconBrandDiscord,
   IconBuildingBridge,
   IconCircleFilled,
+  IconShield,
   IconEdit,
   IconLink,
   IconSailboat,
@@ -274,6 +275,10 @@ const reload = () => location.reload();
         <span :title="t('revoltBridgePost')" v-if="post.u === 'RevowerJS'">
           <IconBuildingBridge class="inline-block w-5" />
           <span class="sr-only">{{ t("revoltBridgePost") }}</span>
+        </span>
+        <span :title="t('adminPost')" v-if="profile?.permissions !== 0">
+          <IconShield class="inline-block w-5" />
+          <span class="sr-only">{{ t("adminPost") }}</span>
         </span>
         <div
           :class="`visible w-full text-sm italic opacity-40 ${
