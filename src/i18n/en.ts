@@ -267,4 +267,5 @@ export const en = {
   settingShowPfps: "Show profile pictures in posts.",
   adminPost:
     "This was posted by a moderator. Go to their user page for further information.",
+  linkGithub: "GitHub",
 };
