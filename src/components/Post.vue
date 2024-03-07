@@ -223,7 +223,7 @@ const reload = () => location.reload();
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(postInfo.username)"
   >
     <div
-      class="mr-2 mt-1 flex px-1"
+      class="mr-2 mt-1 flex max-w-full px-1"
       v-if="!reply && profile && !inbox && settingsStore.showPfps"
     >
       <ProfilePicture
@@ -234,10 +234,10 @@ const reload = () => location.reload();
       />
     </div>
     <div
-      :class="`group flex w-full rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
+      :class="`group flex rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
         reply
           ? 'gap-2 border-none italic text-text opacity-40'
-          : 'flex-col px-2 py-1'
+          : 'grow flex-col overflow-auto px-2 py-1'
       }`"
     >
       <div class="flex items-center gap-x-2">
