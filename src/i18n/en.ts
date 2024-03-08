@@ -268,4 +268,5 @@ export const en = {
   adminPost:
     "This was posted by a moderator. Go to their user page for further information.",
   linkGithub: "GitHub",
+  themeLoadFail: "Failed to load theme.",
 };

@@ -15,8 +15,9 @@ export const useProfilesStore = defineStore("profiles", () => {
   const map = reactive<{ [k in string]: APIProfile }>({});
 
   const getUser = async (username: string) => {
-    if (username in map) {
-      return map[username];
+    const current = map[username];
+    if (current) {
+      return current;
     }
     const profile = await getResponseFromAPIRequest(`/users/${username}`, {
       schema: profileSchema,
@@ -26,7 +27,7 @@ export const useProfilesStore = defineStore("profiles", () => {
     }
     const reactiveProfile = reactive(profile);
     map[username] = reactiveProfile;
-    return map[username];
+    return reactiveProfile;
   };
 
   cloudlinkStore.lookFor(
@@ -45,9 +46,12 @@ export const useProfilesStore = defineStore("profiles", () => {
       if (!(packet.val.payload._id in map)) {
         return;
       }
-      console.log("here!");
+      const current = map[packet.val.payload._id];
+      if (!current) {
+        return;
+      }
       map[packet.val.payload._id] = {
-        ...map[packet.val.payload._id],
+        ...current,
         ...packet.val.payload,
       };
     },

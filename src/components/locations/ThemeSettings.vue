@@ -40,7 +40,9 @@ const updateTheme = async () => {
   }
   const safeTheme = themeSchema.safeParse(objectTheme);
   if (!safeTheme.success) {
-    await dialogStore.alert(safeTheme.error.errors[0].message);
+    await dialogStore.alert(
+      safeTheme.error.errors[0]?.message ?? t("themeLoadFail"),
+    );
     themeInputRef.value.value = stringifyTheme();
     return;
   }

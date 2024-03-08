@@ -15,7 +15,8 @@
     "jsx": "preserve",
 
     /* Linting */
-    "strict": true
+    "strict": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

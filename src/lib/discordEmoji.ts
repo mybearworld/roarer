@@ -58,7 +58,13 @@ export const discordEmoji = [
   if (!match) {
     throw new Error(`${emoji} isn't discord emoji`);
   }
-  return { emoji, name: match[1], id: match[2], isGif: emoji.startsWith("<a") };
+  const name = match[1];
+  const id = match[2];
+  if (!name || !id) {
+    console.error("Name or ID of Discord emoji not defined", { name, id });
+    throw new Error("Name or ID of Discord emoji not defined");
+  }
+  return { emoji, name, id, isGif: emoji.startsWith("<a") };
 });
 
 export type Emoji = (typeof discordEmoji)[number];

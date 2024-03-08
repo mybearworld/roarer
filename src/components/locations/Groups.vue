@@ -88,14 +88,18 @@ cloudlinkStore.lookFor(
     const index = chats.value.findIndex(
       (chat) => packet.val.payload._id === chat._id,
     );
+    const chat = chats.value[index];
+    if (!chat) {
+      return;
+    }
     if (packet.val.payload.nickname) {
-      chats.value[index].nickname = packet.val.payload.nickname;
+      chat.nickname = packet.val.payload.nickname;
     }
     if (packet.val.payload.owner) {
-      chats.value[index].owner = packet.val.payload.owner;
+      chat.owner = packet.val.payload.owner;
     }
     if (packet.val.payload.members) {
-      chats.value[index].members = packet.val.payload.members;
+      chat.members = packet.val.payload.members;
     }
     chats.value = chats.value;
   },

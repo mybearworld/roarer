@@ -93,6 +93,10 @@ tokens.forEach((token) => {
       beforeTextToken.content = beforeText;
       newTextTokens.push(beforeTextToken);
       const [fullMatch, alt, src] = specificMatch;
+      if (!alt || !src) {
+        console.error("alt or src are undefined", { alt, src });
+        throw new Error("alt or src are undefined");
+      }
       const imageToken = new Token("image", "", 0);
       imageToken.content = alt;
       imageToken.tag = "img";
