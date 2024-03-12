@@ -7,6 +7,7 @@ import {
   IconBuildingBridge,
   IconCheck,
   IconCircleFilled,
+  IconX,
   IconShield,
   IconEdit,
   IconLink,
@@ -53,6 +54,7 @@ const {
   dontUpdate,
   reply,
   isChatOwner,
+  closable,
 } = defineProps<{
   post: APIPost;
   inbox?: boolean;
@@ -60,10 +62,12 @@ const {
   reply?: boolean;
   isChatOwner?: boolean;
   hideControls?: boolean;
+  closable?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string, postId: string];
   delete: [];
+  close: [];
 }>();
 
 const post = addOntoPost(rawPost);
@@ -324,6 +328,10 @@ defineExpose({ highlight });
           <IconShield class="inline-block w-5" />
           <span class="sr-only">{{ t("adminPost") }}</span>
         </span>
+        <button v-if="closable" @click="emit('close')">
+          <IconX class="inline-block w-5" />
+          <span class="sr-only">{{ t("closePost") }}</span>
+        </button>
         <div
           :class="`visible w-full text-sm italic opacity-40 ${
             !postInfo.italic && !hideControls

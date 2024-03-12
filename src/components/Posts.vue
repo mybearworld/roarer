@@ -3,6 +3,7 @@ import { computed, ref, effect } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink, onBeforeRouteLeave } from "vue-router";
 import EnterPost from "./EnterPost.vue";
+import PostPopup from "./PostPopup.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
@@ -42,6 +43,9 @@ const gotPosts = ref(false);
 const newPostsAmount = ref(0);
 const stopShowingLoadMore = ref(false);
 
+const isChatOwner = computed(
+  () => chat && chat !== "livechat" && chat.owner === authStore.username,
+);
 const showPosts = computed(() =>
   posts.value.filter(
     (post) =>
@@ -136,18 +140,24 @@ effect(() => {
   }
 });
 
+const popupPost = ref<string | null>(null);
 onBeforeRouteLeave((route) => {
-  if (route.path.startsWith("/posts/") && route.params.post) {
+  if (
+    route.path.startsWith("/posts/") &&
+    typeof route.params.post === "string"
+  ) {
     const postIndex = posts.value.findIndex(
       (post) => post.post_id === route.params.post,
     );
-    if (postIndex !== -1) {
+    if (postIndex === -1) {
+      popupPost.value = route.params.post;
+    } else {
       const component = postComponents.value?.[postIndex];
       if (component) {
         component.highlight();
-        return false;
       }
     }
+    return false;
   }
   if (chat === "livechat" && authStore.isLoggedIn) {
     cloudlinkStore.send(
@@ -258,9 +268,7 @@ const loadMore = async () => {
     :post="post"
     :key="post.post_id"
     :inbox="inbox"
-    :isChatOwner="
-      chat && chat !== 'livechat' && chat.owner === authStore.username
-    "
+    :isChatOwner="isChatOwner"
     :hideControls="chat === 'livechat'"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
@@ -276,4 +284,21 @@ const loadMore = async () => {
   >
     {{ loadingMore ? t("loadingMore") : t("loadMore") }}
   </button>
+  <PostPopup
+    :post="popupPost"
+    :inbox="inbox"
+    :isChatOwner="isChatOwner"
+    @reply="
+      (username, postContent, postId) => {
+        enterPost?.reply(username, postContent, postId);
+        popupPost = null;
+      }
+    "
+    @delete="
+      newPostsAmount--;
+      popupPost = null;
+    "
+    @close="popupPost = null"
+    v-if="popupPost"
+  />
 </template>
