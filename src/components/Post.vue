@@ -276,7 +276,7 @@ const reload = () => location.reload();
           <IconBuildingBridge class="inline-block w-5" />
           <span class="sr-only">{{ t("revoltBridgePost") }}</span>
         </span>
-        <span :title="t('adminPost')" v-if="profile?.permissions !== 0">
+        <span :title="t('adminPost')" v-if="profile?.permissions">
           <IconShield class="inline-block w-5" />
           <span class="sr-only">{{ t("adminPost") }}</span>
         </span>
