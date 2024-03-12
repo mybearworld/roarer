@@ -267,11 +267,10 @@ const loadMore = async () => {
     :inbox="inbox"
     :isChatOwner="isChatOwner"
     :hideControls="chat === 'livechat'"
-    :id="i /* Not an actual property, just for ordering */"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
     ref="postComponents"
-    v-for="(post, i) in showPosts"
+    v-for="post in showPosts"
   />
   <button
     type="button"
