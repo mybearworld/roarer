@@ -146,16 +146,13 @@ onBeforeRouteLeave((route) => {
     route.path.startsWith("/posts/") &&
     typeof route.params.post === "string"
   ) {
-    const postIndex = showPosts.value.findIndex(
-      (post) => post.post_id === route.params.post,
+    const postComponent = postComponents.value?.find(
+      (component) => component.$props.post.post_id === route.params.post,
     );
-    if (postIndex === -1) {
-      popupPost.value = route.params.post;
+    if (postComponent) {
+      postComponent.highlight();
     } else {
-      const component = postComponents.value?.[postIndex];
-      if (component) {
-        component.highlight();
-      }
+      popupPost.value = route.params.post;
     }
     return false;
   }
@@ -270,10 +267,11 @@ const loadMore = async () => {
     :inbox="inbox"
     :isChatOwner="isChatOwner"
     :hideControls="chat === 'livechat'"
+    :id="i /* Not an actual property, just for ordering */"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
     ref="postComponents"
-    v-for="post in showPosts"
+    v-for="(post, i) in showPosts"
   />
   <button
     type="button"
