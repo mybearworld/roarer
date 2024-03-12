@@ -206,6 +206,7 @@ defineExpose({ reply });
     <button
       type="submit"
       class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
+      v-if="postContent.trim()"
     >
       {{ $t("enterPostSend") }}
     </button>
