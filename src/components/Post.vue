@@ -185,11 +185,6 @@ const copy = async () => {
   await navigator.clipboard.writeText(
     `https://mybearworld.github.io/roarer#/posts/${post.post_id}`,
   );
-  console.log(
-    router.resolve(
-      "https://mybearworld.github.io/roarer#/posts/4c475344-9b28-494d-b7f5-a1c0a78dd4fe",
-    ),
-  );
   copiedLink.value = true;
   setTimeout(() => {
     copiedLink.value = false;

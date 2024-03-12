@@ -137,7 +137,6 @@ effect(() => {
 });
 
 onBeforeRouteLeave((route) => {
-  console.log(route);
   if (route.path.startsWith("/posts/") && route.params.post) {
     const postIndex = posts.value.findIndex(
       (post) => post.post_id === route.params.post,

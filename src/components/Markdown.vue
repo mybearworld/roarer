@@ -174,7 +174,6 @@ effect(() => {
   });
   element.querySelectorAll("a").forEach((el) => {
     const url = new URL(el.href);
-    console.log([url.origin + url.pathname, baseURL]);
     if (url.origin + url.pathname !== baseURL) {
       return;
     }

@@ -2,7 +2,6 @@ import { z } from "zod";
 import { getResponseFromAPIRequest } from "./apiRequest";
 
 export const upload = async (file: File): Promise<UploadReturn> => {
-  console.log("Uploading", file);
   const token = await getResponseFromAPIRequest("/uploads/token/icon", {
     auth: true,
     schema: tokenSchema,
