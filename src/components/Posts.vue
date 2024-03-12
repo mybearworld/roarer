@@ -37,6 +37,7 @@ const requestURL =
       : `/${inbox ? "inbox" : "home"}?autoget=1`;
 
 const posts = ref<APIPost[]>([]);
+const postComponents = ref<InstanceType<typeof Post>[] | null>(null);
 const gotPosts = ref(false);
 const newPostsAmount = ref(0);
 const stopShowingLoadMore = ref(false);
@@ -135,7 +136,20 @@ effect(() => {
   }
 });
 
-onBeforeRouteLeave(() => {
+onBeforeRouteLeave((route) => {
+  console.log(route);
+  if (route.path.startsWith("/posts/") && route.params.post) {
+    const postIndex = posts.value.findIndex(
+      (post) => post.post_id === route.params.post,
+    );
+    if (postIndex !== -1) {
+      const component = postComponents.value?.[postIndex];
+      if (component) {
+        component.highlight();
+        return false;
+      }
+    }
+  }
   if (chat === "livechat" && authStore.isLoggedIn) {
     cloudlinkStore.send(
       {
@@ -251,6 +265,7 @@ const loadMore = async () => {
     :hideControls="chat === 'livechat'"
     @reply="enterPost?.reply"
     @delete="newPostsAmount--"
+    ref="postComponents"
     v-for="post in showPosts"
   />
   <button

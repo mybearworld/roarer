@@ -7,6 +7,8 @@ import "linkify-plugin-mention";
 import markdownit from "markdown-it";
 import Token from "markdown-it/lib/token";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { url as baseURL } from "../lib/env";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
 import { useIdsStore } from "../stores/uniqueIds";
@@ -23,6 +25,7 @@ const { md, inline, noImages } = defineProps<{
 
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
+const router = useRouter();
 
 const ATTACHMENT_REGEX = /\[([^\]]+?): (?! )([^\]]+?)\]/;
 const IMAGE_REGEX = new RegExp(
@@ -168,6 +171,17 @@ effect(() => {
       element.alt = element.alt.replace("(sticker) ", "");
       element.classList.add("rounded-xl");
     }
+  });
+  element.querySelectorAll("a").forEach((el) => {
+    const url = new URL(el.href);
+    console.log([url.origin + url.pathname, baseURL]);
+    if (url.origin + url.pathname !== baseURL) {
+      return;
+    }
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      router.push(url.hash.slice(1));
+    });
   });
   [...element.querySelectorAll("img")].forEach(async (element) => {
     let request;

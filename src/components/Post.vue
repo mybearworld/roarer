@@ -5,6 +5,7 @@ import {
   IconArrowForward,
   IconBrandDiscord,
   IconBuildingBridge,
+  IconCheck,
   IconCircleFilled,
   IconShield,
   IconEdit,
@@ -15,9 +16,10 @@ import {
   IconWebhook,
 } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
-import { RouterLink } from "vue-router";
+import { useRouter, RouterLink } from "vue-router";
 import { z } from "zod";
 import Markdown from "./Markdown.vue";
+import Post from "./Post.vue";
 import ProfilePicture from "./ProfilePicture.vue";
 import { admin } from "../lib/env";
 import { autoResizeTextarea } from "../lib/autoResizeTextarea";
@@ -43,6 +45,7 @@ const profilesStore = useProfilesStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
+const router = useRouter();
 
 const {
   post: rawPost,
@@ -177,6 +180,22 @@ effect(async () => {
   replyPost.value = response;
 });
 
+const copiedLink = ref(false);
+const copy = async () => {
+  await navigator.clipboard.writeText(
+    `https://mybearworld.github.io/roarer#/posts/${post.post_id}`,
+  );
+  console.log(
+    router.resolve(
+      "https://mybearworld.github.io/roarer#/posts/4c475344-9b28-494d-b7f5-a1c0a78dd4fe",
+    ),
+  );
+  copiedLink.value = true;
+  setTimeout(() => {
+    copiedLink.value = false;
+  }, 750);
+};
+
 const report = async () => {
   const reason = await dialogStore.prompt(
     t("reportReason"),
@@ -208,6 +227,34 @@ const report = async () => {
 };
 
 const reload = () => location.reload();
+
+const editedPost = ref<InstanceType<typeof Post> | null>(null);
+const main = ref<HTMLDivElement | null>(null);
+const highlight = () => {
+  if (editedPost.value) {
+    editedPost.value.highlight();
+    return;
+  }
+  if (!main.value) {
+    return;
+  }
+  main.value.scrollIntoView();
+  const property =
+    settingsStore.theme.roarer_postStyle === "filled"
+      ? "backgroundColor"
+      : "borderColor";
+
+  main.value.style[property] =
+    "color-mix(in lch, var(--base-highlight), white var(--highlight-mix))";
+  setTimeout(() => {
+    if (!main.value) {
+      return;
+    }
+    main.value.style[property] = "var(--base-highlight)";
+  }, 1500);
+};
+
+defineExpose({ highlight });
 </script>
 
 <template>
@@ -215,6 +262,7 @@ const reload = () => location.reload();
     :post="edited"
     :reply="reply"
     v-if="edited && !relationshipStore.blockedUsers.has(postInfo.username)"
+    ref="editedPost"
     @reply="(u, p) => emit('reply', u, p, post.post_id)"
   />
   <div
@@ -234,11 +282,12 @@ const reload = () => location.reload();
       />
     </div>
     <div
-      :class="`group flex rounded-xl filled:bg-accent filled:text-accent-text bordered:border-2 bordered:border-accent bordered:bg-transparent ${
+      :class="`group flex rounded-xl transition-colors duration-300 [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
         reply
-          ? 'gap-2 border-none italic text-text opacity-40'
-          : 'grow flex-col overflow-auto px-2 py-1'
+          ? 'gap-2 border-none bg-transparent italic text-text opacity-40 '
+          : 'grow flex-col overflow-auto px-2 py-1 filled:bg-accent filled:text-accent-text'
       }`"
+      ref="main"
     >
       <div class="flex items-center gap-x-2">
         <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
@@ -301,11 +350,10 @@ const reload = () => location.reload();
             !post.post_id.startsWith('_')
           "
         >
-          <button v-if="post.post_origin === 'home'">
-            <RouterLink :to="`/posts/${post.post_id}`">
-              <IconLink class="h-6 w-6" aria-hidden />
-              <span class="sr-only">{{ t("linkPost") }}</span>
-            </RouterLink>
+          <button v-if="post.post_origin === 'home'" @click="copy">
+            <IconCheck class="h-6 w-6" aria-hidden v-if="copiedLink" />
+            <IconLink class="h-6 w-6" aria-hidden v-else />
+            <span class="sr-only">{{ t("linkPost") }}</span>
           </button>
           <button
             @click="remove"
