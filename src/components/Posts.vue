@@ -146,7 +146,7 @@ onBeforeRouteLeave((route) => {
     route.path.startsWith("/posts/") &&
     typeof route.params.post === "string"
   ) {
-    const postIndex = posts.value.findIndex(
+    const postIndex = showPosts.value.findIndex(
       (post) => post.post_id === route.params.post,
     );
     if (postIndex === -1) {
