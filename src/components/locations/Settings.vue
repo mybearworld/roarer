@@ -25,7 +25,7 @@ const router = useRouter();
 const quote = ref("");
 const profilePicture = ref<number | string>(0);
 const uploadedProfilePicture = ref<string | null>(null);
-
+const pfpColor = ref("");
 (async () => {
   const response = await getResponseFromAPIRequest(
     `/users/${authStore.username}`,
@@ -44,6 +44,7 @@ const uploadedProfilePicture = ref<string | null>(null);
   if (response.avatar) {
     profilePicture.value = response.avatar;
     uploadedProfilePicture.value = response.avatar;
+    pfpColor.value = "#" + response.avatar_color;
   }
 })();
 
@@ -69,6 +70,7 @@ cloudlinkStore.lookFor(
 const me = async (e: Event) => {
   e.preventDefault();
   try {
+    console.log(pfpColor.value.slice(1));
     await cloudlinkStore.send(
       {
         cmd: "update_config",
@@ -76,6 +78,7 @@ const me = async (e: Event) => {
           quote: quote.value,
           [typeof profilePicture.value === "string" ? "avatar" : "pfp_data"]:
             profilePicture.value,
+          avatar_color: pfpColor.value.slice(1),
         },
       },
       updateConfigSchema,
@@ -224,6 +227,33 @@ const deleteAccount = async () => {
             v-model="quote"
           />
         </label>
+        <div class="space-x-2" v-if="uploadedProfilePicture">
+          {{ t("usersMePfpColor") }}
+          <label class="inline-flex items-center gap-1">
+            <input
+              type="radio"
+              name="pfpColor"
+              value="color"
+              :checked="pfpColor !== '#!color'"
+              @input="
+                if (pfpColor === '#!color') {
+                  pfpColor = '#000';
+                }
+              "
+            />
+            <input type="color" v-model="pfpColor" class="bg-transparent" />
+          </label>
+          <label class="inline-flex items-center gap-1">
+            <input
+              type="radio"
+              name="pfpColor"
+              value="no"
+              :checked="pfpColor === '#!color'"
+              @input="pfpColor = '#!color'"
+            />
+            {{ t("usersMePfpColorNo") }}
+          </label>
+        </div>
         <label>
           {{ t("usersMePfp") }}
           <div class="flex flex-wrap gap-2">
@@ -251,7 +281,7 @@ const deleteAccount = async () => {
             >
               <ProfilePicture
                 class="h-16 w-16"
-                :pfp="{ avatar: uploadedProfilePicture }"
+                :pfp="{ avatar: uploadedProfilePicture, bg: pfpColor }"
               />
             </button>
             <button
@@ -263,11 +293,6 @@ const deleteAccount = async () => {
               v-for="[key, value] of profilePictures"
             >
               <ProfilePicture class="h-16 w-16" :pfp="{ pfp: key }" />
-              <!-- <img
-                class="h-16 w-16"
-                :src="value"
-                :alt="t('profilePictureAlt', { n: key })"
-              /> -->
             </button>
           </div>
         </label>

@@ -7,10 +7,12 @@ const props = defineProps<{
   pfp:
     | {
         avatar: string;
+        bg: string;
         pfp: number;
       }
     | {
         avatar: string;
+        bg: string;
       }
     | {
         pfp: number;
@@ -26,11 +28,17 @@ const { t } = useI18n();
   <img
     :src="`https://uploads.meower.org/icons/${props.pfp.avatar}`"
     :alt="t('profilePictureCustomAlt')"
+    :style="{
+      backgroundColor:
+        props.pfp.bg === '!color' || props.pfp.bg === '#!color'
+          ? 'transparent'
+          : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
+    }"
     v-if="'avatar' in props.pfp && props.pfp.avatar !== ''"
   />
   <img
     :src="pfpLink"
-    :alt="t('profilePictureAlt', { n: props.pfp })"
+    :alt="t('profilePictureAlt', { n: props.pfp.pfp })"
     v-else-if="'pfp' in props.pfp && pfpLink"
   />
   <img

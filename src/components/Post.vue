@@ -277,7 +277,11 @@ defineExpose({ highlight });
         class="h-10 min-h-10 w-10 min-w-10 rounded-xl"
         height="40"
         width="40"
-        :pfp="{ pfp: profile.pfp_data, avatar: profile.avatar }"
+        :pfp="{
+          pfp: profile.pfp_data,
+          avatar: profile.avatar,
+          bg: profile.avatar_color,
+        }"
       />
     </div>
     <div

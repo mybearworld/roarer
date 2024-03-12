@@ -270,4 +270,6 @@ export const en = {
   linkGithub: "GitHub",
   themeLoadFail: "Failed to load theme.",
   closePost: "Close",
+  usersMePfpColor: "Background color of custom profile picture:",
+  usersMePfpColorNo: "None",
 };
