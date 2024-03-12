@@ -250,7 +250,7 @@ const highlight = () => {
       return;
     }
     main.value.style[property] = "var(--base-highlight)";
-  }, 1500);
+  }, 500);
 };
 
 defineExpose({ highlight });
@@ -281,7 +281,7 @@ defineExpose({ highlight });
       />
     </div>
     <div
-      :class="`group flex rounded-xl transition-colors duration-300 [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
+      :class="`group flex rounded-xl transition-colors duration-300 duration-500 [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
         reply
           ? 'gap-2 border-none bg-transparent italic text-text opacity-40 '
           : 'grow flex-col overflow-auto px-2 py-1 filled:bg-accent filled:text-accent-text'
