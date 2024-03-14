@@ -164,7 +164,7 @@ effect(() => {
   // above change for images
   element.innerHTML = linkifyHtml(element.innerHTML, {
     formatHref: {
-      mention: (href) => `#/users${href}`,
+      mention: (href) => `${baseURL}#/users${href}`,
     },
     ignoreTags: ["code"],
   });
