@@ -11,6 +11,7 @@ import { useRouter } from "vue-router";
 import { url as baseURL } from "../lib/env";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
+import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
 import { effect } from "vue";
@@ -23,6 +24,7 @@ const { md, inline, noImages } = defineProps<{
   noImages?: boolean;
 }>();
 
+const dialogStore = useDialogStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
 const router = useRouter();
@@ -174,12 +176,17 @@ effect(() => {
   });
   element.querySelectorAll("a").forEach((el) => {
     const url = new URL(el.href);
-    if (url.origin + url.pathname !== baseURL) {
-      return;
-    }
     el.addEventListener("click", (e) => {
       e.preventDefault();
-      router.push(url.hash.slice(1));
+      if (url.origin + url.pathname === baseURL) {
+        router.push(url.hash.slice(1));
+      } else {
+        (async () => {
+          if (await dialogStore.confirm(t("externalSite", { link: el.href }))) {
+            open(el.href);
+          }
+        })();
+      }
     });
   });
   [...element.querySelectorAll("img")].forEach(async (element) => {

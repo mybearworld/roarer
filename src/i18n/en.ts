@@ -272,4 +272,6 @@ export const en = {
   closePost: "Close",
   usersMePfpColor: "Background color of custom profile picture:",
   usersMePfpColorNo: "None",
+  externalSite:
+    "Are you sure you want to leave Roarer and open {link}? It'll be opened in a new tab.",
 };
