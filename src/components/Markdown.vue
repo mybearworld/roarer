@@ -175,7 +175,12 @@ effect(() => {
     }
   });
   element.querySelectorAll("a").forEach((el) => {
-    const url = new URL(el.href);
+    let url: URL;
+    try {
+      url = new URL(el.href);
+    } catch {
+      return;
+    }
     el.addEventListener("click", (e) => {
       e.preventDefault();
       if (url.origin + url.pathname === baseURL) {
