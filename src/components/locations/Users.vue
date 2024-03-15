@@ -176,7 +176,11 @@ const permissions = computed(() =>
       >
         <ProfilePicture
           class="h-16 w-16"
-          :pfp="{ pfp: userProfile.pfp_data, avatar: userProfile.avatar }"
+          :pfp="{
+            pfp: userProfile.pfp_data,
+            avatar: userProfile.avatar,
+            bg: userProfile.avatar_color,
+          }"
         />
       </div>
       <div class="">
