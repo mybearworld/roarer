@@ -29,6 +29,10 @@ const { t } = useI18n();
     :src="`https://uploads.meower.org/icons/${props.pfp.avatar}`"
     :alt="t('profilePictureCustomAlt')"
     :style="{
+      padding:
+        props.pfp.bg === '!color' || props.pfp.bg === '#!color'
+          ? '0'
+          : '0.2rem',
       backgroundColor:
         props.pfp.bg === '!color' || props.pfp.bg === '#!color'
           ? 'transparent'
