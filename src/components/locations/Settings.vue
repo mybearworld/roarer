@@ -86,6 +86,7 @@ const me = async (e: Event) => {
     );
   } catch (e) {
     await dialogStore.alert(t("configFail", { errmsg: e }));
+    return;
   }
   await dialogStore.alert(t("configSuccess"));
 };
