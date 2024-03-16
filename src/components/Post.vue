@@ -274,7 +274,7 @@ defineExpose({ highlight });
       v-if="!reply && profile && !inbox && settingsStore.showPfps"
     >
       <ProfilePicture
-        class="h-10 min-h-10 w-10 min-w-10 rounded-xl"
+        class="h-10 min-h-10 w-10 min-w-10"
         height="40"
         width="40"
         :pfp="{
@@ -282,6 +282,7 @@ defineExpose({ highlight });
           avatar: profile.avatar,
           bg: profile.avatar_color,
         }"
+        :online="onlineListStore.online.includes(postInfo.username)"
       />
     </div>
     <div
@@ -299,17 +300,6 @@ defineExpose({ highlight });
             {{ postInfo.username }}</RouterLink
           >
           <span v-else>{{ postInfo.username }}</span>
-        </span>
-        <span
-          class="inline-block text-green-400"
-          v-if="
-            onlineListStore.online.includes(postInfo.username) &&
-            !reply &&
-            !postInfo.italic
-          "
-        >
-          <IconCircleFilled class="h-2 w-2" aria-hidden />
-          <span class="sr-only">Online</span>
         </span>
         <span :title="t('discordBridgePost')" v-if="post.u === 'Discord'">
           <IconBrandDiscord class="inline-block w-5" aria-hidden />
