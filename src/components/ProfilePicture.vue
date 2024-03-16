@@ -46,18 +46,16 @@ const { t } = useI18n();
             ? 'transparent'
             : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
       }"
-      class="rounded-xl"
       v-if="'avatar' in props.pfp && props.pfp.avatar !== ''"
     />
     <img
       :src="pfpLink"
       :alt="t('profilePictureAlt', { n: props.pfp.pfp })"
-      class="rounded-xl"
       v-else-if="'pfp' in props.pfp && pfpLink"
     />
     <img
       :src="meowy"
-      class="rounded-xl brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
+      class="brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
       v-else
     />
     <span

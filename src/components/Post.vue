@@ -271,18 +271,28 @@ defineExpose({ highlight });
   >
     <div
       class="mr-2 mt-1 flex max-w-full px-1"
-      v-if="!reply && profile && !inbox && settingsStore.showPfps"
+      v-if="
+        !reply &&
+        (profile || inbox || postInfo.username === 'Server') &&
+        settingsStore.showPfps
+      "
     >
       <ProfilePicture
         class="h-10 min-h-10 w-10 min-w-10"
         height="40"
         width="40"
-        :pfp="{
-          pfp: profile.pfp_data,
-          avatar: profile.avatar,
-          bg: profile.avatar_color,
-        }"
-        :online="onlineListStore.online.includes(postInfo.username)"
+        :pfp="
+          inbox
+            ? { pfp: 101 }
+            : postInfo.username === 'Server'
+              ? { pfp: 500 }
+              : {
+                  pfp: profile?.pfp_data!,
+                  avatar: profile?.avatar!,
+                  bg: profile?.avatar_color!,
+                }
+        "
+        :online="!inbox && onlineListStore.online.includes(postInfo.username)"
       />
     </div>
     <div
