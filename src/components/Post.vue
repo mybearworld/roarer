@@ -294,13 +294,12 @@ defineExpose({ highlight });
     >
       <div class="flex items-center gap-x-2">
         <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
-        <RouterLink
-          v-if="!postInfo.italic"
-          class="whitespace-nowrap font-bold"
-          :to="`/users/${postInfo.username}`"
-        >
-          {{ postInfo.username }}
-        </RouterLink>
+        <span v-if="!postInfo.italic" class="whitespace-nowrap font-bold">
+          <RouterLink :to="`/users/${postInfo.username}`" v-if="!reply">
+            {{ postInfo.username }}</RouterLink
+          >
+          <span v-else>{{ postInfo.username }}</span>
+        </span>
         <span
           class="inline-block text-green-400"
           v-if="
