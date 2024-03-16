@@ -76,8 +76,9 @@ const me = async (e: Event) => {
         cmd: "update_config",
         val: {
           quote: quote.value,
-          [typeof profilePicture.value === "string" ? "avatar" : "pfp_data"]:
-            profilePicture.value,
+          ...(typeof profilePicture.value === "string"
+            ? { avatar: profilePicture.value }
+            : { pfp_data: profilePicture.value, avatar: "" }),
           avatar_color: pfpColor.value.slice(1),
         },
       },
@@ -85,7 +86,6 @@ const me = async (e: Event) => {
     );
   } catch (e) {
     await dialogStore.alert(t("configFail", { errmsg: e }));
-    return;
   }
   await dialogStore.alert(t("configSuccess"));
 };
