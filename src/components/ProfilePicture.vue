@@ -20,6 +20,7 @@ const props = withDefaults(
           pfp: number;
         };
     online?: boolean;
+    class?: string;
   }>(),
   {
     online: false,
@@ -32,7 +33,7 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="relative">
+  <div>
     <img
       :src="`https://uploads.meower.org/icons/${props.pfp.avatar}`"
       :alt="t('profilePictureCustomAlt')"
@@ -46,16 +47,18 @@ const { t } = useI18n();
             ? 'transparent'
             : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
       }"
+      :class="props.class"
       v-if="'avatar' in props.pfp && props.pfp.avatar !== ''"
     />
     <img
       :src="pfpLink"
       :alt="t('profilePictureAlt', { n: props.pfp.pfp })"
+      :class="props.class"
       v-else-if="'pfp' in props.pfp && pfpLink"
     />
     <img
       :src="meowy"
-      class="brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s]"
+      :class="`brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s] ${props.class}`"
       v-else
     />
     <span
