@@ -279,8 +279,8 @@ defineExpose({ highlight });
     >
       <ProfilePicture
         class="h-10 min-h-10 w-10 min-w-10"
-        height="40"
-        width="40"
+        :height="40"
+        :width="40"
         :pfp="
           inbox
             ? { pfp: 101 }
