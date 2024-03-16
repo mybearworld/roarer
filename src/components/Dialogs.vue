@@ -28,7 +28,7 @@ const promptResponse = ref("");
         class="fixed left-0 top-0 flex h-full w-full items-center justify-center"
       >
         <DialogContent
-          class="w-[min(calc(100ch-8rem),95%)] space-y-2 rounded-xl bg-accent px-2 py-1 text-accent-text"
+          class="w-[min(calc(100ch-8rem),95%)] space-y-2 whitespace-normal break-words rounded-xl bg-accent px-2 py-1 text-accent-text"
         >
           <DialogTitle class="sr-only">
             {{ t(`dialogTitle_${dialogStore.shownDialog.type}`) }}
