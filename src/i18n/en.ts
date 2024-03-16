@@ -274,4 +274,17 @@ export const en = {
   usersMePfpColorNo: "None",
   externalSite:
     "Are you sure you want to leave Roarer and open {link}? It'll be opened in a new tab.",
+  orSignUp: "...or sign up.",
+  orLogIn: "...or log in.",
+  loginConfirmPassword: "Confirm password",
+  tosCheck: {
+    start: "I have read and agree to ",
+    link: "Meower's Terms of Service and Privacy Policy",
+    end: ".",
+  },
+  cantSignUp_passwordMismatch: "The passwords don't match!",
+  cantSignUp_noPassword: "Please provide a password!",
+  cantSignUp_noUsername: "Please provide a username!",
+  cantSignUp_noTos:
+    "Please read and agree to the Terms of Service and Privacy Policy!",
 };

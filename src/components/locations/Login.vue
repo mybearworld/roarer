@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { useCloudlinkStore } from "../../stores/cloudlink";
@@ -23,8 +23,22 @@ effect(() => {
 
 const username = ref("");
 const password = ref("");
+const confirmPassword = ref("");
+const tosAgree = ref(false);
+const signUpIssue = computed(() =>
+  password.value !== confirmPassword.value
+    ? "passwordMismatch"
+    : !password.value
+      ? "noPassword"
+      : !username.value
+        ? "noUsername"
+        : !tosAgree.value
+          ? "noTos"
+          : null,
+);
 const loading = ref(false);
 const message = ref("");
+const mode = ref<"login" | "signup">("login");
 
 const resetFormFields = () => {
   username.value = "";
@@ -33,6 +47,10 @@ const resetFormFields = () => {
 
 const loginEvent = async (e: Event) => {
   e.preventDefault();
+  if (mode.value === "signup") {
+    signUp();
+    return;
+  }
   loading.value = true;
   message.value = "";
   let data;
@@ -48,6 +66,9 @@ const loginEvent = async (e: Event) => {
 };
 
 const signUp = async () => {
+  if (signUpIssue.value) {
+    return;
+  }
   loading.value = true;
   message.value = "";
   let data;
@@ -85,38 +106,63 @@ const signUp = async () => {
   </p>
   <form :class="`rounded-xl`" @submit="loginEvent">
     <div class="space-y-4">
-      <label class="block">
+      <label class="flex w-56 flex-col">
         {{ t("loginUsername") }}
         <input
           class="rounded-lg border-2 border-accent bg-transparent px-1"
           type="text"
+          required
           v-model="username"
         />
       </label>
-      <label class="block">
+      <label class="flex w-56 flex-col">
         {{ t("loginPassword") }}
         <input
           class="rounded-lg border-2 border-accent bg-transparent px-1"
           type="password"
+          required
           v-model="password"
         />
       </label>
+      <label class="flex w-56 flex-col" v-if="mode === 'signup'">
+        <div>{{ t("loginConfirmPassword") }}</div>
+        <input
+          class="rounded-lg border-2 border-accent bg-transparent px-1"
+          type="password"
+          required
+          v-model="confirmPassword"
+        />
+      </label>
+      <label class="block space-x-2" v-if="mode === 'signup'">
+        <input type="checkbox" v-model="tosAgree" />
+        <span>
+          {{ t("tosCheck.start")
+          }}<a
+            class="text-link underline"
+            href="https://meower.org/legal"
+            target="_blank"
+            >{{ t("tosCheck.link") }}</a
+          >{{ t("tosCheck.end") }}
+        </span>
+      </label>
       <div class="space-x-2">
         <button
-          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text disabled:cursor-not-allowed disabled:opacity-60"
           type="submit"
-          :disabled="loading"
+          :disabled="loading || (mode === 'signup' && !!signUpIssue)"
         >
-          {{ t("loginSubmit") }}
+          {{ t(mode === "login" ? "loginSubmit" : "loginSignUp") }}
         </button>
         <button
-          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          class="text-link underline"
+          @click="mode = mode === 'login' ? 'signup' : 'login'"
           type="button"
-          :disabled="loading"
-          @click="signUp"
         >
-          {{ t("loginSignUp") }}
+          {{ mode === "login" ? t("orSignUp") : t("orLogIn") }}
         </button>
+        <span v-if="mode === 'signup' && signUpIssue">
+          {{ t(`cantSignUp_${signUpIssue}`) }}
+        </span>
       </div>
       <span v-if="message">
         {{ message }}
