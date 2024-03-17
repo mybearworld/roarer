@@ -241,7 +241,7 @@ export const en = {
   newPasswordPlaceholder: "New password",
   oldPasswordPlaceholder: "Current password",
   deleteAccountPasswordPlaceholder: "Password",
-  routeRelated: "Related",
+  routeRelated: "More",
   routeRoarBot: "RoarBot",
   roarBotTagline: "Robots for Meower.",
   roarBotTypeSafe: "Type-safe",

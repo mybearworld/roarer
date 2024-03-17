@@ -63,7 +63,7 @@ const router = createRouter({
       meta: { requiresLogin: true },
     },
     { path: "/posts/:post", component: PostShare },
-    { path: "/bot", component: RoarBot },
+    // { path: "/bot", component: RoarBot },
     { path: "/:path(.*)", component: NotFound },
   ],
 });
