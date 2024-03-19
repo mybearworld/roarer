@@ -53,6 +53,7 @@ export const discordEmoji = [
   "<:atticusaijkndemw:1212216821625917450>",
   "<:meowy2:1214405335666925568>",
   "<:wooftheheck:1217544930847625427>",
+  "<:POWER:1215322815105077279>",
 ].map((emoji) => {
   const match = emoji.match(DISCORD_REGEX);
   if (!match) {
