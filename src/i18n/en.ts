@@ -258,7 +258,7 @@ export const en = {
   livechatJoin: "{'@'}{username} joined the chat.",
   livechatLeave: "{'@'}{username} left the chat.",
   liveChatDescription:
-    "Messages in here are not saved. Note that this doesn't stop 3rd parties from logging messages.",
+    "Messages in here are not saved. Note that this doesn't stop 3rd parties (e.g. the Discord bridge) from logging messages.",
   uploadProfilePicture: "Upload profile picture",
   uploadTokenFail: "Failed to get token to upload: {status}",
   uploadTooLarge: "Your asset is too large. Please keep it at or under {size}.",
