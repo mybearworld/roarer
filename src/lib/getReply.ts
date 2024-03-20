@@ -1,5 +1,5 @@
 const REPLY_REGEX =
-  /^(@[a-z_0-9-]+(?: ".{0,40}…?" (?:\(([a-f0-9\-]+)\))?| \[([a-f0-9\-]+)\])?(?:\n| ))(.*)$/is;
+  /^(@[a-z_0-9-]+(?: ".{0,40}(?:…|\.\.\.)?" (?:\(([a-f0-9\-]+)\))?| \[([a-f0-9\-]+)\])?(?:\n| ))(.*)$/is;
 
 export const getReply = (post: string): Reply | null => {
   const match = post.match(REPLY_REGEX);
