@@ -70,7 +70,6 @@ cloudlinkStore.lookFor(
 const me = async (e: Event) => {
   e.preventDefault();
   try {
-    console.log(pfpColor.value.slice(1));
     await cloudlinkStore.send(
       {
         cmd: "update_config",
