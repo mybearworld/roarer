@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 import "vue-router";
+import { tabs } from "./lib/tabs";
 
 interface ImportMetaEnv {
   readonly VITE_API: string;
@@ -16,5 +17,6 @@ interface ImportMeta {
 declare module "vue-router" {
   interface RouteMeta {
     requiresLogin?: true;
+    tab: (typeof tabs)[number]["name"] | null;
   }
 }

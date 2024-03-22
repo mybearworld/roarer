@@ -4,7 +4,7 @@ export const tabs = [
   { name: "routeGroups", to: "/chats" },
   { name: "routeUsers", to: "/users" },
   { name: "routeSettings", to: "/settings" },
-] satisfies Tab[];
+] as const satisfies Tab[];
 
 export type Tab = {
   name: string;

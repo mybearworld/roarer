@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 import { IconChevronDown } from "@tabler/icons-vue";
 import {
   DropdownMenuRoot,
@@ -14,6 +15,7 @@ import { tabs } from "../lib/tabs";
 import { useIsDevStore } from "../stores/isDev";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const isDevStore = useIsDevStore();
 </script>
@@ -29,11 +31,14 @@ const isDevStore = useIsDevStore();
       </div>
       <div class="flex flex-wrap items-center gap-2">
         <RouterLink
-          class="flex whitespace-nowrap text-link underline"
+          :class="`flex whitespace-nowrap text-link underline ${
+            route.meta.tab === tab.name ? 'font-bold' : ''
+          }`"
           :to="tab.to"
           v-for="tab in tabs"
-          >{{ t(tab.name) }}</RouterLink
         >
+          {{ t(tab.name) }}
+        </RouterLink>
         <DropdownMenuRoot>
           <DropdownMenuTrigger>
             <span
