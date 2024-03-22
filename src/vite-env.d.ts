@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+import "vue-router";
+
 interface ImportMetaEnv {
   readonly VITE_API: string;
   readonly VITE_CLOUDLINK: string;
@@ -9,4 +11,10 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;
+}
+
+declare module "vue-router" {
+  interface RouteMeta {
+    requiresLogin?: true;
+  }
 }
