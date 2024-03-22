@@ -1,12 +1,12 @@
 export const tabs = [
-  { message: "routeHome", to: "/" },
-  { message: "routeInbox", to: "/inbox" },
-  { message: "routeGroups", to: "/chats" },
-  { message: "routeUsers", to: "/users" },
-  { message: "routeSettings", to: "/settings" },
+  { name: "routeHome", to: "/" },
+  { name: "routeInbox", to: "/inbox" },
+  { name: "routeGroups", to: "/chats" },
+  { name: "routeUsers", to: "/users" },
+  { name: "routeSettings", to: "/settings" },
 ] satisfies Tab[];
 
 export type Tab = {
-  message: string;
+  name: string;
   to: string;
 };

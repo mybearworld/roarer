@@ -32,7 +32,7 @@ const isDevStore = useIsDevStore();
           class="flex whitespace-nowrap text-link underline"
           :to="tab.to"
           v-for="tab in tabs"
-          >{{ t(tab.message) }}</RouterLink
+          >{{ t(tab.name) }}</RouterLink
         >
         <DropdownMenuRoot>
           <DropdownMenuTrigger>
