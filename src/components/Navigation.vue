@@ -10,6 +10,7 @@ import {
 } from "radix-vue";
 import { RouterLink } from "vue-router";
 import Login from "./Login.vue";
+import { tabs } from "../lib/tabs";
 import { useIsDevStore } from "../stores/isDev";
 
 const { t } = useI18n();
@@ -27,33 +28,12 @@ const isDevStore = useIsDevStore();
         <Login />
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <RouterLink class="flex whitespace-nowrap text-link underline" to="/">
-          {{ t("routeHome") }}
-        </RouterLink>
         <RouterLink
           class="flex whitespace-nowrap text-link underline"
-          to="/inbox"
+          :to="tab.to"
+          v-for="tab in tabs"
+          >{{ t(tab.message) }}</RouterLink
         >
-          {{ t("routeInbox") }}
-        </RouterLink>
-        <RouterLink
-          class="flex whitespace-nowrap text-link underline"
-          to="/chats"
-        >
-          {{ t("routeGroups") }}
-        </RouterLink>
-        <RouterLink
-          class="flex whitespace-nowrap text-link underline"
-          to="/users"
-        >
-          {{ t("routeUsers") }}
-        </RouterLink>
-        <RouterLink
-          class="flex whitespace-nowrap text-link underline"
-          to="/settings"
-        >
-          {{ t("routeSettings") }}
-        </RouterLink>
         <DropdownMenuRoot>
           <DropdownMenuTrigger>
             <span
@@ -76,10 +56,10 @@ const isDevStore = useIsDevStore();
                 </RouterLink> -->
                 <a
                   class="flex whitespace-nowrap text-link underline"
-                  href=https://github.com/mybearworld/roarer
+                  href="https://github.com/mybearworld/roarer"
                 >
                   {{ t("linkGithub") }}
-              </a>
+                </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenuPortal>
