@@ -7,7 +7,7 @@ import { useRouter, RouterLink } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import { profilePictures } from "../../assets/pfp";
-import { getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { profileSchema } from "../../lib/schemas/profile";
 import { upload } from "../../lib/upload";
 import { useCloudlinkStore } from "../../stores/cloudlink";
@@ -69,25 +69,22 @@ cloudlinkStore.lookFor(
 
 const me = async (e: Event) => {
   e.preventDefault();
-  try {
-    await cloudlinkStore.send(
-      {
-        cmd: "update_config",
-        val: {
-          quote: quote.value,
-          ...(typeof profilePicture.value === "string"
-            ? { avatar: profilePicture.value }
-            : { pfp_data: profilePicture.value, avatar: "" }),
-          avatar_color: pfpColor.value.slice(1),
-        },
-      },
-      updateConfigSchema,
-    );
-  } catch (e) {
+  const response = await apiRequest("/me/config", {
+    method: "PATCH",
+    auth: true,
+    body: JSON.stringify({
+      quote: quote.value,
+      ...(typeof profilePicture.value === "string"
+        ? { avatar: profilePicture.value }
+        : { pfp_data: profilePicture.value, avatar: "" }),
+      avatar_color: pfpColor.value.slice(1),
+    }),
+  });
+  if (response.status === 200) {
+    await dialogStore.alert(t("configSuccess"));
+  } else {
     await dialogStore.alert(t("configFail", { errmsg: e }));
-    return;
   }
-  await dialogStore.alert(t("configSuccess"));
 };
 
 const pfpUpload = ref<HTMLInputElement | null>(null);
