@@ -17,11 +17,11 @@ const stats = ref<z.infer<typeof statsSchema> | number | null>(null);
   const response = await getResponseFromAPIRequest("/statistics", {
     schema: statsSchema,
   });
-  if ("status" in response) {
-    stats.value = response.status;
+  if (response.error !== null) {
+    stats.value = response.error;
     return;
   }
-  stats.value = response;
+  stats.value = response.data;
 })();
 </script>
 

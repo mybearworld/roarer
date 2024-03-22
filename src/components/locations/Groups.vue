@@ -22,11 +22,11 @@ effect(async () => {
     auth: true,
     schema,
   });
-  if ("status" in response) {
-    await dialogStore.alert(t("getChatsFail", { status: response.status }));
+  if (response.error !== null) {
+    await dialogStore.alert(t("getChatsFail", { status: response.error }));
     return;
   }
-  chats.value = response.autoget;
+  chats.value = response.data.autoget;
 });
 
 const sortedChats = computed(() =>

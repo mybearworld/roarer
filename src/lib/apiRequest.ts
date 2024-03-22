@@ -31,9 +31,9 @@ export const getResponseFromAPIRequest = async <TSchema extends ZodSchema>(
 ): Promise<APIRequestResponseReturn<TSchema>> => {
   const { status, response } = await apiRequest(url, { auth, method, body });
   if (status !== 200) {
-    return { status, response };
+    return { error: status, data: response };
   }
-  return schema.parse(response);
+  return { error: null, data: schema.parse(response) };
 };
 
 type APIRequest = {
@@ -46,7 +46,10 @@ type APIRequestResponse<TSchema extends ZodSchema> = APIRequest & {
 };
 type APIRequestResponseReturn<TSchema extends ZodSchema> =
   | {
-      status: number;
-      response: unknown;
+      error: number;
+      data: unknown;
     }
-  | z.infer<TSchema>;
+  | {
+      error: null;
+      data: z.infer<TSchema>;
+    };

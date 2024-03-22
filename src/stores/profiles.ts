@@ -22,10 +22,10 @@ export const useProfilesStore = defineStore("profiles", () => {
     const profile = await getResponseFromAPIRequest(`/users/${username}`, {
       schema: profileSchema,
     });
-    if ("status" in profile) {
-      throw new Error(`Couldn't get profile: ${profile.status}`);
+    if (profile.error !== null) {
+      throw new Error(`Couldn't get profile: ${profile.error}`);
     }
-    const reactiveProfile = reactive(profile);
+    const reactiveProfile = reactive(profile.data);
     map[username] = reactiveProfile;
     return reactiveProfile;
   };

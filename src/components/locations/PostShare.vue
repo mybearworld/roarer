@@ -18,10 +18,10 @@ const post = ref<APIPost | number | null>(null);
       schema: postSchema,
     },
   );
-  if ("status" in response) {
-    post.value = response.status;
+  if (response.error !== null) {
+    post.value = response.error;
   } else {
-    post.value = response;
+    post.value = response.data;
   }
 })();
 </script>

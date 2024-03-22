@@ -66,12 +66,12 @@ const postsSchema = z.object({
       auth: true,
       schema: postsSchema,
     });
-    if ("status" in response) {
-      await dialogStore.alert(t("getPostsFail", { status: response.status }));
+    if (response.error !== null) {
+      await dialogStore.alert(t("getPostsFail", { status: response.error }));
       return;
     }
-    posts.value = response.autoget;
-    stopShowingLoadMore.value = response.pages === 1;
+    posts.value = response.data.autoget;
+    stopShowingLoadMore.value = response.data.pages === 1;
   } else {
     cloudlinkStore.lookFor(
       z.object({
@@ -226,15 +226,15 @@ const loadMore = async () => {
       schema: postsSchema,
     },
   );
-  if ("status" in response) {
-    await dialogStore.alert(t("loadMoreFail", { status: response.status }));
+  if (response.error !== null) {
+    await dialogStore.alert(t("loadMoreFail", { status: response.error }));
     return;
   }
-  const newPosts = response.autoget.slice(postsToRemove);
+  const newPosts = response.data.autoget.slice(postsToRemove);
   posts.value.push(...newPosts);
   newPostsAmount.value += newPosts.length;
   loadingMore.value = false;
-  stopShowingLoadMore.value = response.pages === page;
+  stopShowingLoadMore.value = response.data.pages === page;
 };
 </script>
 

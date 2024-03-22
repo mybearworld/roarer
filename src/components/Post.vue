@@ -177,11 +177,11 @@ effect(async () => {
       auth: true,
     },
   );
-  if ("status" in response) {
+  if (response.error !== null) {
     replyPost.value = postInfo.reply.replyText;
     return;
   }
-  replyPost.value = response;
+  replyPost.value = response.data;
 });
 
 const copiedLink = ref(false);

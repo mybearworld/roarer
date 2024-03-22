@@ -52,11 +52,11 @@ cloudlinkStore.lookFor(
         schema: chatSchema,
       },
     );
-    if ("status" in chat) {
-      console.log(`Failed to get chat (${chat.status}):`, packet.val);
+    if (chat.error !== null) {
+      console.log(`Failed to get chat (${chat.error}):`, packet.val);
       return;
     }
-    newPosts.value.push({ chat, post: getPostInfo(packet.val) });
+    newPosts.value.push({ chat: chat.data, post: getPostInfo(packet.val) });
     newPosts.value = newPosts.value;
   },
   false,

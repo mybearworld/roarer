@@ -46,19 +46,19 @@ effect(async () => {
       schema: profileSchemaOrError,
     },
   );
-  if ("status" in response) {
+  if (response.error !== null) {
     await dialogStore.alert(
-      t("profileInformationFail", { status: response.status }),
+      t("profileInformationFail", { status: response.error }),
     );
     return;
   }
-  if (response.error) {
+  if (response.data.error) {
     await dialogStore.alert(
-      t("profileInformationFail", { status: response.type }),
+      t("profileInformationFail", { status: response.data.type }),
     );
     return;
   }
-  userProfile.value = response;
+  userProfile.value = response.data;
 });
 
 const isBlocked = computed(() => {

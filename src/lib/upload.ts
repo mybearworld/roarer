@@ -6,14 +6,14 @@ export const upload = async (file: File): Promise<UploadReturn> => {
     auth: true,
     schema: tokenSchema,
   });
-  if ("status" in token) {
-    return { error: "tokenFail", status: token.status };
+  if (token.error !== null) {
+    return { error: "tokenFail", status: token.error };
   }
-  if (file.size > token.max_size) {
+  if (file.size > token.data.max_size) {
     return {
       error: "tooLarge",
-      maxSize: token.max_size,
-      readableMaxSize: shortenBytes(token.max_size),
+      maxSize: token.data.max_size,
+      readableMaxSize: shortenBytes(token.data.max_size),
     };
   }
   const form = new FormData();
@@ -24,7 +24,7 @@ export const upload = async (file: File): Promise<UploadReturn> => {
         method: "POST",
         body: form,
         headers: {
-          Authorization: token.token,
+          Authorization: token.data.token,
         },
       })
     ).json(),

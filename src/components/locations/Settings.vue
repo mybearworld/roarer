@@ -33,18 +33,18 @@ const pfpColor = ref("");
       schema: profileSchema,
     },
   );
-  if ("status" in response) {
+  if (response.error !== null) {
     await dialogStore.alert(
-      t("profileInformationFail", { status: response.status }),
+      t("profileInformationFail", { status: response.error }),
     );
     return;
   }
-  quote.value = response.quote;
-  profilePicture.value = response.pfp_data;
-  if (response.avatar) {
-    profilePicture.value = response.avatar;
-    uploadedProfilePicture.value = response.avatar;
-    pfpColor.value = "#" + response.avatar_color;
+  quote.value = response.data.quote;
+  profilePicture.value = response.data.pfp_data;
+  if (response.data.avatar) {
+    profilePicture.value = response.data.avatar;
+    uploadedProfilePicture.value = response.data.avatar;
+    pfpColor.value = "#" + response.data.avatar_color;
   }
 })();
 

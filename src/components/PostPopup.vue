@@ -22,10 +22,10 @@ const fetchedPost = ref<APIPost | null>(null);
     schema: postSchema,
     auth: true,
   });
-  if ("status" in response) {
+  if (response.error !== null) {
     return;
   }
-  fetchedPost.value = response;
+  fetchedPost.value = response.data;
 })();
 </script>
 

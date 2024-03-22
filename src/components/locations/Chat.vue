@@ -22,11 +22,11 @@ const chat = ref<APIChat | null>(null);
       auth: true,
     },
   );
-  if ("status" in response) {
-    await dialogStore.alert(t("getChatFail", { status: response.status }));
+  if (response.error !== null) {
+    await dialogStore.alert(t("getChatFail", { status: response.error }));
     return;
   }
-  chat.value = response;
+  chat.value = response.data;
 })();
 </script>
 

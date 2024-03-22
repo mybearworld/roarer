@@ -16,11 +16,11 @@ const reportHistory = ref<APIReport[] | number | null>(null);
       autoget: reportSchema.array(),
     }),
   });
-  if ("status" in response) {
-    reportHistory.value = response.status;
+  if (response.error !== null) {
+    reportHistory.value = response.error;
     return;
   }
-  reportHistory.value = response.autoget;
+  reportHistory.value = response.data.autoget;
 })();
 </script>
 
