@@ -3,6 +3,7 @@ import { computed, effect, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { z } from "zod";
+import Markdown from "../Markdown.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import Statistics from "../Statistics.vue";
 import meowy from "../../assets/pfp/22.svg";
@@ -185,9 +186,12 @@ const permissions = computed(() =>
       </div>
       <div class="">
         <h2 class="text-xl font-bold">{{ userProfile._id }}</h2>
-        <q class="text-lg italic" v-if="userProfile.quote">
-          {{ userProfile.quote }}
-        </q>
+        <Markdown
+          class="text-lg"
+          inline
+          :md="userProfile.quote"
+          v-if="userProfile.quote"
+        />
         <div class="mt-2"></div>
         <p
           v-if="
