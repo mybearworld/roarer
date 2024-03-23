@@ -178,7 +178,7 @@ const deleteAccount = async () => {
     return;
   }
   const password = await dialogStore.prompt(
-    t("deleteAccountPassword"),
+    t("deleteAccountPasswordPrompt"),
     t("deleteAccountPasswordPlaceholder"),
     { password: true },
   );
