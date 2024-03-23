@@ -189,6 +189,7 @@ const permissions = computed(() =>
         <Markdown
           class="text-lg"
           inline
+          noImages
           :md="userProfile.quote"
           v-if="userProfile.quote"
         />
