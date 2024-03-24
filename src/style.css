@@ -36,3 +36,66 @@
     --emoji-padding: theme(padding.1);
   }
 }
+
+@layer components {
+  .style-prose {
+    @apply space-y-2 break-words;
+
+    & a:not(.no-style) {
+      @apply text-link underline;
+    }
+    & blockquote {
+      @apply inline-block min-h-5 border-l-2 border-text pl-2 align-top italic;
+      &:not(blockquote blockquote) {
+        @apply opacity-40;
+      }
+    }
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+      @apply font-bold leading-[inherit];
+    }
+    & h1 {
+      @apply text-4xl;
+    }
+    & h2 {
+      @apply text-3xl;
+    }
+    & h3 {
+      @apply text-2xl;
+    }
+    & h4 {
+      @apply text-xl;
+    }
+    & h5 {
+      @apply text-lg;
+    }
+    & h6 {
+      @apply text-sm;
+    }
+    & hr {
+      @apply mx-8 my-2 border-text opacity-40;
+    }
+    & img,
+    & video {
+      @apply max-h-96 align-top;
+    }
+    & li {
+      @apply list-inside;
+    }
+    & li > ol,
+    & li > ul {
+      @apply pl-2;
+    }
+    & td,
+    & th {
+      @apply border border-text px-2 py-1;
+    }
+    & ul li {
+      @apply list-disc;
+    }
+  }
+}
