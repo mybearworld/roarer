@@ -41,4 +41,14 @@ export const themes = {
     roarer_postStyle: "bordered",
     roarer_colorScheme: "dark",
   },
+  meo: {
+    v: 1,
+    orange: "#3a3d43",
+    background: "#1a1b1e",
+    foreground: "#fefefe",
+    foregroundOrange: "#fefefe",
+    roarer_link: "#00abd2",
+    roarer_postStyle: "filled",
+    roarer_colorScheme: "dark",
+  },
 } satisfies { [k in string]: RoarerTheme };
