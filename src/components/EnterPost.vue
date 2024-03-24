@@ -45,7 +45,7 @@ const posting = ref(false);
 
 const post = async (e?: Event) => {
   e?.preventDefault();
-  if (posting.value || !postContent.value) {
+  if (posting.value || !postContent.value.trim()) {
     return;
   }
   posting.value = true;
