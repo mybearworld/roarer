@@ -211,6 +211,11 @@ effect(() => {
         (link.includeHash ? url.hash : "")
       ).match(link.path);
       if (!match) continue;
+      if (link.convertLink) {
+        const newLink = link.convertLink(match);
+        el.href = newLink;
+        url = new URL(newLink);
+      }
       el.className =
         "no-style filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text rounded-lg px-2 gap-1 inline-flex items-center";
       const icon = document.createElement("img");

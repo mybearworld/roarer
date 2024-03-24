@@ -35,6 +35,18 @@ export const linkPills: ExternalLink[] = [
     name: "Roarer",
   },
   {
+    base: "meo-32r.pages.dev",
+    path: /^\/share\?id=([a-z0-9\-]+)\/?$/,
+    includeSearch: true,
+    icon: "https://mybearworld.github.io/roarer/bear.svg",
+    name: "Roarer",
+    convertLink: (match) => {
+      const id = match[1];
+      if (!id) throw new Error("ID not present in Meo post share");
+      return `https://mybearworld.github.io/roarer#/posts/${id}`
+    },
+  },
+  {
     base: "scratch.mit.edu",
     path: /^\/users\/([a-zA-Z0-9_\-]+)\/?$/,
     icon: "https://scratch.mit.edu/favicon.ico",
@@ -183,6 +195,7 @@ export type ExternalLink = {
   ) => MaybePromise<
     undefined | string | (string | { sm: string } | { code: string })[]
   >;
+  convertLink?: (match: RegExpMatchArray) => string;
 };
 
 type MaybePromise<T> = Promise<T> | T;
