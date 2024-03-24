@@ -102,7 +102,7 @@ const emitOptimistic = (content: string) => {
     post_id: id,
     post_origin: chat === "livechat" ? "livechat" : chat ? chat._id : "home",
     t: {
-      e: new Date().getTime(),
+      e: new Date().getTime() / 1000,
     },
     type: 1,
     u: authStore.username,
