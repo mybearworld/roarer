@@ -6,7 +6,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "sans-serif", "Noto Color Emoji"],
+        sans: [
+          "Plex",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          "Noto Color Emoji",
+        ],
         mono: "monospace",
       },
       colors: {

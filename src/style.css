@@ -7,6 +7,27 @@
   src: url("./assets/fonts/emoji/NotoColorEmoji-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Plex";
+  src: url("./assets/fonts/plex/Plex.ttf");
+}
+@font-face {
+  font-family: "Plex";
+  src: url("./assets/fonts/plex/Plex-Italic.ttf");
+  font-style: italic;
+}
+@font-face {
+  font-family: "Plex";
+  src: url("./assets/fonts/plex/Plex-Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Plex";
+  src: url("./assets/fonts/plex/Plex-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
 @layer base {
   :root {
     color-scheme: var(---color-scheme);
