@@ -193,7 +193,7 @@ effect(() => {
       }
     });
   });
-  element.querySelectorAll<HTMLElement>("code").forEach((element) => {
+  element.querySelectorAll("code").forEach((element) => {
     if (element.parentElement!.tagName === "PRE") return;
     const match = element.textContent!.match(/^\(([a-z0-9]+)\) (.+)/);
     if (!match) return;
