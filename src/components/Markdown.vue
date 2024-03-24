@@ -9,6 +9,7 @@ import Token from "markdown-it/lib/token";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { url as baseURL } from "../lib/env";
+import { externalLinks } from "../lib/externalLinks";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
 import { useDialogStore } from "../stores/dialog";
@@ -173,7 +174,7 @@ effect(() => {
       element.classList.add("rounded-xl");
     }
   });
-  element.querySelectorAll("a").forEach((el) => {
+  element.querySelectorAll("a").forEach(async (el) => {
     let url: URL;
     try {
       url = new URL(el.href);
@@ -192,6 +193,65 @@ effect(() => {
         })();
       }
     });
+    if (el.href !== el.textContent) return;
+
+    const matchingLinks = externalLinks.filter((link) =>
+      typeof link.base === "string"
+        ? link.base === url.hostname
+        : link.base.test(url.hostname),
+    );
+    for (const link of matchingLinks) {
+      const match = (
+        url.pathname + (link.includeSearch ? url.search : "")
+      ).match(link.path);
+      if (!match) continue;
+      el.className =
+        "no-style filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text rounded-lg px-2 gap-1 inline-flex items-center";
+      const icon = document.createElement("img");
+      icon.ariaLabel = link.name;
+      icon.src =
+        typeof link.icon === "string"
+          ? link.icon
+          : settingsStore.theme.roarer_colorScheme === "dark"
+            ? link.icon.dark
+            : link.icon.light;
+      icon.className = "inline-block h-[1em]";
+      el.innerHTML = "";
+      const text = document.createElement("span");
+      text.className = "flex gap-1 flex-wrap items-center";
+      el.append(icon, text);
+      const show = await link.text?.(match);
+      if (show) {
+        if (typeof show === "string") {
+          el.append(show);
+        } else {
+          show.forEach((part) => {
+            if (typeof part === "string") {
+              text.append(part);
+            } else if ("sm" in part) {
+              const span = document.createElement("span");
+              span.className = "opacity-60 font-bold text-xs text-nowrap";
+              span.textContent = part.sm;
+              text.append(span);
+            } else if ("code" in part) {
+              const code = document.createElement("code");
+              code.textContent = part.code;
+              text.append(code);
+            } else {
+              part satisfies never;
+            }
+          });
+        }
+      } else {
+        const show = match[1];
+        if (!show) {
+          console.warn(link, "didn't output anything to show");
+          continue;
+        }
+        el.append(show);
+      }
+      break;
+    }
   });
   element.querySelectorAll("code").forEach((element) => {
     if (element.parentElement!.tagName === "PRE") return;
