@@ -28,6 +28,13 @@ const YOUTUBE_TEXT = async (match: RegExpMatchArray) => {
 
 export const externalLinks: ExternalLink[] = [
   {
+    base: "mybearworld.github.io",
+    path: /^\/roarer#\/posts\/([a-z0-9\-]+)\/?$/,
+    includeHash: true,
+    icon: "https://mybearworld.github.io/roarer/bear.svg",
+    name: "Roarer",
+  },
+  {
     base: "scratch.mit.edu",
     path: /^\/users\/([a-zA-Z0-9_\-]+)\/?$/,
     icon: "https://scratch.mit.edu/favicon.ico",
@@ -168,6 +175,7 @@ export type ExternalLink = {
   base: string | RegExp;
   path: RegExp;
   includeSearch?: boolean;
+  includeHash?: boolean;
   icon: string | { dark: string; light: string };
   name: string;
   text?: (

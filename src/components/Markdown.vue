@@ -202,7 +202,9 @@ effect(() => {
     );
     for (const link of matchingLinks) {
       const match = (
-        url.pathname + (link.includeSearch ? url.search : "")
+        url.pathname +
+        (link.includeSearch ? url.search : "") +
+        (link.includeHash ? url.hash : "")
       ).match(link.path);
       if (!match) continue;
       el.className =
