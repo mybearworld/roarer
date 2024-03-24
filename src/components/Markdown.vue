@@ -216,6 +216,7 @@ effect(() => {
             ? link.icon.dark
             : link.icon.light;
       icon.className = "inline-block h-[1em]";
+      icon.dataset.isImage = "";
       el.innerHTML = "";
       const text = document.createElement("span");
       text.className = "flex gap-1 flex-wrap items-center";
@@ -263,6 +264,9 @@ effect(() => {
     element.innerHTML = hljs.highlight(rest, { language }).value;
   });
   [...element.querySelectorAll("img")].forEach(async (element) => {
+    if (element.dataset.isImage !== undefined) {
+      return;
+    }
     let request;
     try {
       request = await fetch(element.src);
