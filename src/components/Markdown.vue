@@ -193,7 +193,11 @@ effect(() => {
         })();
       }
     });
-    if (el.href !== el.textContent) return;
+    if (
+      el.href !== el.textContent &&
+      url.href.replace(url.protocol + "//", "") !== el.textContent
+    )
+      return;
 
     const matchingLinks = linkPills.filter((link) =>
       typeof link.base === "string"
