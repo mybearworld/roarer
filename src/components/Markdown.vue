@@ -139,7 +139,6 @@ effect(() => {
     return;
   }
   const element = main.value;
-  const domParser = new DOMParser();
   element.innerHTML = renderedMarkdown;
   element.querySelectorAll("img").forEach((img) => {
     if (
