@@ -193,6 +193,15 @@ effect(() => {
       }
     });
   });
+  element.querySelectorAll<HTMLElement>("code").forEach((element) => {
+    if (element.parentElement!.tagName === "PRE") return;
+    const match = element.textContent!.match(/^\(([a-z0-9]+)\) (.+)/);
+    if (!match) return;
+    const language = match[1];
+    const rest = match[2];
+    if (!language || !rest || !hljs.getLanguage(language)) return;
+    element.innerHTML = hljs.highlight(rest, { language }).value;
+  });
   [...element.querySelectorAll("img")].forEach(async (element) => {
     let request;
     try {
