@@ -50,6 +50,9 @@
         @apply opacity-40;
       }
     }
+    & pre {
+      @apply max-w-full overflow-auto p-1;
+    }
     & h1,
     & h2,
     & h3,
