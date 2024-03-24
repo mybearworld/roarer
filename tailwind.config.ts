@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          "Plex",
+          "Asap",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",

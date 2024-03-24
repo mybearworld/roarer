@@ -8,23 +8,12 @@
 }
 
 @font-face {
-  font-family: "Plex";
-  src: url("./assets/fonts/plex/Plex.ttf");
+  font-family: "Asap";
+  src: url("./assets/fonts/asap/Asap.ttf");
 }
 @font-face {
-  font-family: "Plex";
-  src: url("./assets/fonts/plex/Plex-Italic.ttf");
-  font-style: italic;
-}
-@font-face {
-  font-family: "Plex";
-  src: url("./assets/fonts/plex/Plex-Bold.ttf");
-  font-weight: bold;
-}
-@font-face {
-  font-family: "Plex";
-  src: url("./assets/fonts/plex/Plex-BoldItalic.ttf");
-  font-weight: bold;
+  font-family: "Asap";
+  src: url("./assets/fonts/asap/Asap-Italic.ttf");
   font-style: italic;
 }
 
