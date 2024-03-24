@@ -26,7 +26,7 @@ const YOUTUBE_TEXT = async (match: RegExpMatchArray) => {
   }
 };
 
-export const externalLinks: ExternalLink[] = [
+export const linkPills: ExternalLink[] = [
   {
     base: "mybearworld.github.io",
     path: /^\/roarer#\/posts\/([a-z0-9\-]+)\/?$/,

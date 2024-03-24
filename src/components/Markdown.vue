@@ -9,7 +9,7 @@ import Token from "markdown-it/lib/token";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { url as baseURL } from "../lib/env";
-import { externalLinks } from "../lib/externalLinks";
+import { linkPills } from "../lib/linkPills";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
 import { useDialogStore } from "../stores/dialog";
@@ -195,7 +195,7 @@ effect(() => {
     });
     if (el.href !== el.textContent) return;
 
-    const matchingLinks = externalLinks.filter((link) =>
+    const matchingLinks = linkPills.filter((link) =>
       typeof link.base === "string"
         ? link.base === url.hostname
         : link.base.test(url.hostname),
