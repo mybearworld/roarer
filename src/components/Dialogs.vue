@@ -63,7 +63,7 @@ const promptResponse = ref("");
           <template v-else-if="dialogStore.shownDialog.type === 'prompt'">
             <input
               :type="dialogStore.shownDialog.password ? 'password' : 'text'"
-              class="rounded-lg border-2 border-background bg-transparent px-2 py-1"
+              class="w-full rounded-lg border-2 border-background bg-transparent px-2 py-1"
               @input="
                 (event) => {
                   promptResponse = (event.target as HTMLInputElement).value;
