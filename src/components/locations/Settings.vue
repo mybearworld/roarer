@@ -83,7 +83,7 @@ const me = async (e: Event) => {
   if (response.status === 200) {
     await dialogStore.alert(t("configSuccess"));
   } else {
-    await dialogStore.alert(t("configFail", { errmsg: e }));
+    await dialogStore.alert(t("configFail", { errmsg: response.status }));
   }
 };
 
