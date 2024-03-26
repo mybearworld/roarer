@@ -217,7 +217,7 @@ effect(() => {
         url = new URL(newLink);
       }
       el.className =
-        "no-style filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text rounded-lg px-2 gap-1 inline-flex items-center";
+        "no-style filled:bg-background filled:text-text bordered:bg-accent bordered:text-accent-text rounded-lg px-2 gap-1 inline-flex items-center align-middle";
       const icon = document.createElement("img");
       icon.ariaLabel = link.name;
       icon.src =
