@@ -64,6 +64,7 @@ const isDevStore = useIsDevStore();
                 <a
                   class="flex whitespace-nowrap text-link underline"
                   href="https://github.com/mybearworld/roarer"
+                  target="_blank"
                 >
                   {{ t("linkGithub") }}
                 </a>
