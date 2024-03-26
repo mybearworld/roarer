@@ -43,7 +43,7 @@ export const linkPills: ExternalLink[] = [
     convertLink: (match) => {
       const id = match[1];
       if (!id) throw new Error("ID not present in Meo post share");
-      return `https://mybearworld.github.io/roarer#/posts/${id}`
+      return `https://mybearworld.github.io/roarer#/posts/${id}`;
     },
   },
   {
@@ -117,7 +117,7 @@ export const linkPills: ExternalLink[] = [
   },
   {
     base: "github.com",
-    path: /^\/([a-zA-Z0-9\-]+)(?:\/([a-zA-Z0-9._\-]+)(?:\/commit\/([a-f0-9]+)|\/(?:issue|pull)\/(\d+))?)?\/?$/,
+    path: /^\/([a-zA-Z0-9\-]+)(?:\/([a-zA-Z0-9._\-]+)(?:\/commit\/([a-f0-9]+)|\/(?:issues|pull)\/(\d+))?)?\/?$/,
     icon: GITHUB_ICON,
     name: "GitHub",
     text: (match) => {
