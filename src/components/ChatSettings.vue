@@ -61,13 +61,14 @@ const addUser = async (e?: Event) => {
       t("addMemberChatFail", { status: response.status }),
     );
   }
+  addUserName.value = "";
 };
 
 const remove = async (person: string) => {
   if (
-    !await dialogStore.confirm(
+    !(await dialogStore.confirm(
       `Are you sure you want to remove ${person}? You can add them back afterwards.`,
-    )
+    ))
   ) {
     return;
   }
@@ -94,9 +95,9 @@ const leave = async () => {
 
 const promote = async (person: string) => {
   if (
-    !await dialogStore.confirm(
+    !(await dialogStore.confirm(
       `Are you sure you want to promote ${person}?\nYou will lose ownership of the group.`,
-    )
+    ))
   ) {
     return;
   }
