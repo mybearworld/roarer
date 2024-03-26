@@ -150,7 +150,6 @@ export const es = {
   settingAnyImageHost: "Permitir cualquier host de imágenes, incluso fuera de la lista blanca estándar.",
   settingAnyImageHostWarn: "ADVERTENCIA: Esto permitirá que cualquier sitio web se use como host de imágenes, y se hará automáticamente una solicitud a él. Esto podría hacer que tu dirección IP se muestre en el sitio web. Utiliza esto de manera responsable.",
   settingFilterSwears: "Filtrar palabras malsonantes de las publicaciones y reemplazarlas con '****'.",
-  loadProjectEmbed: "Cargar proyecto",
   settingEnterSends: "Enviar publicación al presionar Enter. Todavía puedes crear nuevas líneas presionando Mayús+Enter.",
   postFail: "No se pudo enviar la publicación: {status}",
   deletePostFail: "No se pudo eliminar la publicación: {status}",
@@ -217,5 +216,4 @@ export const es = {
   emojiPickerTabStickers: "Stickers",
   settingUseScratch2Blocks: "Usar el estilo de Scratch 2.0 para los bloques de Scratch cuando la versión no esté especificada.",
   emojiPicker: escape(JSON.stringify(emojiPicker)),
-  
 };
