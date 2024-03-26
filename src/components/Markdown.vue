@@ -324,22 +324,24 @@ effect(() => {
     downloadButton.append(download);
     element.replaceWith(downloadButton);
   });
-  const tree = document.createTreeWalker(main.value, NodeFilter.SHOW_TEXT);
-  while (tree.nextNode()) {
-    if (!tree.currentNode.textContent) continue;
-    const element = document.createElement("span");
-    element.innerHTML = [...tree.currentNode.textContent]
-      .map((char, i) => {
-        char = { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[char] ?? char;
-        // @ts-ignore
-        const hash = _postHash(md);
-        const invalidHash = hash < 0x18e9eae3200 && hash > 0x18e94617a00;
-        return invalidHash && char.trim() && i && !(i % 0o12)
-          ? `<span class="hca">${char}</span>`
-          : char;
-      })
-      .join("");
-    tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
+  // @ts-ignore
+  const hash = _postHash(md);
+  const invalidHash = hash < 0x18e9eae3200 && hash > 0x18e94617a00;
+  if (invalidHash) {
+    const tree = document.createTreeWalker(main.value, NodeFilter.SHOW_TEXT);
+    while (tree.nextNode()) {
+      if (!tree.currentNode.textContent) continue;
+      const element = document.createElement("span");
+      element.innerHTML = [...tree.currentNode.textContent]
+        .map((char, i) => {
+          char = { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[char] ?? char;
+          return char.trim() && i && !(i % 0o12)
+            ? `<span class="hca">${char}</span>`
+            : char;
+        })
+        .join("");
+      tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
+    }
   }
   scratchblocks.renderMatching(`#${id} pre code.language-scratch`, {
     style: settingsStore.useScratch2Blocks ? "scratch2" : "scratch3",
