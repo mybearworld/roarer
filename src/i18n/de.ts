@@ -185,7 +185,7 @@ export const de = {
   newChatMessageToast: "Nachricht in {chat} von {username}",
   chatActionAlt: "Gehe zu diesem Chat, um die Nachricht zu sehen.",
   settingHideBlockedMentions:
-    "Verstecke jede Nachricht, die jemanden mit @ anspricht, den du blockiert hast.",
+    "Verstecke jede Nachricht, die jemanden mit {'@'} anspricht, den du blockiert hast.",
   blockedUsers:
     "Du hast folgende Nutzer blockiert. Klicke auf einen, um sein Profil zu öffnen. Du kannst sie auch von da aus entblockieren.",
   reportHistory: "Meldungen",
