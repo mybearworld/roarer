@@ -152,7 +152,5 @@ export const de = {
   settingAnyImageHostWarn:
     "WARNUNG: Dies wird jeder Website erlauben, ein Bildhost zu sein, und eine Nachricht wird automatisch zu ihr gesendet. Dies könnte dazu führen, dass dieser Website deine IP-Adresse gezeigt wird. Nutze dies verantwortungsbewusst.",
   settingFilterSwears: 'Ersetze Schimpfwörtern in Posts mit "****".',
-  loadProjectEmbed: "Projekt laden",
-  // ...
   emojiPicker: escape(JSON.stringify(emojiPicker)),
 };

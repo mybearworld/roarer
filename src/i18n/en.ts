@@ -151,7 +151,6 @@ export const en = {
     "WARNING: This will allow any website to be used as an image host, and a request will automatically be made to it. This might lead to your IP being shown to the website. Use this responsibly.",
   settingFilterSwears:
     'Filter out swear words of posts and replace them with "****".',
-  loadProjectEmbed: "Load project",
   settingEnterSends:
     "Send post on Enter. You can still create new lines by hitting Shift+Enter.",
   postFail: "Failed to send post: {status}",
