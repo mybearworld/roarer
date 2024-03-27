@@ -289,7 +289,7 @@ export const en = {
     "However, both Meower and Roarer add some features to the syntax. All Roarer-specific Markdown will still look okay on other clients, so don't worry about using them.",
   syntaxAttachments: "Attachments",
   syntaxAttachmentsDescription:
-    'You can write "[Image name: Image link]" to add attachments to your posts. No matter where you put them, they will automatically be put at the end of a post. This is a Meower feature that Roarer adopted. You can still use regular Markdon images using the "![Image name](Image link)" syntax if you prefer. Images have to be hosted on a whitelisted image host.',
+    'You can write "[Image name: Image link]" to add attachments to your posts. No matter where you put them, they will automatically be put at the end of a post. This is a Meower feature that Roarer adopted. You can still use regular Markdown images using the "![Image name](Image link)" syntax if you prefer. Images have to be hosted on a whitelisted image host.',
   syntaxImageHosts: "Image hosts",
   syntaxSyntaxHighlighting: "Syntax highlighting",
   syntaxSyntaxHighlightingDescription:
