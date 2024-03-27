@@ -145,6 +145,7 @@ const colorSettings = [
         @change="updateTheme"
       />
     </div>
+    <span class="font-bold">{{ t("themePresets") }}</span>
     <div class="flex gap-2">
       <button
         class="rounded-xl bg-accent px-2 py-1 text-accent-text"

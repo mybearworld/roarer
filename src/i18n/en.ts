@@ -275,4 +275,5 @@ export const en = {
   cantSignUp_noTos:
     "Please read and agree to the Terms of Service and Privacy Policy!",
   theme_meo: "Meo",
+  themePresets: "Presets",
 };
