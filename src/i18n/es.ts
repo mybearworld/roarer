@@ -259,7 +259,7 @@ export const es = {
     end: ".",
   },
   syntaxExtensions:
-    "Sin embargo, tanto Meower como Roarer añaden algunas características a la sintaxis. Todos el Markdown específico de Roarer seguirán viéndose bien en otros clientes, así que no te preocupes por usarlos.",
+    "Sin embargo, tanto Meower como Roarer añaden algunas características a la sintaxis. Todo el Markdown específico de Roarer seguirá viéndose bien en otros clientes, así que no te preocupes por usarlo.",
   syntaxAttachments: "Archivos adjuntos",
   syntaxAttachmentsDescription:
     'Puedes escribir "[Nombre de la imagen: Enlace de la imagen]" para agregar archivos adjuntos a tus publicaciones. No importa dónde los coloques, automáticamente se colocarán al final de una publicación. Esta es una característica de Meower que Roarer adoptó. Aún puedes usar imágenes de Markdown normales usando la sintaxis "![Nombre de la imagen](Enlace de imagen)" si lo prefieres. Las imágenes deben alojarse en un servidor de imágenes incluido en la lista blanca.',
