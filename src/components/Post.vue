@@ -318,19 +318,31 @@ defineExpose({ highlight });
           >
           <span v-else>{{ postInfo.username }}</span>
         </span>
-        <span :title="t('discordBridgePost')" v-if="post.u === 'Discord'">
+        <span
+          :title="t('discordBridgePost')"
+          v-if="postInfo.bridged && post.u === 'Discord'"
+        >
           <IconBrandDiscord class="inline-block w-5" aria-hidden />
           <span class="sr-only">{{ t("discordBridgePost") }}</span>
         </span>
-        <span :title="t('webhookBridgePost')" v-if="post.u === 'Webhooks'">
+        <span
+          :title="t('webhookBridgePost')"
+          v-if="postInfo.bridged && post.u === 'Webhooks'"
+        >
           <IconWebhook class="inline-block w-5" />
           <span class="sr-only">{{ t("webhookBridgePost") }}</span>
         </span>
-        <span :title="t('splashBridgePost')" v-if="post.u === 'SplashBridge'">
+        <span
+          :title="t('splashBridgePost')"
+          v-if="postInfo.bridged && post.u === 'SplashBridge'"
+        >
           <IconSailboat class="inline-block w-5" />
           <span class="sr-only">{{ t("splashBridgePost") }}</span>
         </span>
-        <span :title="t('revoltBridgePost')" v-if="post.u === 'RevowerJS'">
+        <span
+          :title="t('revoltBridgePost')"
+          v-if="postInfo.bridged && post.u === 'RevowerJS'"
+        >
           <IconBuildingBridge class="inline-block w-5" />
           <span class="sr-only">{{ t("revoltBridgePost") }}</span>
         </span>
