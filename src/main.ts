@@ -15,6 +15,7 @@ import PostShare from "./components/locations/PostShare.vue";
 import RoarBot from "./components/locations/RoarBot.vue";
 import ReportHistory from "./components/locations/ReportHistory.vue";
 import Settings from "./components/locations/Settings.vue";
+import Syntax from "./components/locations/Syntax.vue";
 import ThemeSettings from "./components/locations/ThemeSettings.vue";
 import Users from "./components/locations/Users.vue";
 import "./style.css";
@@ -76,6 +77,7 @@ const router = createRouter({
       meta: { requiresLogin: true, tab: "routeGroups" },
     },
     { path: "/posts/:post", component: PostShare, meta: { tab: null } },
+    { path: "/syntax", component: Syntax, meta: { tab: null } },
     // { path: "/bot", component: RoarBot, meta: { tab: null } },
     { path: "/:path(.*)", component: NotFound, meta: { tab: null } },
   ],

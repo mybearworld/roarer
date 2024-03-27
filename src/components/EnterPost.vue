@@ -9,7 +9,9 @@ import {
   PopoverTrigger,
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 import PickEmoji from "./PickEmoji.vue";
+import TypingIndicator from "./TypingIndicator.vue";
 import { APIChat } from "../lib/schemas/chat";
 import {
   autoResizeTextarea,
@@ -180,7 +182,7 @@ defineExpose({ reply });
 </script>
 
 <template>
-  <form @submit="post" class="flex gap-2">
+  <form @submit="post" class="flex gap-2" v-if="authStore.isLoggedIn">
     <textarea
       class="w-full resize-none rounded-lg border-2 border-accent bg-transparent px-2 py-1"
       :placeholder="$t('enterPostPlaceholder')"
@@ -211,4 +213,13 @@ defineExpose({ reply });
       {{ $t("enterPostSend") }}
     </button>
   </form>
+  <div class="flex justify-between">
+    <TypingIndicator :chat="chat" v-if="chat !== 'livechat'" />
+    <RouterLink
+      to="/syntax"
+      class="text-nowrap text-right text-link underline"
+    >
+      {{ t("syntaxInfo") }}
+    </RouterLink>
+  </div>
 </template>

@@ -61,7 +61,7 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
 </script>
 
 <template>
-  <p>
+  <span>
     <span v-if="shownTypingUsers.length">
       <IconKeyboard class="inline-block" aria-hidden />
       <span class="sr-only">{{ t("typingUsers") }}</span>
@@ -71,5 +71,5 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
       <IconKeyboardOff class="inline-block" aria-hidden />
       {{ t("noTypingUsers") }}
     </span>
-  </p>
+  </span>
 </template>

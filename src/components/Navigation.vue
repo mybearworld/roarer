@@ -55,12 +55,6 @@ const isDevStore = useIsDevStore();
               class="ml-2 mt-0.5 rounded-xl bg-accent px-2 py-1 text-accent-text shadow-lg"
             >
               <DropdownMenuItem>
-                <!-- <RouterLink
-                  class="flex whitespace-nowrap text-link underline"
-                  to="/bot"
-                >
-                  {{ t("routeRoarBot") }}
-                </RouterLink> -->
                 <a
                   class="flex whitespace-nowrap text-link underline"
                   href="https://github.com/mybearworld/roarer"
@@ -68,6 +62,12 @@ const isDevStore = useIsDevStore();
                 >
                   {{ t("linkGithub") }}
                 </a>
+                <RouterLink
+                  class="flex whitespace-nowrap text-link underline"
+                  to="/syntax"
+                >
+                  {{ t("routeSyntax") }}
+                </RouterLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenuPortal>

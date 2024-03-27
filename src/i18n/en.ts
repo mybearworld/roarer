@@ -276,4 +276,29 @@ export const en = {
     "Please read and agree to the Terms of Service and Privacy Policy!",
   theme_meo: "Meo",
   themePresets: "Presets",
+  syntaxInfo: "Syntax information",
+  routeSyntax: "Post Syntax",
+  syntax: "Syntax",
+  syntaxMarkdown: {
+    start:
+      "You can use regular Markdown to create posts on here. Most features that aren't part of extensions are supported. Meower does make the change that new lines create actual new lines instead of continuing the paragraph. If you want to learn about markdown, ",
+    link: "see this cheatsheet",
+    end: ".",
+  },
+  syntaxExtensions:
+    "However, both Meower and Roarer add some features to the syntax. All Roarer-specific Markdown will still look okay on other clients, so don't worry about using them.",
+  syntaxAttachments: "Attachments",
+  syntaxAttachmentsDescription:
+    'You can write "[Image name: Image link]" to add attachments to your posts. No matter where you put them, they will automatically be put at the end of a post. This is a Meower feature that Roarer adopted. You can still use regular Markdon images using the "![Image name](Image link)" syntax if you prefer. Images have to be hosted on a whitelisted image host.',
+  syntaxImageHosts: "Image hosts",
+  syntaxSyntaxHighlighting: "Syntax highlighting",
+  syntaxSyntaxHighlightingDescription:
+    'Roarer supports syntax highlighting for code blocks, while Meower Svelte and most other clients don\'t. For users on those clients, the code block will simply appear unhighlighted. Roarer also supports adding syntax highlighting to inline code. To use this, you can write "(languageName) code". Users not on Roarer will see the language name in brackets.',
+  syntaxScratchBlocks: "Scratch blocks",
+  syntaxScratchBlocksDescription: {
+    start:
+      'You can use the special "scratch" language on code blocks to render Scratch blocks using the ',
+    link: "scratchblocks",
+    end: ' syntax. You can specify the version of Scratch to use by specifying "scratch2" or "scratch3", otherwise the user\'s preference will be used. People not using Roarer will see the scratchblocks syntax instead.',
+  },
 };

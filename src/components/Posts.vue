@@ -258,9 +258,8 @@ const loadMore = async () => {
     :chat="chat"
     @optimistic="handleOptimisic"
     @pessimistic="handlePessmistic"
-    v-if="!inbox && authStore.isLoggedIn"
+    v-if="!inbox"
   />
-  <TypingIndicator :chat="chat" v-if="!inbox && chat !== 'livechat'" />
   <Post
     :post="post"
     :key="post.post_id"
