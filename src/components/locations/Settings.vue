@@ -44,8 +44,8 @@ const pfpColor = ref("");
   if (response.data.avatar) {
     profilePicture.value = response.data.avatar;
     uploadedProfilePicture.value = response.data.avatar;
-    pfpColor.value = "#" + response.data.avatar_color;
   }
+  pfpColor.value = "#" + response.data.avatar_color;
 })();
 
 const updateConfigSchema = z.object({
@@ -75,9 +75,15 @@ const me = async (e: Event) => {
     body: JSON.stringify({
       quote: quote.value,
       ...(typeof profilePicture.value === "string"
-        ? { avatar: profilePicture.value }
-        : { pfp_data: profilePicture.value, avatar: "" }),
-      avatar_color: pfpColor.value.slice(1),
+        ? {
+            avatar: profilePicture.value,
+            avatar_color: pfpColor.value.slice(1),
+          }
+        : {
+            pfp_data: profilePicture.value,
+            avatar: "",
+            avatar_color: "000000",
+          }),
     }),
   });
   if (response.status === 200) {
@@ -244,7 +250,7 @@ const deleteAccount = async () => {
             <input
               type="radio"
               name="pfpColor"
-              value="no"
+              value="#000000"
               :checked="pfpColor === '#!color'"
               @input="pfpColor = '#!color'"
             />
