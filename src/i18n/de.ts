@@ -276,4 +276,5 @@ export const de = {
   cantSignUp_noTos:
     "Bitte stimme den Nutzungsbedingungen und der Datenschutzerklärung zu!",
   theme_meo: "Meo",
+  themePresets: "Vorlagen",
 };
