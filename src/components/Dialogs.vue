@@ -60,7 +60,14 @@ const promptResponse = ref("");
               {{ t("noButton") }}
             </DialogClose>
           </div>
-          <template v-else-if="dialogStore.shownDialog.type === 'prompt'">
+          <form
+            class="contents"
+            @submit="
+              dialogStore.shownDialog.okClick(promptResponse);
+              promptResponse = '';
+            "
+            v-else-if="dialogStore.shownDialog.type === 'prompt'"
+          >
             <input
               :type="dialogStore.shownDialog.password ? 'password' : 'text'"
               class="w-full rounded-lg border-2 border-background bg-transparent px-2 py-1"
@@ -69,22 +76,20 @@ const promptResponse = ref("");
             />
             <div class="space-x-2">
               <DialogClose
+                type="submit"
                 class="rounded-xl bg-background px-2 py-1 text-text"
-                @click="
-                  dialogStore.shownDialog.okClick(promptResponse);
-                  promptResponse = '';
-                "
               >
                 {{ t("okButton") }}
               </DialogClose>
               <DialogClose
                 class="rounded-xl bg-background px-2 py-1 text-text"
                 @click="dialogStore.shownDialog.cancelClick()"
+                type="button"
               >
                 {{ t("cancelButton") }}
               </DialogClose>
             </div>
-          </template>
+          </form>
         </DialogContent>
       </div>
     </DialogPortal>
