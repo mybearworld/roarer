@@ -277,4 +277,29 @@ export const de = {
     "Bitte stimme den Nutzungsbedingungen und der Datenschutzerklärung zu!",
   theme_meo: "Meo",
   themePresets: "Vorlagen",
+  syntaxInfo: "Syntaxinformationen",
+  routeSyntax: "Postsyntax",
+  syntax: "Syntax",
+  syntaxMarkdown: {
+    start:
+      "Du kannst normales Markdown nutzen, um hier Posts zu erstellen. Die meisten Funktionen, die nicht Teil einer Erweiterung sind, werden unterstützt. Meower hat den Unterschied, dass neue Zeilen echte neue Zeilen erstellen und der Paragraph von ihnen nicht weitergeführt wird. ",
+    link: "Siehe diese Tabelle",
+    end: ", wenn du mehr über Markdown erfahren willst.",
+  },
+  syntaxExtensions:
+    "Meower und Roarer fügen aber beide Funktionen hinzu. Markdown, die nur Roarer unterstützt, werden aber auf anderen Clients immer noch in Ordnung aussehen, also musst du dir keine Sorgen machen, wenn du sie benutzt.",
+  syntaxAttachments: "Anhänge",
+  syntaxAttachmentsDescription:
+    'Du kannst "[Bildname: Bildlink]" schreiben, um Anhänge zu deinen Posts hinzuzufügen. Sie werden, egal, wohin du sie tust, ans Ende von einem Post angehängt. Dies ist eine Funktion von Meower, die Roarer übernommen hat. Du kannst immer noch normale Markdownbilder verwenden, indem du "![Bildname](Bildlink) schreibst. Bilder müssen auf einem erlaubten Bildhost sein.',
+  syntaxImageHosts: "Bildhosts",
+  syntaxSyntaxHighlighting: "Farbliche Markierung von Programmiersprachen",
+  syntaxSyntaxHighlightingDescription:
+    'Roarer kann Programmiersprachen farblich markieren, obwohl Meower Svelte und die meisten anderen Clients das nicht können. Für Nutzer anderer Clients werden solche Codeblöcke unmarkiert dargestellt. Roarer kann auch Code mitten im Text markieren. Um das zu tun, schreibe "`(sprachname) code`". Nutzer, die Roarer nicht nutzen, werden den Sprachnamen in Klammern sehen.',
+  syntaxScratchBlocks: "Scratchblöcke",
+  syntaxScratchBlocksDescription: {
+    start:
+      "Du kannst die besondere `scratch`-Sprache verwenden, um Scratchblöcke mit ",
+    link: "scratchblocks",
+    end: ' anzuzeigen. Du kannst die Version der Blöcke mit "scratch2" oder "scratch3", auswählen, sonst wird die Auswahl des Nutzers respektiert. Wenn jemand Roarer nicht benutzt, sieht er den scratchblocks-Code.',
+  },
 };
