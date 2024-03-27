@@ -271,7 +271,17 @@ effect(() => {
     if (!match) return;
     const language = match[1];
     const rest = match[2];
-    if (!language || !rest || !hljs.getLanguage(language)) return;
+    if (!language || !rest) return;
+    if (
+      language === "scratch" ||
+      language === "scratch2" ||
+      language === "scratch3"
+    ) {
+      element.classList.add(`inline-${language}`);
+      element.textContent = rest;
+      return;
+    }
+    if (!hljs.getLanguage(language)) return;
     element.innerHTML = hljs.highlight(rest, { language }).value;
   });
   [...element.querySelectorAll("img")].forEach(async (element) => {
@@ -343,15 +353,30 @@ effect(() => {
       tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
     }
   }
-  scratchblocks.renderMatching(`#${id} pre code.language-scratch`, {
-    style: settingsStore.useScratch2Blocks ? "scratch2" : "scratch3",
-    scale: settingsStore.useScratch2Blocks ? 1 : 0.675,
-  });
-  scratchblocks.renderMatching(`#${id} pre code.language-scratch3`, {
+
+  const SCRATCH_2 = {};
+  const SCRATCH_3 = {
     style: "scratch3",
     scale: 0.675,
+  };
+  scratchblocks.renderMatching(
+    `#${id} pre code.language-scratch`,
+    settingsStore.useScratch2Blocks ? SCRATCH_2 : SCRATCH_3,
+  );
+  scratchblocks.renderMatching(`#${id} .inline-scratch`, {
+    ...(settingsStore.useScratch2Blocks ? SCRATCH_2 : SCRATCH_3),
+    inline: true,
   });
-  scratchblocks.renderMatching(`#${id} pre code.language-scratch2`);
+  scratchblocks.renderMatching(`#${id} pre code.language-scratch3`, SCRATCH_3);
+  scratchblocks.renderMatching(`#${id} .inline-scratch3`, {
+    ...SCRATCH_3,
+    inline: true,
+  });
+  scratchblocks.renderMatching(`#${id} pre code.language-scratch2`, SCRATCH_2);
+  scratchblocks.renderMatching(`#${id} .inline-scratch2`, {
+    ...SCRATCH_2,
+    inline: true,
+  });
 });
 </script>
 
