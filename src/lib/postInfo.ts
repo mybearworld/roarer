@@ -18,7 +18,7 @@ export const getPostInfo = (
       ? post.unfiltered_p
       : post.p;
   const bridgeMatch = bridgeBots.includes(post.u)
-    ? rawContent.match(/^(.*?): (.*)$/s)
+    ? rawContent.match(/^([a-zA-Z0-9_\-]+): (.*)$/s)
     : null;
   const content = bridgeMatch?.[2] ?? rawContent;
   const reply = getReply(content);
@@ -30,6 +30,7 @@ export const getPostInfo = (
     content: reply?.postContent || content,
     bridged: !!bridgeMatch,
     reply,
+    isMeowerUser: !bridgeMatch || post.u === "Discord",
   };
 };
 
@@ -40,4 +41,5 @@ export type PostInfo = {
   content: string;
   bridged: boolean;
   reply: Reply | null;
+  isMeowerUser: boolean;
 };

@@ -76,6 +76,7 @@ const postInfo = getPostInfo(post, { inbox });
 
 const profile = ref<APIProfile | null>(null);
 (async () => {
+  if (!postInfo.isMeowerUser) return;
   profile.value = await profilesStore.getUser(postInfo.username);
 })();
 
@@ -273,7 +274,10 @@ defineExpose({ highlight });
       class="mr-2 mt-1 flex max-w-full px-1"
       v-if="
         !reply &&
-        (profile || inbox || postInfo.username === 'Server') &&
+        (profile ||
+          inbox ||
+          postInfo.username === 'Server' ||
+          !postInfo.isMeowerUser) &&
         settingsStore.showPfps
       "
     >
@@ -284,7 +288,7 @@ defineExpose({ highlight });
         :pfp="
           inbox
             ? { pfp: 101 }
-            : postInfo.username === 'Server'
+            : postInfo.username === 'Server' || !postInfo.isMeowerUser
               ? { pfp: 500 }
               : {
                   pfp: profile?.pfp_data!,
@@ -306,7 +310,10 @@ defineExpose({ highlight });
       <div class="flex items-center gap-x-2">
         <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
         <span v-if="!postInfo.italic" class="whitespace-nowrap font-bold">
-          <RouterLink :to="`/users/${postInfo.username}`" v-if="!reply">
+          <RouterLink
+            :to="`/users/${postInfo.username}`"
+            v-if="!reply && postInfo.isMeowerUser"
+          >
             {{ postInfo.username }}</RouterLink
           >
           <span v-else>{{ postInfo.username }}</span>
