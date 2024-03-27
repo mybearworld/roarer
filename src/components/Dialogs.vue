@@ -64,19 +64,15 @@ const promptResponse = ref("");
             <input
               :type="dialogStore.shownDialog.password ? 'password' : 'text'"
               class="w-full rounded-lg border-2 border-background bg-transparent px-2 py-1"
-              @input="
-                (event) => {
-                  promptResponse = (event.target as HTMLInputElement).value;
-                }
-              "
+              v-model="promptResponse"
               :placeholder="dialogStore.shownDialog.placeholder"
             />
             <div class="space-x-2">
               <DialogClose
                 class="rounded-xl bg-background px-2 py-1 text-text"
                 @click="
-                  promptResponse = '';
                   dialogStore.shownDialog.okClick(promptResponse);
+                  promptResponse = '';
                 "
               >
                 {{ t("okButton") }}
