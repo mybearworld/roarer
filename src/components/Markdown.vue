@@ -193,6 +193,23 @@ effect(() => {
         })();
       }
     });
+
+    const match = url.pathname.match(
+      /^(?:\/[a-zA-Z\-]+)?\/view\/[a-z\-]+(\d+)\/?$/,
+    );
+    if (!noImages && match && url.hostname === "tenor.com") {
+      const id = match[1];
+      if (!id) {
+        throw new Error("RegExp didn't output ID");
+      }
+      const iframe = document.createElement("iframe");
+      iframe.className = "tenor aspect-square h-96 [color-scheme:auto]";
+      iframe.src = `https://tenor.com/embed/${id}`;
+      element.append(iframe);
+      el.remove();
+      return;
+    }
+
     if (
       el.href !== el.textContent &&
       url.href.replace(url.protocol + "//", "") !== el.textContent

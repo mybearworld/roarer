@@ -96,7 +96,8 @@
       @apply mx-8 my-2 border-text opacity-40;
     }
     & img,
-    & video {
+    & video,
+    & .tenor {
       @apply max-h-96 align-top;
     }
     & li {
