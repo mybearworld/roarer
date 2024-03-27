@@ -166,7 +166,7 @@ const revokeTokens = async () => {
     await cloudlinkStore.send(
       {
         cmd: "del_tokens",
-        val: null,
+        val: {},
       },
       z.literal("I:024 | Logged out"),
     );
