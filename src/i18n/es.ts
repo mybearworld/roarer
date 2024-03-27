@@ -248,4 +248,30 @@ export const es = {
   cantSignUp_noUsername: "¡Por favor, introduce un nombre de usuario!",
   cantSignUp_noTos: "¡Por favor, lee y acepta los Términos de Servicio y la Política de Privacidad!",
   theme_meo: "Meo",
+  themePresets: "Presets",
+  syntaxInfo: "Información de sintaxis",
+  routeSyntax: "Sintaxis de mensajes",
+  syntax: "Sintaxis",
+  syntaxMarkdown: {
+    start:
+      "Puedes usar Markdown normal para crear mensajes aquí. La mayoría de las funciones que no forman parte de las extensiones son compatibles. Meower hace el cambio de que las nuevas líneas crean nuevas líneas reales en lugar de continuar el párrafo. Si quieres aprender sobre Markdown, ",
+    link: "mira esta hoja de trucos",
+    end: ".",
+  },
+  syntaxExtensions:
+    "Sin embargo, tanto Meower como Roarer añaden algunas características a la sintaxis. Todo el Markdown específico de Roarer seguirá viéndose bien en otros clientes, así que no te preocupes por usarlo.",
+  syntaxAttachments: "Archivos adjuntos",
+  syntaxAttachmentsDescription:
+    'Puedes escribir "[Nombre de la imagen: Enlace de la imagen]" para agregar archivos adjuntos a tus publicaciones. No importa dónde los coloques, automáticamente se colocarán al final de una publicación. Esta es una característica de Meower que Roarer adoptó. Aún puedes usar imágenes de Markdown normales usando la sintaxis "![Nombre de la imagen](Enlace de imagen)" si lo prefieres. Las imágenes deben alojarse en un servidor de imágenes incluido en la lista blanca.',
+  syntaxImageHosts: "Servidor de imágenes",
+  syntaxSyntaxHighlighting: "Resaltado de sintaxis",
+  syntaxSyntaxHighlightingDescription:
+    'Roarer admite resaltado de sintaxis para bloques de código, mientras que Meower Svelte y la mayoría de los demás clientes no lo hacen. Para los usuarios de esos clientes, el bloque de código simplemente aparecerá sin resaltar. Roarer también admite agregar resaltado de sintaxis al código en línea. Para utilizar esto, puede escribir "código (nombre de idioma)". Los usuarios que no estén en Roarer verán el nombre del idioma entre paréntesis.',
+  syntaxScratchBlocks: "Bloques de Scratch",
+  syntaxScratchBlocksDescription: {
+    start:
+      'Puedes utilizar el lenguaje especial "scratch" en bloques de código para representar bloques de Scratch usando la sintaxis de',
+    link: "scratchblocks",
+    end: '. Puedes especificar la versión de Scratch que deseas utilizar especificando "scratch2" o "scratch3"; de lo contrario, se utilizará la preferencia del usuario. Las personas que no utilicen Roarer verán la sintaxis de scratchblocks, y no los bloques en sí.',
+  },
 };
