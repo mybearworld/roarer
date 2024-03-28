@@ -174,6 +174,7 @@ const permissions = computed(() =>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div
         class="flex min-w-[calc(70px+theme(spacing.4))] items-center rounded-xl bg-accent p-2"
+        v-if="userProfile.pfp_data"
       >
         <ProfilePicture
           class="h-16 w-16"
@@ -211,7 +212,7 @@ const permissions = computed(() =>
         </p>
         <p v-if="userProfile.banned">{{ t("banned") }}</p>
         <div class="mt-2"></div>
-        <p>
+        <p v-if="userProfile.created">
           {{
             t("accountCreated", {
               date: formatDate(userProfile.created),

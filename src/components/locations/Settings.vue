@@ -39,8 +39,8 @@ const pfpColor = ref("");
     );
     return;
   }
-  quote.value = response.data.quote;
-  profilePicture.value = response.data.pfp_data;
+  quote.value = response.data.quote ?? "";
+  profilePicture.value = response.data.pfp_data ?? 1;
   if (response.data.avatar) {
     profilePicture.value = response.data.avatar;
     uploadedProfilePicture.value = response.data.avatar;

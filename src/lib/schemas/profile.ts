@@ -5,15 +5,15 @@ export const profileSchemaNoError = z.object({
   avatar: z.string(),
   avatar_color: z.string(),
   banned: z.boolean(),
-  created: z.number(),
+  created: z.number().nullable(),
   flags: z.number(),
   last_seen: z.number().nullable(),
   lower_username: z.string(),
   lvl: z.number(),
-  permissions: z.number(),
-  pfp_data: z.number(),
-  quote: z.string(),
-  uuid: z.string(),
+  permissions: z.number().nullable(),
+  pfp_data: z.number().nullable(),
+  quote: z.string().nullable(),
+  uuid: z.string().nullable(),
 });
 export type APIProfile = z.infer<typeof profileSchema>;
 export const profileSchema = profileSchemaNoError.and(
