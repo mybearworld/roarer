@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import Post from "../Post.vue";
 import { themes } from "../../lib/themes";
 import { useDialogStore } from "../../stores/dialog";
 import { useSettingsStore, themeSchema } from "../../stores/settings";
@@ -85,6 +86,22 @@ const colorSettings = [
 
 <template>
   <div class="flex flex-col gap-2">
+    <Post
+      :post="{
+        isDeleted: false,
+        p: 'Lorem ipsum dolor sit amet.',
+        post_id: 'sample post',
+        post_origin: 'home',
+        t: {
+          e: 1703672945,
+        },
+        type: 1,
+        u: 'MeowerFeedback',
+      }"
+      dontUpdate
+      hideControls
+      noColorTransition
+    />
     <label class="flex items-center gap-2" v-for="setting in colorSettings">
       <span class="font-bold">{{ setting.msg }}</span>
       <input

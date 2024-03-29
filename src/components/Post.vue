@@ -55,6 +55,7 @@ const {
   reply,
   isChatOwner,
   closable,
+  noColorTransition,
 } = defineProps<{
   post: APIPost;
   inbox?: boolean;
@@ -63,6 +64,7 @@ const {
   isChatOwner?: boolean;
   hideControls?: boolean;
   closable?: boolean;
+  noColorTransition?: boolean;
 }>();
 const emit = defineEmits<{
   reply: [username: string, postContent: string, postId: string];
@@ -300,11 +302,11 @@ defineExpose({ highlight });
       />
     </div>
     <div
-      :class="`group flex rounded-xl transition-colors duration-500 [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
+      :class="`group flex rounded-xl [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
         reply
           ? 'gap-2 border-none bg-transparent italic text-text opacity-40 '
           : 'grow flex-col overflow-auto px-2 py-1 filled:bg-accent filled:text-accent-text'
-      }`"
+      } ${noColorTransition ? '' : 'transition-colors  duration-500'}`"
       ref="main"
     >
       <div class="flex items-center gap-x-2">
