@@ -98,7 +98,7 @@
     & img,
     & video,
     & .tenor {
-      @apply max-h-60 align-top;
+      @apply max-h-72 align-top;
     }
     & li {
       @apply list-inside;
