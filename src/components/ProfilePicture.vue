@@ -40,14 +40,11 @@ const { t } = useI18n();
       :src="`https://uploads.meower.org/icons/${props.pfp.avatar}`"
       :alt="t('profilePictureCustomAlt')"
       :style="{
-        padding:
-          props.pfp.bg === '!color' || props.pfp.bg === '#!color'
-            ? '0'
-            : '0.2rem',
-        backgroundColor:
-          props.pfp.bg === '!color' || props.pfp.bg === '#!color'
-            ? 'transparent'
-            : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
+        borderStyle: props.pfp.bg.endsWith('!color') ? 'none' : 'solid',
+        borderWidth: '2px',
+        borderColor: props.pfp.bg.endsWith('!color')
+          ? ''
+          : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
       }"
       :class="props.class"
       :width="props.width"
