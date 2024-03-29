@@ -1,79 +1,40 @@
-import iconNeg3 from "./-3.svg";
-import icon1 from "./1.svg";
-import icon2 from "./2.svg";
-import icon3 from "./3.svg";
-import icon4 from "./4.svg";
-import icon5 from "./5.svg";
-import icon6 from "./6.svg";
-import icon7 from "./7.svg";
-import icon8 from "./8.svg";
-import icon9 from "./9.svg";
-import icon10 from "./10.svg";
-import icon11 from "./11.svg";
-import icon12 from "./12.svg";
-import icon13 from "./13.svg";
-import icon14 from "./14.svg";
-import icon15 from "./15.svg";
-import icon16 from "./16.svg";
-import icon17 from "./17.svg";
-import icon18 from "./18.svg";
-import icon19 from "./19.png";
-import icon20 from "./20.png";
-import icon21 from "./21.svg";
-import icon22 from "./22.svg";
-import icon23 from "./23.svg";
-import icon24 from "./24.svg";
-import icon25 from "./25.png";
-import icon26 from "./26.png";
-import icon27 from "./27.svg";
-import icon28 from "./28.svg";
-import icon29 from "./29.svg";
-import icon30 from "./30.svg";
-import icon31 from "./31.svg";
-import icon32 from "./32.svg";
-import icon33 from "./33.svg";
-import icon34 from "./34.svg";
-import icon101 from "./101.svg";
-import icon102 from "./102.svg";
-import icon500 from "./500.svg";
-
 export const profilePictures = new Map([
-  [1, icon1],
-  [2, icon2],
-  [3, icon3],
-  [4, icon4],
-  [5, icon5],
-  [6, icon6],
-  [7, icon7],
-  [8, icon8],
-  [9, icon9],
-  [10, icon10],
-  [11, icon11],
-  [12, icon12],
-  [13, icon13],
-  [14, icon14],
-  [15, icon15],
-  [16, icon16],
-  [17, icon17],
-  [18, icon18],
-  [19, icon19],
-  [20, icon20],
-  [21, icon21],
-  [22, icon22],
-  [23, icon23],
-  [24, icon24],
-  [25, icon25],
-  [26, icon26],
-  [27, icon27],
-  [28, icon28],
-  [29, icon29],
-  [30, icon30],
-  [31, icon31],
-  [32, icon32],
-  [33, icon33],
-  [34, icon34],
-  [101, icon101],
-  [102, icon102],
-  [500, icon500],
-  [-3, iconNeg3],
+  [1, (await import("./1.svg")).default],
+  [2, (await import("./2.svg")).default],
+  [3, (await import("./3.svg")).default],
+  [4, (await import("./4.svg")).default],
+  [5, (await import("./5.svg")).default],
+  [6, (await import("./6.svg")).default],
+  [7, (await import("./7.svg")).default],
+  [8, (await import("./8.svg")).default],
+  [9, (await import("./9.svg")).default],
+  [10, (await import("./10.svg")).default],
+  [11, (await import("./11.svg")).default],
+  [12, (await import("./12.svg")).default],
+  [13, (await import("./13.svg")).default],
+  [14, (await import("./14.svg")).default],
+  [15, (await import("./15.svg")).default],
+  [16, (await import("./16.svg")).default],
+  [17, (await import("./17.svg")).default],
+  [18, (await import("./18.svg")).default],
+  [19, (await import("./19.png")).default],
+  [20, (await import("./20.png")).default],
+  [21, (await import("./21.svg")).default],
+  [22, (await import("./22.svg")).default],
+  [23, (await import("./23.svg")).default],
+  [24, (await import("./24.svg")).default],
+  [25, (await import("./25.png")).default],
+  [26, (await import("./26.png")).default],
+  [27, (await import("./27.svg")).default],
+  [28, (await import("./28.svg")).default],
+  [29, (await import("./29.svg")).default],
+  [30, (await import("./30.svg")).default],
+  [31, (await import("./31.svg")).default],
+  [32, (await import("./32.svg")).default],
+  [33, (await import("./33.svg")).default],
+  [34, (await import("./34.svg")).default],
+  [101, (await import("./101.svg")).default],
+  [102, (await import("./102.svg")).default],
+  [500, (await import("./500.svg")).default],
+  [-3, (await import("./-3.svg")).default],
 ]);
