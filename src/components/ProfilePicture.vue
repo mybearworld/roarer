@@ -29,6 +29,8 @@ const props = withDefaults(
   },
 );
 
+const imageClass = props.class + " rounded-xl";
+
 const pfpLink = "pfp" in props.pfp ? profilePictures.get(props.pfp.pfp) : null;
 
 const { t } = useI18n();
@@ -46,7 +48,7 @@ const { t } = useI18n();
           ? ''
           : (props.pfp.bg.startsWith('#') ? '' : '#') + props.pfp.bg,
       }"
-      :class="props.class"
+      :class="imageClass"
       :width="props.width"
       :height="props.height"
       v-if="'avatar' in props.pfp && props.pfp.avatar !== ''"
@@ -54,14 +56,14 @@ const { t } = useI18n();
     <img
       :src="pfpLink"
       :alt="t('profilePictureAlt', { n: props.pfp.pfp })"
-      :class="props.class"
+      :class="imageClass"
       :width="props.width"
       :height="props.height"
       v-else-if="'pfp' in props.pfp && pfpLink"
     />
     <img
       :src="meowy"
-      :class="`brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s] ${props.class}`"
+      :class="`brightness-150 grayscale motion-safe:animate-spin motion-safe:[animation-duration:.5s] ${imageClass}`"
       :width="props.width"
       :height="props.height"
       v-else
