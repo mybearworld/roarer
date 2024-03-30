@@ -368,7 +368,7 @@ defineExpose({ highlight });
           <span v-if="edited || post.edited_at">(edited)</span>
         </div>
         <div
-          class="visible flex grow justify-end space-x-1 sm:invisible sm:grow group-hover:sm:visible"
+          class="visible flex grow justify-end space-x-1 sm:invisible sm:grow group-focus-within:sm:visible group-hover:sm:visible"
           v-if="
             !editing &&
             !inbox &&
