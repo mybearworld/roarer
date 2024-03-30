@@ -31,7 +31,7 @@
   }
 
   emoji-picker {
-    --emoji-font-family: inherit;
+    --emoji-font-family: theme(fontFamily.sans);
     --background: theme(colors.accent);
     --border-color: transparent;
     --button-active-background: transparent;
