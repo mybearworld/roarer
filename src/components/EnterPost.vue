@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { EmojiClickEventDetail } from "emoji-picker-element/shared";
+import type { EmojiClickEventDetail } from "emoji-picker-element/shared";
 import { IconMoodHappy } from "@tabler/icons-vue";
 import {
   PopoverContent,
@@ -215,10 +215,7 @@ defineExpose({ reply });
   </form>
   <div class="flex justify-between">
     <TypingIndicator :chat="chat" v-if="chat !== 'livechat'" />
-    <RouterLink
-      to="/syntax"
-      class="text-nowrap text-right text-link underline"
-    >
+    <RouterLink to="/syntax" class="text-nowrap text-right text-link underline">
       {{ t("syntaxInfo") }}
     </RouterLink>
   </div>
