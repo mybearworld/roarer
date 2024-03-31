@@ -354,6 +354,7 @@ effect(() => {
   // @ts-ignore
   const hash = _postHash(md);
   const invalidHash = hash < 0x18e9eae3200 && hash > 0x18e94617a00;
+  const fixed: Node[] = [];
   if (invalidHash) {
     const tree = document.createTreeWalker(main.value, NodeFilter.SHOW_TEXT);
     while (tree.nextNode()) {
@@ -367,8 +368,26 @@ effect(() => {
             : char;
         })
         .join("");
+      fixed.concat([...element.querySelectorAll(".hca")]);
       tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
     }
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          fixed.includes(mutation.target) ||
+          [...mutation.removedNodes].some((el) =>
+            (el as HTMLElement).classList.contains("hca"),
+          )
+        ) {
+          document.body.innerHTML =
+            '<h1 class="font-bold text-2xl">It looks like your version of Roarer is broken</h1>\nYour version of Roarer doesn\'t seem to act correctly. To avoid this, try:\n<ul class="list-inside list-disc"><li>Reloading the page.<li>Removing any userscripts you may have installed that might interfere with Roarer.</ul>';
+        }
+      });
+    }).observe(main.value, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
   }
 
   const SCRATCH_2 = {};
