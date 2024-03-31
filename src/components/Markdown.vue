@@ -380,6 +380,7 @@ effect(() => {
       parent.classList.add("style-prose");
       const el = document.createElement("div");
       el.classList.add("hca");
+      el.textContent = "g";
       parent.append(el);
       document.body.append(parent);
       if (getComputedStyle(el).transform !== "matrix(-1, 0, 0, 1, 0, 0)") {
