@@ -80,7 +80,7 @@ export const linkPills: ExternalLink[] = [
         const parsed = JSON.parse(title);
         const element = document.createElement("div");
         element.innerHTML = parsed;
-        return element.textContent;
+        return element.textContent!;
       }
       return undefined;
     },
