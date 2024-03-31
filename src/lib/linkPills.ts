@@ -77,7 +77,10 @@ export const linkPills: ExternalLink[] = [
         if (!title) {
           continue;
         }
-        return JSON.parse(title);
+        const parsed = JSON.parse(title);
+        const element = document.createElement("div");
+        element.innerHTML = parsed;
+        return element.textContent;
       }
       return undefined;
     },
