@@ -371,6 +371,21 @@ effect(() => {
       fixed.concat([...element.querySelectorAll(".hca")]);
       tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
     }
+    const somethingBroke = () => {
+      document.body.innerHTML =
+        '<h1 class="font-bold text-2xl">It looks like your version of Roarer is broken</h1>\nYour version of Roarer doesn\'t seem to act correctly. To avoid this, try:\n<ul class="list-inside list-disc"><li>Reloading the page.<li>Removing any userscripts you may have installed that might interfere with Roarer.</ul>';
+    };
+    (() => {
+      const parent = document.createElement("div");
+      parent.classList.add("style-prose");
+      const el = document.createElement("div");
+      el.classList.add("hca");
+      parent.append(el);
+      document.body.append(parent);
+      if (getComputedStyle(el).transform !== "matrix(-1, 0, 0, 1, 0, 0)") {
+        somethingBroke();
+      }
+    })();
     new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (
@@ -379,8 +394,7 @@ effect(() => {
             (el as HTMLElement).classList.contains("hca"),
           )
         ) {
-          document.body.innerHTML =
-            '<h1 class="font-bold text-2xl">It looks like your version of Roarer is broken</h1>\nYour version of Roarer doesn\'t seem to act correctly. To avoid this, try:\n<ul class="list-inside list-disc"><li>Reloading the page.<li>Removing any userscripts you may have installed that might interfere with Roarer.</ul>';
+          somethingBroke();
         }
       });
     }).observe(main.value, {
