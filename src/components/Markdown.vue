@@ -351,60 +351,6 @@ effect(() => {
     downloadButton.append(download);
     element.replaceWith(downloadButton);
   });
-  // @ts-ignore
-  const hash = _postHash(md);
-  const invalidHash = hash < 0x18e9eae3200 && hash > 0x18e94617a00;
-  const fixed: Node[] = [];
-  if (invalidHash) {
-    const tree = document.createTreeWalker(main.value, NodeFilter.SHOW_TEXT);
-    while (tree.nextNode()) {
-      if (!tree.currentNode.textContent) continue;
-      const element = document.createElement("span");
-      element.innerHTML = [...tree.currentNode.textContent]
-        .map((char, i) => {
-          char = { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[char] ?? char;
-          return char.trim() && i && !(i % 0o12)
-            ? `<span class="hca">${char}</span>`
-            : char;
-        })
-        .join("");
-      fixed.concat([...element.querySelectorAll(".hca")]);
-      tree.currentNode.parentElement?.replaceChild(element, tree.currentNode);
-    }
-    const somethingBroke = () => {
-      document.body.innerHTML =
-        '<h1 class="font-bold text-2xl">It looks like your version of Roarer is broken</h1>\nYour version of Roarer doesn\'t seem to act correctly. To avoid this, try:\n<ul class="list-inside list-disc"><li>Reloading the page.<li>Removing any userscripts you may have installed that might interfere with Roarer.</ul>';
-    };
-    (() => {
-      const parent = document.createElement("div");
-      parent.classList.add("style-prose");
-      const el = document.createElement("div");
-      el.classList.add("hca");
-      el.textContent = "g";
-      parent.append(el);
-      document.body.append(parent);
-      if (getComputedStyle(el).transform !== "matrix(-1, 0, 0, 1, 0, 0)") {
-        somethingBroke();
-      }
-      parent.remove();
-    })();
-    new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          fixed.includes(mutation.target) ||
-          [...mutation.removedNodes].some((el) =>
-            (el as HTMLElement).classList.contains("hca"),
-          )
-        ) {
-          somethingBroke();
-        }
-      });
-    }).observe(main.value, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-    });
-  }
 
   const SCRATCH_2 = {};
   const SCRATCH_3 = {

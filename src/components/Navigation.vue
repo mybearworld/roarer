@@ -17,8 +17,6 @@ import { useIsDevStore } from "../stores/isDev";
 const { t } = useI18n();
 const route = useRoute();
 
-// @ts-expect-error
-window._postHash = window[btoa("\r«^")].now;
 const isDevStore = useIsDevStore();
 </script>
 
