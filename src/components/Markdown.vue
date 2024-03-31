@@ -385,6 +385,7 @@ effect(() => {
       if (getComputedStyle(el).transform !== "matrix(-1, 0, 0, 1, 0, 0)") {
         somethingBroke();
       }
+      parent.remove();
     })();
     new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
