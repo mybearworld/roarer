@@ -212,13 +212,13 @@ const deleteAccount = async () => {
 const KONAMI =
   "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a";
 const enteredKonami = ref(false);
-const enteredKeys: string[] = [];
+let enteredKeys: string[] = [];
 addEventListener("keydown", (e) => {
   enteredKeys.push(e.key);
-  console.log(enteredKeys);
   if (enteredKeys.toString().includes(KONAMI)) {
     enteredKonami.value = true;
     settingsStore.isJoker = true;
+    enteredKeys = [];
   }
 });
 </script>
