@@ -183,11 +183,11 @@ effect(() => {
     }
     el.target = "_blank";
     el.addEventListener("click", (e) => {
-      if (!settingsStore.confirmExternalLinks) return;
-      e.preventDefault();
       if (url.origin + url.pathname === baseURL) {
+        e.preventDefault();
         router.push(url.hash.slice(1));
-      } else {
+      } else if (settingsStore.confirmExternalLinks) {
+        e.preventDefault();
         (async () => {
           if (await dialogStore.confirm(t("externalSite", { link: el.href }))) {
             open(el.href);
