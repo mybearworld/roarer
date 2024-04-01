@@ -13,11 +13,13 @@ import { RouterLink } from "vue-router";
 import Login from "./Login.vue";
 import { tabs } from "../lib/tabs";
 import { useIsDevStore } from "../stores/isDev";
+import { useSettingsStore } from "../stores/settings";
 
 const { t } = useI18n();
 const route = useRoute();
 
 const isDevStore = useIsDevStore();
+const settingsStore = useSettingsStore();
 </script>
 
 <template>
@@ -25,7 +27,8 @@ const isDevStore = useIsDevStore();
     <div class="mb-2 flex flex-col items-center gap-1">
       <div class="flex flex-wrap items-center gap-x-4">
         <h1 class="text-3xl font-bold">
-          {{ t("roarer") }}
+          <template v-if="settingsStore.isJoker">R🤡arer</template>
+          <template v-else>{{ t("roarer") }}</template>
         </h1>
         <Login />
       </div>

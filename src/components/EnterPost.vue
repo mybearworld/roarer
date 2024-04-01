@@ -51,7 +51,10 @@ const post = async (e?: Event) => {
     return;
   }
   posting.value = true;
-  const content = postContent.value.trim();
+  let content = postContent.value.trim();
+  if (settingsStore.isJoker) {
+    content += " /j";
+  }
   postContent.value = "";
   if (inputRef.value) {
     resetTextareaSize(inputRef.value);

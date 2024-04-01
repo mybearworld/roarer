@@ -208,10 +208,32 @@ const deleteAccount = async () => {
   authStore.token = null;
   location.reload();
 };
+
+const KONAMI =
+  "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a";
+const enteredKonami = ref(false);
+const enteredKeys: string[] = [];
+addEventListener("keydown", (e) => {
+  enteredKeys.push(e.key);
+  console.log(enteredKeys);
+  if (enteredKeys.toString().includes(KONAMI)) {
+    enteredKonami.value = true;
+    settingsStore.isJoker = true;
+  }
+});
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2" v-if="enteredKonami">
+    <h2 class="text-xl font-bold">{{ t("hi") }}</h2>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.isJoker" />
+      <div>
+        {{ t("settingJoker") }}
+      </div>
+    </label>
+  </div>
+  <div class="flex flex-col gap-2" v-else>
     <template v-if="authStore.isLoggedIn">
       <div class="flex items-baseline gap-2">
         <h2 class="inline-block text-lg font-bold">

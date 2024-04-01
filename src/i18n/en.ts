@@ -302,4 +302,6 @@ export const en = {
     end: ' syntax. You can specify the version of Scratch to use by specifying "scratch2" or "scratch3", otherwise the user\'s preference will be used. People not using Roarer will see the scratchblocks syntax instead.',
   },
   settingConfirmExternalLinks: "Confirm before opening external links.",
+  hi: "Hello there! :)",
+  settingJoker: "I'm a joker",
 };

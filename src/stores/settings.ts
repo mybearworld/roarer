@@ -4,10 +4,11 @@ import { z } from "zod";
 import { themes } from "../lib/themes";
 
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
-const CONFIRM_EXTERNAL_LINKS_STORAGE = "roarer:confirmExternalLinks"
+const CONFIRM_EXTERNAL_LINKS_STORAGE = "roarer:confirmExternalLinks";
 const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
 const ENTER_SENDS_STORAGE = "roarer:enterSends";
 const HIDE_BLOCKED_MENTIONS_STORAGE = "roarer:hideBlockedMentions";
+const IS_JOKER_STORAGE = "roarer:isJoker";
 const USE_SCRATCH_2_BLOCKS_STORAGE = "roarer:useScratch2Blocks";
 const SHOW_PFPS_STORAGE = "roarer:showPfps";
 const THEME_STORAGE = "roarer:theme";
@@ -19,9 +20,10 @@ export const useSettingsStore = defineStore("settings", () => {
     localStorage.getItem(ANY_IMG_HOST_STORAGE) === "true",
   );
   const confirmExternalLinks = ref(
-    
-    ["true", null].includes(localStorage.getItem(CONFIRM_EXTERNAL_LINKS_STORAGE)),
-  )
+    ["true", null].includes(
+      localStorage.getItem(CONFIRM_EXTERNAL_LINKS_STORAGE),
+    ),
+  );
   const filterSwears = ref(
     ["true", null].includes(localStorage.getItem(FILTER_SWEARS_STORAGE)),
   );
@@ -31,6 +33,7 @@ export const useSettingsStore = defineStore("settings", () => {
   const hideBlockedMentions = ref(
     localStorage.getItem(HIDE_BLOCKED_MENTIONS_STORAGE) === "true",
   );
+  const isJoker = ref(localStorage.getItem(IS_JOKER_STORAGE) === "true");
   const useScratch2Blocks = ref(
     localStorage.getItem(USE_SCRATCH_2_BLOCKS_STORAGE) === "true",
   );
@@ -76,6 +79,9 @@ export const useSettingsStore = defineStore("settings", () => {
     );
   });
   effect(() => {
+    localStorage.setItem(IS_JOKER_STORAGE, isJoker.value ? "true" : "false");
+  });
+  effect(() => {
     localStorage.setItem(
       USE_SCRATCH_2_BLOCKS_STORAGE,
       useScratch2Blocks.value ? "true" : "false",
@@ -93,6 +99,7 @@ export const useSettingsStore = defineStore("settings", () => {
     confirmExternalLinks,
     filterSwears,
     enterSends,
+    isJoker,
     theme,
     hideBlockedMentions,
     useScratch2Blocks,
