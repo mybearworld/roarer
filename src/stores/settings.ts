@@ -4,6 +4,7 @@ import { z } from "zod";
 import { themes } from "../lib/themes";
 
 const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
+const CONFIRM_EXTERNAL_LINKS_STORAGE = "roarer:confirmExternalLinks"
 const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
 const ENTER_SENDS_STORAGE = "roarer:enterSends";
 const HIDE_BLOCKED_MENTIONS_STORAGE = "roarer:hideBlockedMentions";
@@ -17,6 +18,10 @@ export const useSettingsStore = defineStore("settings", () => {
   const anyImageHost = ref(
     localStorage.getItem(ANY_IMG_HOST_STORAGE) === "true",
   );
+  const confirmExternalLinks = ref(
+    
+    ["true", null].includes(localStorage.getItem(CONFIRM_EXTERNAL_LINKS_STORAGE)),
+  )
   const filterSwears = ref(
     ["true", null].includes(localStorage.getItem(FILTER_SWEARS_STORAGE)),
   );
@@ -44,6 +49,12 @@ export const useSettingsStore = defineStore("settings", () => {
     localStorage.setItem(
       ANY_IMG_HOST_STORAGE,
       anyImageHost.value ? "true" : "false",
+    );
+  });
+  effect(() => {
+    localStorage.setItem(
+      CONFIRM_EXTERNAL_LINKS_STORAGE,
+      confirmExternalLinks.value ? "true" : "false",
     );
   });
   effect(() => {
@@ -79,6 +90,7 @@ export const useSettingsStore = defineStore("settings", () => {
 
   return {
     anyImageHost,
+    confirmExternalLinks,
     filterSwears,
     enterSends,
     theme,

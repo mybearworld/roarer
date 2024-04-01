@@ -181,7 +181,9 @@ effect(() => {
     } catch {
       return;
     }
+    el.target = "_blank";
     el.addEventListener("click", (e) => {
+      if (!settingsStore.confirmExternalLinks) return;
       e.preventDefault();
       if (url.origin + url.pathname === baseURL) {
         router.push(url.hash.slice(1));
