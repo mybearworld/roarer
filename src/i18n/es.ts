@@ -105,7 +105,7 @@ export const es = {
   userSearch: "Buscar",
   noUserPlaceholder: "¡Introduce un usuario arriba para ver su perfil!",
   lastSeenUser: "Visto por última vez el {date}",
-  banned: "Banneado",
+  banned: "Baneado",
   accountCreated: "Cuenta creada en: {date}",
   block: "Bloquear",
   unblock: "Desbloquear",
@@ -115,7 +115,7 @@ export const es = {
   chatCreateFail: "No se pudo crear el chat: {status}",
   chatGetFail: "No se pudieron obtener los chats: {status}",
   disconnected:
-    "Te desconectaron. Al hacer clic en Aceptar, se volverá a cargar la página.",
+    "Te has desconectado. Al hacer clic en Aceptar, se volverá a cargar la página.",
   myAccount: "Mi cuenta",
   languageContributing: {
     start:
@@ -302,8 +302,14 @@ export const es = {
   syntaxScratchBlocks: "Bloques de Scratch",
   syntaxScratchBlocksDescription: {
     start:
-      'Puedes utilizar el lenguaje especial "scratch" en bloques de código para representar bloques de Scratch usando la sintaxis de',
+      'Puedes utilizar el lenguaje especial "scratch" en bloques de código para representar bloques de Scratch usando la sintaxis de ',
     link: "scratchblocks",
     end: '. Puedes especificar la versión de Scratch que deseas utilizar especificando "scratch2" o "scratch3"; de lo contrario, se utilizará la preferencia del usuario. Las personas que no utilicen Roarer verán la sintaxis de scratchblocks, y no los bloques en sí.',
   },
+  settingConfirmExternalLinks: "Confirmar antes de abrir links externos.",
+  hi: "Oye, ¡hola! :)",
+  settingJoker: "Soy un/una bromista",
+  devDisconnect: "Desconectar",
+  disconnectedDialog:
+    "Has sido desconectado de Meower. Intentando reconectar...",
 };
