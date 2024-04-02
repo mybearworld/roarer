@@ -3,43 +3,23 @@ import { defineStore } from "pinia";
 import { z } from "zod";
 import { themes } from "../lib/themes";
 
-const ANY_IMG_HOST_STORAGE = "roarer:anyImageHost";
-const CONFIRM_EXTERNAL_LINKS_STORAGE = "roarer:confirmExternalLinks";
-const FILTER_SWEARS_STORAGE = "roarer:filterSwears";
-const ENTER_SENDS_STORAGE = "roarer:enterSends";
-const HIDE_BLOCKED_MENTIONS_STORAGE = "roarer:hideBlockedMentions";
-const IS_JOKER_STORAGE = "roarer:isJoker";
-const USE_SCRATCH_2_BLOCKS_STORAGE = "roarer:useScratch2Blocks";
-const SHOW_PFPS_STORAGE = "roarer:showPfps";
 const THEME_STORAGE = "roarer:theme";
 
 const COLOR_REGEX = /^#[0-9a-f]{6}$/i;
 
+const useTogglable = (name: string, enabledByDefault: boolean) => {
+  const taggedName = "roarer:" + name;
+  const storageItem = localStorage.getItem(taggedName);
+  const setting = ref(
+    storageItem === "true" || (enabledByDefault && storageItem === null),
+  );
+  effect(() => {
+    localStorage.setItem(taggedName, setting.toString());
+  });
+  return setting;
+};
+
 export const useSettingsStore = defineStore("settings", () => {
-  const anyImageHost = ref(
-    localStorage.getItem(ANY_IMG_HOST_STORAGE) === "true",
-  );
-  const confirmExternalLinks = ref(
-    ["true", null].includes(
-      localStorage.getItem(CONFIRM_EXTERNAL_LINKS_STORAGE),
-    ),
-  );
-  const filterSwears = ref(
-    ["true", null].includes(localStorage.getItem(FILTER_SWEARS_STORAGE)),
-  );
-  const enterSends = ref(
-    ["true", null].includes(localStorage.getItem(ENTER_SENDS_STORAGE)),
-  );
-  const hideBlockedMentions = ref(
-    localStorage.getItem(HIDE_BLOCKED_MENTIONS_STORAGE) === "true",
-  );
-  const isJoker = ref(localStorage.getItem(IS_JOKER_STORAGE) === "true");
-  const useScratch2Blocks = ref(
-    localStorage.getItem(USE_SCRATCH_2_BLOCKS_STORAGE) === "true",
-  );
-  const showPfps = ref(
-    ["true", null].includes(localStorage.getItem(SHOW_PFPS_STORAGE)),
-  );
   const theme = ref<RoarerTheme>(themes.dark);
   const themeStorage = localStorage.getItem(THEME_STORAGE);
   if (themeStorage !== null) {
@@ -49,61 +29,19 @@ export const useSettingsStore = defineStore("settings", () => {
   }
 
   effect(() => {
-    localStorage.setItem(
-      ANY_IMG_HOST_STORAGE,
-      anyImageHost.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(
-      CONFIRM_EXTERNAL_LINKS_STORAGE,
-      confirmExternalLinks.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(
-      FILTER_SWEARS_STORAGE,
-      filterSwears.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(
-      ENTER_SENDS_STORAGE,
-      enterSends.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(
-      HIDE_BLOCKED_MENTIONS_STORAGE,
-      enterSends.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(IS_JOKER_STORAGE, isJoker.value ? "true" : "false");
-  });
-  effect(() => {
-    localStorage.setItem(
-      USE_SCRATCH_2_BLOCKS_STORAGE,
-      useScratch2Blocks.value ? "true" : "false",
-    );
-  });
-  effect(() => {
-    localStorage.setItem(SHOW_PFPS_STORAGE, showPfps.value ? "true" : "false");
-  });
-  effect(() => {
     localStorage.setItem(THEME_STORAGE, JSON.stringify(theme.value));
   });
 
   return {
-    anyImageHost,
-    confirmExternalLinks,
-    filterSwears,
-    enterSends,
-    isJoker,
+    anyImageHost: useTogglable("anyImageHost", false),
+    confirmExternalLinks: useTogglable("confirmExternalLinks", true),
+    enterSends: useTogglable("enterSends", true),
+    filterSwears: useTogglable("filterSwears", true),
+    hideBlockedMentions: useTogglable("hideBlockedMentions", false),
+    isJoker: useTogglable("isJoker", false),
+    showPfps: useTogglable("showPfps", true),
+    useScratch2Blocks: useTogglable("useScratch2Blocks", false),
     theme,
-    hideBlockedMentions,
-    useScratch2Blocks,
-    showPfps,
     setTheme(newTheme: RoarerTheme) {
       theme.value = newTheme;
     },
