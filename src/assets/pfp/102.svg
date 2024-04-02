@@ -27,7 +27,8 @@
          stroke-width="5.5"
          stroke-linecap="round"
          stroke-linejoin="round"
-         id="path2" />
+         id="path2"
+         style="stroke:#ffb601;stroke-opacity:1" />
       <path
          d="M 320.00001,183.69582 V 169.63496"
          fill="none"
@@ -35,7 +36,8 @@
          stroke-width="5.5"
          stroke-linecap="round"
          stroke-linejoin="round"
-         id="path3" />
+         id="path3"
+         style="stroke:#ffb601;stroke-opacity:1" />
       <path
          d="m 320.00001,197.75668 h 0.0351"
          fill="none"
@@ -43,7 +45,8 @@
          stroke-width="5.5"
          stroke-linecap="round"
          stroke-linejoin="round"
-         id="path4" />
+         id="path4"
+         style="stroke:#ffb601;stroke-opacity:1" />
     </g>
   </g>
 </svg>
