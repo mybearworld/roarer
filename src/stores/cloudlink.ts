@@ -19,7 +19,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
   const cloudlink = ref(
     new CloudlinkClient({
       url: cloudlinkURL,
-      log: true,
+      log: false,
     }),
   );
   setInterval(async () => {
