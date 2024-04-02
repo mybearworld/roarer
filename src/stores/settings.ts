@@ -2,7 +2,6 @@ import { effect, reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { z } from "zod";
 import { themes } from "../lib/themes";
-import { IconChevronCompactLeft } from "@tabler/icons-vue";
 
 const THEME_STORAGE = "roarer:theme";
 

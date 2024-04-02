@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { effect, ref } from "vue";
-import { IconUpload } from "@tabler/icons-vue";
+import { Upload } from "lucide-vue-next";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { useRouter, RouterLink } from "vue-router";
@@ -288,7 +288,7 @@ addEventListener("keydown", (e) => {
               :title="t('uploadProfilePicture')"
               @click="pfpUpload?.click()"
             >
-              <IconUpload class="h-16 w-16" />
+              <Upload class="h-16 w-16" />
               <input
                 type="file"
                 class="hidden"

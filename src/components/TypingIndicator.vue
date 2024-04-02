@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { IconKeyboard, IconKeyboardOff } from "@tabler/icons-vue";
+import { Keyboard } from "lucide-vue-next";
+// import { IconKeyboard, IconKeyboardOff } from "@tabler/icons-vue";
 import { useI18n } from "vue-i18n";
 import { z } from "zod";
 import { APIChat } from "../lib/schemas/chat";
@@ -61,15 +62,18 @@ cloudlinkStore.cloudlink.on("direct", (packet: unknown) => {
 </script>
 
 <template>
-  <span>
-    <span v-if="shownTypingUsers.length">
-      <IconKeyboard class="inline-block" aria-hidden />
+  <span
+    :class="`flex items-center gap-1 ${
+      shownTypingUsers.length === 0 ? 'italic opacity-40' : ''
+    }`"
+  >
+    <Keyboard class="inline-block h-5 w-5" aria-hidden />
+    <template v-if="shownTypingUsers.length === 0">
+      {{ t("noTypingUsers") }}
+    </template>
+    <template v-else>
       <span class="sr-only">{{ t("typingUsers") }}</span>
       {{ shownTypingUsers.join(", ") }}
-    </span>
-    <span class="italic opacity-40" v-else>
-      <IconKeyboardOff class="inline-block" aria-hidden />
-      {{ t("noTypingUsers") }}
-    </span>
+    </template>
   </span>
 </template>

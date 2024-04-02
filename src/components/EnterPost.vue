@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { EmojiClickEventDetail } from "emoji-picker-element/shared";
-import { IconMoodHappy } from "@tabler/icons-vue";
+import { Laugh } from "lucide-vue-next";
 import {
   PopoverContent,
   PopoverPortal,
@@ -197,7 +197,7 @@ defineExpose({ reply });
     ></textarea>
     <PopoverRoot>
       <PopoverTrigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
-        <IconMoodHappy aria-hidden />
+        <Laugh aria-hidden />
         <span class="sr-only">Emoji</span>
       </PopoverTrigger>
       <PopoverPortal>

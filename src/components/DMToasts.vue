@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { IconMessage } from "@tabler/icons-vue";
+import { MessageCircle } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import { useRoute, RouterLink } from "vue-router";
 import {
@@ -107,7 +107,7 @@ cloudlinkStore.lookFor(
               : `/chats/${chat._id}`
           "
         >
-          <IconMessage />
+          <MessageCircle />
         </RouterLink>
       </ToastAction>
     </ToastRoot>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { IconChevronDown } from "@tabler/icons-vue";
+import { ChevronDown } from "lucide-vue-next";
 import {
   DropdownMenuRoot,
   DropdownMenuContent,
@@ -50,7 +50,7 @@ const settingsStore = useSettingsStore();
               class="flex items-center whitespace-nowrap text-link underline"
             >
               {{ t("routeRelated") }}
-              <IconChevronDown class="h-5 w-5" />
+              <ChevronDown class="h-5 w-5" />
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuPortal>

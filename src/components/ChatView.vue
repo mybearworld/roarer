@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconMessage, IconSettings, IconUser } from "@tabler/icons-vue";
+import { MessageCircle, Settings, User } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { APIChat } from "../lib/schemas/chat";
@@ -40,12 +40,12 @@ const { chat } = defineProps<{
           {{ t("liveChatDescription") }}
         </template>
         <template v-else-if="chat.nickname">
-          <IconUser class="inline-block h-4 w-4 min-w-4" aria-hidden />
+          <User class="inline-block h-4 w-4 min-w-4" aria-hidden />
           <span class="sr-only">Members:</span>
           <span class="line-clamp-1"> {{ chat.members.join(", ") }}</span>
         </template>
         <template v-else>
-          <IconMessage class="inline-block h-4 w-4 min-w-4" aria-hidden />
+          <MessageCircle class="inline-block h-4 w-4 min-w-4" aria-hidden />
           {{ t("chatDM") }}
         </template>
       </p>
@@ -55,7 +55,7 @@ const { chat } = defineProps<{
       :to="`/chats/${chat._id}/settings`"
       v-if="chat !== 'livechat' && chat.nickname"
     >
-      <IconSettings aria-hidden />
+      <Settings aria-hidden />
       <span class="sr-only">
         {{ t("chatSettings") }}
       </span>

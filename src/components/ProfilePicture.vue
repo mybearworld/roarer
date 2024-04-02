@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import meowy from "../assets/pfp/22.svg";
 import { useI18n } from "vue-i18n";
-import { IconCircleFilled } from "@tabler/icons-vue";
 import { profilePictures } from "../assets/pfp";
 
 const props = withDefaults(

@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { computed, effect, reactive, ref } from "vue";
 import {
-  IconAlertTriangle,
-  IconArrowForward,
-  IconBrandDiscord,
-  IconBuildingBridge,
-  IconCheck,
-  IconCircleFilled,
-  IconX,
-  IconShield,
-  IconEdit,
-  IconLink,
-  IconSailboat,
-  IconReload,
-  IconTrash,
-  IconWebhook,
-} from "@tabler/icons-vue";
+  Check,
+  MessageSquareReply,
+  Flag,
+  Link,
+  Pencil,
+  Reply,
+  RotateCw,
+  Shield,
+  Trash,
+  UserRoundX,
+  Waves,
+  X,
+} from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 import { useRouter, RouterLink } from "vue-router";
 import { z } from "zod";
@@ -310,7 +308,7 @@ defineExpose({ highlight });
       ref="main"
     >
       <div class="flex items-center gap-x-2">
-        <IconArrowForward class="inline-block" aria-hidden v-if="reply" />
+        <Reply class="inline-block" aria-hidden v-if="reply" />
         <span v-if="!postInfo.italic" class="whitespace-nowrap font-bold">
           <RouterLink
             :to="`/users/${postInfo.username}`"
@@ -324,36 +322,36 @@ defineExpose({ highlight });
           :title="t('discordBridgePost')"
           v-if="postInfo.bridged && post.u === 'Discord'"
         >
-          <IconBrandDiscord class="inline-block w-5" aria-hidden />
+          <MessageSquareReply class="inline-block w-5" aria-hidden />
           <span class="sr-only">{{ t("discordBridgePost") }}</span>
         </span>
         <span
           :title="t('webhookBridgePost')"
           v-if="postInfo.bridged && post.u === 'Webhooks'"
         >
-          <IconWebhook class="inline-block w-5" />
+          <UserRoundX class="inline-block w-5" />
           <span class="sr-only">{{ t("webhookBridgePost") }}</span>
         </span>
         <span
           :title="t('splashBridgePost')"
           v-if="postInfo.bridged && post.u === 'SplashBridge'"
         >
-          <IconSailboat class="inline-block w-5" />
+          <Waves class="inline-block w-5" />
           <span class="sr-only">{{ t("splashBridgePost") }}</span>
         </span>
         <span
           :title="t('revoltBridgePost')"
           v-if="postInfo.bridged && post.u === 'RevowerJS'"
         >
-          <IconBuildingBridge class="inline-block w-5" />
+          <MessageSquareReply class="inline-block w-5" />
           <span class="sr-only">{{ t("revoltBridgePost") }}</span>
         </span>
         <span :title="t('adminPost')" v-if="profile?.permissions">
-          <IconShield class="inline-block w-5" />
+          <Shield class="inline-block w-5" />
           <span class="sr-only">{{ t("adminPost") }}</span>
         </span>
         <button v-if="closable" @click="emit('close')">
-          <IconX class="inline-block w-5" />
+          <X class="inline-block w-5" />
           <span class="sr-only">{{ t("closePost") }}</span>
         </button>
         <div
@@ -378,26 +376,26 @@ defineExpose({ highlight });
           "
         >
           <button v-if="post.post_origin === 'home'" @click="copy">
-            <IconCheck class="h-6 w-6" aria-hidden v-if="copiedLink" />
-            <IconLink class="h-6 w-6" aria-hidden v-else />
+            <Check class="h-5 w-5" aria-hidden v-if="copiedLink" />
+            <Link class="h-5 w-5" aria-hidden v-else />
             <span class="sr-only">{{ t("linkPost") }}</span>
           </button>
           <button
             @click="remove"
             v-if="isChatOwner || post.u === authStore.username"
           >
-            <IconTrash class="h-6 w-6" aria-hidden />
+            <Trash class="h-5 w-5" aria-hidden />
             <span class="sr-only">{{ t("deletePost") }}</span>
           </button>
           <button @click="editing = true" v-if="post.u === authStore.username">
-            <IconEdit class="h-6 w-6" aria-hidden />
+            <Pencil class="h-5 w-5" aria-hidden />
             <span class="sr-only">{{ t("editPost") }}</span>
           </button>
           <button
             @click="report"
             v-if="post.u !== authStore.username && authStore.isLoggedIn"
           >
-            <IconAlertTriangle class="h-6 w-6" heigh aria-hidden />
+            <Flag class="h-5 w-5" heigh aria-hidden />
             <span class="sr-only">{{ t("reportPost") }}</span>
           </button>
           <button
@@ -406,7 +404,7 @@ defineExpose({ highlight });
             "
             v-if="authStore.isLoggedIn"
           >
-            <IconArrowForward class="h-6 w-6" heigh aria-hidden />
+            <Reply class="h-5 w-5" heigh aria-hidden />
             <span class="sr-only">{{ t("replyPost") }}</span>
           </button>
         </div>
@@ -482,7 +480,7 @@ defineExpose({ highlight });
           "
           @click="reload"
         >
-          <IconReload class="inline-block h-5 w-5" aria-hidden />
+          <RotateCw class="inline-block h-5 w-5" aria-hidden />
           {{ t("reloadPostButton") }}
         </button>
       </div>

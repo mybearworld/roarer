@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
-import { IconCrown, IconX } from "@tabler/icons-vue";
+import { Crown, X } from "lucide-vue-next";
 import { apiRequest } from "../lib/apiRequest";
 import { APIChat } from "../lib/schemas/chat";
 import { updateChatSchema } from "../lib/schemas/updateChat";
@@ -188,7 +188,7 @@ cloudlinkStore.lookFor(
           class="flex w-full items-center gap-2 rounded-xl bg-accent px-2 py-1 text-accent-text"
         >
           <h3 class="inline-block text-lg font-bold">{{ person }}</h3>
-          <IconCrown class="inline-block" aria-hidden v-if="person === owner" />
+          <Crown class="inline-block" aria-hidden v-if="person === owner" />
           <span class="sr-only">{{ t("chatOwner") }}</span>
         </div>
         <button
@@ -197,7 +197,7 @@ cloudlinkStore.lookFor(
           @click="promote(person)"
           v-if="owner === authStore.username && person !== authStore.username"
         >
-          <IconCrown aria-hidden />
+          <Crown aria-hidden />
           <span class="sr-only">{{ t("chatPromote") }}</span>
         </button>
         <button
@@ -206,7 +206,7 @@ cloudlinkStore.lookFor(
           @click="person === authStore.username ? leave() : remove(person)"
           v-if="owner === authStore.username || person === authStore.username"
         >
-          <IconX aria-hidden />
+          <X aria-hidden />
           <span class="sr-only">{{ t("chatRemove") }}</span>
         </button>
       </div>
