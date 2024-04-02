@@ -304,4 +304,5 @@ export const en = {
   settingConfirmExternalLinks: "Confirm before opening external links.",
   hi: "Hello there! :)",
   settingJoker: "I'm a joker",
+  devDisconnect: "Disconnect",
 };

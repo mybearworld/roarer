@@ -12,12 +12,14 @@ import {
 import { RouterLink } from "vue-router";
 import Login from "./Login.vue";
 import { tabs } from "../lib/tabs";
+import { useCloudlinkStore } from "../stores/cloudlink";
 import { useIsDevStore } from "../stores/isDev";
 import { useSettingsStore } from "../stores/settings";
 
 const { t } = useI18n();
 const route = useRoute();
 
+const cloudlinkStore = useCloudlinkStore();
 const isDevStore = useIsDevStore();
 const settingsStore = useSettingsStore();
 </script>
@@ -89,6 +91,13 @@ const settingsStore = useSettingsStore();
           target="_blank"
           >Meower Svelte</a
         >
+        -
+        <button
+          class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+          @click="cloudlinkStore.cloudlink.disconnect()"
+        >
+          {{ t("devDisconnect") }}
+        </button>
       </p>
     </div>
   </div>
