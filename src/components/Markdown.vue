@@ -152,6 +152,7 @@ effect(() => {
       img.replaceWith(span);
       return;
     }
+    img.title ||= img.alt;
     if (img.dataset.original && !img.dataset.original.startsWith("<")) {
       const clonedImg = img.cloneNode();
       element.append(clonedImg);
