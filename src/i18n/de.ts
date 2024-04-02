@@ -302,4 +302,11 @@ export const de = {
     link: "scratchblocks",
     end: ' anzuzeigen. Du kannst die Version der Blöcke mit "scratch2" oder "scratch3", auswählen, sonst wird die Auswahl des Nutzers respektiert. Wenn jemand Roarer nicht benutzt, sieht er den scratchblocks-Code.',
   },
+  settingConfirmExternalLinks:
+    "Bestätige, wenn auf externe Links geklickt wird.",
+  hi: "Hallo! :)",
+  settingJoker: "Ich bin sehr lustig",
+  devDisconnect: "Verbindung abbrechen",
+  disconnectedDialog:
+    "Deine Verbindung zu Meower wurde abgebrochen. Wiederverbindung läuft...",
 };
