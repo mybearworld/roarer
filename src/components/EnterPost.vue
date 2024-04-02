@@ -188,7 +188,7 @@ defineExpose({ reply });
   <form @submit="post" class="flex gap-2" v-if="authStore.isLoggedIn">
     <textarea
       class="w-full resize-none rounded-lg border-2 border-accent bg-transparent px-2 py-1"
-      :placeholder="$t('enterPostPlaceholder')"
+      :placeholder="t('enterPostPlaceholder')"
       @input="input"
       @keydown="keydown"
       v-model="postContent"
@@ -213,7 +213,7 @@ defineExpose({ reply });
       class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
       v-if="postContent.trim()"
     >
-      {{ $t("enterPostSend") }}
+      {{ t("enterPostSend") }}
     </button>
   </form>
   <div class="flex justify-between">
