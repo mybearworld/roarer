@@ -2,6 +2,7 @@ import { effect, reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { z } from "zod";
 import { themes } from "../lib/themes";
+import { IconChevronCompactLeft } from "@tabler/icons-vue";
 
 const THEME_STORAGE = "roarer:theme";
 
@@ -14,7 +15,7 @@ const useTogglable = (name: string, enabledByDefault: boolean) => {
     storageItem === "true" || (enabledByDefault && storageItem === null),
   );
   effect(() => {
-    localStorage.setItem(taggedName, setting.toString());
+    localStorage.setItem(taggedName, setting.value.toString());
   });
   return setting;
 };
