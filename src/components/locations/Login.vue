@@ -29,12 +29,12 @@ const signUpIssue = computed(() =>
   password.value !== confirmPassword.value
     ? "passwordMismatch"
     : !password.value
-      ? "noPassword"
-      : !username.value
-        ? "noUsername"
-        : !tosAgree.value
-          ? "noTos"
-          : null,
+    ? "noPassword"
+    : !username.value
+    ? "noUsername"
+    : !tosAgree.value
+    ? "noTos"
+    : null,
 );
 const loading = ref(false);
 const message = ref("");
