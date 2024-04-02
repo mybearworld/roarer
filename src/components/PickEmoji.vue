@@ -9,7 +9,7 @@ import {
   TabsTrigger,
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
-import {
+import type {
   EmojiClickEventDetail,
   CustomEmoji,
 } from "emoji-picker-element/shared";
