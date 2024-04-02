@@ -16,12 +16,13 @@ export const useDialogStore = defineStore("dialog", () => {
     resolve(resolveMessage);
   };
 
-  const alert = (message: string): Promise<"ok"> => {
+  const alert = (message: string, closable = true): Promise<"ok"> => {
     return new Promise((resolve) => {
       const dialog = {
         type: "alert",
         message,
         okClick: () => resolveDialog(dialog, resolve, "ok"),
+        closable,
       } as const;
       dialogs.value.unshift(dialog);
     });
@@ -57,7 +58,12 @@ export const useDialogStore = defineStore("dialog", () => {
     });
   };
 
-  return { shownDialog, alert, confirm, prompt };
+  const closeAlert = () => {
+    if (shownDialog.value?.type !== "alert") return;
+    shownDialog.value.okClick();
+  };
+
+  return { shownDialog, alert, confirm, prompt, closeAlert };
 });
 
 export type Dialog =
@@ -65,6 +71,7 @@ export type Dialog =
       type: "alert";
       message: string;
       okClick: () => void;
+      closable: boolean;
     }
   | {
       type: "confirm";

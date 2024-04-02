@@ -305,4 +305,6 @@ export const en = {
   hi: "Hello there! :)",
   settingJoker: "I'm a joker",
   devDisconnect: "Disconnect",
+  disconnectedDialog:
+    "You were disconnected from Meower. Trying to reconnect...",
 };

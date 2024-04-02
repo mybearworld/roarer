@@ -35,9 +35,12 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
       console.log("☁️", packet);
     }
   });
+
   cloudlink.value.on("close", async () => {
-    await dialogStore.alert(t("disconnected"));
-    location.reload();
+    cloudlink.value.connect();
+    dialogStore.alert(t("disconnectedDialog"), false);
+    await waitUntilSendable();
+    dialogStore.closeAlert();
   });
 
   const waitUntilSendable = () => {
