@@ -19,7 +19,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
   const cloudlink = ref(
     new CloudlinkClient({
       url: cloudlinkURL,
-      log: false,
+      log: true,
     }),
   );
   setInterval(async () => {
@@ -29,15 +29,15 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
         val: "",
       });
     }
-    if (cloudlink.value.status === 3) {
-      await dialogStore.alert(t("disconnected"));
-      location.reload();
-    }
   }, 20000);
   cloudlink.value.on("packet", (packet: object) => {
     if (import.meta.env.DEV) {
       console.log("☁️", packet);
     }
+  });
+  cloudlink.value.on("close", async () => {
+    await dialogStore.alert(t("disconnected"));
+    location.reload();
   });
 
   const waitUntilSendable = () => {
