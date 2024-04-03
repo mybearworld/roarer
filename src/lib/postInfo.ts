@@ -27,7 +27,7 @@ export const getPostInfo = (
     username: bridgeMatch?.[1] ?? post.u,
     id: post.post_id,
     italic: post.u === "Server" || inbox,
-    content: reply?.postContent || content,
+    content: reply?.postContent ?? content,
     bridged: !!bridgeMatch,
     reply,
     isMeowerUser: !bridgeMatch || post.u === "Discord",
