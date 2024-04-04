@@ -89,6 +89,7 @@ const trimmedPost = (post: string) => {
     .replace(/: /g, ":  ") // images shouldn't appear in replies
 
     .replace(/!/g, "!\u200c") // markdown images
+    .replace(/`/g, "\\`") // code blocks can span  new lines
     .replace(/\n/g, " ");
   return `"${replacedPostContent.slice(0, 40).trim()}${
     postContent.length > 39 ? "…" : ""
