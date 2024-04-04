@@ -86,13 +86,13 @@ export const linkPills: ExternalLink[] = [
     },
   },
   {
-    base: /^(?:www\.)?youtube\.com$/,
+    base: /^(?:www\.)?(?:m\.)?youtube\.com$/,
     path: /^\/@([a-zA-Z0-9_\-.]+)\/?$/,
     icon: "https://youtube.com/favicon.ico",
     name: "YouTube",
   },
   {
-    base: /^(?:www\.)?youtube\.com$/,
+    base: /^(?:www\.)?(?:m\.)youtube\.com$/,
     path: /^\/watch\?v=([a-zA-Z0-9_\-]+)$/,
     includeSearch: true,
     icon: "https://youtube.com/favicon.ico",
@@ -141,14 +141,14 @@ export const linkPills: ExternalLink[] = [
               { code: commit },
             ]
           : issue
-          ? [
-              { sm: username },
-              { sm: "/" },
-              { sm: repo },
-              { sm: "/" },
-              `#${issue}`,
-            ]
-          : [{ sm: username }, { sm: "/" }, repo]
+            ? [
+                { sm: username },
+                { sm: "/" },
+                { sm: repo },
+                { sm: "/" },
+                `#${issue}`,
+              ]
+            : [{ sm: username }, { sm: "/" }, repo]
         : username;
     },
   },
