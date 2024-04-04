@@ -307,4 +307,6 @@ export const en = {
   devDisconnect: "Disconnect",
   disconnectedDialog:
     "You were disconnected from Meower. Trying to reconnect...",
+  confirmLeave:
+    "Are you sure you want to leave this page? Your post draft will get lost.",
 };

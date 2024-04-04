@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
-import { RouterLink } from "vue-router";
+import { onBeforeRouteLeave, RouterLink } from "vue-router";
 import PickEmoji from "./PickEmoji.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import { APIChat } from "../lib/schemas/chat";
@@ -126,6 +126,18 @@ const reply = (username: string, content: string, postId: string) => {
     autoResizeTextarea(inputRef.value);
   }
 };
+
+addEventListener("beforeunload", (e) => {
+  if (postContent.value.trim() !== "") {
+    e.preventDefault();
+  }
+});
+onBeforeRouteLeave(async () => {
+  return (
+    postContent.value.trim() === "" ||
+    (await dialogStore.confirm(t("confirmLeave")))
+  );
+});
 
 const lastTypingIndicatorSent = ref<number | null>(null);
 const input = async () => {
