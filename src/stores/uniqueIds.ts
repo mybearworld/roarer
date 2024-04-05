@@ -10,9 +10,5 @@ export const useIdsStore = defineStore("ids", () => {
 
 const createSet = (name: string) => {
   const latestId = ref(0);
-  const getNewId = () => {
-    latestId.value = latestId.value + 1;
-    return `_${name}-id-${latestId.value + 1}`;
-  };
-  return getNewId;
+  return () => `_${name}-id-${latestId.value++}`;
 };
