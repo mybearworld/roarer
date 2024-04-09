@@ -12,7 +12,6 @@ import Livechat from "./components/locations/Livechat.vue";
 import Login from "./components/locations/Login.vue";
 import NotFound from "./components/locations/NotFound.vue";
 import PostShare from "./components/locations/PostShare.vue";
-import RoarBot from "./components/locations/RoarBot.vue";
 import ReportHistory from "./components/locations/ReportHistory.vue";
 import Settings from "./components/locations/Settings.vue";
 import Syntax from "./components/locations/Syntax.vue";
@@ -80,7 +79,6 @@ const router = createRouter({
     },
     { path: "/posts/:post", component: PostShare, meta: { tab: null } },
     { path: "/syntax", component: Syntax, meta: { tab: null } },
-    // { path: "/bot", component: RoarBot, meta: { tab: null } },
     { path: "/:path(.*)", component: NotFound, meta: { tab: null } },
   ],
 });
