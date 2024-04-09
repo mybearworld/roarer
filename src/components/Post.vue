@@ -289,12 +289,12 @@ defineExpose({ highlight });
           inbox
             ? { pfp: 101 }
             : postInfo.username === 'Server' || !postInfo.isMeowerUser
-            ? { pfp: 500 }
-            : {
-                pfp: profile?.pfp_data!,
-                avatar: profile?.avatar!,
-                bg: profile?.avatar_color!,
-              }
+              ? { pfp: 500 }
+              : {
+                  pfp: profile?.pfp_data!,
+                  avatar: profile?.avatar!,
+                  bg: profile?.avatar_color!,
+                }
         "
         :online="!inbox && onlineListStore.online.includes(postInfo.username)"
       />

@@ -34,8 +34,8 @@ const requestURL =
   chat === "livechat"
     ? ""
     : chat
-    ? `/posts/${chat._id}?autoget=1`
-    : `/${inbox ? "inbox" : "home"}?autoget=1`;
+      ? `/posts/${chat._id}?autoget=1`
+      : `/${inbox ? "inbox" : "home"}?autoget=1`;
 
 const posts = ref<APIPost[]>([]);
 const postComponents = ref<InstanceType<typeof Post>[] | null>(null);
@@ -217,8 +217,8 @@ const loadMore = async () => {
     newPostsAmount.value <= -25
       ? 0
       : newPostsAmount.value < 0
-      ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
-      : newPostsAmount.value % POSTS_PER_REQUESTS;
+        ? POSTS_PER_REQUESTS + (newPostsAmount.value % POSTS_PER_REQUESTS)
+        : newPostsAmount.value % POSTS_PER_REQUESTS;
   const response = await getResponseFromAPIRequest(
     requestURL + `&page=${page}`,
     {

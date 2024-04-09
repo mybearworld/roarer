@@ -141,14 +141,14 @@ export const linkPills: ExternalLink[] = [
               { code: commit },
             ]
           : issue
-          ? [
-              { sm: username },
-              { sm: "/" },
-              { sm: repo },
-              { sm: "/" },
-              `#${issue}`,
-            ]
-          : [{ sm: username }, { sm: "/" }, repo]
+            ? [
+                { sm: username },
+                { sm: "/" },
+                { sm: repo },
+                { sm: "/" },
+                `#${issue}`,
+              ]
+            : [{ sm: username }, { sm: "/" }, repo]
         : username;
     },
   },

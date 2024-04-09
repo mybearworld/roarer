@@ -21,10 +21,10 @@ const { chat } = defineProps<{
         chat === 'livechat'
           ? '/chats/livechat'
           : chat.nickname
-          ? `/chats/${chat._id}`
-          : `/users/${chat.members.find(
-              (user) => user !== authStore.username,
-            )}/dm`
+            ? `/chats/${chat._id}`
+            : `/users/${chat.members.find(
+                (user) => user !== authStore.username,
+              )}/dm`
       "
     >
       <p class="text-xl font-bold">

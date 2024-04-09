@@ -244,8 +244,8 @@ effect(() => {
         typeof link.icon === "string"
           ? link.icon
           : settingsStore.theme.roarer_colorScheme === "dark"
-          ? link.icon.dark
-          : link.icon.light;
+            ? link.icon.dark
+            : link.icon.light;
       icon.className = "inline-block h-[1em]";
       icon.dataset.isImage = "";
       el.innerHTML = "";
