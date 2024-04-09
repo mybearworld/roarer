@@ -86,9 +86,6 @@
     & h5 {
       @apply text-lg;
     }
-    & .hca {
-      @apply inline-block -scale-x-100 text-[inherit];
-    }
     & h6 {
       @apply text-sm;
     }
