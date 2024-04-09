@@ -20,7 +20,7 @@ const useTogglable = (name: string, enabledByDefault: boolean) => {
 };
 
 export const useSettingsStore = defineStore("settings", () => {
-  const theme = ref<RoarerTheme>(themes.dark);
+  const theme = ref<RoarerTheme>(themes.dark.theme);
   const themeStorage = localStorage.getItem(THEME_STORAGE);
   if (themeStorage !== null) {
     try {

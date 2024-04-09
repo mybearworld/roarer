@@ -20,6 +20,8 @@ const stringifyTheme = () => {
   });
 };
 
+const originalTheme = settingsStore.theme;
+
 const themeInputRef = ref<HTMLInputElement | null>(null);
 effect(() => {
   if (!themeInputRef.value) {
@@ -163,18 +165,43 @@ const colorSettings = [
       />
     </div>
     <span class="font-bold">{{ t("themePresets") }}</span>
-    <div class="flex gap-2">
+    <div class="space-y-2">
+      <table class="border-separate border-spacing-x-2 border-spacing-y-1">
+        <tr
+          :style="{
+            '--bg-color': theme.theme.orange,
+            '--text-color': theme.theme.foregroundOrange,
+          }"
+          v-for="(theme, name) in themes"
+        >
+          <td class="font-bold">{{ t(`theme_${name}`) }}</td>
+          <td>
+            {{
+              "users" in theme
+                ? t("themeAuthors", { users: theme.users.join(", ") })
+                : ""
+            }}
+          </td>
+          <td>
+            <button
+              class="rounded-xl bg-[--bg-color] px-2 py-1 text-[--text-color]"
+              type="button"
+              @click="
+                () => {
+                  settingsStore.theme = { ...theme.theme };
+                }
+              "
+            >
+              {{ t(`themeApply`) }}
+            </button>
+          </td>
+        </tr>
+      </table>
       <button
         class="rounded-xl bg-accent px-2 py-1 text-accent-text"
-        type="button"
-        @click="
-          () => {
-            settingsStore.theme = { ...theme };
-          }
-        "
-        v-for="(theme, name) in themes"
+        @click="() => (settingsStore.theme = { ...originalTheme })"
       >
-        {{ t(`theme_${name}`) }}
+        {{ t("themeUndo") }}
       </button>
     </div>
   </div>

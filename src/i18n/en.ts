@@ -309,4 +309,7 @@ export const en = {
     "You were disconnected from Meower. Trying to reconnect...",
   confirmLeave:
     "Are you sure you want to leave this page? Your post draft will get lost.",
+  themeAuthors: "by {users}",
+  themeApply: "Apply",
+  themeUndo: "Undo changes",
 };
