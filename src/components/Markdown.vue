@@ -198,7 +198,7 @@ effect(() => {
     });
 
     const match = url.pathname.match(
-      /^(?:\/[a-zA-Z\-]+)?\/view\/[a-z\-]+(\d+)\/?$/,
+      /^(?:\/[a-zA-Z\-]+)?\/view\/[a-z%0-9\-]+?(\d+)\/?$/,
     );
     if (!noImages && match && url.hostname === "tenor.com") {
       const id = match[1];
@@ -244,8 +244,8 @@ effect(() => {
         typeof link.icon === "string"
           ? link.icon
           : settingsStore.theme.roarer_colorScheme === "dark"
-          ? link.icon.dark
-          : link.icon.light;
+            ? link.icon.dark
+            : link.icon.light;
       icon.className = "inline-block h-[1em]";
       icon.dataset.isImage = "";
       el.innerHTML = "";
