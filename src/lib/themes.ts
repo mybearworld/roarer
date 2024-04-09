@@ -63,6 +63,19 @@ export const themes = {
     },
     users: ["Eris"],
   },
+  lion: {
+    theme: {
+      v: 1,
+      orange: "#432304",
+      background: "#261303",
+      foreground: "#e1d4cb",
+      foregroundOrange: "#e6c6a8",
+      roarer_link: "#d1853d",
+      roarer_postStyle: "filled",
+      roarer_colorScheme: "dark",
+    },
+    users: ["Scratchgaming2222"],
+  },
 } satisfies {
   [k in string]: {
     theme: RoarerTheme;

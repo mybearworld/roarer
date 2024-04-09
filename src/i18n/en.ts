@@ -312,4 +312,5 @@ export const en = {
   themeAuthors: "by {users}",
   themeApply: "Apply",
   themeUndo: "Undo changes",
+  theme_lion: "Lion",
 };
