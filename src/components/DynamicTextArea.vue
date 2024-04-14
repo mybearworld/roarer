@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { effect, ref, watch } from "vue";
+import { useSettingsStore } from "../stores/settings";
+
+const settingsStore = useSettingsStore();
 
 const model = defineModel<string>();
 const el = ref<HTMLTextAreaElement>();
@@ -20,6 +23,18 @@ effect(() => {
   if (!el.value) return;
   resize();
 });
+
+const keydown = (e: KeyboardEvent) => {
+  if (
+    e.key === "Enter" &&
+    ((!e.shiftKey && settingsStore.enterSends) ||
+      (e.shiftKey && !settingsStore.enterSends)) &&
+    el.value
+  ) {
+    e.preventDefault();
+    el.value.form?.dispatchEvent(new Event("submit"));
+  }
+};
 </script>
 
 <template>
@@ -28,5 +43,6 @@ effect(() => {
     rows="1"
     v-model="model"
     ref="el"
+    @keydown="keydown"
   ></textarea>
 </template>

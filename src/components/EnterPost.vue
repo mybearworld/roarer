@@ -155,17 +155,6 @@ const input = async () => {
   }
 };
 
-const keydown = (e: KeyboardEvent) => {
-  if (
-    e.key === "Enter" &&
-    ((!e.shiftKey && settingsStore.enterSends) ||
-      (e.shiftKey && !settingsStore.enterSends))
-  ) {
-    e.preventDefault();
-    post();
-  }
-};
-
 const addEmoji = (emoji: EmojiClickEventDetail) => {
   postContent.value += emoji.unicode ?? emoji.emoji.shortcodes?.[0];
 };
@@ -183,7 +172,6 @@ defineExpose({ reply });
       class="border-accent"
       :placeholder="t('enterPostPlaceholder')"
       @input="input"
-      @keydown="keydown"
       v-model="postContent"
       ref="inputRef"
     />

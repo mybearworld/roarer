@@ -140,17 +140,6 @@ const edit = async (e?: Event) => {
   }
 };
 
-const editKeydown = (e: KeyboardEvent) => {
-  if (
-    e.key === "Enter" &&
-    ((!e.shiftKey && settingsStore.enterSends) ||
-      (e.shiftKey && !settingsStore.enterSends))
-  ) {
-    e.preventDefault();
-    edit();
-  }
-};
-
 const replyPost = ref<APIPost | string | null>(null);
 effect(async () => {
   if (!postInfo.reply) {
@@ -423,7 +412,6 @@ defineExpose({ highlight });
         <DynamicTextArea
           class="filled:border-background bordered:border-accent"
           v-model="editContent"
-          @keydown="editKeydown"
         />
         <div class="space-x-2">
           <button
