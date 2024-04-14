@@ -184,7 +184,7 @@ effect(() => {
     }
     el.target = "_blank";
     el.addEventListener("click", (e) => {
-      if (url.origin + url.pathname === baseURL) {
+      if ((url.origin + url.pathname).replace(/\/$/, "") === baseURL) {
         e.preventDefault();
         router.push(url.hash.slice(1));
       } else if (settingsStore.confirmExternalLinks) {
