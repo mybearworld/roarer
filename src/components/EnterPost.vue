@@ -109,7 +109,7 @@ const emitOptimistic = (content: string) => {
   return id;
 };
 
-const inputRef = ref<HTMLTextAreaElement | null>(null);
+const inputRef = ref<InstanceType<typeof DynamicTextArea> | null>(null);
 const reply = (username: string, content: string, postId: string) => {
   postContent.value =
     `@${username} ${trimmedPost(content)} (${postId})\n` + postContent.value;

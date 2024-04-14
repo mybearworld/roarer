@@ -35,6 +35,13 @@ const keydown = (e: KeyboardEvent) => {
     el.value.form?.dispatchEvent(new Event("submit"));
   }
 };
+
+const focus = () => {
+  if (!el.value) return;
+  el.value.focus()
+}
+
+defineExpose({ focus })
 </script>
 
 <template>
