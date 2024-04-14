@@ -10,13 +10,10 @@ import {
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
 import { onBeforeRouteLeave, RouterLink } from "vue-router";
+import DynamicTextArea from "./DynamicTextArea.vue";
 import PickEmoji from "./PickEmoji.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import { APIChat } from "../lib/schemas/chat";
-import {
-  autoResizeTextarea,
-  resetTextareaSize,
-} from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
@@ -54,9 +51,6 @@ const post = async (e?: Event) => {
     content += " /j";
   }
   postContent.value = "";
-  if (inputRef.value) {
-    resetTextareaSize(inputRef.value);
-  }
   const id = emitOptimistic(content);
   const response = await getResponseFromAPIRequest(
     chat ? `/posts/${chat === "livechat" ? "livechat" : chat._id}` : "/home",
@@ -121,7 +115,6 @@ const reply = (username: string, content: string, postId: string) => {
     `@${username} ${trimmedPost(content)} (${postId})\n` + postContent.value;
   if (inputRef.value) {
     inputRef.value.focus();
-    autoResizeTextarea(inputRef.value);
   }
 };
 
@@ -143,9 +136,6 @@ const input = async () => {
     return;
   }
   const currentDate = new Date().getTime();
-  if (inputRef.value) {
-    autoResizeTextarea(inputRef.value);
-  }
   if (
     lastTypingIndicatorSent.value === null ||
     lastTypingIndicatorSent.value + 1500 < currentDate
@@ -177,19 +167,11 @@ const keydown = (e: KeyboardEvent) => {
 };
 
 const addEmoji = (emoji: EmojiClickEventDetail) => {
-  if (!inputRef.value) {
-    return;
-  }
   postContent.value += emoji.unicode ?? emoji.emoji.shortcodes?.[0];
-  autoResizeTextarea(inputRef.value);
 };
 
 const postSticker = (sticker: DiscordSticker) => {
-  if (!inputRef.value) {
-    return;
-  }
   postContent.value += ` [(sticker) ${sticker.name}: ${sticker.url}]`;
-  autoResizeTextarea(inputRef.value);
 };
 
 defineExpose({ reply });
@@ -197,15 +179,13 @@ defineExpose({ reply });
 
 <template>
   <form @submit="post" class="flex gap-2" v-if="authStore.isLoggedIn">
-    <textarea
-      class="w-full resize-none rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+    <DynamicTextArea
       :placeholder="t('enterPostPlaceholder')"
       @input="input"
       @keydown="keydown"
       v-model="postContent"
       ref="inputRef"
-      rows="1"
-    ></textarea>
+    />
     <PopoverRoot>
       <PopoverTrigger class="rounded-xl bg-accent px-2 py-1 text-accent-text">
         <Laugh aria-hidden />
