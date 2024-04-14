@@ -8,8 +8,6 @@ export const useDialogStore = defineStore("dialog", () => {
   );
 
   const resolveDialog = <TResolve>(
-    // TODO: Entirely delete this argument
-    _dialog: Dialog,
     resolve: (item: TResolve) => void,
     resolveMessage: TResolve,
   ) => {
@@ -22,7 +20,7 @@ export const useDialogStore = defineStore("dialog", () => {
       const dialog = {
         type: "alert",
         message,
-        okClick: () => resolveDialog(dialog, resolve, "ok"),
+        okClick: () => resolveDialog(resolve, "ok"),
         closable,
       } as const;
       dialogs.value.unshift(dialog);
@@ -34,8 +32,8 @@ export const useDialogStore = defineStore("dialog", () => {
       const dialog = {
         type: "confirm",
         message,
-        yesClick: () => resolveDialog(dialog, resolve, true),
-        noClick: () => resolveDialog(dialog, resolve, false),
+        yesClick: () => resolveDialog(resolve, true),
+        noClick: () => resolveDialog(resolve, false),
       } as const;
       dialogs.value.unshift(dialog);
     });
@@ -52,8 +50,8 @@ export const useDialogStore = defineStore("dialog", () => {
         message,
         placeholder,
         password,
-        okClick: (response) => resolveDialog(dialog, resolve, response),
-        cancelClick: () => resolveDialog(dialog, resolve, null),
+        okClick: (response) => resolveDialog(resolve, response),
+        cancelClick: () => resolveDialog(resolve, null),
       } as const;
       dialogs.value.unshift(dialog);
     });
