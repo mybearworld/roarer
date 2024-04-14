@@ -124,6 +124,7 @@ const remove = async () => {
 };
 
 const editing = ref(false);
+const editContent = ref(post.unfiltered_p ?? post.p);
 const editInputValue = ref<HTMLTextAreaElement | null>(null);
 effect(() => {
   if (!editInputValue.value) {
@@ -142,7 +143,7 @@ const edit = async (e?: Event) => {
     method: "PATCH",
     auth: true,
     body: JSON.stringify({
-      content: editInputValue.value.value,
+      content: editContent.value,
     }),
   });
   if (response.status !== 200) {
@@ -434,7 +435,7 @@ defineExpose({ highlight });
           class="mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 filled:border-background bordered:border-accent"
           type="text"
           rows="1"
-          :value="post.unfiltered_p ?? post.p"
+          v-model="editContent"
           ref="editInputValue"
           @keydown="editKeydown"
           @input="editInputValue && autoResizeTextarea(editInputValue)"
