@@ -4,6 +4,7 @@ import { Upload } from "lucide-vue-next";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
+import DynamicTextArea from "../DynamicTextArea.vue";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import { profilePictures } from "../../assets/pfp";
@@ -243,13 +244,9 @@ addEventListener("keydown", (e) => {
         </RouterLink>
       </div>
       <form class="contents" @submit="me">
-        <label class="flex items-center gap-2">
+        <label class="flex gap-2">
           {{ t("usersMeQuote") }}
-          <input
-            type="text"
-            class="w-full rounded-lg border-2 border-accent bg-transparent px-2 py-1"
-            v-model="quote"
-          />
+          <DynamicTextArea class="border-accent" v-model="quote" />
         </label>
         <div class="space-x-2" v-if="uploadedProfilePicture">
           {{ t("usersMePfpColor") }}
@@ -300,7 +297,7 @@ addEventListener("keydown", (e) => {
               :aria-selected="profilePicture === uploadedProfilePicture"
               type="button"
               :title="t('uploadedPfp')"
-              @click="profilePicture = uploadedProfilePicture"
+              @click="profilePicture = uploadedProfilePicture!"
               v-if="uploadedProfilePicture"
             >
               <ProfilePicture
