@@ -5,7 +5,6 @@ const model = defineModel<string>();
 const el = ref<HTMLTextAreaElement>();
 
 watch([model], () => {
-  console.log("!");
   requestAnimationFrame(() => {
     if (!el.value) return;
     el.value.style.height = "auto";
