@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { effect, ref } from "vue";
 import { Picker } from "emoji-picker-element";
-import {
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsRoot,
-  TabsTrigger,
-} from "radix-vue";
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "radix-vue";
 import { useI18n } from "vue-i18n";
 import type {
   EmojiClickEventDetail,

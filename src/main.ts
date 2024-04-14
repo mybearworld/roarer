@@ -20,8 +20,6 @@ import Users from "./components/locations/Users.vue";
 import "./style.css";
 import { languages } from "./i18n/languages";
 
-const tw = <T>(n: T) => n;
-
 const i18n = createI18n({
   legacy: false,
   locale: localStorage.getItem("roarer:locale") || "en",

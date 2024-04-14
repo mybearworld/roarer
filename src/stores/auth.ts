@@ -1,4 +1,4 @@
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 const USERNAME_STORAGE = "roarer:username";

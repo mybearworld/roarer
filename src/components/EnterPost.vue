@@ -22,7 +22,6 @@ import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { useAuthStore } from "../stores/auth";
-import { useCloudlinkStore } from "../stores/cloudlink";
 import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
@@ -36,7 +35,6 @@ const emit = defineEmits<{
 }>();
 
 const authStore = useAuthStore();
-const cloudlinkStore = useCloudlinkStore();
 const dialogStore = useDialogStore();
 const settingsStore = useSettingsStore();
 const idsStore = useIdsStore();

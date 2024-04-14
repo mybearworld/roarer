@@ -4,13 +4,11 @@ import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useAuthStore } from "../../stores/auth";
-import { useRelationshipStore } from "../../stores/relationship";
 import { loginSchema } from "../../lib/loginSchema";
 import { effect } from "vue";
 
 const cloudlinkStore = useCloudlinkStore();
 const authStore = useAuthStore();
-const relationshipStore = useRelationshipStore();
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
@@ -53,9 +51,8 @@ const loginEvent = async (e: Event) => {
   }
   loading.value = true;
   message.value = "";
-  let data;
   try {
-    data = await cloudlinkStore.login(username.value, password.value);
+    await cloudlinkStore.login(username.value, password.value);
   } catch (e) {
     message.value = e as string;
     loading.value = false;

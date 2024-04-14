@@ -4,7 +4,6 @@ import { useI18n } from "vue-i18n";
 import { RouterLink, onBeforeRouteLeave } from "vue-router";
 import EnterPost from "./EnterPost.vue";
 import PostPopup from "./PostPopup.vue";
-import TypingIndicator from "./TypingIndicator.vue";
 import OnlineList from "./OnlineList.vue";
 import Post from "./Post.vue";
 import { useCloudlinkStore } from "../stores/cloudlink";

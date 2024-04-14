@@ -6,7 +6,6 @@ import { z } from "zod";
 import Markdown from "../Markdown.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import Statistics from "../Statistics.vue";
-import meowy from "../../assets/pfp/22.svg";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";

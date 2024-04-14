@@ -2,7 +2,6 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
-import { bridgeBots } from "../lib/bridgeBots";
 import { APIChat } from "../lib/schemas/chat";
 import { useOnlinelistStore } from "../stores/onlinelist";
 

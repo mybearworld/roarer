@@ -8,7 +8,8 @@ export const useDialogStore = defineStore("dialog", () => {
   );
 
   const resolveDialog = <TResolve>(
-    dialog: Dialog,
+    // TODO: Entirely delete this argument
+    _dialog: Dialog,
     resolve: (item: TResolve) => void,
     resolveMessage: TResolve,
   ) => {

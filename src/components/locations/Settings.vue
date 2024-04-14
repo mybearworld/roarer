@@ -3,7 +3,7 @@ import { effect, ref } from "vue";
 import { Upload } from "lucide-vue-next";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
-import { useRouter, RouterLink } from "vue-router";
+import { RouterLink } from "vue-router";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import { profilePictures } from "../../assets/pfp";
@@ -20,7 +20,6 @@ const dialogStore = useDialogStore();
 const authStore = useAuthStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
-const router = useRouter();
 
 const quote = ref("");
 const profilePicture = ref<number | string>(0);
@@ -315,7 +314,7 @@ addEventListener("keydown", (e) => {
               type="button"
               :title="`Profile picture #${key}`"
               @click="profilePicture = key"
-              v-for="[key, value] of profilePictures"
+              v-for="[key] of profilePictures"
             >
               <ProfilePicture class="h-16 w-16" :pfp="{ pfp: key }" />
             </button>

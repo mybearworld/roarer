@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, effect, reactive, ref } from "vue";
+import { effect, ref } from "vue";
 import {
   Check,
   MessageSquareReply,
@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
-import { useRouter, RouterLink } from "vue-router";
+import { RouterLink } from "vue-router";
 import { z } from "zod";
 import Markdown from "./Markdown.vue";
 import Post from "./Post.vue";
@@ -44,7 +44,6 @@ const profilesStore = useProfilesStore();
 const relationshipStore = useRelationshipStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
-const router = useRouter();
 
 const {
   post: rawPost,

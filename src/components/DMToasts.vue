@@ -15,14 +15,12 @@ import { z } from "zod";
 import { getResponseFromAPIRequest } from "../lib/apiRequest";
 import { chatSchema, APIChat } from "../lib/schemas/chat";
 import { getPostInfo, PostInfo } from "../lib/postInfo";
-import { postSchema, APIPost } from "../lib/schemas/post";
+import { postSchema } from "../lib/schemas/post";
 import { useCloudlinkStore } from "../stores/cloudlink";
 import { useAuthStore } from "../stores/auth";
-import { useSettingsStore } from "../stores/settings";
 
 const cloudlinkStore = useCloudlinkStore();
 const authStore = useAuthStore();
-const settingsStore = useSettingsStore();
 const route = useRoute();
 const { t } = useI18n();
 

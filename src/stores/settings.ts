@@ -1,4 +1,4 @@
-import { effect, reactive, ref } from "vue";
+import { effect, ref } from "vue";
 import { defineStore } from "pinia";
 import { z } from "zod";
 import { themes } from "../lib/themes";

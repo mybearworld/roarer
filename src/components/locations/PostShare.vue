@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Post from "../Post.vue";
 import { getResponseFromAPIRequest } from "../../lib/apiRequest";
 import { postSchema, APIPost } from "../../lib/schemas/post";
 
-const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
 
