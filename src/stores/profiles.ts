@@ -58,7 +58,5 @@ export const useProfilesStore = defineStore("profiles", () => {
     false,
   );
 
-  getUser("PKW");
-
   return { map, getUser };
 });
