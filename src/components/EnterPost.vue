@@ -180,6 +180,7 @@ defineExpose({ reply });
 <template>
   <form @submit="post" class="flex gap-2" v-if="authStore.isLoggedIn">
     <DynamicTextArea
+      class="border-accent"
       :placeholder="t('enterPostPlaceholder')"
       @input="input"
       @keydown="keydown"

@@ -16,7 +16,7 @@ watch([model], () => {
 
 <template>
   <textarea
-    class="w-full resize-none rounded-lg border-2 border-accent bg-transparent px-2 py-1"
+    class="w-full resize-none rounded-lg border-2 bg-transparent px-2 py-1"
     rows="1"
     v-model="model"
     ref="el"

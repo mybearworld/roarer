@@ -17,11 +17,11 @@ import {
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { z } from "zod";
+import DynamicTextArea from "./DynamicTextArea.vue";
 import Markdown from "./Markdown.vue";
 import Post from "./Post.vue";
 import ProfilePicture from "./ProfilePicture.vue";
 import { admin } from "../lib/env";
-import { autoResizeTextarea } from "../lib/autoResizeTextarea";
 import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
 import { addOntoPost } from "../lib/addOntoPost";
 import { formatDate } from "../lib/formatDate";
@@ -125,20 +125,9 @@ const remove = async () => {
 
 const editing = ref(false);
 const editContent = ref(post.unfiltered_p ?? post.p);
-const editInputValue = ref<HTMLTextAreaElement | null>(null);
-effect(() => {
-  if (!editInputValue.value) {
-    return;
-  }
-  autoResizeTextarea(editInputValue.value);
-});
 const edit = async (e?: Event) => {
   e?.preventDefault();
   editing.value = false;
-  if (!editInputValue.value) {
-    return;
-  }
-  autoResizeTextarea(editInputValue.value);
   const response = await apiRequest(`/posts?id=${post.post_id}`, {
     method: "PATCH",
     auth: true,
@@ -431,15 +420,11 @@ defineExpose({ highlight });
         <Post :post="replyPost" reply v-else />
       </div>
       <form class="mt-2" v-if="editing" @submit="edit">
-        <textarea
-          class="mb-2 block w-full resize-none overflow-hidden rounded-lg border-2 bg-transparent px-2 py-1 filled:border-background bordered:border-accent"
-          type="text"
-          rows="1"
+        <DynamicTextArea
+          class="filled:border-background bordered:border-accent"
           v-model="editContent"
-          ref="editInputValue"
           @keydown="editKeydown"
-          @input="editInputValue && autoResizeTextarea(editInputValue)"
-        ></textarea>
+        />
         <div class="space-x-2">
           <button
             type="submit"
