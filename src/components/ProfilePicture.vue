@@ -9,14 +9,14 @@ const props = withDefaults(
       | {
           avatar: string;
           bg: string;
-          pfp: number;
+          pfp: number | null;
         }
       | {
           avatar: string;
           bg: string;
         }
       | {
-          pfp: number;
+          pfp: number | null;
         };
     online?: boolean;
     class?: string;
@@ -30,7 +30,10 @@ const props = withDefaults(
 
 const imageClass = props.class + " rounded-xl";
 
-const pfpLink = "pfp" in props.pfp ? profilePictures.get(props.pfp.pfp) : null;
+const pfpLink =
+  "pfp" in props.pfp && props.pfp.pfp
+    ? profilePictures.get(props.pfp.pfp)
+    : null;
 
 const { t } = useI18n();
 </script>

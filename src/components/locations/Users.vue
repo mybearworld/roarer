@@ -172,8 +172,7 @@ const permissions = computed(() =>
     </div>
     <div class="mx-auto mt-5 flex gap-2" v-else>
       <div
-        class="flex min-w-[calc(70px+theme(spacing.4))] items-center justify-center rounded-xl bg-accent"
-        v-if="userProfile.pfp_data"
+        class="flex min-w-[calc(70px+theme(spacing.4))] items-center justify-center rounded-xl bg-accent py-4"
       >
         <ProfilePicture
           class="h-16 w-16"
