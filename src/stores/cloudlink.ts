@@ -38,8 +38,10 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
 
   cloudlink.value.on("close", async () => {
     cloudlink.value.connect();
+    authStore.isLoggedIn = false;
     dialogStore.alert(t("disconnectedDialog"), false);
     await waitUntilSendable();
+    storedLogIn();
     dialogStore.closeAlert();
   });
 
@@ -126,32 +128,35 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
     return response;
   };
 
-  if (authStore.username !== null && authStore.token !== null) {
-    let nonNullCredentials: [string, string] = [
-      authStore.username,
-      authStore.token,
-    ];
+  const storedLogIn = () => {
+    if (authStore.username !== null && authStore.token !== null) {
+      let nonNullCredentials: [string, string] = [
+        authStore.username,
+        authStore.token,
+      ];
 
-    const syntaxErrorSchema = z.object({
-      val: z.literal("E:101 | Syntax"),
-    });
-    cloudlink.value.on("statuscode", async (packet: unknown) => {
-      if (authStore.isLoggedIn) {
-        return;
-      }
-      if (syntaxErrorSchema.safeParse(packet).success) {
-        try {
-          await login(...nonNullCredentials);
-        } catch (e) {
-          if (!(await dialogStore.confirm(t("loginFail")))) {
-            authStore.username = null;
-            authStore.token = null;
-          }
-          location.reload();
+      const syntaxErrorSchema = z.object({
+        val: z.literal("E:101 | Syntax"),
+      });
+      cloudlink.value.on("statuscode", async (packet: unknown) => {
+        if (authStore.isLoggedIn) {
+          return;
         }
-      }
-    });
-  }
+        if (syntaxErrorSchema.safeParse(packet).success) {
+          try {
+            await login(...nonNullCredentials);
+          } catch (e) {
+            if (!(await dialogStore.confirm(t("loginFail")))) {
+              authStore.username = null;
+              authStore.token = null;
+            }
+            location.reload();
+          }
+        }
+      });
+    }
+  };
+  storedLogIn();
 
   lookFor(
     relationshipPacketSchema,
