@@ -81,4 +81,9 @@ const router = createRouter({
   ],
 });
 
+console.log("%cImportant:", "font-weight: bold; font-size: 2rem;");
+console.log(
+  "This console allows executing any arbitrary code. This includes code to get your Meower account information.\nIf you don't know what you're doing, don't paste code in here.",
+);
+
 createApp(App).use(createPinia()).use(i18n).use(router).mount("#app");
