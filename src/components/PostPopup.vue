@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Post from "./Post.vue";
-import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../lib/api/request";
 import { postSchema, APIPost } from "../lib/schemas/post";
 
 const { post, inbox, isChatOwner } = defineProps<{

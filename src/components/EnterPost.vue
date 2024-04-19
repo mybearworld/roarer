@@ -14,7 +14,7 @@ import DynamicTextArea from "./DynamicTextArea.vue";
 import PickEmoji from "./PickEmoji.vue";
 import TypingIndicator from "./TypingIndicator.vue";
 import { APIChat } from "../lib/schemas/chat";
-import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../lib/api/request";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema, APIPost } from "../lib/schemas/post";

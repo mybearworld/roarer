@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import Posts from "../Posts.vue";
-import { getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../../lib/api/request";
 import { APIChat, chatSchema } from "../../lib/schemas/chat";
 import { useDialogStore } from "../../stores/dialog";
 

@@ -11,7 +11,7 @@ import { useAuthStore } from "../stores/auth";
 import { useDialogStore } from "../stores/dialog";
 import { useRelationshipStore } from "../stores/relationship";
 import { useSettingsStore } from "../stores/settings";
-import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../lib/api/request";
 import { APIChat } from "../lib/schemas/chat";
 import { postSchema, APIPost } from "../lib/schemas/post";
 import { z } from "zod";

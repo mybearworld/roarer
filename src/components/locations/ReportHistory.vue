@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { z } from "zod";
-import { getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../../lib/api/request";
 import { formatDate } from "../../lib/formatDate";
 import { reportSchema, APIReport } from "../../lib/schemas/report";
 

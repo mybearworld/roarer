@@ -6,7 +6,7 @@ import { z } from "zod";
 import Markdown from "../Markdown.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import Statistics from "../Statistics.vue";
-import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../../lib/api/request";
 import { formatDate } from "../../lib/formatDate";
 import { getPermissions } from "../../lib/permissions";
 import { profileSchemaOrError, APIProfile } from "../../lib/schemas/profile";

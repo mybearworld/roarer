@@ -22,7 +22,7 @@ import Markdown from "./Markdown.vue";
 import Post from "./Post.vue";
 import ProfilePicture from "./ProfilePicture.vue";
 import { admin } from "../lib/env";
-import { apiRequest, getResponseFromAPIRequest } from "../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../lib/api/request";
 import { addOntoPost } from "../lib/addOntoPost";
 import { formatDate } from "../lib/formatDate";
 import { getPostInfo } from "../lib/postInfo";

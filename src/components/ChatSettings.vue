@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { Crown, X } from "lucide-vue-next";
-import { apiRequest } from "../lib/apiRequest";
+import { apiRequest } from "../lib/api/request";
 import { APIChat } from "../lib/schemas/chat";
 import { updateChatSchema } from "../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../stores/cloudlink";

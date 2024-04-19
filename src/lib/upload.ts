@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getResponseFromAPIRequest } from "./apiRequest";
+import { getResponseFromAPIRequest } from "./api/request";
 
 export const upload = async (file: File): Promise<UploadReturn> => {
   const token = await getResponseFromAPIRequest("/uploads/token/icon", {

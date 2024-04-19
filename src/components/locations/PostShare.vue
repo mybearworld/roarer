@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Post from "../Post.vue";
-import { getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../../lib/api/request";
 import { postSchema, APIPost } from "../../lib/schemas/post";
 
 const route = useRoute();

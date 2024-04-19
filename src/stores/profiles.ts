@@ -2,7 +2,7 @@ import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { z } from "zod";
 import { useCloudlinkStore } from "./cloudlink";
-import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../lib/api/request";
 import {
   profileSchema,
   profileSchemaNoError,

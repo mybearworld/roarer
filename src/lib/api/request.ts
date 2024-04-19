@@ -1,6 +1,6 @@
 import { z, ZodSchema } from "zod";
-import { apiURL } from "./env";
-import { useAuthStore } from "../stores/auth";
+import { apiURL } from "../env";
+import { useAuthStore } from "../../stores/auth";
 
 export const apiRequest = async (
   url: string,

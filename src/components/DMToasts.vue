@@ -12,7 +12,7 @@ import {
   ToastViewport,
 } from "radix-vue";
 import { z } from "zod";
-import { getResponseFromAPIRequest } from "../lib/apiRequest";
+import { getResponseFromAPIRequest } from "../lib/api/request";
 import { chatSchema, APIChat } from "../lib/schemas/chat";
 import { getPostInfo, PostInfo } from "../lib/postInfo";
 import { postSchema } from "../lib/schemas/post";

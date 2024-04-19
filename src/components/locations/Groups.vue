@@ -3,7 +3,7 @@ import { computed, effect, ref } from "vue";
 import { z } from "zod";
 import { useI18n } from "vue-i18n";
 import ChatView from "../ChatView.vue";
-import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../../lib/api/request";
 import { chatSchema, APIChat } from "../../lib/schemas/chat";
 import { updateChatSchema } from "../../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../../stores/cloudlink";

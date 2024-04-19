@@ -8,7 +8,7 @@ import DynamicTextArea from "../DynamicTextArea.vue";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import ProfilePicture from "../ProfilePicture.vue";
 import { profilePictures } from "../../assets/pfp";
-import { apiRequest, getResponseFromAPIRequest } from "../../lib/apiRequest";
+import { apiRequest, getResponseFromAPIRequest } from "../../lib/api/request";
 import { profileSchema } from "../../lib/schemas/profile";
 import { upload } from "../../lib/upload";
 import { useCloudlinkStore } from "../../stores/cloudlink";
