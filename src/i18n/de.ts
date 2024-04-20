@@ -309,4 +309,10 @@ export const de = {
   devDisconnect: "Verbindung abbrechen",
   disconnectedDialog:
     "Deine Verbindung zu Meower wurde abgebrochen. Wiederverbindung läuft...",
+  confirmLeave:
+    "Bist du dir sicher, dass du diese Seite verlassen willst? Dein Postentwurf wird verloren gehen.",
+  themeAuthors: "von {users}",
+  themeApply: "Nutzen",
+  themeUndo: "Änderungen rückgängig machen",
+  theme_lion: "Löwe",
 };
