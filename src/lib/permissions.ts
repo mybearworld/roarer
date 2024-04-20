@@ -1,12 +1,7 @@
 export const getPermissions = (permissionSet: number) => {
-  let counter = 0;
-  const allPermissions = new Set<Permission>();
-  permissions.forEach((permission) => {
-    if (permissionSet & (1 << counter)) {
-      allPermissions.add(permission);
-    }
-    counter++;
-  });
+  const allPermissions = new Set(
+    permissions.filter((_, index) => permissionSet & (1 << index)),
+  );
   return allPermissions;
 };
 
