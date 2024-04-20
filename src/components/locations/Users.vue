@@ -217,7 +217,7 @@ const permissions = computed(() =>
             })
           }}
         </p>
-        <ul class="mt-2" v-if="permissions && permissions.length">
+        <ul class="mt-2" v-if="permissions && permissions.size">
           <li v-for="permission in permissions">
             {{ t(permission) }}
           </li>
