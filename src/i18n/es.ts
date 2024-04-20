@@ -312,4 +312,10 @@ export const es = {
   devDisconnect: "Desconectar",
   disconnectedDialog:
     "Has sido desconectado de Meower. Intentando reconectar...",
+  confirmLeave:
+    "¿Estás seguro de quieres abandonar esta página? El borrador de tu post será borrado.",
+  themeAuthors: "por {users}",
+  themeApply: "Aplicar",
+  themeUndo: "Deshacer cambios",
+  theme_lion: "León",
 };
