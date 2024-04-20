@@ -2,7 +2,7 @@ export const getPermissions = (permissionSet: number) => {
   let counter = 0;
   const allPermissions: Permission[] = [];
   permissions.forEach((permission) => {
-    if (permissionSet & (2 ** counter)) {
+    if (permissionSet & (1 << counter)) {
       allPermissions.push(permission);
     }
     counter++;
