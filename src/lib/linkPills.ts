@@ -92,7 +92,7 @@ export const linkPills: ExternalLink[] = [
     name: "YouTube",
   },
   {
-    base: /^(?:www\.)?(?:m\.)youtube\.com$/,
+    base: /^(?:www\.)?(?:m\.)?youtube\.com$/,
     path: /^\/watch\?v=([a-zA-Z0-9_\-]+)$/,
     includeSearch: true,
     icon: "https://youtube.com/favicon.ico",
