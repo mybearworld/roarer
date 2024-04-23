@@ -38,10 +38,10 @@ const keydown = (e: KeyboardEvent) => {
 
 const focus = () => {
   if (!el.value) return;
-  el.value.focus()
-}
+  el.value.focus();
+};
 
-defineExpose({ focus })
+defineExpose({ focus });
 </script>
 
 <template>
