@@ -248,8 +248,9 @@ defineExpose({ highlight });
     v-else
     v-if="!isDeleted && !relationshipStore.blockedUsers.has(postInfo.username)"
   >
-    <div
+    <RouterLink
       class="mr-2 mt-1 flex max-w-full px-1"
+      :to="`/users/${postInfo.username}`"
       v-if="
         !reply &&
         (profile ||
@@ -276,7 +277,7 @@ defineExpose({ highlight });
         "
         :online="!inbox && onlineListStore.online.includes(postInfo.username)"
       />
-    </div>
+    </RouterLink>
     <div
       :class="`group flex rounded-xl [--base-highlight:theme('colors.accent')] filled:[--highlight-mix:10%] bordered:border-2 bordered:border-accent bordered:bg-transparent bordered:[--highlight-mix:60%] ${
         reply
