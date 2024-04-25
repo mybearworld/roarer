@@ -76,6 +76,19 @@ export const themes = {
     },
     users: ["Scratchgaming2222"],
   },
+  olive: {
+    theme: {
+      v: 1,
+      orange: "#5d7737",
+      background: "#213626",
+      foreground: "#fefefe",
+      foregroundOrange: "#ffffff",
+      roarer_link: "#aaf8be",
+      roarer_postStyle: "bordered",
+      roarer_colorScheme: "dark",
+    },
+    users: ["Supernoodles99"],
+  },
 } satisfies {
   [k in string]: {
     theme: RoarerTheme;
