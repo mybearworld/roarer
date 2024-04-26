@@ -124,7 +124,7 @@ const remove = async () => {
 };
 
 const editing = ref(false);
-const editContent = ref(post.unfiltered_p ?? post.p);
+const editContent = ref(post.p);
 const edit = async (e?: Event) => {
   e?.preventDefault();
   editing.value = false;

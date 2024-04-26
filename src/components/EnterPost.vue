@@ -104,7 +104,6 @@ const emitOptimistic = (content: string) => {
     },
     type: 1,
     u: authStore.username,
-    unfiltered_p: undefined,
   });
   return id;
 };

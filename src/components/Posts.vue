@@ -177,7 +177,7 @@ const newPost = (newPost: APIPost) => {
     const duplicateIndex = posts.value.findIndex(
       (post) =>
         post.post_id.startsWith("_") &&
-        post.p === (newPost.unfiltered_p ?? newPost.p),
+        post.p === (newPost.p),
     );
     if (duplicateIndex !== -1) {
       posts.value = posts.value
