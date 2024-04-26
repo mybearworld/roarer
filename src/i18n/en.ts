@@ -311,4 +311,5 @@ export const en = {
   themeApply: "Apply",
   themeUndo: "Undo changes",
   theme_lion: "Lion",
+  theme_olive: "Olive",
 };
