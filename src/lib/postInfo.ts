@@ -2,7 +2,6 @@ import { createPinia } from "pinia";
 import { bridgeBots } from "./bridgeBots";
 import { getReply, Reply } from "./getReply";
 import { APIPost } from "./schemas/post";
-import { useSettingsStore } from "../stores/settings";
 
 createPinia();
 
@@ -10,8 +9,6 @@ export const getPostInfo = (
   post: APIPost,
   { inbox = false } = {},
 ): PostInfo => {
-  const settingsStore = useSettingsStore();
-
   const rawContent = post.p;
   const bridgeMatch = bridgeBots.includes(post.u)
     ? rawContent.match(/^([a-zA-Z0-9_\-]+): (.*)$/s)
