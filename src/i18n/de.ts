@@ -151,7 +151,6 @@ export const de = {
     "Erlaube jeden Bildhost, auch außerhalb der normal gültigen Liste.",
   settingAnyImageHostWarn:
     "WARNUNG: Dies wird jeder Website erlauben, ein Bildhost zu sein, und eine Nachricht wird automatisch zu ihr gesendet. Dies könnte dazu führen, dass dieser Website deine IP-Adresse gezeigt wird. Nutze dies verantwortungsbewusst.",
-  settingFilterSwears: 'Ersetze Schimpfwörtern in Posts mit "****".',
   emojiPicker: escape(JSON.stringify(emojiPicker)),
   settingEnterSends:
     "Sende Posts, wenn du Enter drückst. Du kannst immer noch neue Zeilen schreiben, indem du Umschalt+Enter drückst.",

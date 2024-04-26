@@ -152,8 +152,6 @@ export const es = {
     "Permitir cualquier host de imágenes, incluso fuera de la lista blanca estándar.",
   settingAnyImageHostWarn:
     "ADVERTENCIA: Esto permitirá que cualquier sitio web se use como host de imágenes, y se hará automáticamente una solicitud a él. Esto podría hacer que tu dirección IP se muestre en el sitio web. Utiliza esto de manera responsable.",
-  settingFilterSwears:
-    "Filtrar palabras malsonantes de las publicaciones y reemplazarlas con '****'.",
   settingEnterSends:
     "Enviar publicación al presionar Enter. Todavía puedes crear nuevas líneas presionando Mayús+Enter.",
   postFail: "No se pudo enviar la publicación: {status}",
