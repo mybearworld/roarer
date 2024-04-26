@@ -12,10 +12,7 @@ export const getPostInfo = (
 ): PostInfo => {
   const settingsStore = useSettingsStore();
 
-  const rawContent =
-    !settingsStore.filterSwears && post.unfiltered_p
-      ? post.unfiltered_p
-      : post.p;
+  const rawContent = post.p;
   const bridgeMatch = bridgeBots.includes(post.u)
     ? rawContent.match(/^([a-zA-Z0-9_\-]+): (.*)$/s)
     : null;

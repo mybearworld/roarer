@@ -335,12 +335,6 @@ addEventListener("keydown", (e) => {
         </p>
       </div>
     </label>
-    <label class="flex items-baseline gap-2">
-      <input type="checkbox" v-model="settingsStore.filterSwears" />
-      <div>
-        {{ t("settingFilterSwears") }}
-      </div>
-    </label>
     <label class="flex items-baseline gap-2" v-if="authStore.isLoggedIn">
       <input type="checkbox" v-model="settingsStore.enterSends" />
       <div>

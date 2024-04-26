@@ -36,7 +36,6 @@ export const useSettingsStore = defineStore("settings", () => {
     anyImageHost: useTogglable("anyImageHost", false),
     confirmExternalLinks: useTogglable("confirmExternalLinks", true),
     enterSends: useTogglable("enterSends", true),
-    filterSwears: useTogglable("filterSwears", true),
     hideBlockedMentions: useTogglable("hideBlockedMentions", false),
     isJoker: useTogglable("isJoker", false),
     showPfps: useTogglable("showPfps", true),
