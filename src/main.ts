@@ -85,5 +85,9 @@ console.log("%cImportant:", "font-weight: bold; font-size: 2rem;");
 console.log(
   "This console allows executing any arbitrary code. This includes code to get your Meower account information.\nIf you don't know what you're doing, don't paste code in here.",
 );
+console.log(
+  "%c(If you're here for Roarer's source code, see https://github.com/mybearworld/roarer)",
+  "font-style: italic; font-size: .65rem;",
+);
 
 createApp(App).use(createPinia()).use(i18n).use(router).mount("#app");
