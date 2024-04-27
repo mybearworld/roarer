@@ -14,7 +14,6 @@ export const getReply = (post: string): Reply | null => {
   if (replyText === undefined) {
     throw new Error("Reply text is not defined");
   }
-  // const decodedId = match[1] ? match[1] : null
   return {
     id: match[2] || match[3] || null,
     postContent,
