@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier -w **/*.*"
   },
   "dependencies": {
     "@williamhorning/cloudlink": "^4.1.1",
