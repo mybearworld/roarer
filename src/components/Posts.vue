@@ -72,32 +72,6 @@ const postsSchema = z.object({
     posts.value = response.data.autoget;
     stopShowingLoadMore.value = response.data.pages === 1;
   } else {
-    cloudlinkStore.lookFor(
-      z.object({
-        cmd: z.literal("direct"),
-        val: z.object({
-          chatid: z.literal("livechat"),
-          state: z.literal(1).or(z.literal(0)),
-          u: z.string(),
-        }),
-      }),
-      (packet) => {
-        newPost({
-          isDeleted: false,
-          p: t(`livechat${packet.val.state === 1 ? "Join" : "Leave"}`, {
-            username: packet.val.u,
-          }),
-          post_id: "Livechat Post",
-          post_origin: "livechat",
-          t: {
-            e: new Date().getTime() / 1000,
-          },
-          type: 1,
-          u: "Server",
-        });
-      },
-      false,
-    );
     stopShowingLoadMore.value = true;
   }
 
@@ -124,21 +98,6 @@ const postsSchema = z.object({
   gotPosts.value = true;
 })();
 
-effect(() => {
-  if (chat === "livechat" && authStore.isLoggedIn) {
-    cloudlinkStore.send(
-      {
-        cmd: "set_chat_state",
-        val: {
-          chatid: "livechat",
-          state: 1,
-        },
-      },
-      z.any(),
-    );
-  }
-});
-
 const popupPost = ref<string | null>(null);
 onBeforeRouteLeave((route) => {
   if (
@@ -155,18 +114,6 @@ onBeforeRouteLeave((route) => {
     }
     return false;
   }
-  if (chat === "livechat" && authStore.isLoggedIn) {
-    cloudlinkStore.send(
-      {
-        cmd: "set_chat_state",
-        val: {
-          chatid: "livechat",
-          state: 0,
-        },
-      },
-      z.any(),
-    );
-  }
 });
 
 const newPost = (newPost: APIPost) => {
@@ -175,9 +122,7 @@ const newPost = (newPost: APIPost) => {
   newPostsAmount.value++;
   if (!newPost.post_id.startsWith("_")) {
     const duplicateIndex = posts.value.findIndex(
-      (post) =>
-        post.post_id.startsWith("_") &&
-        post.p === (newPost.p),
+      (post) => post.post_id.startsWith("_") && post.p === newPost.p,
     );
     if (duplicateIndex !== -1) {
       posts.value = posts.value
