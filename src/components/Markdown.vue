@@ -41,7 +41,6 @@ const id = useIdsStore().newMarkdownId();
 const escapedMarkdown = md
   .replace(/(?:\s|\u200c)+$/, "")
   .replace(/&/g, "&amp;");
-console.log(escapedMarkdown);
 
 const markdown = markdownit({
   breaks: true,
