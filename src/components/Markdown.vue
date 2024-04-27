@@ -40,7 +40,10 @@ const id = useIdsStore().newMarkdownId();
 
 const escapedMarkdown = md
   .replace(/(?:\s|\u200c)+$/, "")
-  .replace(/&/g, "&amp;");
+  .replace(/&/g, "&amp;")
+  // I'm sorry for including such a bad word in the Roarer source code, but it
+  // needs to be censored.
+  .replace(/s\x6bi\x62i\x64i/g, "****");
 
 const markdown = markdownit({
   breaks: true,
