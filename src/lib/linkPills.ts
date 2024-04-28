@@ -29,7 +29,7 @@ const YOUTUBE_TEXT = async (match: RegExpMatchArray) => {
 export const linkPills: ExternalLink[] = [
   {
     base: "mybearworld.github.io",
-    path: /^\/roarer#\/posts\/([a-z0-9\-]+)\/?$/,
+    path: /^\/roarer\/?#\/posts\/([a-z0-9\-]+)\/?$/,
     includeHash: true,
     icon: "https://mybearworld.github.io/roarer/bear.svg",
     name: "Roarer",
