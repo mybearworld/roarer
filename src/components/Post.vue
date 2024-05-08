@@ -288,7 +288,10 @@ defineExpose({ highlight });
     >
       <div class="flex items-center gap-x-2">
         <Reply class="inline-block" aria-hidden v-if="reply" />
-        <span v-if="!postInfo.italic" class="whitespace-nowrap font-bold">
+        <span
+          v-if="!postInfo.italic || reply"
+          class="whitespace-nowrap font-bold"
+        >
           <RouterLink
             :to="`/users/${postInfo.username}`"
             v-if="!reply && postInfo.isMeowerUser"
