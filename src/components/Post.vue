@@ -401,13 +401,9 @@ defineExpose({ highlight });
         class="overflow-hidden"
         v-if="replyPost && typeof replyPost !== 'string' && !reply && !editing"
       >
-        <RouterLink
-          :to="`/posts/${replyPost.post_id}`"
-          v-if="post.post_origin === 'home'"
-        >
+        <RouterLink :to="`/posts/${replyPost.post_id}`">
           <Post :post="replyPost" reply />
         </RouterLink>
-        <Post :post="replyPost" reply v-else />
       </div>
       <form class="mt-2" v-if="editing" @submit="edit">
         <DynamicTextArea
