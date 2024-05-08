@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from "radix-vue";
 import { useI18n } from "vue-i18n";
-import { onBeforeRouteLeave, RouterLink } from "vue-router";
+import { onBeforeRouteLeave, RouterLink, useRoute } from "vue-router";
 import DynamicTextArea from "./DynamicTextArea.vue";
 import PickEmoji from "./PickEmoji.vue";
 import TypingIndicator from "./TypingIndicator.vue";
@@ -35,9 +35,12 @@ const authStore = useAuthStore();
 const dialogStore = useDialogStore();
 const settingsStore = useSettingsStore();
 const idsStore = useIdsStore();
+const route = useRoute();
 const { t } = useI18n();
 
-const postContent = ref("");
+const postContent = ref(
+  typeof route.query["post"] === "string" ? route.query["post"] : "",
+);
 const posting = ref(false);
 
 const post = async (e?: Event) => {

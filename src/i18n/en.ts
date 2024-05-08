@@ -312,4 +312,9 @@ export const en = {
   themeUndo: "Undo changes",
   theme_lion: "Lion",
   theme_olive: "Olive",
+  roarerGc: {
+    introduction: "Roarer has a group chat!",
+    gcBot: "Send a message in home to join.",
+    dm: "DM me to join.",
+  },
 };

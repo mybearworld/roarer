@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, effect, ref } from "vue";
 import { z } from "zod";
+import { RouterLink } from "vue-router";
 import { useI18n } from "vue-i18n";
 import ChatView from "../ChatView.vue";
 import { apiRequest, getResponseFromAPIRequest } from "../../lib/api/request";
@@ -8,12 +9,15 @@ import { chatSchema, APIChat } from "../../lib/schemas/chat";
 import { updateChatSchema } from "../../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../../stores/cloudlink";
 import { useDialogStore } from "../../stores/dialog";
+import { useOnlinelistStore } from "../../stores/onlinelist";
 
 const cloudlinkStore = useCloudlinkStore();
 const dialogStore = useDialogStore();
+const onlineListStore = useOnlinelistStore();
 const { t } = useI18n();
 
 const chats = ref<APIChat[]>([]);
+const chatsLoaded = ref(false);
 const schema = z.object({
   autoget: chatSchema.array(),
 });
@@ -27,6 +31,7 @@ effect(async () => {
     return;
   }
   chats.value = response.data.autoget;
+  chatsLoaded.value = true;
 });
 
 const sortedChats = computed(() =>
@@ -123,6 +128,31 @@ cloudlinkStore.lookFor(
         {{ t("createChat") }}
       </button>
     </form>
+    <div
+      class="my-2 text-center"
+      v-if="
+        chatsLoaded &&
+        !chats.some(
+          (chat) => chat._id === '7d48d687-ab68-4fe1-96a1-4aacbff36a12',
+        )
+      "
+    >
+      {{ t("roarerGc.introduction") }}
+      <RouterLink
+        class="text-link underline"
+        to="/home?post=@gc%20join%207d48d687-ab68-4fe1-96a1-4aacbff36a12"
+        v-if="onlineListStore.online.includes('gc')"
+      >
+        {{ t("roarerGc.gcBot") }}
+      </RouterLink>
+      <RouterLink
+        class="text-link underline"
+        to="/users/mybearworld/dm?post=hey!%20can%20i%20join%20the%20roarer%20gc?"
+        v-else
+      >
+        {{ t("roarerGc.dm") }}
+      </RouterLink>
+    </div>
     <ChatView chat="livechat" />
     <ChatView :chat="chat" v-for="chat in sortedChats" />
   </div>
