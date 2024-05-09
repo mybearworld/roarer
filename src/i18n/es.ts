@@ -316,4 +316,12 @@ export const es = {
   themeApply: "Aplicar",
   themeUndo: "Deshacer cambios",
   theme_lion: "León",
+  theme_olive: "Oliva",
+  roarerGc: {
+    introduction: "Roarer tiene un chat grupal!",
+    gcBot: "Envia un mensaje en la página principal para unirte.",
+    dm: "Enviame un MD para unirte.",
+  },
+  uploadFile: "Subir archivo",
+  meoUploaderThanks: "¡Especiales gracias a Meo por su servicio de subida de imágenes!",
 };
