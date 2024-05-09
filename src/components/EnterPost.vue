@@ -186,7 +186,6 @@ const uploadFile = async (files: FileList) => {
     postContent.value += `[ : ${uploaded.image.data.display_url}]`;
   }
   imageUploading.value = false;
-  inputRef.value?.focus();
 };
 
 const uploadFileFromEvent = (e: ClipboardEvent) => {
