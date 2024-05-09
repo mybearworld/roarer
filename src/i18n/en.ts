@@ -317,4 +317,6 @@ export const en = {
     gcBot: "Send a message in home to join.",
     dm: "DM me to join.",
   },
+  uploadFile: "Upload file",
+  meoUploaderThanks: "Special thanks to Meo for its image uploading service!",
 };

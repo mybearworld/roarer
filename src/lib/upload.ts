@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { getResponseFromAPIRequest } from "./api/request";
 
-export const upload = async (file: File): Promise<UploadReturn> => {
+export const upload = async (
+  file: File,
+): Promise<UploadReturn<UploadedImage>> => {
   const token = await getResponseFromAPIRequest("/uploads/token/icon", {
     auth: true,
     schema: tokenSchema,
@@ -32,6 +34,31 @@ export const upload = async (file: File): Promise<UploadReturn> => {
   return { error: null, image };
 };
 
+const MEO_MAX_SIZE = 32 * 1024 * 1024;
+export const uploadToMeo = async (
+  file: File,
+): Promise<UploadReturn<UploadedMeoImage>> => {
+  if (file.size > MEO_MAX_SIZE) {
+    return {
+      error: "tooLarge",
+      maxSize: MEO_MAX_SIZE,
+      readableMaxSize: shortenBytes(MEO_MAX_SIZE),
+    };
+  }
+  const form = new FormData();
+  form.set("username", "roarer");
+  form.set("image", file);
+  const image = meoImageSchema.parse(
+    await (
+      await fetch("https://meouploads.schafezr0000.workers.dev", {
+        method: "POST",
+        body: form,
+      })
+    ).json(),
+  );
+  return { error: null, image };
+};
+
 /**
  * Thank you, StackOverflow :)
  * https://stackoverflow.com/a/42408230
@@ -43,7 +70,7 @@ const shortenBytes = (n: number) => {
   return count + rank;
 };
 
-type UploadReturn =
+type UploadReturn<TImage> =
   | {
       error: "tokenFail";
       status: number;
@@ -55,7 +82,7 @@ type UploadReturn =
     }
   | {
       error: null;
-      image: UploadedImage;
+      image: TImage;
     };
 
 const tokenSchema = z.object({
@@ -77,3 +104,11 @@ const imageSchema = z.object({
 });
 
 export type UploadedImage = z.infer<typeof imageSchema>;
+
+const meoImageSchema = z.object({
+  data: z.object({
+    display_url: z.string(),
+  }),
+});
+
+export type UploadedMeoImage = z.infer<typeof meoImageSchema>;

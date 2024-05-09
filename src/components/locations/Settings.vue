@@ -430,6 +430,9 @@ addEventListener("keydown", (e) => {
       >{{ t("mascotThanks.end") }}
     </p>
     <p>
+      {{ t("meoUploaderThanks") }}
+    </p>
+    <p>
       {{ t("notoColorEmoji") }}
     </p>
   </div>

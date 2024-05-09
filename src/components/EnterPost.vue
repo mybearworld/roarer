@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { EmojiClickEventDetail } from "emoji-picker-element/shared";
-import { Laugh } from "lucide-vue-next";
+import { Laugh, Upload } from "lucide-vue-next";
 import {
   PopoverContent,
   PopoverPortal,
@@ -18,6 +18,7 @@ import { apiRequest, getResponseFromAPIRequest } from "../lib/api/request";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema, APIPost } from "../lib/schemas/post";
+import { uploadToMeo } from "../lib/upload";
 import { useAuthStore } from "../stores/auth";
 import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
@@ -165,15 +166,71 @@ const postSticker = (sticker: DiscordSticker) => {
   postContent.value += ` [(sticker) ${sticker.name}: ${sticker.url}]`;
 };
 
+const imageUploading = ref(false);
+const uploadFile = async (files: FileList) => {
+  imageUploading.value = true;
+  for (const file of files) {
+    const uploaded = await uploadToMeo(file);
+    if (uploaded.error === "tokenFail") {
+      await dialogStore.alert(
+        t("uploadTokenFail", { status: uploaded.status }),
+      );
+      continue;
+    }
+    if (uploaded.error === "tooLarge") {
+      await dialogStore.alert(
+        t("uploadTooLarge", { size: uploaded.readableMaxSize }),
+      );
+      continue;
+    }
+    postContent.value += `[ : ${uploaded.image.data.display_url}]`;
+  }
+  imageUploading.value = false;
+  inputRef.value?.focus();
+};
+
+const uploadFileFromEvent = (e: ClipboardEvent) => {
+  if (!e.clipboardData?.files.length) {
+    return;
+  }
+  uploadFile(e.clipboardData.files);
+};
+
+const fileInput = ref<HTMLInputElement | null>(null);
+const uploadFileFromFileInput = () => {
+  if (!fileInput.value?.files) {
+    return;
+  }
+  uploadFile(fileInput.value.files);
+};
+
 defineExpose({ reply });
 </script>
 
 <template>
   <form @submit="post" class="flex gap-2" v-if="authStore.isLoggedIn">
+    <button
+      class="rounded-xl bg-accent px-2 py-1 text-accent-text"
+      type="button"
+      @click="fileInput?.click()"
+    >
+      <Upload aria-hidden />
+      <span class="sr-only">{{ t("uploadFile") }}</span>
+      <input
+        type="file"
+        accept=".jpg,.jpeg,.png,.bmp,.gif,.tif,.webp,.heic,.avif"
+        multiple
+        hidden
+        ref="fileInput"
+        @change="uploadFileFromFileInput"
+      />
+    </button>
     <DynamicTextArea
-      class="border-accent"
+      class="border-accent disabled:opacity-50"
       :placeholder="t('enterPostPlaceholder')"
+      :disabled="imageUploading"
       @input="input"
+      @paste="uploadFileFromEvent"
       v-model="postContent"
       ref="inputRef"
     />
