@@ -43,6 +43,9 @@ cloudlinkStore.lookFor(
     ),
   }),
   async (packet) => {
+    if (packet.val.post_origin === "livechat") {
+      return;
+    }
     const chat = await getResponseFromAPIRequest(
       `/chats/${packet.val.post_origin}`,
       {
