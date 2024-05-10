@@ -169,22 +169,25 @@ const postSticker = (sticker: DiscordSticker) => {
 const imageUploading = ref(false);
 const uploadFile = async (files: FileList) => {
   imageUploading.value = true;
-  for (const file of files) {
-    const uploaded = await uploadToMeo(file);
-    if (uploaded.error === "tokenFail") {
-      await dialogStore.alert(
-        t("uploadTokenFail", { status: uploaded.status }),
-      );
-      continue;
-    }
-    if (uploaded.error === "tooLarge") {
-      await dialogStore.alert(
-        t("uploadTooLarge", { size: uploaded.readableMaxSize }),
-      );
-      continue;
-    }
-    postContent.value += `[ : ${uploaded.image.data.display_url}]`;
-  }
+  const attachments = await Promise.all(
+    [...files].map(async (file) => {
+      const uploaded = await uploadToMeo(file);
+      if (uploaded.error === "tokenFail") {
+        await dialogStore.alert(
+          t("uploadTokenFail", { status: uploaded.status }),
+        );
+        return;
+      }
+      if (uploaded.error === "tooLarge") {
+        await dialogStore.alert(
+          t("uploadTooLarge", { size: uploaded.readableMaxSize }),
+        );
+        return;
+      }
+      return `[ : ${uploaded.image.data.display_url}]`;
+    }),
+  );
+  postContent.value += " " + attachments.filter(Boolean).join(" ");
   imageUploading.value = false;
 };
 
