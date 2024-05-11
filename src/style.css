@@ -67,7 +67,7 @@
       text-decoration: none;
       /* https://github.com/google/fonts/issues/2436#issuecomment-619445643 */
       background: linear-gradient(currentColor, currentColor) no-repeat center
-        0.65em / 100% 1px;
+        0.6em / 100% 1px;
     }
     & h1,
     & h2,
