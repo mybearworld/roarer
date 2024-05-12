@@ -153,7 +153,7 @@ effect(() => {
         !hostWhitelist.some((host) => img.src.startsWith(host)))
     ) {
       const span = document.createElement("span");
-      span.textContent = img.dataset.original || `![${img.src}](${img.alt})`;
+      span.textContent = img.dataset.original || `![${img.alt}](${img.src})`;
       img.replaceWith(span);
       return;
     }
