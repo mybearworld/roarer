@@ -101,7 +101,7 @@
     & img,
     & video,
     & .tenor {
-      @apply max-h-72 align-top;
+      @apply max-h-72 align-middle;
     }
     & li {
       @apply list-inside;
