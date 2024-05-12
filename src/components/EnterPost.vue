@@ -204,6 +204,7 @@ const uploadFileFromFileInput = () => {
     return;
   }
   uploadFile(fileInput.value.files);
+  fileInput.value.value = "";
 };
 
 defineExpose({ reply });
