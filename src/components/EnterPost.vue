@@ -18,7 +18,7 @@ import { apiRequest, getResponseFromAPIRequest } from "../lib/api/request";
 import { DiscordSticker } from "../lib/discordEmoji";
 import { getReply } from "../lib/getReply";
 import { postSchema, APIPost } from "../lib/schemas/post";
-import { uploadToMeo } from "../lib/upload";
+import { upload } from "../lib/upload";
 import { useAuthStore } from "../stores/auth";
 import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
@@ -46,7 +46,7 @@ const posting = ref(false);
 
 const post = async (e?: Event) => {
   e?.preventDefault();
-  if (posting.value || !postContent.value.trim()) {
+  if (posting.value || imageUploading.value || !postContent.value.trim()) {
     return;
   }
   posting.value = true;
@@ -63,6 +63,7 @@ const post = async (e?: Event) => {
       auth: true,
       body: JSON.stringify({
         content: content,
+        attachments: attachments.value,
       }),
       schema: postSchema,
     },
@@ -74,6 +75,7 @@ const post = async (e?: Event) => {
     return;
   }
   posting.value = false;
+  attachments.value = [];
 };
 
 const trimmedPost = (post: string) => {
@@ -98,6 +100,7 @@ const emitOptimistic = (content: string) => {
   }
   const id = idsStore.newOptimisicPostId();
   emit("optimistic", {
+    attachments: [],
     edited_at: undefined,
     isDeleted: false,
     p: content,
@@ -166,28 +169,29 @@ const postSticker = (sticker: DiscordSticker) => {
   postContent.value += ` [(sticker) ${sticker.name}: ${sticker.url}]`;
 };
 
+const attachments = ref<string[]>([]);
+
 const imageUploading = ref(false);
 const uploadFile = async (files: FileList) => {
   imageUploading.value = true;
-  const attachments = await Promise.all(
+  const uplaodedAttachments = await Promise.all(
     [...files].map(async (file) => {
-      const uploaded = await uploadToMeo(file);
-      if (uploaded.error === "tokenFail") {
-        await dialogStore.alert(
-          t("uploadTokenFail", { status: uploaded.status }),
-        );
-        return;
-      }
+      const uploaded = await upload(file, "attachments");
       if (uploaded.error === "tooLarge") {
         await dialogStore.alert(
           t("uploadTooLarge", { size: uploaded.readableMaxSize }),
         );
         return;
       }
-      return `[ : ${uploaded.image.data.display_url}]`;
+      return uploaded.image.id;
     }),
   );
-  postContent.value += " " + attachments.filter(Boolean).join(" ");
+  attachments.value = [
+    ...attachments.value,
+    ...uplaodedAttachments.filter(
+      (attachment): attachment is string => typeof attachment === "string",
+    ),
+  ];
   imageUploading.value = false;
 };
 
@@ -231,7 +235,6 @@ defineExpose({ reply });
     <DynamicTextArea
       class="border-accent disabled:opacity-50"
       :placeholder="t('enterPostPlaceholder')"
-      :disabled="imageUploading"
       @input="input"
       @paste="uploadFileFromEvent"
       v-model="postContent"
@@ -252,12 +255,20 @@ defineExpose({ reply });
     </PopoverRoot>
     <button
       type="submit"
-      class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text"
+      class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text disabled:opacity-50"
+      :disabled="imageUploading"
       v-if="postContent.trim()"
     >
       {{ t("enterPostSend") }}
     </button>
   </form>
+  <div v-if="attachments.length || imageUploading">
+    {{
+      imageUploading
+        ? t("uploadingAttachments")
+        : t("attachmentsCount", { amount: attachments.length })
+    }}
+  </div>
   <div class="flex justify-between">
     <TypingIndicator :chat="chat" v-if="chat !== 'livechat'" />
     <RouterLink to="/syntax" class="text-nowrap text-right text-link underline">

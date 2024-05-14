@@ -1,64 +1,39 @@
 import { z } from "zod";
-import { getResponseFromAPIRequest } from "./api/request";
+import { useAuthStore } from "../stores/auth";
 
 export const upload = async (
   file: File,
+  type: "icons" | "attachments",
 ): Promise<UploadReturn<UploadedImage>> => {
-  const token = await getResponseFromAPIRequest("/uploads/token/icon", {
-    auth: true,
-    schema: tokenSchema,
-  });
-  if (token.error !== null) {
-    return { error: "tokenFail", status: token.error };
+  const authStore = useAuthStore();
+  if (!authStore.token) {
+    throw new Error("Need to be logged in for uploading");
   }
-  if (file.size > token.data.max_size) {
+
+  const maxSize = type === "icons" ? 5 << 20 : 25 << 20;
+  if (file.size > maxSize) {
     return {
       error: "tooLarge",
-      maxSize: token.data.max_size,
-      readableMaxSize: shortenBytes(token.data.max_size),
+      maxSize,
+      readableMaxSize: shortenBytes(maxSize),
     };
   }
   const form = new FormData();
   form.set("file", file);
   const image = imageSchema.parse(
     await (
-      await fetch("https://uploads.meower.org/icons", {
+      await fetch(`https://uploads.meower.org/${type}`, {
         method: "POST",
         body: form,
         headers: {
-          Authorization: token.data.token,
+          Authorization: authStore.token,
         },
       })
     ).json(),
   );
+
   return { error: null, image };
 };
-
-const MEO_MAX_SIZE = 32 * 1024 * 1024;
-export const uploadToMeo = async (
-  file: File,
-): Promise<UploadReturn<UploadedMeoImage>> => {
-  if (file.size > MEO_MAX_SIZE) {
-    return {
-      error: "tooLarge",
-      maxSize: MEO_MAX_SIZE,
-      readableMaxSize: shortenBytes(MEO_MAX_SIZE),
-    };
-  }
-  const form = new FormData();
-  form.set("username", "roarer");
-  form.set("image", file);
-  const image = meoImageSchema.parse(
-    await (
-      await fetch("https://meouploads.schafezr0000.workers.dev", {
-        method: "POST",
-        body: form,
-      })
-    ).json(),
-  );
-  return { error: null, image };
-};
-
 /**
  * Thank you, StackOverflow :)
  * https://stackoverflow.com/a/42408230
@@ -72,10 +47,6 @@ const shortenBytes = (n: number) => {
 
 type UploadReturn<TImage> =
   | {
-      error: "tokenFail";
-      status: number;
-    }
-  | {
       error: "tooLarge";
       maxSize: number;
       readableMaxSize: string;
@@ -85,30 +56,14 @@ type UploadReturn<TImage> =
       image: TImage;
     };
 
-const tokenSchema = z.object({
-  expires: z.number(),
-  id: z.string(),
-  max_size: z.number(),
-  token: z.string(),
-});
-
 const imageSchema = z.object({
-  id: z.string(),
+  bucket: z.string(),
+  claimed: z.boolean(),
+  filename: z.string(),
   hash: z.string(),
-  mime: z.string(),
-  size: z.number(),
-  width: z.number(),
-  height: z.number(),
-  uploaded_by: z.string(),
+  id: z.string(),
   uploaded_at: z.number(),
+  uploaded_by: z.string(),
 });
 
 export type UploadedImage = z.infer<typeof imageSchema>;
-
-const meoImageSchema = z.object({
-  data: z.object({
-    display_url: z.string(),
-  }),
-});
-
-export type UploadedMeoImage = z.infer<typeof meoImageSchema>;

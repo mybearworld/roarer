@@ -318,5 +318,6 @@ export const en = {
     dm: "DM me to join.",
   },
   uploadFile: "Upload file",
-  meoUploaderThanks: "Special thanks to Meo for its image uploading service!",
+  attachmentsCount: "{amount} attachments",
+  uploadingAttachments: "Uploading attachments..."
 };

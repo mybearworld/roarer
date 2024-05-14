@@ -12,6 +12,7 @@ import { url as baseURL } from "../lib/env";
 import { linkPills } from "../lib/linkPills";
 import { hostWhitelist } from "../lib/hostWhitelist";
 import { DISCORD_REGEX } from "../lib/discordEmoji";
+import { APIAttachment } from "../lib/schemas/post";
 import { useDialogStore } from "../stores/dialog";
 import { useIdsStore } from "../stores/uniqueIds";
 import { useSettingsStore } from "../stores/settings";
@@ -19,10 +20,11 @@ import { effect } from "vue";
 // @ts-expect-error
 import scratchblocks from "scratchblocks";
 
-const { md, inline, noImages } = defineProps<{
+const { md, inline, noImages, attachments } = defineProps<{
   md: string;
   inline?: boolean;
   noImages?: boolean;
+  attachments?: APIAttachment[];
 }>();
 
 const dialogStore = useDialogStore();
@@ -145,8 +147,16 @@ effect(() => {
     return;
   }
   const element = main.value;
-  element.innerHTML = renderedMarkdown;
-  element.querySelectorAll("img").forEach((img) => {
+  const virtualDocument = new DOMParser().parseFromString(
+    renderedMarkdown,
+    "text/html",
+  );
+  attachments?.forEach((attachment) => {
+    const img = document.createElement("img");
+    img.src = `https://uploads.meower.org/attachments/${attachment.id}/${attachment.filename}`;
+    virtualDocument.body.appendChild(img);
+  });
+  virtualDocument.querySelectorAll("img").forEach((img) => {
     if (
       noImages ||
       (!settingsStore.anyImageHost &&
@@ -158,7 +168,10 @@ effect(() => {
       return;
     }
     img.title ||= img.alt;
-    if (img.dataset.original && !img.dataset.original.startsWith("<")) {
+    if (
+      img.dataset.attachment ||
+      (img.dataset.original && !img.dataset.original.startsWith("<"))
+    ) {
       const clonedImg = img.cloneNode();
       element.append(clonedImg);
       img.remove();
@@ -168,7 +181,7 @@ effect(() => {
   });
   // using the built in linkify feature of markdown-it would not allow the
   // above change for images
-  element.innerHTML = linkifyHtml(element.innerHTML, {
+  element.innerHTML = linkifyHtml(virtualDocument.body.innerHTML, {
     formatHref: {
       mention: (href) => `${baseURL}#/users${href}`,
     },

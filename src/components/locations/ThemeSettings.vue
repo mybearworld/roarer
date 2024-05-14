@@ -90,6 +90,7 @@ const colorSettings = [
   <div class="flex flex-col gap-2">
     <Post
       :post="{
+        attachments: [],
         isDeleted: false,
         p: 'Lorem ipsum dolor sit amet.',
         post_id: 'sample post',

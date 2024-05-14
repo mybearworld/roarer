@@ -323,5 +323,4 @@ export const es = {
     dm: "Enviame un MD para unirte.",
   },
   uploadFile: "Subir archivo",
-  meoUploaderThanks: "¡Especiales gracias a Meo por su servicio de subida de imágenes!",
 };

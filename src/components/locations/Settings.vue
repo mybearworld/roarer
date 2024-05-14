@@ -103,11 +103,7 @@ effect(() => {
     if (!file) {
       return;
     }
-    const result = await upload(file);
-    if (result.error === "tokenFail") {
-      alert(t("uploadTokenFail", { status: result.status }));
-      return;
-    }
+    const result = await upload(file, "icons");
     if (result.error === "tooLarge") {
       alert(t("uploadTooLarge", { size: result.readableMaxSize }));
       return;
@@ -428,9 +424,6 @@ addEventListener("keydown", (e) => {
       }}<RouterLink class="text-link underline" to="/users/Supernoodles99">
         @Supernoodles99</RouterLink
       >{{ t("mascotThanks.end") }}
-    </p>
-    <p>
-      {{ t("meoUploaderThanks") }}
     </p>
     <p>
       {{ t("notoColorEmoji") }}

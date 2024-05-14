@@ -441,6 +441,7 @@ defineExpose({ highlight });
             }`"
             :inline="reply"
             :noImages="reply"
+            :attachments="reply ? [] : post.attachments"
           />
         </div>
         <button
