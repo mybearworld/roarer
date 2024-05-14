@@ -154,6 +154,7 @@ effect(() => {
   attachments?.forEach((attachment) => {
     const img = document.createElement("img");
     img.src = `https://uploads.meower.org/attachments/${attachment.id}/${attachment.filename}`;
+    img.alt = attachment.filename;
     virtualDocument.body.appendChild(img);
   });
   virtualDocument.querySelectorAll("img").forEach((img) => {
