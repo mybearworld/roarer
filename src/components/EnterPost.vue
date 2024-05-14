@@ -225,7 +225,6 @@ defineExpose({ reply });
       <span class="sr-only">{{ t("uploadFile") }}</span>
       <input
         type="file"
-        accept=".jpg,.jpeg,.png,.bmp,.gif,.tif,.webp,.heic,.avif"
         multiple
         hidden
         ref="fileInput"
