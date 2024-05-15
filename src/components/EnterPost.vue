@@ -46,7 +46,11 @@ const posting = ref(false);
 
 const post = async (e?: Event) => {
   e?.preventDefault();
-  if (posting.value || imageUploading.value || !postContent.value.trim()) {
+  if (
+    posting.value ||
+    imageUploading.value ||
+    (!postContent.value.trim() && !attachments.value.length)
+  ) {
     return;
   }
   posting.value = true;
@@ -256,7 +260,7 @@ defineExpose({ reply });
       type="submit"
       class="whitespace-nowrap rounded-xl bg-accent px-2 py-1 text-accent-text disabled:opacity-50"
       :disabled="imageUploading"
-      v-if="postContent.trim()"
+      v-if="postContent.trim() || attachments.length"
     >
       {{ t("enterPostSend") }}
     </button>
