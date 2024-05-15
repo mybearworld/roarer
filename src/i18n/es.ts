@@ -323,4 +323,6 @@ export const es = {
     dm: "Enviame un MD para unirte.",
   },
   uploadFile: "Subir archivo",
+  attachmentsCount: "{amount} archivo(s) adjunto(s)",
+  uploadingAttachments: "Subiendo archivo(s) adjunto(s)..."
 };
