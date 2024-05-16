@@ -25,6 +25,7 @@ const { t } = useI18n();
 const quote = ref("");
 const profilePicture = ref<number | string>(0);
 const uploadedProfilePicture = ref<string | null>(null);
+const hasUploadedProfilePicture = ref(false);
 const pfpColor = ref("");
 (async () => {
   const response = await getResponseFromAPIRequest(
@@ -75,10 +76,12 @@ const me = async (e: Event) => {
     body: JSON.stringify({
       quote: quote.value,
       ...(typeof profilePicture.value === "string"
-        ? {
-            avatar: profilePicture.value,
-            avatar_color: pfpColor.value.slice(1),
-          }
+        ? hasUploadedProfilePicture.value
+          ? {
+              avatar: profilePicture.value,
+              avatar_color: pfpColor.value.slice(1),
+            }
+          : {}
         : {
             pfp_data: profilePicture.value,
             avatar: "",
@@ -86,6 +89,9 @@ const me = async (e: Event) => {
           }),
     }),
   });
+  if (typeof profilePicture.value !== "string") {
+    uploadedProfilePicture.value = null;
+  }
   if (response.status === 200) {
     await dialogStore.alert(t("configSuccess"));
   } else {
@@ -110,6 +116,7 @@ effect(() => {
     }
     uploadedProfilePicture.value = result.image.id;
     profilePicture.value = result.image.id;
+    hasUploadedProfilePicture.value = true;
   });
 });
 
