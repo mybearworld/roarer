@@ -92,6 +92,7 @@ const me = async (e: Event) => {
   if (typeof profilePicture.value !== "string") {
     uploadedProfilePicture.value = null;
   }
+  hasUploadedProfilePicture.value = false;
   if (response.status === 200) {
     await dialogStore.alert(t("configSuccess"));
   } else {
