@@ -44,8 +44,7 @@ const postContent = ref(
 );
 const posting = ref(false);
 
-const post = async (e?: Event) => {
-  e?.preventDefault();
+const post = async () => {
   if (
     posting.value ||
     imageUploading.value ||
@@ -80,6 +79,11 @@ const post = async (e?: Event) => {
   }
   posting.value = false;
   attachments.value = [];
+};
+
+const postSubmit = (e: Event) => {
+  e.preventDefault();
+  post();
 };
 
 const trimmedPost = (post: string) => {
