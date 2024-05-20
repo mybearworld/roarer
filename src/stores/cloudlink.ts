@@ -122,15 +122,18 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
         }),
       }),
       (packet) => {
-        dialogStore.alert(
-          packet.val.payload.expires
-            ? t("tempBan", {
-                date: new Date(packet.val.payload.expires * 1000).toString(),
-                reason: packet.val.payload.reason,
-              })
-            : t("permBan", { reason: packet.val.payload.reason }),
-          false,
-        );
+        const date = new Date(packet.val.payload.expires * 1000);
+        if (new Date().getTime() < date.getTime()) {
+          dialogStore.alert(
+            packet.val.payload.expires
+              ? t("tempBan", {
+                  date: date.toString(),
+                  reason: packet.val.payload.reason,
+                })
+              : t("permBan", { reason: packet.val.payload.reason }),
+            false,
+          );
+        }
       },
     );
     const response = await send(
