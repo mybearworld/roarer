@@ -234,6 +234,8 @@ defineExpose({ reply });
     "
   >
     {{ t("creatingPostsRestriction") }}
+    temporary debug info
+    {{ JSON.stringify(authStore.ban) }}
   </div>
   <form
     @submit="postSubmit"
