@@ -5,6 +5,7 @@ import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 import { Crown, X } from "lucide-vue-next";
 import { apiRequest } from "../lib/api/request";
+import { getRestrictions } from "../lib/bitwise";
 import { APIChat } from "../lib/schemas/chat";
 import { updateChatSchema } from "../lib/schemas/updateChat";
 import { useCloudlinkStore } from "../stores/cloudlink";
@@ -140,7 +141,16 @@ cloudlinkStore.lookFor(
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div
+  class="text-center italic"
+    v-if="
+      authStore.ban &&
+      getRestrictions(authStore.ban.restrictions).has('editingChatDetails')
+    "
+  >
+    {{ t("editingChatsRestriction") }}
+  </div>
+  <div class="space-y-4" v-else>
     <div class="flex items-center gap-2">
       <h2 class="text-xl font-bold">{{ name }}</h2>
       <RouterLink to="/chats" class="text-link underline">

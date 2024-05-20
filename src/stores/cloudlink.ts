@@ -124,6 +124,7 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
     );
     authStore.username = response.payload.username;
     authStore.token = response.payload.token;
+    authStore.ban = response.payload.account.ban;
     authStore.isLoggedIn = true;
     return response;
   };
