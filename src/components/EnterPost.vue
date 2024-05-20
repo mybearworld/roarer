@@ -234,7 +234,6 @@ defineExpose({ reply });
     "
   >
     {{ t("creatingPostsRestriction") }}
-    temporary debug info
   </div>
   <form
     @submit="postSubmit"
