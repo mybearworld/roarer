@@ -110,6 +110,29 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
   };
 
   const login = async (username: string, password: string) => {
+    lookFor(
+      z.object({
+        cmd: z.literal("direct"),
+        val: z.object({
+          mode: z.literal("banned"),
+          payload: z.object({
+            reason: z.string(),
+            expires: z.number(),
+          }),
+        }),
+      }),
+      (packet) => {
+        dialogStore.alert(
+          packet.val.payload.expires
+            ? t("tempBan", {
+                date: new Date(packet.val.payload.expires * 1000).toString(),
+                reason: packet.val.payload.reason,
+              })
+            : t("permBan", { reason: packet.val.payload.reason }),
+          false,
+        );
+      },
+    );
     const response = await send(
       {
         cmd: "authpswd",

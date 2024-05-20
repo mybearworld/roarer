@@ -326,4 +326,8 @@ export const en = {
   editingChatsRestriction: "You are restricted from editing chats.",
   newChatsRestriction: "You are restricted from creating chats.",
   creatingPostsRestriction: "You are restricted from posting here.",
+  tempBan:
+    "You are temporarily banned from Meower until {date} for the following reason: {reason}",
+  permBan:
+    "You are permanently banned from Meower for the following reason: {reason}",
 };
