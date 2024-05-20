@@ -321,5 +321,5 @@ export const en = {
   attachmentsCount: "{amount} attachments",
   uploadingAttachments: "Uploading attachments...",
   gcBridgePost:
-    "This post was posted in a group chat connected to this one via the @gc bot.",
+    "This post was posted in a group chat connected to this one via the {'@'}gc bot.",
 };
