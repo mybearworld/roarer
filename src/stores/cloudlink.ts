@@ -152,7 +152,8 @@ export const useCloudlinkStore = defineStore("cloudlink", () => {
     authStore.token = response.payload.token;
     if (
       new Date().getTime() <
-      new Date(response.payload.account.ban.expires * 1000).getTime()
+        new Date(response.payload.account.ban.expires * 1000).getTime() &&
+      response.payload.account.ban.state !== "none"
     ) {
       authStore.ban = response.payload.account.ban;
     }
