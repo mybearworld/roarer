@@ -24,7 +24,7 @@ const emit = defineEmits<{
   back: [];
 }>();
 
-if (!chat.nickname) {
+if (!chat.owner) {
   throw new Error("ChatSettings can only be used on group chats, not DMs");
 }
 
@@ -142,7 +142,7 @@ cloudlinkStore.lookFor(
 
 <template>
   <div
-  class="text-center italic"
+    class="text-center italic"
     v-if="
       authStore.ban &&
       getRestrictions(authStore.ban.restrictions).has('editingChatDetails')
@@ -152,7 +152,7 @@ cloudlinkStore.lookFor(
   </div>
   <div class="space-y-4" v-else>
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-bold">{{ name }}</h2>
+      <h2 class="text-xl font-bold">{{ name ?? t("namelessChat") }}</h2>
       <RouterLink to="/chats" class="text-link underline">
         {{ t("back") }}
       </RouterLink>
