@@ -378,6 +378,12 @@ addEventListener("keydown", (e) => {
         {{ t("settingConfirmExternalLinks") }}
       </div>
     </label>
+    <label class="flex items-baseline gap-2">
+      <input type="checkbox" v-model="settingsStore.useTwelveHourTime" />
+      <div>
+        {{ t("settingUseTwelveHourTime") }}
+      </div>
+    </label>
     <div>
       <button
         type="button"

@@ -40,6 +40,7 @@ export const useSettingsStore = defineStore("settings", () => {
     isJoker: useTogglable("isJoker", false),
     showPfps: useTogglable("showPfps", true),
     useScratch2Blocks: useTogglable("useScratch2Blocks", false),
+    useTwelveHourTime: useTogglable("useTwelveHourTime", false),
     theme,
     setTheme(newTheme: RoarerTheme) {
       theme.value = newTheme;

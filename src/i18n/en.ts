@@ -331,4 +331,5 @@ export const en = {
   permBan:
     "You are permanently banned from Meower for the following reason: {reason}",
   namelessChat: "Nameless chat",
+  settingUseTwelveHourTime: "Use 12 hour time.",
 };
