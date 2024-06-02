@@ -8,7 +8,7 @@ export const formatDate = (timestamp: number) => {
   const formatter = new Intl.DateTimeFormat(locale.value, {
     dateStyle: "long",
     timeStyle: "medium",
-    hourCycle: settingsStore.useTwelveHourTime ? "h12" : "h24",
+    hour12: settingsStore.useTwelveHourTime,
   });
   const date = new Date(timestamp * 1000);
   return formatter.format(date);
