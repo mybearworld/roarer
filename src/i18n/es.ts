@@ -324,5 +324,17 @@ export const es = {
   },
   uploadFile: "Subir archivo",
   attachmentsCount: "{amount} archivo(s) adjunto(s)",
-  uploadingAttachments: "Subiendo archivo(s) adjunto(s)..."
+  uploadingAttachments: "Subiendo archivo(s) adjunto(s)...",
+  gcBridgePost:
+    "Este post fue creado en un chat grupal conectado a este mediante el bot {'@'}gc",
+  editingProfileRestriction: "Estás restringido de editar tu perfil.",
+  editingChatsRestriction: "Estás restringido de editar chats.",
+  newChatsRestriction: "Estás restringido de crear chats.",
+  creatingPostsRestriction: "Estás restringido de postear aquí.",
+  tempBan:
+    "Estás temporalmente baneado de Meower hasta {date} por la siguiente razón: {reason}",
+  permBan:
+    "Estás baneado de Meower permanentemente por la siguiente razón: {reason}",
+  namelessChat: "Chat sin nombre",
+  settingUseTwelveHourTime: "Usar formato de 12h.",
 };
