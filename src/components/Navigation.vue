@@ -106,6 +106,14 @@ const settingsStore = useSettingsStore();
           {{ t("devDisconnect") }}
         </button>
       </p>
+      <p>
+        {{ t("roarer2.start")
+        }}<a
+          href="https://mybearworld.github.io/roarer-2/"
+          class="text-link underline"
+          >{{ t("roarer2.link") }}</a
+        >{{ t("roarer2.end") }}
+      </p>
     </div>
   </div>
 </template>

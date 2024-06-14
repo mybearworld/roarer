@@ -332,4 +332,9 @@ export const en = {
     "You are permanently banned from Meower for the following reason: {reason}",
   namelessChat: "Nameless chat",
   settingUseTwelveHourTime: "Use 12 hour time.",
+  roarer2: {
+    start: "Try out ",
+    link: "Roarer 2",
+    end: ", an improved version of Roarer!",
+  },
 };
