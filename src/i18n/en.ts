@@ -333,8 +333,8 @@ export const en = {
   namelessChat: "Nameless chat",
   settingUseTwelveHourTime: "Use 12 hour time.",
   roarer2: {
-    start: "Try out ",
+    start: "This version of Roarer will not be maintained further. Instead, try out ",
     link: "Roarer 2",
-    end: ", an improved version of Roarer!",
+    end: ".",
   },
 };
