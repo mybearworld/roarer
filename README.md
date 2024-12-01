@@ -1,3 +1,6 @@
+> [!WARNING]
+> This client was superceded by Roarer 2. Additionally, Meower no longer exists. As a result, this client will no longer be maintained.
+
 # Roarer
 
 A simple mobile-friendly Meower client.
